@@ -16,6 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+//Populates Discount List
+function toPage(destination) {
+
+  window.location.assign(destination);
+
+};
+
+function authUser(email, password) {
+
+  toPage('restUser.html');
+
+  window.alert(email);
+
+  // document.getElementById("email").innerHTML = email;
+  // document.getElementById("password").innerHTML = password;
+
+
+};
+
+function regUser(email, password) {
+
+};
+
 var app = {
     // Application Constructor
     initialize: function() {
