@@ -1,58 +1,134 @@
 <!DOCTYPE html>
 <html>
 
-  <!-- Head -->
-  <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="bootstrap-4.0.0-alpha.6-dist/css/bootstrap.css">
-    <link href="sticky-footer-navbar.css" rel="stylesheet">
-    <title> Restaurant Discount App </title>
-  </head>
+<!-- Head -->
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="bootstrap-4.0.0-alpha.6-dist/css/bootstrap.css">
+  <link href="sticky-footer-navbar.css" rel="stylesheet">
+  <title> Restaurant Discount App </title>
+</head>
 
-  <!-- Body -->
-  <body>
+<!-- Body -->
+<body>
 
-    <!-- App Class -->
-    <div class="app">
+  <!-- App Class -->
+  <div class="app">
 
-      <!-- Nav Bar -->
-      <nav class="navbar navbar-light bg-success">
-        <a class="navbar-brand" href="#">
-          <img src="img/restaurant-logo.png" width="35" height="35" alt=""> <h4 class="d-inline align-middle"> Restaurant Discount App </h4>
-        </a>
-      </nav>
-      <p></p>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-light bg-success">
+      <a class="navbar-brand" href="#">
+        <img src="img/restaurant-logo.png" width="35" height="35" alt=""> <h4 class="d-inline align-middle"> Restaurant Discount App </h4>
+      </a>
+    </nav>
+    <p></p>
 
-      <!-- Body Container -->
-      <div class="container-fluid">
+    <!-- Body Container -->
+    <div class="container-fluid">
 
-        <!-- Discount List -->
-        <div class="list-group">
-          <h5> Discounts In Your Area </h5>
-          <a href="#" class="list-group-item list-group-item-action">Resturant A</a>
-          <a href="#" class="list-group-item list-group-item-action">Resturant B</a>
-          <a href="#" class="list-group-item list-group-item-action">Resturant C</a>
-          <a href="#" class="list-group-item list-group-item-action">Resturant D</a>
+      <h5> Discounts In Your Area </h5>
+
+      <!-- Discount List -->
+      <div id="accordion" role="tablist" aria-multiselectable="true" class="scroll">
+
+        <div class="card">
+          <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Restaurant A
+              </a>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-block">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    1 of 2
+                  </div>
+                  <div class="col-8">
+                    1 of 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <div class="card">
+          <div class="card-header" role="tab" id="headingTwo">
+            <h5 class="mb-0">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Restaurant B
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="card-block">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    1 of 2
+                  </div>
+                  <div class="col-8">
+                    1 of 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" role="tab" id="headingThree">
+            <h5 class="mb-0">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Restaurant C
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseThree" class="collapse show" role="tabpanel" aria-labelledby="headingThree">
+            <div class="card-block">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    1 of 2
+                  </div>
+                  <div class="col-8">
+                    1 of 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!--Close Discount List -->
       </div>
 
-      <!-- Sign In / Sign Up Button-->
-      <footer class="footer">
-        <div class="container-fluid">
-          <button type="button" class="btn btn-success btn-lg btn-block" onclick="toPage('signInUp.html')"> Sign In / Sign Up </button>
-        </div>
-      </footer>
-
+    <!-- Close Body Container -->
     </div>
 
-      <!-- Scripts -->
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <!-- Sign In / Sign Up Button-->
+    <footer class="footer">
+      <div class="container-fluid">
+        <button type="button" class="btn btn-success btn-lg btn-block" onclick="toPage('signInUp.html')"> Sign In / Sign Up </button>
+      </div>
+    </footer>
 
-  </body>
+  <!-- Close App Class -->
+  </div>
+
+  <!-- Scripts -->
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+
+</body>
 
 </html>

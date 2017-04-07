@@ -20,19 +20,27 @@
 //Populates Discount List
 function toPage(destination) {
 
-  window.location.assign(destination);
+  //window.location.assign(destination);
+  window.location.replace(destination);
+
+
 
 };
 
 function authUser(email, password) {
 
-  toPage('restUser.html');
+  if (email || password == null){
+    return 0;
+  } else {
+    
+    toPage('restUser.html');
 
-  window.alert(email);
+    //window.alert(email + password);
 
-  // document.getElementById("email").innerHTML = email;
-  // document.getElementById("password").innerHTML = password;
+    //document.getElementById("email").innerHTML = email;
+    //document.getElementById("password").innerHTML = password;
 
+  }
 
 };
 

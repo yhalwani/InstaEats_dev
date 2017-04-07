@@ -39,8 +39,8 @@
                 <input type="checkbox" value="remember-me"> Remember me
               </label>
             </div>
-            <button class="btn btn-lg btn-success btn-block" type="submit" onclick="authUser(document.getElementById('inputEmail').innerHTML, document.getElementById('inputPassword').innerHTML)"> Sign in </button>
-            <button class="btn btn-lg btn-success btn-block" type="submit" onclick="regUser(document.getElementById('inputEmail').innerHTML, document.getElementById('inputPassword').innerHTML)"> Sign up </button>
+            <button class="btn btn-lg btn-success btn-block" type="submit" onclick="authUser(document.forms[0].elements[0].value, document.forms[0].elements[1].value)"> Sign in </button>
+            <button class="btn btn-lg btn-success btn-block" type="submit" onclick="regUser(document.forms[0].elements[0].value, document.forms[0].elements[1].value)"> Sign up </button>
           </form>
 
 
@@ -55,7 +55,7 @@
 
     </div>
 
-      <!-- Scripts -->
+    <!-- Scripts -->
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
