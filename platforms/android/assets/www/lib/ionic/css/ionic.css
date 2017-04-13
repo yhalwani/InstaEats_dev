@@ -4118,7 +4118,7 @@ a.subdued {
 .bar-stable .button {
   border-color: #b2b2b2;
   background-color: #f8f8f8;
-  color: #444; }
+  color: #FFF; }
   .bar-stable .button:hover {
     color: #444;
     text-decoration: none; }
@@ -4129,7 +4129,7 @@ a.subdued {
     border-color: transparent;
     background: none;
     box-shadow: none;
-    color: #444;
+    color: #FFF;
     font-size: 17px; }
   .bar-stable .button.button-icon {
     border-color: transparent;
@@ -8732,7 +8732,7 @@ progress {
         color: #fff; }
   .button.button-assertive {
     border-color: transparent;
-    background-color: #ef473a;
+    background-color: #da3937;
     color: #fff; }
     .button.button-assertive:hover {
       color: #fff;
@@ -8744,16 +8744,16 @@ progress {
       border-color: transparent;
       background: none;
       box-shadow: none;
-      color: #ef473a; }
+      color: #da3937; }
     .button.button-assertive.button-icon {
       border-color: transparent;
       background: none; }
     .button.button-assertive.button-outline {
-      border-color: #ef473a;
+      border-color: #da3937;
       background: transparent;
-      color: #ef473a; }
+      color: #da3937; }
       .button.button-assertive.button-outline.active, .button.button-assertive.button-outline.activated {
-        background-color: #ef473a;
+        background-color: #da3937;
         box-shadow: none;
         color: #fff; }
   .button.button-balanced {

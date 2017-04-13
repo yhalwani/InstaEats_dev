@@ -15,14 +15,14 @@ function ($scope, $stateParams) {
 
 
   var database = firebase.database();
-  var usersRef = database.ref("Restaurant Profiles/");
+  var restRef = database.ref("Restaurant Profiles/");
 
   var restaurantList = [];
 
-  usersRef.once("value", function(snapshot) {
+  restRef.orderByChild("liveStatus").equalTo(true).on("value", function(snapshot) {
     restaurantList = snapshot.val();
-    console.log(restaurantList);
     $scope.restList = restaurantList;
+    console.log(restaurantList);
   });
 
 

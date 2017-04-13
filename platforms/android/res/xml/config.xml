@@ -24,8 +24,8 @@
         <param name="onload" value="true" />
     </feature>
     <name>RDA-Sample</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <description>Restaurant Discount Marketplace</description>
+    <author email="youssef.halwani@gmail.com">Retoll Developement Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
