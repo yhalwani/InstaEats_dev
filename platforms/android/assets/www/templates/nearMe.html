@@ -1,0 +1,29 @@
+<ion-view title="Near Me" id="page3">
+  <ion-content padding="true" class="has-header">
+    <div id="nearMe-container1">
+      <ion-list id="nearMe-list8" ng-repeat="rest in restList">
+        <ion-item>{{rest.restaurantName}}</ion-item>
+      </ion-list>
+    </div>
+    <form id="nearMe-form6" class="list">
+      <div class="spacer" style="width: 300px; height: 144px;"></div>
+      <ion-item class="range range-positive" id="nearMe-range3">Distance
+        <input type="range" value="50" min="0" max="100" step="1" name="distance-range">
+      </ion-item>
+      <label class="item item-select" id="nearMe-select2">
+        <span class="input-label">Sort By</span>
+        <select>
+          <option>Cuisine</option>
+          <option>Discount</option>
+          <option>Distance</option>
+          <option>Name</option>
+        </select>
+      </label>
+    </form>
+  </ion-content>
+</ion-view>
+
+<!-- <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+<script>
+  var ref = new Firebase("https://test1-51a17.firebaseio.com/");
+</script> -->
