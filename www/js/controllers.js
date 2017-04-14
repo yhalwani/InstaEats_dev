@@ -22,7 +22,6 @@ function ($scope, $stateParams) {
   restRef.orderByChild("liveStatus").equalTo(true).on("value", function(snapshot) {
     restaurantList = snapshot.val();
     $scope.restList = restaurantList;
-    console.log(restaurantList);
   });
 
 
