@@ -15,7 +15,7 @@ function ($scope, $stateParams) {
 
 
   var database = firebase.database();
-  var restRef = database.ref("Restaurant Profiles/");
+  var restRef = database.ref("Users/");
 
   var restaurantList = [];
 
