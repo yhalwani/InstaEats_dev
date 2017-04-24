@@ -33,7 +33,7 @@
     <ion-list *ngSwitchCase="'listView'">
       <ion-item *ngFor="let rest of restList">
         <ion-thumbnail item-left>
-          <img src="assets/img/retoll.png">
+          <img src="{{rest.imgUrl}}">
         </ion-thumbnail>
           <h2>{{rest.restaurantName}}</h2>
         <p>Discount info here</p>

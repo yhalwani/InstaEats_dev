@@ -8,13 +8,12 @@ import firebase from 'firebase';
 })
 export class NearMePage {
 
-  restList: Array<{liveStatus: boolean, restaurantName: any}>;
+  restList: Array<{imgURL: string, liveStatus: boolean, restaurantName: any}>;
   nearMeViews: string = "listView";
 
   constructor(public navCtrl: NavController) {
 
-    var database = firebase.database();
-    var restRef = database.ref("Restaurant Profiles/");
+    var restRef = firebase.database().ref("Restaurant Profiles/");;
 
     restRef.orderByChild("liveStatus").equalTo(true).once("value", (snapshot) => {
       var restaurantList = [];
