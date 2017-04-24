@@ -9,6 +9,7 @@ import firebase from 'firebase';
 export class NearMePage {
 
   restList: Array<{liveStatus: boolean, restaurantName: any}>;
+  nearMeViews: string = "listView";
 
   constructor(public navCtrl: NavController) {
 

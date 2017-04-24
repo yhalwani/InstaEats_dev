@@ -1,23 +1,46 @@
 <ion-header>
+
   <ion-navbar color = "rdaApp">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Near Me</ion-title>
   </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="nearMeViews">
+      <ion-segment-button value="mapView">
+        Map
+      </ion-segment-button>
+      <ion-segment-button value="listView">
+        List
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content padding>
 
-  <ion-list>
-    <ion-item *ngFor="let rest of restList">
-      <ion-thumbnail item-left>
-        <img src="assets/img/retoll.png">
-      </ion-thumbnail>
-        <h2>{{rest.restaurantName}}</h2>
-      <p>Discount info here</p>
-      <button ion-button clear item-right>View</button>
-    </ion-item>
-  </ion-list>
+
+  <div [ngSwitch]="nearMeViews">
+
+    <ion-list *ngSwitchCase="'mapView'">
+      <ion-item> Map Here </ion-item>
+    </ion-list>
+
+
+    <ion-list *ngSwitchCase="'listView'">
+      <ion-item *ngFor="let rest of restList">
+        <ion-thumbnail item-left>
+          <img src="assets/img/retoll.png">
+        </ion-thumbnail>
+          <h2>{{rest.restaurantName}}</h2>
+        <p>Discount info here</p>
+        <button ion-button clear item-right>View</button>
+      </ion-item>
+    </ion-list>
+
+  </div>
 
 </ion-content>
