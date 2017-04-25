@@ -8,7 +8,7 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="nearMeViews">
+    <ion-segment color = "rdaApp" [(ngModel)]="nearMeViews">
       <ion-segment-button value="mapView">
         Map
       </ion-segment-button>
@@ -26,18 +26,20 @@
   <div [ngSwitch]="nearMeViews">
 
     <ion-list *ngSwitchCase="'mapView'">
-      <ion-item> Map Here </ion-item>
+      <ion-item>
+        <div #map id="map"> Map Here </div>
+      </ion-item>
     </ion-list>
 
 
     <ion-list *ngSwitchCase="'listView'">
-      <ion-item *ngFor="let rest of restList">
+      <ion-item *ngFor="let rest of restList; let i = index">
         <ion-thumbnail item-left>
           <img src="{{rest.imgUrl}}">
         </ion-thumbnail>
           <h2>{{rest.restaurantName}}</h2>
-        <p>Discount info here</p>
-        <button ion-button clear item-right>View</button>
+          <p>{{rest.blurb}}</p>
+          <button ion-button clear item-right (click)="goToRestPage(i)">View</button>
       </ion-item>
     </ion-list>
 

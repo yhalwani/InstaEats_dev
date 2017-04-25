@@ -29,6 +29,7 @@ import { RecentPage } from '../pages/recent/recent';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { NearMePage } from '../pages/nearMe/nearMe';
 
+import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NearMePage } from '../pages/nearMe/nearMe';
     SignupPage,
     RecentPage,
     FavoritesPage,
-    NearMePage
+    NearMePage,
+    RestaurantPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { NearMePage } from '../pages/nearMe/nearMe';
     SignupPage,
     RecentPage,
     FavoritesPage,
-    NearMePage
+    NearMePage,
+    RestaurantPage
   ],
   providers: [
     StatusBar,
