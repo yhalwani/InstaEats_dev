@@ -26606,11 +26606,7 @@ ion-navbar.toolbar {
   }
 }
 
-.ios page-nearMe .scroll, .md page-nearMe .scroll {
-  height: 100%;
-}
-
-.ios page-nearMe #map, .md page-nearMe #map {
+page-nearMe #map {
   width: 100%;
   height: 100%;
 }

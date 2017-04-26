@@ -8,20 +8,11 @@ import firebase from 'firebase';
 })
 export class RestaurantPage {
 
-  // restaurant : {
-  //   "name" : any
-  // };
-
-  //restaurant['name']
-  //restaurant.name
-
   restaurantName
   restaurantImg
 
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-    //this.restaurant.name = navParams.get('restaurantName');
     this.restaurantName = navParams.get('restaurantName');
     this.restaurantImg = navParams.get('imgUrl');
 

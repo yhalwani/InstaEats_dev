@@ -27,7 +27,10 @@
 
     <ion-list *ngSwitchCase="'mapView'">
       <ion-item>
-        <div #map id="map"> Map Here </div>
+        <div #map id="map"></div>
+      </ion-item>
+      <ion-item>
+        <button (click)="loadMap()"> Click </button>
       </ion-item>
     </ion-list>
 
