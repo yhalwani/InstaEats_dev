@@ -26605,8 +26605,3 @@ ion-navbar.toolbar {
     padding-top: calc(16px + 20px);
   }
 }
-
-page-nearMe #map {
-  width: 100%;
-  height: 100%;
-}

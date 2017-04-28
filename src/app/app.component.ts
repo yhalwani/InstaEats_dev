@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -15,18 +17,36 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage:any = TabsPage;
+  loginPage:any = LoginPage;
+  loggedIn : any = false;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Near Me', component: TabsPage },
       { title: 'Login', component: LoginPage },
       { title: 'Signup', component: SignupPage }
-    ];
+    ]
+
+    events.subscribe('user:loggedIn', (loggedIn) => {
+      this.loggedIn = loggedIn;
+      this.pages = [
+        {title: 'Near Me', component: TabsPage },
+        {title: 'Logout', component: this.loggedIn }
+      ];
+    });
+
+    events.subscribe('user:loggedOut', (loggedOut) =>{
+      this.loggedIn = loggedOut;
+      this.pages = [
+        { title: 'Near Me', component: TabsPage },
+        { title: 'Login', component: LoginPage },
+        { title: 'Signup', component: SignupPage }
+      ]
+    });
 
   }
 
@@ -42,6 +62,16 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.component === this.loggedIn) {
+      firebase.auth().signOut().then(() =>{
+        this.loggedIn = false;
+        this.events.publish('user:loggedOut', false);
+      }).catch(function(error) {
+        console.log(error.message);
+      });
+
+    } else {
+      this.nav.setRoot(page.component);
+    }
   }
 }

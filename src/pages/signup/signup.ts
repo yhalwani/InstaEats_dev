@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 import firebase from 'firebase';
 
 @Component({
@@ -11,8 +12,9 @@ export class SignupPage {
   username : string;
   email : string;
   password : string;
+  fbAuthID : string;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public events: Events) {
 
   }
 
@@ -26,6 +28,7 @@ export class SignupPage {
 
       var currentUser = auth.currentUser;
       var id = currentUser.uid;
+      this.fbAuthID = id;
 
       userRef.child(id).update({
         email: this.email,
@@ -33,16 +36,13 @@ export class SignupPage {
         displayName: this.username
       });
 
-      user.updateProfile({
-        displayName: this.username
-      }).then(function() {
-        console.log("Username updated");
-      }, function(error) {
-        console.log("Unable to update username");
-      });
+      this.events.publish('user:loggedIn', true);
 
+
+    //Handle Error
     }, function(error) {
 
+      //Toast Alert
       if (error) {
         alert(error.message);
       } else {
@@ -50,6 +50,8 @@ export class SignupPage {
       }
 
     });
+
+    this.navCtrl.setRoot(TabsPage);
 
   }
 
