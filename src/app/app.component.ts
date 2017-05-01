@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -19,10 +19,18 @@ export class MyApp {
   rootPage:any = TabsPage;
   loginPage:any = LoginPage;
   loggedIn : any = false;
+  menuTitle : any = "InstaEats";
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public events: Events,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController) {
+
     this.initializeApp();
 
     this.pages = [
@@ -31,8 +39,9 @@ export class MyApp {
       { title: 'Signup', component: SignupPage }
     ]
 
-    events.subscribe('user:loggedIn', (loggedIn) => {
+    events.subscribe('user:loggedIn', (loggedIn, username) => {
       this.loggedIn = loggedIn;
+      this.menuTitle = username;
       this.pages = [
         {title: 'Near Me', component: TabsPage },
         {title: 'Logout', component: this.loggedIn }
@@ -41,6 +50,7 @@ export class MyApp {
 
     events.subscribe('user:loggedOut', (loggedOut) =>{
       this.loggedIn = loggedOut;
+      this.menuTitle = "InstaEats";
       this.pages = [
         { title: 'Near Me', component: TabsPage },
         { title: 'Login', component: LoginPage },
@@ -65,13 +75,36 @@ export class MyApp {
     if(page.component === this.loggedIn) {
       firebase.auth().signOut().then(() =>{
         this.loggedIn = false;
+        this.presentLoading();
         this.events.publish('user:loggedOut', false);
-      }).catch(function(error) {
-        console.log(error.message);
+      }).catch((error) => {
+        this.errToast(error.message);
       });
 
     } else {
       this.nav.setRoot(page.component);
     }
   }
+
+  errToast(msg){
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.present();
+  }
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Logout successful! Please wait...",
+      duration: 2000
+    });
+    loader.present();
+
+  }
+
+
+
 }
