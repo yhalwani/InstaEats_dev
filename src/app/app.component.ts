@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
 
@@ -29,7 +30,9 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public events: Events,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    public storage: Storage
+  ) {
 
     this.initializeApp();
 
@@ -37,7 +40,7 @@ export class MyApp {
       { title: 'Near Me', component: TabsPage },
       { title: 'Login', component: LoginPage },
       { title: 'Signup', component: SignupPage }
-    ]
+    ];
 
     events.subscribe('user:loggedIn', (loggedIn, username) => {
       this.loggedIn = loggedIn;
@@ -55,7 +58,7 @@ export class MyApp {
         { title: 'Near Me', component: TabsPage },
         { title: 'Login', component: LoginPage },
         { title: 'Signup', component: SignupPage }
-      ]
+      ];
     });
 
   }
@@ -66,8 +69,19 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.storage.ready().then(() => {
+        this.storage.length().then((numOfKeys) => {
+          console.log(numOfKeys);
+          if (numOfKeys < 1) {
+            this.storage.set('favList', {});
+            this.storage.set('recentList', {});
+            this.storage.set('recentCount', 0);
+          };
+        });
+      });
+
     });
-  }
+  };
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -84,7 +98,7 @@ export class MyApp {
     } else {
       this.nav.setRoot(page.component);
     }
-  }
+  };
 
   errToast(msg){
     let toast = this.toastCtrl.create({
@@ -94,7 +108,7 @@ export class MyApp {
     });
 
     toast.present();
-  }
+  };
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
@@ -102,9 +116,6 @@ export class MyApp {
       duration: 2000
     });
     loader.present();
-
-  }
-
-
+  };
 
 }
