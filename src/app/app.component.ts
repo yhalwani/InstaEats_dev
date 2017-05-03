@@ -71,9 +71,9 @@ export class MyApp {
       this.splashScreen.hide();
       this.storage.ready().then(() => {
         this.storage.length().then((numOfKeys) => {
-          console.log(numOfKeys);
           if (numOfKeys < 1) {
             this.storage.set('favList', {});
+            this.storage.set('favCount', 0);
             this.storage.set('recentList', {});
             this.storage.set('recentCount', 0);
           };

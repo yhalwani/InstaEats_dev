@@ -7,21 +7,9 @@
     <ion-title>Near Me</ion-title>
   </ion-navbar>
 
-  <ion-toolbar no-border-top>
-    <ion-segment color = "rdaApp" [(ngModel)]="nearMeViews">
-      <ion-segment-button value="mapView">
-        Map
-      </ion-segment-button>
-      <ion-segment-button value="listView">
-        List
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-
 </ion-header>
 
 <ion-content padding>
-
 
   <div [ngSwitch]="nearMeViews">
 
@@ -30,7 +18,6 @@
         <div #map id="map"></div>
       </ion-item>
     </ion-list>
-
 
     <ion-list *ngSwitchCase="'listView'">
       <ion-item *ngFor="let rest of restList; let i = index">
@@ -46,3 +33,18 @@
   </div>
 
 </ion-content>
+
+<ion-footer>
+
+    <ion-toolbar no-border-top>
+      <ion-segment color = "rdaApp" [(ngModel)]="nearMeViews">
+        <ion-segment-button value="mapView">
+          Map
+        </ion-segment-button>
+        <ion-segment-button value="listView">
+          List
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+
+</ion-footer>

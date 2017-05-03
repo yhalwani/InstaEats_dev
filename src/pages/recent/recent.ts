@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { RestaurantPage } from '../restaurant-page/restaurant-page';
 
 @Component({
   selector: 'page-about',
@@ -7,8 +9,32 @@ import { NavController } from 'ionic-angular';
 })
 export class RecentPage {
 
-  constructor(public navCtrl: NavController) {
+  restList: Array<{ blurb: any, imgURL: string, liveStatus: boolean, restaurantName: any }>;
 
+  constructor(public navCtrl: NavController, public events: Events, public storage: Storage) {
+
+    this.storage.get('recentList').then((list) => {
+      this.restList = list.reverse();
+    });
+
+    events.subscribe('restaurant:viewed', () => {
+      this.storage.get('recentList').then((list) => {
+        this.restList = list.reverse();
+      });
+    });
+
+  }
+
+  ionViewDidLoad(){
+    this.storage.get('recentList').then((list) => {
+      this.restList= list.reverse();
+    });
+  }
+
+  ionViewDidEnter(){
+    this.storage.get('recentList').then((list) => {
+      this.restList = list.reverse();
+    });
   }
 
 }
