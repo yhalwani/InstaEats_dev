@@ -1,7 +1,7 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{restaurantName}}</ion-title>
+  <ion-navbar color="rdaApp">
+    <ion-title>{{restaurant.restaurantName}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="favRest()">
         <ion-icon name="heart"></ion-icon>
@@ -14,29 +14,70 @@
 
 <ion-content padding>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-thumbnail>
-          <img src="{{restaurantImg}}">
-        </ion-thumbnail>
-      </ion-col>
-      <ion-col>
-        <h4> Description </h4>
+  <ion-card>
 
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        1 of 3
-      </ion-col>
-      <ion-col>
-        2 of 3
-      </ion-col>
-      <ion-col>
-        3 of 3
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-card-header>
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="{{restaurant.imgUrl}}">
+        </ion-thumbnail>
+        <h2> Description </h2>
+        <p> {{restaurant.description}} </p>
+      </ion-item>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p> {{restaurant.blurb}} </p>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      Menu
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item *ngFor="let item of Menu; let i = index">
+          <h4>{{item.name}}</h4>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                Price
+              </ion-col>
+              <ion-col>
+                {{item.price}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Discount
+              </ion-col>
+              <ion-col>
+                {{item.discount}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      Map
+    </ion-card-header>
+
+    <ion-card-content>
+      <div #map id="map"></div>
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>

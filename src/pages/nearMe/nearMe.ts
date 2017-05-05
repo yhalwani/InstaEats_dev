@@ -10,7 +10,7 @@ import firebase from 'firebase';
 })
 export class NearMePage {
 
-  restList: Array<{ blurb: any, imgURL: string, liveStatus: boolean, restaurantName: any }>;
+  restList: Array<{ blurb: any, description: string, imgURL: string, liveStatus: boolean, restaurantName: any }>;
   nearMeViews: string = "listView";
 
   constructor(public navCtrl: NavController, public events: Events, public storage: Storage) {

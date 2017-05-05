@@ -5502,7 +5502,7 @@ button[disabled],
 
 .button-clear-ios {
   border-color: transparent;
-  color: #488aff;
+  color: #da3937;
   background-color: transparent;
 }
 
@@ -5811,7 +5811,7 @@ button[disabled],
 
 .button-clear-md {
   border-color: transparent;
-  color: #488aff;
+  color: #da3937;
   background-color: transparent;
   box-shadow: none;
   opacity: 1;
@@ -26604,4 +26604,13 @@ ion-navbar.toolbar {
   .wp .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(16px + 20px);
   }
+}
+
+.ios page-restaurant-page .scroll, .md page-restaurant-page .scroll {
+  height: 100%;
+}
+
+.ios page-restaurant-page #map, .md page-restaurant-page #map {
+  width: 100%;
+  height: 100%;
 }

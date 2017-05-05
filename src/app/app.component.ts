@@ -72,9 +72,10 @@ export class MyApp {
       this.storage.ready().then(() => {
         this.storage.length().then((numOfKeys) => {
           if (numOfKeys < 1) {
-            this.storage.set('favList', {});
+            var list = [];
+            this.storage.set('favList', list);
             this.storage.set('favCount', 0);
-            this.storage.set('recentList', {});
+            this.storage.set('recentList', list);
             this.storage.set('recentCount', 0);
           };
         });

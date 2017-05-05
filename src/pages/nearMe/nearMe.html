@@ -14,9 +14,7 @@
   <div [ngSwitch]="nearMeViews">
 
     <ion-list *ngSwitchCase="'mapView'">
-      <ion-item>
-        <div #map id="map"></div>
-      </ion-item>
+        <img src="/assets/img/map.png">
     </ion-list>
 
     <ion-list *ngSwitchCase="'listView'">
@@ -26,7 +24,9 @@
         </ion-thumbnail>
           <h2>{{rest.restaurantName}}</h2>
           <p>{{rest.blurb}}</p>
-          <button ion-button clear item-right (click)="goToRestPage(i)">View</button>
+          <button ion-button color="rdaApp" clear icon-only item-right (click)="goToRestPage(i)">
+            <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
+          </button>
       </ion-item>
     </ion-list>
 
