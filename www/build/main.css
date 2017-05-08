@@ -5502,7 +5502,7 @@ button[disabled],
 
 .button-clear-ios {
   border-color: transparent;
-  color: #da3937;
+  color: #488aff;
   background-color: transparent;
 }
 
@@ -5811,7 +5811,7 @@ button[disabled],
 
 .button-clear-md {
   border-color: transparent;
-  color: #da3937;
+  color: #488aff;
   background-color: transparent;
   box-shadow: none;
   opacity: 1;
