@@ -1,0 +1,124 @@
+<!-- Header / Menu -->
+<ion-header>
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>SignUp Your Restaurant!</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!-- Slides Container -->
+  <ion-slides pager paginationType="progress" color="rdaApp">
+
+    <!-- General Info -->
+    <ion-slide>
+
+      <h2> Please enter your login information below and continue to the next step! </h2>
+
+      <ion-list>
+        <!-- Restaurant Name Input -->
+        <ion-item>
+          <ion-icon item-left name="restaurant"></ion-icon>
+          <ion-label floating>Restaurant Name</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="restaurantname"></ion-input>
+        </ion-item>
+        <!-- Email Input -->
+        <ion-item>
+          <ion-icon item-left name="mail"></ion-icon>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <!-- Password Input -->
+        <ion-item>
+          <ion-icon item-left name="lock"></ion-icon>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <!-- Continue to Next Slide -->
+      <button ion-button large clear icon-right color="rdaApp" (click)="generalInfo()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+
+    </ion-slide>
+
+    <!-- Meta Info -->
+    <ion-slide>
+
+      <h2> Please enter your Restaurants information below and continue to the next step!  </h2>
+
+      <ion-item-group>
+        <!-- Restaurant Info -->
+        <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
+        <!-- Img Chooser -->
+        <ion-item>
+          <ion-icon item-left name="image"></ion-icon>
+          <ion-label floating>Choose your icon image</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="image"></ion-input>
+        </ion-item>
+        <!-- Slogan Input -->
+        <ion-item>
+          <ion-icon item-left name="quote"></ion-icon>
+          <ion-label floating>Slogan</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="slogan"></ion-input>
+        </ion-item>
+        <!-- Description Input -->
+        <ion-item>
+          <ion-icon item-left name="document"></ion-icon>
+          <ion-label floating>Description</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+        </ion-item>
+        <!-- Cuisine Type Input -->
+        <ion-item>
+          <ion-icon item-left name="restaurant"></ion-icon>
+          <ion-label floating>Cuisine Type</ion-label>
+          <ion-select [(ngModel)]="cuisineType">
+            <ion-option *ngFor="let cuisine of cuisineTypes; let i = index" value="{{cuisine.id}}">
+              {{cuisine.type}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <!-- Website Input -->
+        <ion-item>
+          <ion-icon item-left name="document"></ion-icon>
+          <ion-label floating>Description</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+        </ion-item>
+
+        <!-- Address Input -->
+        <ion-item-divider color="light">Address</ion-item-divider>
+        <ion-item>
+          <ion-icon item-left name="document"></ion-icon>
+          <ion-label floating>Description</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+        </ion-item>
+
+        <!-- Hours of Operation Input -->
+        <ion-item-divider color="light">Hours of Operations</ion-item-divider>
+        <ion-item>
+          <ion-icon item-left name="document"></ion-icon>
+          <ion-label floating>Description</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+        </ion-item>
+      </ion-item-group>
+
+      <button ion-button large clear icon-right color="rdaApp" (click)="generalInfo()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+
+    </ion-slide>
+
+    <!-- General Info -->
+    <ion-slide>
+      <h2>Slide 3</h2>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

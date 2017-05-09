@@ -20,15 +20,16 @@ export const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-import { MyApp } from './app.component';
-import { TabsPage } from '../pages/tabs/tabs';
+import { MyApp }          from './app.component';
+import { TabsPage }       from '../pages/tabs/tabs';
 
-import { LoginPage } from '../pages/login/login';
-import { SignupPage } from '../pages/signup/signup';
+import { LoginPage }      from '../pages/login/login';
+import { SignupPage }     from '../pages/signup/signup';
+import { OnBoardPage }    from '../pages/on-board/on-board';
 
-import { RecentPage } from '../pages/recent/recent';
-import { FavoritesPage } from '../pages/favorites/favorites';
-import { NearMePage } from '../pages/nearMe/nearMe';
+import { RecentPage }     from '../pages/recent/recent';
+import { FavoritesPage }  from '../pages/favorites/favorites';
+import { NearMePage }     from '../pages/nearMe/nearMe';
 
 import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
 
@@ -41,7 +42,8 @@ import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
     RecentPage,
     FavoritesPage,
     NearMePage,
-    RestaurantPage
+    RestaurantPage,
+    OnBoardPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
     RecentPage,
     FavoritesPage,
     NearMePage,
-    RestaurantPage
+    RestaurantPage,
+    OnBoardPage
   ],
   providers: [
     StatusBar,

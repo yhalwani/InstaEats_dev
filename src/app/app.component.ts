@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events, LoadingController, ToastController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import { Nav, Platform, Events, LoadingController, ToastController }  from 'ionic-angular';
+import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Storage } from '@ionic/storage';
+import { Storage }      from '@ionic/storage';
 
-import firebase from 'firebase';
+import firebase         from 'firebase';
 
-import { TabsPage } from '../pages/tabs/tabs';
-
-import { LoginPage } from '../pages/login/login';
-import { SignupPage } from '../pages/signup/signup';
+import { TabsPage }     from '../pages/tabs/tabs';
+import { OnBoardPage }  from '../pages/on-board/on-board';
+import { LoginPage }    from '../pages/login/login';
+import { SignupPage }   from '../pages/signup/signup';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,9 +17,9 @@ import { SignupPage } from '../pages/signup/signup';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage:any = TabsPage;
-  loginPage:any = LoginPage;
-  loggedIn : any = false;
+  rootPage  : any = TabsPage;
+  loginPage : any = LoginPage;
+  loggedIn  : any = false;
   menuTitle : any = "InstaEats";
 
   pages: Array<{title: string, component: any}>;
@@ -37,16 +37,17 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Near Me', component: TabsPage },
+      { title: 'Feed Me!', component: TabsPage },
       { title: 'Login', component: LoginPage },
-      { title: 'Signup', component: SignupPage }
+      { title: 'Signup', component: SignupPage },
+      { title: 'Signup Your Restaurant!', component: OnBoardPage}
     ];
 
     events.subscribe('user:loggedIn', (loggedIn, username) => {
       this.loggedIn = loggedIn;
       this.menuTitle = username;
       this.pages = [
-        {title: 'Near Me', component: TabsPage },
+        {title: 'Feed Me!', component: TabsPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -55,13 +56,14 @@ export class MyApp {
       this.loggedIn = loggedOut;
       this.menuTitle = "InstaEats";
       this.pages = [
-        { title: 'Near Me', component: TabsPage },
+        { title: 'Feed Me!', component: TabsPage },
         { title: 'Login', component: LoginPage },
-        { title: 'Signup', component: SignupPage }
+        { title: 'Signup', component: SignupPage },
+        { title: 'Signup Your Restaurant!', component: OnBoardPage}
       ];
     });
 
-  }
+  };
 
   initializeApp() {
     this.platform.ready().then(() => {
