@@ -18447,7 +18447,7 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-pagination-progress .swiper-pagination-progressbar {
-  background: #da3937;
+  background: #007aff;
   position: absolute;
   left: 0;
   top: 0;
@@ -26604,6 +26604,11 @@ ion-navbar.toolbar {
   .wp .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(16px + 20px);
   }
+}
+
+page-nearMe #map {
+  height: 400px;
+  transition: opacity 150ms ease-in;
 }
 
 .ios page-restaurant-page .scroll, .md page-restaurant-page .scroll {

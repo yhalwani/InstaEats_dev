@@ -12,6 +12,8 @@ export class NearMePage {
 
   restList: Array<{ blurb: any, description: string, imgURL: string, liveStatus: boolean, restaurantName: any }>;
   nearMeViews: string = "listView";
+  locations: Array<{name: any, lat: number, lng: number}>;
+  map: any;
 
   constructor(public navCtrl: NavController, public events: Events, public storage: Storage) {
 
@@ -26,6 +28,38 @@ export class NearMePage {
       });
     });
 
+    // get coordinates from firebase
+    var coords = [];
+    var geoRef = firebase.database().ref("/geofire");
+    geoRef.on("value", (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        var data = childSnapshot;
+        var obj = {name: data.key, lat: data.val().l[0], lng: data.val().l[1]};
+        //coords.push(data.key, data.val().l);
+        coords.push(obj);
+        this.locations = coords;
+        return false;
+      });
+    });
+
+  }
+
+  ngOnInit() {
+    this.loadMap();
+  }
+
+  loadMap(){
+    // Set user location
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.map = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          zoom: 12,
+          iconUrl: "http://www.cary.ae/img/map-marker.png"
+        }
+      });
+    }
   }
 
   goToRestPage(index) {

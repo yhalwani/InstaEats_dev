@@ -11,12 +11,12 @@
 <ion-content padding>
 
   <!-- Slides Container -->
-  <ion-slides pager paginationType="progress" color="rdaApp">
+  <ion-slides pager paginationType="progress" color="rdaApp" style="height: auto">
 
     <!-- General Info -->
     <ion-slide>
 
-      <h2> Please enter your login information below and continue to the next step! </h2>
+      <h2 padding> Please enter your login information below and continue to the next step! </h2>
 
       <ion-list>
         <!-- Restaurant Name Input -->
@@ -50,7 +50,7 @@
     <!-- Meta Info -->
     <ion-slide>
 
-      <h2> Please enter your Restaurants information below and continue to the next step!  </h2>
+      <h2 padding> Please enter your Restaurants information below and continue to the next step!  </h2>
 
       <ion-item-group>
         <!-- Restaurant Info -->
@@ -85,26 +85,482 @@
         </ion-item>
         <!-- Website Input -->
         <ion-item>
-          <ion-icon item-left name="document"></ion-icon>
-          <ion-label floating>Description</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+          <ion-icon item-left name="globe"></ion-icon>
+          <ion-label floating>Website</ion-label>
+          <ion-input type="url" value="" [(ngModel)]="website"></ion-input>
         </ion-item>
 
         <!-- Address Input -->
-        <ion-item-divider color="light">Address</ion-item-divider>
+        <ion-item-divider color="light">Contact Info</ion-item-divider>
         <ion-item>
-          <ion-icon item-left name="document"></ion-icon>
-          <ion-label floating>Description</ion-label>
+          <ion-icon item-left name="call"></ion-icon>
+          <ion-label floating>Phone Number</ion-label>
+          <ion-input type="tel" value="" [(ngModel)]="phone"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left name="home"></ion-icon>
+          <ion-label floating>Street</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="Street"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left></ion-icon>
+          <ion-label floating>City</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="city"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left></ion-icon>
+          <ion-label floating>State</ion-label>
+          <ion-select [(ngModel)]="state">
+            <ion-option *ngFor="let state of stateList; let i = index" value="{{state.id}}">
+              {{state.name}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left></ion-icon>
+          <ion-label floating>Country</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="country"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left></ion-icon>
+          <ion-label floating>Postal Code</ion-label>
           <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
         </ion-item>
 
         <!-- Hours of Operation Input -->
         <ion-item-divider color="light">Hours of Operations</ion-item-divider>
-        <ion-item>
-          <ion-icon item-left name="document"></ion-icon>
-          <ion-label floating>Description</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
-        </ion-item>
+        <!-- <ion-item> -->
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                Day
+              </ion-col>
+              <ion-col>
+                Mon
+              </ion-col>
+              <ion-col>
+                Tues
+              </ion-col>
+              <ion-col>
+                Wed
+              </ion-col>
+              <ion-col>
+                Thurs
+              </ion-col>
+              <ion-col>
+                Fri
+              </ion-col>
+              <ion-col>
+                Sat
+              </ion-col>
+              <ion-col>
+                Sun
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Open
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="mon-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="mon-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="mon-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="tues-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="tues-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="tues-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="wed-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="wed-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="wed-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="thurs-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="thurs-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="thurs-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="fri-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="fri-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="fri-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="sat-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sat-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sat-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="sun-open-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sun-open-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sun-open-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Close
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="mon-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="mon-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="mon-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="tues-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="tues-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="tues-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="wed-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="wed-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="wed-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="thurs-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="thurs-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="thurs-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="fri-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="fri-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="fri-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="sat-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sat-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sat-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+              </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-select [(ngModel)]="sun-close-hour">
+                    <ion-option value="01">01</ion-option>
+                    <ion-option value="02">02</ion-option>
+                    <ion-option value="03">03</ion-option>
+                    <ion-option value="04">04</ion-option>
+                    <ion-option value="05">05</ion-option>
+                    <ion-option value="06">06</ion-option>
+                    <ion-option value="07">07</ion-option>
+                    <ion-option value="08">08</ion-option>
+                    <ion-option value="09">09</ion-option>
+                    <ion-option value="10">10</ion-option>
+                    <ion-option value="11">11</ion-option>
+                    <ion-option value="12">12</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sun-close-minute">
+                    <ion-option>00</ion-option>
+                    <ion-option>15</ion-option>
+                    <ion-option>30</ion-option>
+                    <ion-option>45</ion-option>
+                  </ion-select>
+                  <ion-select [(ngModel)]="sun-close-noon">
+                    <ion-option>PM</ion-option>
+                    <ion-option>AM</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        <!-- </ion-item> -->
       </ion-item-group>
 
       <button ion-button large clear icon-right color="rdaApp" (click)="generalInfo()">

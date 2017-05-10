@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import  firebase  from 'firebase';
 
+import { AgmCoreModule } from 'angular2-google-maps/core';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
@@ -48,7 +50,10 @@ import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCfjCqsLgu2mYhxquylBJRzwEfgUIUQD30'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
