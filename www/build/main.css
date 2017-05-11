@@ -26611,6 +26611,28 @@ page-nearMe #map {
   transition: opacity 150ms ease-in;
 }
 
+page-on-board .flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border: none;
+  -ms-box-orient: horizontal;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+page-on-board .wrap {
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+page-on-board .col {
+  border: thin solid grey;
+}
+
 .ios page-restaurant-page .scroll, .md page-restaurant-page .scroll {
   height: 100%;
 }
