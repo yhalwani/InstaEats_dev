@@ -1,14 +1,5 @@
 page-on-board {
 
-  // .slide-zoom{
-  //   height:auto;
-  //   overflow-y: auto;
-  // }
-  //
-  // SCROLL-CONTENT {
-  // 	overflow-y: auto !important;
-  // }
-
   .flex-container {
     padding: 0;
     margin: 0;
@@ -32,6 +23,9 @@ page-on-board {
     border: thin solid grey;
   }
 
+  .item-datetime ion-datetime {
+    text-align: center;
+  }
 
 
 

@@ -26633,6 +26633,10 @@ page-on-board .col {
   border: thin solid grey;
 }
 
+page-on-board .item-datetime ion-datetime {
+  text-align: center;
+}
+
 .ios page-restaurant-page .scroll, .md page-restaurant-page .scroll {
   height: 100%;
 }
