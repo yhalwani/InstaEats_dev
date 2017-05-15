@@ -8,6 +8,7 @@ import { NavController, NavParams, Slides } from 'ionic-angular';
 export class OnBoardPage {
   @ViewChild(Slides) slides: Slides;
   cuisineTypes: Array<{ type: string, id: string }>;
+  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.cuisineTypes = [
@@ -41,7 +42,8 @@ export class OnBoardPage {
       {type : "Tapas",        id : "28"},
       {type : "Thai",         id : "29"},
       {type : "Bar / Pub",    id : "30"}
-    ]
+    ];
+    this.menuGroup = [];
   }
 
   ionViewDidEnter() {
@@ -54,10 +56,33 @@ export class OnBoardPage {
     }
   }
 
+  loginInfo(){
+    this.slides.lockSwipes(false);
+    this.slides.slideNext();
+    this.slides.lockSwipeToNext(true);
+  }
+
   generalInfo(){
     this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.slides.lockSwipeToNext(true);
+  }
+
+  finish(){
+    
+  }
+
+
+
+  addMenuGroup(){
+    var menuItem = {name : "", description: "", price: 0.00};
+    var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
+    this.menuGroup.push(menuGroupElem);
+  }
+
+  addMenuItem(index){
+    var menuItem = {name : "", description: "", price: 0.00};
+    this.menuGroup[index].menu.push(menuItem);
   }
 
 
