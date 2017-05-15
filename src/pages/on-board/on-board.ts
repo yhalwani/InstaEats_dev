@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-on-board',
@@ -69,7 +70,7 @@ export class OnBoardPage {
   }
 
   finish(){
-    
+    this.navCtrl.setRoot(TabsPage);
   }
 
 
