@@ -34,7 +34,7 @@ export class NearMePage {
     geoRef.on("value", (snapshot) => {
       snapshot.forEach((childSnapshot) => {
         var data = childSnapshot;
-        var obj = {name: data.key, lat: data.val().l[0], lng: data.val().l[1]};
+        var obj = {name: data.key, lat: data.val().lat, lng: data.val().lng};
         //coords.push(data.key, data.val().l);
         coords.push(obj);
         this.locations = coords;
