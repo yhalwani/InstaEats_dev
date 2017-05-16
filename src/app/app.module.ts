@@ -33,7 +33,14 @@ import { RecentPage }     from '../pages/recent/recent';
 import { FavoritesPage }  from '../pages/favorites/favorites';
 import { NearMePage }     from '../pages/nearMe/nearMe';
 
-import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
+import { RestaurantPage } from '../pages/restaurant-page/restaurant-page';
+
+import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
+
+import { MenuPage }       from '../pages/menu/menu';
+import { InfoPage }       from '../pages/info/info';
+import { DiscountsPage }  from '../pages/discounts/discounts';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +52,11 @@ import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
     FavoritesPage,
     NearMePage,
     RestaurantPage,
-    OnBoardPage
+    OnBoardPage,
+    RestaurantPortalPage,
+    MenuPage,
+    InfoPage,
+    DiscountsPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +76,11 @@ import { RestaurantPage } from '../pages/restaurant-page/restaurant-page'
     FavoritesPage,
     NearMePage,
     RestaurantPage,
-    OnBoardPage
+    OnBoardPage,
+    RestaurantPortalPage,
+    MenuPage,
+    InfoPage,
+    DiscountsPage
   ],
   providers: [
     StatusBar,

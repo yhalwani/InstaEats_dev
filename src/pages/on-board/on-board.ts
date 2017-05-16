@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
+import { NavController, NavParams, Slides, Events, ToastController, LoadingController  } from 'ionic-angular';
+
+import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal'
 
 @Component({
   selector: 'page-on-board',
@@ -10,8 +11,10 @@ export class OnBoardPage {
   @ViewChild(Slides) slides: Slides;
   cuisineTypes: Array<{ type: string, id: string }>;
   menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  username: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
     this.cuisineTypes = [
       {type : "American",     id : "1"},
       {type : "Asian",        id : "2"},
@@ -70,10 +73,9 @@ export class OnBoardPage {
   }
 
   finish(){
-    this.navCtrl.setRoot(TabsPage);
+    this.events.publish('restaurant:onboarded', true, this.username);
+    this.navCtrl.setRoot(RestaurantPortalPage);
   }
-
-
 
   addMenuGroup(){
     var menuItem = {name : "", description: "", price: 0.00};

@@ -11,6 +11,8 @@ import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
 
+import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal'
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -37,7 +39,7 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Feed Me!', component: TabsPage },
+      { title: 'Feed Me!', component: this.rootPage },
       { title: 'Login', component: LoginPage },
       { title: 'Signup', component: SignupPage },
       { title: 'Signup Your Restaurant!', component: OnBoardPage}
@@ -47,7 +49,7 @@ export class MyApp {
       this.loggedIn = loggedIn;
       this.menuTitle = username;
       this.pages = [
-        {title: 'Feed Me!', component: TabsPage },
+        {title: 'Feed Me!', component: this.rootPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -56,10 +58,20 @@ export class MyApp {
       this.loggedIn = loggedOut;
       this.menuTitle = "InstaEats";
       this.pages = [
-        { title: 'Feed Me!', component: TabsPage },
+        { title: 'Feed Me!', component: this.rootPage },
         { title: 'Login', component: LoginPage },
         { title: 'Signup', component: SignupPage },
         { title: 'Signup Your Restaurant!', component: OnBoardPage}
+      ];
+    });
+
+    events.subscribe('restaurant:onboarded', (loggedIn, username) => {
+      this.loggedIn = loggedIn;
+      this.menuTitle = username;
+      this.rootPage = RestaurantPortalPage;
+      this.pages = [
+        {title: 'Portal', component: this.rootPage},
+        {title: 'Logout', component: this.loggedIn}
       ];
     });
 
