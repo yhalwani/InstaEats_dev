@@ -28,26 +28,26 @@ export class RestaurantPage {
     this.restaurant = this.navParams.data;
 
   }
-
-ngAfterViewInit(){
-  this.loadMap();
-}
-
-IonViewDidLoad(){
-  this.loadMap();
-}
-
-loadMap(){
-  let latLng = new google.maps.LatLng(43.6010365, -79.641453);
-
-  let mapOptions = {
-    center: latLng,
-    zoom: 18,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  }
-
-  this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
+// 
+// ngAfterViewInit(){
+//   this.loadMap();
+// }
+//
+// IonViewDidLoad(){
+//   this.loadMap();
+// }
+//
+// loadMap(){
+//   let latLng = new google.maps.LatLng(43.6010365, -79.641453);
+//
+//   let mapOptions = {
+//     center: latLng,
+//     zoom: 18,
+//     mapTypeId: google.maps.MapTypeId.ROADMAP
+//   }
+//
+//   this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+// }
 
   favRest(){
     console.log(this.restaurant);
