@@ -21,7 +21,7 @@
         <ion-item>
           <ion-icon item-left name="restaurant"></ion-icon>
           <ion-label floating>Restaurant Name</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="restaurantname"></ion-input>
+          <ion-input type="text" value="" [(ngModel)]="restaurantName"></ion-input>
         </ion-item>
         <!-- Email Input -->
         <ion-item>
@@ -89,7 +89,7 @@
         <ion-item>
           <ion-icon item-left name="call"></ion-icon>
           <ion-label floating>Phone Number</ion-label>
-          <ion-input type="tel" value="" [(ngModel)]="phone"></ion-input>
+          <ion-input type="tel" value="" [(ngModel)]="phoneNumber"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon item-left name="home"></ion-icon>
@@ -118,7 +118,7 @@
         <ion-item>
           <ion-icon item-left></ion-icon>
           <ion-label floating>Postal Code</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+          <ion-input type="text" value="" [(ngModel)]="postalCode"></ion-input>
         </ion-item>
 
         <!-- Hours of Operation Input -->
@@ -142,13 +142,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Monday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Monday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon-close"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon_close"></ion-datetime>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -159,13 +159,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Tuesday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Tuesday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues-close"></ion-datetime>>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues_close"></ion-datetime>>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -176,13 +176,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Wednesday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Wednesday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed-close"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed_close"></ion-datetime>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -193,13 +193,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Thursday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Thursday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs-close"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs_close"></ion-datetime>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -210,13 +210,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Friday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Friday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri-close"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri_close"></ion-datetime>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -227,13 +227,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Saturday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Saturday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat-close"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat_close"></ion-datetime>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -244,13 +244,13 @@
             <ion-col>
               <ion-item>
                 <ion-label>Sunday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun-open"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun_open"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label>Sunday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun-close"></ion-datetime>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun_close"></ion-datetime>
               </ion-item>
             </ion-col>
           </ion-row>

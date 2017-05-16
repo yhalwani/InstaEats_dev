@@ -31,17 +31,19 @@ export class SignupPage {
       var auth = firebase.auth();
       var userRef = firebase.database().ref("/User Profiles");
 
+      // create account using email and password
       auth.createUserWithEmailAndPassword(this.email, this.password).then((user) => {
         // if user created, then update the user displayName
         var currentUser = auth.currentUser;
         this.fbAuthID = currentUser.uid;
 
+        // after creation push the user to realtime database using uid as key
         userRef.child(this.fbAuthID).update({
           email: this.email,
           pass: this.password,
           displayName: this.username
         });
-
+        // updates the display name else remains undefined
         user.updateProfile({
           displayName: this.username
         });
@@ -83,6 +85,5 @@ export class SignupPage {
     }, 4000);
 
   }
-
 
 }

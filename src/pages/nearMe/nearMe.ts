@@ -17,9 +17,9 @@ export class NearMePage {
 
   constructor(public navCtrl: NavController, public events: Events, public storage: Storage) {
 
-    var restRef = firebase.database().ref("Restaurant Profiles/");;
+    var restRef = firebase.database().ref("Restaurant Profiles/");
 
-    restRef.orderByChild("liveStatus").equalTo(true).once("value", (snapshot) => {
+    restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
       var restaurantList = [];
       snapshot.forEach((childSnapshot) => {
         restaurantList.push(childSnapshot.val());
