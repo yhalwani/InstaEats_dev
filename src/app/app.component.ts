@@ -57,6 +57,7 @@ export class MyApp {
     events.subscribe('user:loggedOut', (loggedOut) =>{
       this.loggedIn = loggedOut;
       this.menuTitle = "InstaEats";
+      this.rootPage = TabsPage;
       this.pages = [
         { title: 'Feed Me!', component: this.rootPage },
         { title: 'Login', component: LoginPage },
@@ -65,12 +66,12 @@ export class MyApp {
       ];
     });
 
-    events.subscribe('restaurant:onboarded', (loggedIn, username) => {
+    events.subscribe('restaurant:loggedIn', (loggedIn, username) => {
       this.loggedIn = loggedIn;
       this.menuTitle = username;
       this.rootPage = RestaurantPortalPage;
       this.pages = [
-        {title: 'Portal', component: this.rootPage},
+        {title: 'Restaurant Portal', component: this.rootPage},
         {title: 'Logout', component: this.loggedIn}
       ];
     });
