@@ -132,6 +132,7 @@ export class OnBoardPage {
 
         var currentUser = firebase.auth().currentUser;
         var id = currentUser.uid;
+        var name = currentUser.displayName;
 
         // run html5 gelocation to get user coordinates
         if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.showPosition); }
@@ -157,34 +158,49 @@ export class OnBoardPage {
             "Sat":    [this.sat_open, this.sat_close],
             "Sun":    [this.sun_open, this.sun_close]
           }
-    		})
+    		});
     		// update the display name with the username provided
     		user.updateProfile({
     			displayName: this.restaurantName
     		});
-      //  this.events.publish('user:loggedIn', true, this.restaurantName);
+        this.pushMenu(this.restaurantName);
       });
       this.events.publish('restaurant:onboarded', true, this.username);
       this.navCtrl.setRoot(RestaurantPortalPage);
   }
 
-    showPosition(position){
+  showPosition(position){
     var geofire = firebase.database().ref("/geofire");
 
   	var currentUser = firebase.auth().currentUser;
     var id = currentUser.uid;
+
     // push users coordinates onto firebase real-time database
   	geofire.child(id).update({
+      //name: this.restaurantName,
       lat: position.coords.latitude,
       lng: position.coords.longitude
     }).then(() => {
-  		console.log("Current user " + currentUser.displayName + "'s location has been added to GeoFire");
+  		console.log("Current user's location has been added to GeoFire");
     });
   }
 
-  // TODO: once signed up as restaurant, direct user to
-  //       restaurant portal
+  pushMenu(name){
+    var menuNode = firebase.database().ref("MenuItems");
+    var groupname = this.menuGroup[0].menuGroupName;
 
+
+//    for (let i = 0; i< this.menuGroup.length; i++){
+      menuNode.child(name).update({
+          food: this.menuGroup
+          // 'groupname': {
+          //   name: this.menuGroup[i].menu[0].name,
+          //   description: this.menuGroup[i].menu[0].description,
+          //   price: this.menuGroup[i].menu[0].price,
+
+      });
+  //  }
+  }
 
   addMenuGroup(){
     var menuItem = {name : "", description: "", price: 0.00};
@@ -196,6 +212,5 @@ export class OnBoardPage {
     var menuItem = {name : "", description: "", price: 0.00};
     this.menuGroup[index].menu.push(menuItem);
   }
-
 
 }
