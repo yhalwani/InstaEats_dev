@@ -2,12 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides, Events, ToastController, LoadingController  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal'
 
-// declare var GeoFire: any
-// // Generate a random Firebase location
-// var firebaseRef = firebase.database().ref("/geofire");//.push();
-//
-// // Create a new GeoFire instance at the random Firebase location
-// var geoFire = new GeoFire(firebaseRef);
 
 @Component({
   selector: 'page-on-board',
@@ -15,55 +9,43 @@ import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal'
 })
 export class OnBoardPage {
 
-  //uid: any;
+// variables for restaurant sign up
+email: string;
+password: string;
+restaurantName: string;
+image: any = null;
+slogan: string = null;
+description: string = null;
+cuisineType: string = null;
+website: string = null;
+phoneNumber: number = null;
 
-  // variables for restaurant sign up
-  email:          string;
-  password:       string;
-  restaurantName: string;
-  image:          any = null;
-  slogan:         string = null;
-  description:    string = null;
-  cuisineType:    string = null;
-  website:        string = null;
-  phoneNumber:    number = null;
+// address info
+street: any = null;
+city: any = null;
+state: any = null;
+country: any = null;
+postalCode: any = null;
 
-  // address info
-  street:     any = null;
-  city:       any = null;
-  state:      any = null;
-  country:    any = null;
-  postalCode: any = null;
-
-  //hours of operation
-  // mon: {open: any, close: any};
-  // tues: {open: any, close: any};
-  // wed: {open: any, close: any};
-  // thurs: {open: any, close: any};
-  // fri: {open: any, close: any};
-  // sat: {open: any, close: any};
-  // sun: {open: any, close: any};
-
-
-  mon_open:     any = null;
-  mon_close:    any = null;
-  tues_open:    any = null;
-  tues_close:   any = null;
-  wed_open:     any = null;
-  wed_close:    any = null;
-  thurs_open:   any = null;
-  thurs_close:  any = null;
-  fri_open:     any = null;
-  fri_close:    any = null;
-  sat_open:     any = null;
-  sat_close:    any = null;
-  sun_open:     any = null;
-  sun_close:    any = null;
+mon_open: any = null;
+mon_close: any = null;
+tues_open: any = null;
+tues_close: any = null;
+wed_open: any = null;
+wed_close: any = null;
+thurs_open: any = null;
+thurs_close: any = null;
+fri_open: any = null;
+fri_close: any = null;
+sat_open: any = null;
+sat_close: any = null;
+sun_open: any = null;
+sun_close: any = null;
 
 
   @ViewChild(Slides) slides: Slides;
   cuisineTypes: Array<{ type: string, id: string }>;
-  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  menuGroup: Array<{ groupName: string, menu: Array<{name: string, description: string, price: number}>}>;
   username: any;
 
   constructor(public navCtrl: NavController, public events: Events, public navParams: NavParams, public loadingCtrl: LoadingController) {
@@ -125,86 +107,112 @@ export class OnBoardPage {
   }
 
   finish(){
-    var restRef = firebase.database().ref("/Restaurant Profiles");
+  var restRef = firebase.database().ref("/Restaurant Profiles");
 
-      // create account using email and password
-    	firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+  // create account using email and password
+  firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
 
-        var currentUser = firebase.auth().currentUser;
-        var id = currentUser.uid;
-        var name = currentUser.displayName;
-
-        // run html5 gelocation to get user coordinates
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.showPosition); }
-    		// after creation push the user to realtime database using uid as key
-    		restRef.child(id).update({
-    			email: this.email,
-    			displayName: this.restaurantName,
-    			photoUrl:this.image,
-    			slogan: this.slogan,
-    			description: this.description,
-    			cuisineType: this.cuisineType,
-    			website: this.website,
-    			phoneNumber: this.phoneNumber,
-    			address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
-    			liveStatus: false,   // false by default
-
-          hoursOfOperation: {
-            "Mon":    [this.mon_open, this.mon_close],
-            "Tues":   [this.tues_open, this.tues_close],
-            "Wed":    [this.wed_open, this.wed_close],
-            "Thurs":  [this.thurs_open, this.thurs_close],
-            "Fri":    [this.fri_open, this.fri_close],
-            "Sat":    [this.sat_open, this.sat_close],
-            "Sun":    [this.sun_open, this.sun_close]
-          }
-    		});
-    		// update the display name with the username provided
-    		user.updateProfile({
-    			displayName: this.restaurantName
-    		});
-        this.pushMenu(this.restaurantName);
-      });
-      this.events.publish('restaurant:onboarded', true, this.username);
-      this.navCtrl.setRoot(RestaurantPortalPage);
-  }
-
-  showPosition(position){
-    var geofire = firebase.database().ref("/geofire");
-
-  	var currentUser = firebase.auth().currentUser;
+    var currentUser = firebase.auth().currentUser;
     var id = currentUser.uid;
 
-    // push users coordinates onto firebase real-time database
-  	geofire.child(id).update({
-      //name: this.restaurantName,
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    }).then(() => {
+    // run html5 gelocation to get user coordinates
+    if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
+    // after creation push the user to realtime database using uid as key
+    restRef.child(id).set({
+      email: this.email,
+      displayName: this.restaurantName,
+      photoUrl: this.image,
+      slogan: this.slogan,
+      description: this.description,
+      cuisineType: this.cuisineType,
+      website: this.website,
+      phoneNumber: this.phoneNumber,
+      address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
+      liveStatus: false,   // false by default
+
+      hoursOfOperation: {
+        "Mon": [this.mon_open, this.mon_close],
+        "Tues": [this.tues_open, this.tues_close],
+        "Wed": [this.wed_open, this.wed_close],
+        "Thurs": [this.thurs_open, this.thurs_close],
+        "Fri": [this.fri_open, this.fri_close],
+        "Sat": [this.sat_open, this.sat_close],
+        "Sun": [this.sun_open, this.sun_close]
+      }
+    });
+    // update the display name with the username provided
+    user.updateProfile({
+      displayName: this.restaurantName
+    });
+    this.pushMenu(this.restaurantName);
+  });
+  this.events.publish('restaurant:onboarded', true, this.username);
+  this.navCtrl.setRoot(RestaurantPortalPage);
+}
+
+setPosition(position){
+  var geofire = firebase.database().ref("/geofire");
+
+  var currentUser = firebase.auth().currentUser;
+  var id = currentUser.uid;
+
+  // push users coordinates onto firebase real-time database
+  geofire.child(id).update({
+    //name: this.restaurantName,
+    lat: position.coords.latitude,
+    lng: position.coords.longitude
+  }).then(() => {
   		console.log("Current user's location has been added to GeoFire");
+  });
+}
+
+onComplete(error) {
+  if (error) {
+    console.log('Operation failed');
+  } else {
+    console.log(' Operation completed');
+  }
+}
+
+pushMenu(name){
+  var menuNode = firebase.database().ref("MenuItems");
+  var length = this.menuGroup.length;
+
+  var childNode = menuNode.child(name);
+  for (var i = 0; i < length; i++) {
+    childNode.update({
+      [this.menuGroup[i].groupName]: this.menuGroup[i].menu
     });
   }
+}
+      //
+      // for(let i = 0; i < length; i++){
+      //   for (let j = i; j < this.menuGroup[i].menu.length; j++)
+      //     childNode.child(this.menuGroup[i].groupName).set({
+      //       [this.menuGroup[i].menu[j].name]:
+      //       {
+      //         name: this.menuGroup[i].menu[j].name,
+      //         description: this.menuGroup[i].menu[j].description,
+      //         price: this.menuGroup[i].menu[j].price
+      //       }
+      //     });
+      //   }
+      //
 
-  pushMenu(name){
-    var menuNode = firebase.database().ref("MenuItems");
-    var groupname = this.menuGroup[0].menuGroupName;
-
-
-//    for (let i = 0; i< this.menuGroup.length; i++){
-      menuNode.child(name).update({
-          food: this.menuGroup
-          // 'groupname': {
-          //   name: this.menuGroup[i].menu[0].name,
-          //   description: this.menuGroup[i].menu[0].description,
-          //   price: this.menuGroup[i].menu[0].price,
-
-      });
-  //  }
-  }
+      // do{
+      //   menuNode.child(name).set({
+      //     [this.menuGroup[index].groupName]: {
+      //       name: this.menuGroup[index].menu[index].name,
+      //       description: this.menuGroup[index].menu[index].description,
+      //       price: this.menuGroup[index].menu[index].price
+      //     }
+      //   });
+      //   index++;
+      // }while(index < length);
 
   addMenuGroup(){
     var menuItem = {name : "", description: "", price: 0.00};
-    var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
+    var menuGroupElem = {groupName: "", menu: [menuItem]};
     this.menuGroup.push(menuGroupElem);
   }
 
