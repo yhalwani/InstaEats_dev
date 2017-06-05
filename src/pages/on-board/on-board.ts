@@ -47,7 +47,7 @@ export class OnBoardPage {
 
   @ViewChild(Slides) slides: Slides;
   cuisineTypes: Array<{ type: string, id: string }>;
-  menuGroup: Array<{ groupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
   username: any;
 
   constructor(
@@ -227,14 +227,14 @@ export class OnBoardPage {
       var childNode = menuNode.child(name);
       for (var i = 0; i < length; i++) {
         childNode.update({
-          [this.menuGroup[i].groupName]: this.menuGroup[i].menu
+          [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
         });
       }
     }
 
     addMenuGroup(){
       var menuItem = {name : "", description: "", price: 0.00};
-      var menuGroupElem = {groupName: "", menu: [menuItem]};
+      var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
       this.menuGroup.push(menuGroupElem);
     }
 

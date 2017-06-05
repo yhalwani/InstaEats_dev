@@ -48,8 +48,7 @@ export class MenuPage {
       </ion-title>
       <ion-buttons start>
         <button ion-button (click)="dismiss()">
-          <span ion-text color="rdaApp" showWhen="ios">Cancel</span>
-          <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+          Cancel
         </button>
       </ion-buttons>
     </ion-toolbar>
@@ -58,17 +57,34 @@ export class MenuPage {
   <ion-content padding>
     <ion-list *ngFor="let menug of menuGroup; let i = index">
       <ion-list-header>
-        <ion-label>Group name</ion-label>
-        <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+        <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
       </ion-list-header>
-      <ion-item-group *ngFor="let menu of menug.menu; let i = index">
-        <ion-item>
-          <ion-label> menu.name </ion-label>
-          <ion-checkbox></ion-checkbox>
-        </ion-item>
-      </ion-item-group>
+      <ion-grid>
+        <ion-item-group *ngFor="let menu of menug.menu; let i = index">
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label fixed> {{menu.name}} </ion-label>
+                <ion-checkbox></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input type="number" placeholder="Discount Percentage"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-item-group>
+      </ion-grid>
     </ion-list>
-  </ion-content>  
+
+    <div text-center>
+      <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
+        Save Bundle
+        <ion-icon name="pricetags"></ion-icon>
+      </button>
+    </div>
+  </ion-content>
   `
 })
 export class ModalContentPage {
@@ -84,5 +100,9 @@ export class ModalContentPage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  saveBundle() {
+
   }
 }
