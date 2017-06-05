@@ -3,6 +3,7 @@ import { NavController, NavParams, Slides, Events, ToastController, LoadingContr
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 
+
 @Component({
   selector: 'page-on-board',
   templateUrl: 'on-board.html',
@@ -46,7 +47,7 @@ export class OnBoardPage {
 
   @ViewChild(Slides) slides: Slides;
   cuisineTypes: Array<{ type: string, id: string }>;
-  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  menuGroup: Array<{ groupName: string, menu: Array<{name: string, description: string, price: number}>}>;
   username: any;
 
   constructor(
@@ -146,82 +147,100 @@ export class OnBoardPage {
       sun_open:         this.sun_open,
       sun_close:        this.sun_close};
 
-    this.storage.set('restInfo', info);
+      this.storage.set('restInfo', info);
 
-    this.storage.set('restMenu', []);
-    this.storage.set('restMenu', this.menuGroup);
+      this.storage.set('restMenu', []);
+      this.storage.set('restMenu', this.menuGroup);
 
 
-    var restRef = firebase.database().ref("/Restaurant Profiles");
+      var restRef = firebase.database().ref("/Restaurant Profiles");
 
-    // create account using email and password
-  	firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+      // create account using email and password
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+
+        var currentUser = firebase.auth().currentUser;
+        var id = currentUser.uid;
+
+        // run html5 gelocation to get user coordinates
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
+        // after creation push the user to realtime database using uid as key
+        restRef.child(id).set({
+          email: this.email,
+          displayName: this.restaurantName,
+          photoUrl: this.image,
+          slogan: this.slogan,
+          description: this.description,
+          cuisineType: this.cuisineType,
+          website: this.website,
+          phoneNumber: this.phoneNumber,
+          address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
+          liveStatus: false,   // false by default
+
+          hoursOfOperation: {
+            "Mon": [this.mon_open, this.mon_close],
+            "Tues": [this.tues_open, this.tues_close],
+            "Wed": [this.wed_open, this.wed_close],
+            "Thurs": [this.thurs_open, this.thurs_close],
+            "Fri": [this.fri_open, this.fri_close],
+            "Sat": [this.sat_open, this.sat_close],
+            "Sun": [this.sun_open, this.sun_close]
+          }
+        });
+        // update the display name with the username provided
+        user.updateProfile({
+          displayName: this.restaurantName
+        });
+        this.pushMenu(this.restaurantName);
+      });
+      this.events.publish('restaurant:onboarded', true, this.username);
+      this.navCtrl.setRoot(RestaurantPortalPage);
+    }
+
+    setPosition(position){
+      var geofire = firebase.database().ref("/geofire");
 
       var currentUser = firebase.auth().currentUser;
       var id = currentUser.uid;
 
-      // run html5 gelocation to get user coordinates
-      if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
-  		// after creation push the user to realtime database using uid as key
-  		restRef.child(id).update({
-  			email: this.email,
-  			displayName: this.restaurantName,
-  			photoUrl:this.image,
-  			slogan: this.slogan,
-  			description: this.description,
-  			cuisineType: this.cuisineType,
-  			website: this.website,
-  			phoneNumber: this.phoneNumber,
-  			address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
-  			liveStatus: false,   // false by default
+      // push users coordinates onto firebase real-time database
+      geofire.child(id).update({
+        //name: this.restaurantName,
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }).then(() => {
+        console.log("Current user's location has been added to GeoFire");
+      });
+    }
 
-        hoursOfOperation: {
-          "Mon":    [this.mon_open, this.mon_close],
-          "Tues":   [this.tues_open, this.tues_close],
-          "Wed":    [this.wed_open, this.wed_close],
-          "Thurs":  [this.thurs_open, this.thurs_close],
-          "Fri":    [this.fri_open, this.fri_close],
-          "Sat":    [this.sat_open, this.sat_close],
-          "Sun":    [this.sun_open, this.sun_close]
-        }
-  		})
-  		// update the display name with the username provided
-  		user.updateProfile({
-  			displayName: this.restaurantName
-  		});
-    //  this.events.publish('user:loggedIn', true, this.restaurantName);
-    });
+    onComplete(error) {
+      if (error) {
+        console.log('Operation failed');
+      } else {
+        console.log(' Operation completed');
+      }
+    }
 
-    this.events.publish('restaurant:loggedIn', true, this.username);
-    this.navCtrl.setRoot(RestaurantPortalPage);
+    pushMenu(name){
+      var menuNode = firebase.database().ref("MenuItems");
+      var length = this.menuGroup.length;
 
-  }
+      var childNode = menuNode.child(name);
+      for (var i = 0; i < length; i++) {
+        childNode.update({
+          [this.menuGroup[i].groupName]: this.menuGroup[i].menu
+        });
+      }
+    }
 
-  setPosition(position){
-    var geofire = firebase.database().ref("/geofire");
+    addMenuGroup(){
+      var menuItem = {name : "", description: "", price: 0.00};
+      var menuGroupElem = {groupName: "", menu: [menuItem]};
+      this.menuGroup.push(menuGroupElem);
+    }
 
-  	var currentUser = firebase.auth().currentUser;
-    var id = currentUser.uid;
-    // push users coordinates onto firebase real-time database
-  	geofire.child(id).update({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    }).then(() => {
-  		console.log("Current user " + currentUser.displayName + "'s location has been added to GeoFire");
-    });
+    addMenuItem(index){
+      var menuItem = {name : "", description: "", price: 0.00};
+      this.menuGroup[index].menu.push(menuItem);
+    }
 
   }
-
-  addMenuGroup(){
-    var menuItem = {name : "", description: "", price: 0.00};
-    var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
-    this.menuGroup.push(menuGroupElem);
-  }
-
-  addMenuItem(index){
-    var menuItem = {name : "", description: "", price: 0.00};
-    this.menuGroup[index].menu.push(menuItem);
-  }
-
-
-}

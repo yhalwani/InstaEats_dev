@@ -28,7 +28,7 @@ export class RestaurantPage {
     this.restaurant = this.navParams.data;
 
   }
-// 
+//
 // ngAfterViewInit(){
 //   this.loadMap();
 // }
