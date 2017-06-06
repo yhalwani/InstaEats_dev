@@ -72,12 +72,12 @@ export class MenuPage {
             <ion-col>
               <ion-item>
                 <ion-label fixed> {{menu.name}} </ion-label>
-                <ion-checkbox></ion-checkbox>
+                <ion-checkbox (click)="addToBundle(menu)"></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-input type="number" placeholder="Discount Percentage"></ion-input>
+                <ion-input type="number" placeholder="Discount Percentage" [(ngModel)]="discount"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -101,26 +101,34 @@ export class ModalContentPage {
     menu:          Array<{name: string, description: string, price: number}>
   }>;
 
-  bundleGroup: Array<{
-    bundleGroupName:            string,
-    bundleGroupeDescription:    string,
-    bundle:        Array<{name: string, discount: number}>
+  bundle: Array<{
+    bundleName:            string,
+    bundleDescription:     string,
+    bundleElem:        Array<{name: string, description: string, price: number, discount: number}>
   }>;
 
   bundleName:                   string;
   bundleDescription:            string;
+  discount:                     number;
 
   constructor(
     public params: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public storage: Storage
   ) {
     this.menuGroup = this.params.data;
-    this.bundleGroup = [];
+    this.bundle = [];
   };
 
   dismiss() {
     this.viewCtrl.dismiss();
   };
+
+  addToBundle(menuItem){
+    var bundleItem = {name: menuItem.name, description: menuItem.description, price: menuItem.price, discount: this.discount};
+    var bundleGroupElem = {bundleName: this.bundleName, bundleDescription: this.bundleDescription, bundleElem: [bundleItem]};
+    this.bundle.push(bundleGroupElem);
+  }
 
   saveBundle() {
 

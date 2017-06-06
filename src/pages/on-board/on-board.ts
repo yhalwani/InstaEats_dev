@@ -130,6 +130,9 @@ export class OnBoardPage {
   // Finish onboarding and store data
   finish(){
 
+    // Set empty JSON array for bundles
+    this.storage.set('bundles', []);
+
     // Set empty JSON array to restInfo
     this.storage.set('restInfo', {});
 

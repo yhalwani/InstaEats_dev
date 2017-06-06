@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events, LoadingController, ToastController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal'
 
 import firebase from 'firebase';
 
@@ -10,8 +11,10 @@ import firebase from 'firebase';
 })
 export class LoginPage {
 
-  email : string;
-  password : string;
+  email :     string;
+  password :  string;
+  userType:   string;
+  userToggle: boolean;
 
 
   constructor(
@@ -20,22 +23,30 @@ export class LoginPage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController) {
 
+      this.userType = "User";
+      this.userToggle = false;
+
   }
 
   loginClicked() {
-
     if(this.email === undefined || this.password === undefined){
       this.errToast("Please enter valid email and password");
     } else {
       var auth = firebase.auth();
       auth.signInWithEmailAndPassword(this.email, this.password).then(() => {
-        this.events.publish('user:loggedIn', true, auth.currentUser.displayName);
-        this.presentLoading();
+        console.log(this.userType + "   " + this.userToggle);
+
+        if(this.userType == "User"){
+          this.events.publish('user:loggedIn', true, auth.currentUser.displayName);
+          this.presentLoading(this.userToggle);
+        } else {
+          this.events.publish('restaurant:loggedIn', true, auth.currentUser.displayName);
+          this.presentLoading(this.userToggle);
+        }
       }, (error) => {
         this.errToast(error.message);
       });
     }
-
   }
 
   errToast(msg){
@@ -48,20 +59,32 @@ export class LoginPage {
     toast.present();
   }
 
-  presentLoading() {
+  presentLoading(type) {
     let loader = this.loadingCtrl.create({
       content: "Login successful! Please wait...",
     });
     loader.present();
 
     setTimeout(() => {
-      this.navCtrl.setRoot(TabsPage);
+      if( type == false ){
+        this.navCtrl.setRoot(TabsPage);
+      } else {
+        this.navCtrl.setRoot(RestaurantPortalPage);
+      }
     }, 2000);
 
     setTimeout(() => {
       loader.dismiss();
     }, 4000);
 
-  }
+  };
+
+  userToggled(){
+    if (this.userToggle == false){
+      this.userType = "User";
+    } else {
+      this.userType = "Restaurant";
+    };
+  };
 
 }
