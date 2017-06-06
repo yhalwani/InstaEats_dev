@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 })
 export class OnBoardPage {
 
-  // variables for restaurant sign up
+  // Variables for restaurant sign up
   email:          string;
   password:       string;
   restaurantName: string;
@@ -21,14 +21,14 @@ export class OnBoardPage {
   website:        string = null;
   phoneNumber:    number = null;
 
-  // address info
+  // Address info
   street:     any = null;
   city:       any = null;
   state:      any = null;
   country:    any = null;
   postalCode: any = null;
 
-  //hours of operation
+  // Hours of operation
   mon_open:     any = null;
   mon_close:    any = null;
   tues_open:    any = null;
@@ -44,10 +44,15 @@ export class OnBoardPage {
   sun_open:     any = null;
   sun_close:    any = null;
 
-
+  // Slides reference
   @ViewChild(Slides) slides: Slides;
+
+  // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
-  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  menuGroup: Array<{
+    menuGroupName: string,
+    menu: Array<{name: string, description: string, price: number}>
+  }>;
   username: any;
 
   constructor(
@@ -58,6 +63,7 @@ export class OnBoardPage {
     public storage: Storage
   ) {
 
+    // Set cuisineTypes array
     this.cuisineTypes = [
       {type : "American",     id : "1"},
       {type : "Asian",        id : "2"},
@@ -90,19 +96,25 @@ export class OnBoardPage {
       {type : "Thai",         id : "29"},
       {type : "Bar / Pub",    id : "30"}
     ];
+
+    // Set empty menuGroup
     this.menuGroup = [];
+
   }
 
+  // Lock swipes to nav only by buttons
   ionViewDidEnter() {
     this.slides.lockSwipes(true);
   }
 
+  // If the slide is the first one stop lockSwipes
   ionSlideDidChange(){
     if (this.slides.getActiveIndex() === 0){
       this.slides.lockSwipes(true);
     }
   }
 
+  // Lock swipe right and unlock swipe left
   loginInfo(){
     this.slides.lockSwipes(false);
     this.slides.slideNext();
@@ -115,10 +127,13 @@ export class OnBoardPage {
     this.slides.lockSwipeToNext(true);
   }
 
+  // Finish onboarding and store data
   finish(){
 
+    // Set empty JSON array to restInfo
     this.storage.set('restInfo', {});
 
+    // Fetch and set variables
     var info = {
       restaurantName :  this.restaurantName,
       email :           this.email,
@@ -145,102 +160,103 @@ export class OnBoardPage {
       sat_open:         this.sat_open,
       sat_close:        this.sat_close,
       sun_open:         this.sun_open,
-      sun_close:        this.sun_close};
+      sun_close:        this.sun_close
+    };
 
-      this.storage.set('restInfo', info);
+    // Store restaurant info
+    this.storage.set('restInfo', info);
 
-      this.storage.set('restMenu', []);
-      this.storage.set('restMenu', this.menuGroup);
+    // Store menu
+    this.storage.set('restMenu', []);
+    this.storage.set('restMenu', this.menuGroup);
 
 
-      var restRef = firebase.database().ref("/Restaurant Profiles");
+    var restRef = firebase.database().ref("/Restaurant Profiles");
 
       // create account using email and password
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
-
-        var currentUser = firebase.auth().currentUser;
-        var id = currentUser.uid;
-
-        // run html5 gelocation to get user coordinates
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
-        // after creation push the user to realtime database using uid as key
-        restRef.child(id).set({
-          email: this.email,
-          displayName: this.restaurantName,
-          photoUrl: this.image,
-          slogan: this.slogan,
-          description: this.description,
-          cuisineType: this.cuisineType,
-          website: this.website,
-          phoneNumber: this.phoneNumber,
-          address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
-          liveStatus: false,   // false by default
-
-          hoursOfOperation: {
-            "Mon": [this.mon_open, this.mon_close],
-            "Tues": [this.tues_open, this.tues_close],
-            "Wed": [this.wed_open, this.wed_close],
-            "Thurs": [this.thurs_open, this.thurs_close],
-            "Fri": [this.fri_open, this.fri_close],
-            "Sat": [this.sat_open, this.sat_close],
-            "Sun": [this.sun_open, this.sun_close]
-          }
-        });
-        // update the display name with the username provided
-        user.updateProfile({
-          displayName: this.restaurantName
-        });
-        this.pushMenu(this.restaurantName);
-      });
-      this.events.publish('restaurant:onboarded', true, this.username);
-      this.navCtrl.setRoot(RestaurantPortalPage);
-    }
-
-    setPosition(position){
-      var geofire = firebase.database().ref("/geofire");
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
 
       var currentUser = firebase.auth().currentUser;
       var id = currentUser.uid;
 
-      // push users coordinates onto firebase real-time database
-      geofire.child(id).update({
-        //name: this.restaurantName,
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }).then(() => {
-        console.log("Current user's location has been added to GeoFire");
+      // run html5 gelocation to get user coordinates
+      if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
+      // after creation push the user to realtime database using uid as key
+      restRef.child(id).set({
+        email: this.email,
+        displayName: this.restaurantName,
+        photoUrl: this.image,
+        slogan: this.slogan,
+        description: this.description,
+        cuisineType: this.cuisineType,
+        website: this.website,
+        phoneNumber: this.phoneNumber,
+        address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
+        liveStatus: false,   // false by default
+
+        hoursOfOperation: {
+          "Mon": [this.mon_open, this.mon_close],
+          "Tues": [this.tues_open, this.tues_close],
+          "Wed": [this.wed_open, this.wed_close],
+          "Thurs": [this.thurs_open, this.thurs_close],
+          "Fri": [this.fri_open, this.fri_close],
+          "Sat": [this.sat_open, this.sat_close],
+          "Sun": [this.sun_open, this.sun_close]
+        }
+      });
+      // update the display name with the username provided
+      user.updateProfile({
+        displayName: this.restaurantName
+      });
+      this.pushMenu(this.restaurantName);
+    });
+
+    // Nav to portal
+    this.events.publish('restaurant:loggedIn', true, this.username);
+    this.navCtrl.setRoot(RestaurantPortalPage);
+  }
+
+  // Get LAT/LNG via address
+  setPosition(position){
+    var geofire = firebase.database().ref("/geofire");
+
+    var currentUser = firebase.auth().currentUser;
+    var id = currentUser.uid;
+
+    // push users coordinates onto firebase real-time database
+    geofire.child(id).update({
+      //name: this.restaurantName,
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    }).then(() => {
+      console.log("Current user's location has been added to GeoFire");
+    });
+  }
+
+  // Push menu to firebase
+  pushMenu(name){
+    var menuNode = firebase.database().ref("MenuItems");
+    var length = this.menuGroup.length;
+
+    var childNode = menuNode.child(name);
+    for (var i = 0; i < length; i++) {
+      childNode.update({
+        [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
       });
     }
-
-    onComplete(error) {
-      if (error) {
-        console.log('Operation failed');
-      } else {
-        console.log(' Operation completed');
-      }
-    }
-
-    pushMenu(name){
-      var menuNode = firebase.database().ref("MenuItems");
-      var length = this.menuGroup.length;
-
-      var childNode = menuNode.child(name);
-      for (var i = 0; i < length; i++) {
-        childNode.update({
-          [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
-        });
-      }
-    }
-
-    addMenuGroup(){
-      var menuItem = {name : "", description: "", price: 0.00};
-      var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
-      this.menuGroup.push(menuGroupElem);
-    }
-
-    addMenuItem(index){
-      var menuItem = {name : "", description: "", price: 0.00};
-      this.menuGroup[index].menu.push(menuItem);
-    }
-
   }
+
+  // Add menu group to page
+  addMenuGroup(){
+    var menuItem = {name : "", description: "", price: 0.00};
+    var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
+    this.menuGroup.push(menuGroupElem);
+  }
+
+  // Add menu item to group
+  addMenuItem(index){
+    var menuItem = {name : "", description: "", price: 0.00};
+    this.menuGroup[index].menu.push(menuItem);
+  }
+
+}

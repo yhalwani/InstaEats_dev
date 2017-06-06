@@ -35,7 +35,7 @@ export class MenuPage {
   createBundle(){
     let modal = this.modalCtrl.create(ModalContentPage, this.menuGroup);
     modal.present();
-  }
+  };
 
 };
 
@@ -55,6 +55,13 @@ export class MenuPage {
   </ion-header>
 
   <ion-content padding>
+    <ion-item>
+      <ion-input type="text" placeholder="Bundle Name" [(ngModel)]="bundleName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Bundle Description" [(ngModel)]="bundleDescription"></ion-input>
+    </ion-item>
+
     <ion-list *ngFor="let menug of menuGroup; let i = index">
       <ion-list-header>
         <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
@@ -89,20 +96,33 @@ export class MenuPage {
 })
 export class ModalContentPage {
 
-  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  menuGroup: Array<{
+    menuGroupName:              string,
+    menu:          Array<{name: string, description: string, price: number}>
+  }>;
+
+  bundleGroup: Array<{
+    bundleGroupName:            string,
+    bundleGroupeDescription:    string,
+    bundle:        Array<{name: string, discount: number}>
+  }>;
+
+  bundleName:                   string;
+  bundleDescription:            string;
 
   constructor(
     public params: NavParams,
     public viewCtrl: ViewController
   ) {
     this.menuGroup = this.params.data;
-  }
+    this.bundleGroup = [];
+  };
 
   dismiss() {
     this.viewCtrl.dismiss();
-  }
+  };
 
   saveBundle() {
 
-  }
-}
+  };
+};
