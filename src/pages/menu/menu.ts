@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, Events, ModalController, ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -77,7 +77,7 @@ export class MenuPage {
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-input type="number" placeholder="Discount Percentage" [(ngModel)]="discount"></ion-input>
+                <ion-input type="number" disabled="true" placeholder="Discount Percentage" [(ngModel)]="discount"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -114,10 +114,13 @@ export class ModalContentPage {
   constructor(
     public params: NavParams,
     public viewCtrl: ViewController,
-    public storage: Storage
+    public storage: Storage,
+    public events: Events
   ) {
     this.menuGroup = this.params.data;
-    this.bundle = [];
+    this.storage.get('bundles').then((list) => {
+      this.bundle = list;
+    });
   };
 
   dismiss() {
@@ -126,11 +129,16 @@ export class ModalContentPage {
 
   addToBundle(menuItem){
     var bundleItem = {name: menuItem.name, description: menuItem.description, price: menuItem.price, discount: this.discount};
-    var bundleGroupElem = {bundleName: this.bundleName, bundleDescription: this.bundleDescription, bundleElem: [bundleItem]};
-    this.bundle.push(bundleGroupElem);
+
   }
 
   saveBundle() {
+    var bundleGroupElem = {bundleName: this.bundleName, bundleDescription: this.bundleDescription, bundleElem: []};
+    this.bundle.push(bundleGroupElem);
 
+    // this.storage.set('bundles', this.bundle);
+    this.events.publish('bundle:created', this.bundle);
+
+    this.dismiss();
   };
 };
