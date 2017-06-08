@@ -80,11 +80,7 @@ export class LoginPage {
   };
 
   userToggled(){
-    if (this.userToggle == false){
-      this.userType = "User";
-    } else {
-      this.userType = "Restaurant";
-    };
+      this.userType = this.userToggle ? "Restaurant" : "User";
   };
 
 }

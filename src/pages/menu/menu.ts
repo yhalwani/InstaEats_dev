@@ -134,10 +134,16 @@ export class ModalContentPage {
 
   saveBundle() {
     var bundleGroupElem = {bundleName: this.bundleName, bundleDescription: this.bundleDescription, bundleElem: []};
-    this.bundle.push(bundleGroupElem);
+    this.storage.get('bundles').then((list) => {
+      this.bundle = list;
+      this.bundle.push(bundleGroupElem);
+      this.storage.set('bundles', this.bundle);
 
-    // this.storage.set('bundles', this.bundle);
-    this.events.publish('bundle:created', this.bundle);
+      console.log("Bundle Created");
+      console.log(this.bundle);
+      this.events.publish('bundle:created', this.bundle);
+
+    });
 
     this.dismiss();
   };

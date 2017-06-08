@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, ActionSheetController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -18,7 +18,8 @@ export class DiscountsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
-    public storage: Storage
+    public storage: Storage,
+    public actionSheetCtrl: ActionSheetController
   ) {
 
     this.storage.get('bundles').then((list) => {
@@ -26,15 +27,49 @@ export class DiscountsPage {
     })
 
     this.events.subscribe('bundle:created', (bundle) => {
-      console.log("Bundle created");
+      console.log("Bundle Recieved");
       this.bundles = bundle;
-      console.log(this.bundles);
     });
 
   }
 
   ionViewDidLoad() {
     console.log(this.bundles);
+  }
+
+  presentActionSheet(index) {
+    console.log(index);
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'this.bundles[index].bundleName',
+      buttons: [
+        {
+          text: 'Go Live!',
+          handler: () => {
+            console.log('Fuck it! Well do it live!');
+          }
+        },
+        {
+          text: 'Terminate!',
+          handler: () => {
+            console.log('Astalavista!');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            console.log(index);
+            this.bundles.splice(index,1);
+            this.storage.get('bundles').then((list) => {
+              list.splice(index,1);
+              this.storage.set('bundles', list);
+              console.log(list);
+            });
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
 }

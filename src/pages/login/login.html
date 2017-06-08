@@ -20,17 +20,22 @@
       <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
     </ion-item>
 
-    <div>
-
-
-    </div>
-
-    <ion-item>
-      <ion-label>{{userType}}</ion-label>
-      <ion-toggle color="rdaApp" checked="false" [(ngModel)]="userToggle" (click)="userToggled()"></ion-toggle>
-    </ion-item>
-
   </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <ion-label text-center> Login in As </ion-label>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-label>{{userType}}</ion-label>
+        <ion-toggle color="rdaApp" checked="false" [(ngModel)]="userToggle" (ionChange)="userToggled()"></ion-toggle>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
 
   <div padding>
     <button ion-button color="rdaApp" block (click)="loginClicked()"> Login </button>

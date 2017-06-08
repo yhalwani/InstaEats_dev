@@ -11,15 +11,15 @@
 
 <ion-content padding>
 
-  <ion-list *ngFor="let bundle of bundles;" reorder="true">
+  <ion-list *ngFor="let bundle of bundles; let i = index;" reorder="true">
 
       <ion-card>
 
         <ion-card-header>
           {{bundle.bundleName}}
           <ion-buttons end>
-            <button ion-button clear="true">
-              <ion-icon name="menu"></ion-icon>
+            <button ion-button clear="true" (click)="presentActionSheet(i)">
+              <ion-icon color="rdaApp" name="menu"></ion-icon>
             </button>
           </ion-buttons>
         </ion-card-header>
