@@ -27,20 +27,15 @@ export class DiscountsPage {
     })
 
     this.events.subscribe('bundle:created', (bundle) => {
-      console.log("Bundle Recieved");
       this.bundles = bundle;
     });
 
   }
 
-  ionViewDidLoad() {
-    console.log(this.bundles);
-  }
 
   presentActionSheet(index) {
-    console.log(index);
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'this.bundles[index].bundleName',
+      title: this.bundles[index].bundleName,
       buttons: [
         {
           text: 'Go Live!',
