@@ -263,7 +263,7 @@
       </button>
     </ion-slide>
 
-    <!-- General Info Slide -->
+    <!-- Menu Info Slide -->
     <ion-slide>
 
       <h2 padding> Please add your Restaurants menu below, create groups (Appetizers, Entrees, Desserts etc) and add items to group. </h2>
@@ -280,7 +280,7 @@
           <ion-label>Group name</ion-label>
           <ion-input type="text" value="" [(ngModel)]="menug.menuGroupName"></ion-input>
         </ion-list-header>
-        <ion-item-group *ngFor="let menu of menug.menu; let i = index">
+        <ion-item-group *ngFor="let menu of menug.menu;">
           <ion-item>
             <ion-label>Item name</ion-label>
             <ion-input type="text" value="" [(ngModel)]="menu.name"></ion-input>

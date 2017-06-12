@@ -52,12 +52,10 @@ export class DiscountsPage {
         {
           text: 'Delete',
           handler: () => {
-            console.log(index);
             this.bundles.splice(index,1);
             this.storage.get('bundles').then((list) => {
               list.splice(index,1);
               this.storage.set('bundles', list);
-              console.log(list);
             });
           }
         }

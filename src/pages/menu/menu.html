@@ -22,6 +22,7 @@
       <ion-list-header>
         <ion-label>Group name</ion-label>
         <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+
       </ion-list-header>
       <ion-item-group *ngFor="let menu of menug.menu; let i = index" no-lines>
         <ion-card>

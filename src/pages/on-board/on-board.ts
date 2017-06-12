@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides, Events, ToastController, LoadingController  } from 'ionic-angular';
+import { NavController, NavParams, Slides, Events, LoadingController  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 

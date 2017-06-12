@@ -67,12 +67,12 @@ export class MenuPage {
         <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
       </ion-list-header>
       <ion-grid>
-        <ion-item-group *ngFor="let menu of menug.menu; let i = index">
+        <ion-item-group *ngFor="let menu of menug.menu; let j = index">
           <ion-row>
             <ion-col>
               <ion-item>
                 <ion-label fixed> {{menu.name}} </ion-label>
-                <ion-checkbox (click)="addToBundle(menu)"></ion-checkbox>
+                <ion-checkbox (ionChange)="addToBundle(menu, i * menug.menu.length + j, i, j, menug.menu.length, this)"></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col>
@@ -101,15 +101,20 @@ export class ModalContentPage {
     menu:          Array<{name: string, description: string, price: number}>
   }>;
 
-  bundle: Array<{
+  bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
-    bundleElem:        Array<{name: string, description: string, price: number, discount: number}>
+    bundleElem:        Array<{name: string, description: string, price: number, checked: boolean, discount: number}>
   }>;
+
+  bundleItems:          Array<{name: string, description: string, price: number, checked: boolean, discount: number}>;
 
   bundleName:                   string;
   bundleDescription:            string;
   discount:                     number;
+
+  checked: Array< boolean >;
+
 
   constructor(
     public params: NavParams,
@@ -119,29 +124,52 @@ export class ModalContentPage {
   ) {
     this.menuGroup = this.params.data;
     this.storage.get('bundles').then((list) => {
-      this.bundle = list;
+      this.bundles = list;
     });
+
+    this.bundleItems = [];
+
+    for (var i = 0; i < this.menuGroup.length; i++ ){
+      for (var j = 0; j < this.menuGroup[i].menu.length; j++ ){
+        var bundleItem = {
+          name: this.menuGroup[i].menu[j].name,
+          description: this.menuGroup[i].menu[j].description,
+          price: this.menuGroup[i].menu[j].price,
+          checked: false,
+          discount: 0
+        };
+        this.bundleItems.push(bundleItem);
+      };
+    };
+
   };
 
   dismiss() {
     this.viewCtrl.dismiss();
   };
 
-  addToBundle(menuItem){
-    var bundleItem = {name: menuItem.name, description: menuItem.description, price: menuItem.price, discount: this.discount};
+  addToBundle(menuItem, total, group, index, length, checked){
+    if (checked == true){
+      console.log(checked.checked + "  " + total + "  " + group + "  " + index + " " + length);
+      // var item = {name: menuItem.name, description: menuItem.description, price: menuItem.price, discount: this.discount};
+      // this.bundleItem.push(item);
+    } else {
+      console.log(checked.checked + "  " + total + "  " + group + "  " + index + " " + length);
+      // this.bundleItem.splice(index,1);
+    }
 
   }
 
   saveBundle() {
     var bundleGroupElem = {bundleName: this.bundleName, bundleDescription: this.bundleDescription, bundleElem: []};
     this.storage.get('bundles').then((list) => {
-      this.bundle = list;
-      this.bundle.push(bundleGroupElem);
-      this.storage.set('bundles', this.bundle);
+      this.bundles = list;
+      this.bundles.push(bundleGroupElem);
+      this.storage.set('bundles', this.bundles);
 
       console.log("Bundle Created");
-      console.log(this.bundle);
-      this.events.publish('bundle:created', this.bundle);
+      console.log(this.bundles);
+      this.events.publish('bundle:created', this.bundles);
 
     });
 
