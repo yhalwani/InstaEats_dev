@@ -77,7 +77,7 @@ export class MenuPage {
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-input type="number" disabled="true" placeholder="Discount Percentage" [(ngModel)]="discount"></ion-input>
+                <ion-input type="number" disabled="!{{bundleItem.bundleElem[i].menu[j].checked}}" placeholder="Discount Percentage" [(ngModel)]="bundleItem.bundleElem[i].menu[j].discount"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -134,7 +134,6 @@ export class ModalContentPage {
 
   bundleName:                   string;
   bundleDescription:            string;
-  discount:                     number;
 
   constructor(
     public params: NavParams,
@@ -158,7 +157,7 @@ export class ModalContentPage {
       bundleElem: []
     };
 
-    //
+    // Loop through menu and init dummy bundle
     for (var i = 0; i < this.menuGroup.length; i++ ){
 
       var menuItem = {
@@ -170,7 +169,6 @@ export class ModalContentPage {
       this.bundleItem.bundleElem.push(menuItem);
 
       for (var j = 0; j < this.menuGroup[i].menu.length; j++ ){
-
        var item = {
           name: this.menuGroup[i].menu[j].name,
           description: this.menuGroup[i].menu[j].description,
@@ -178,11 +176,11 @@ export class ModalContentPage {
           checked: false,
           discount: 0
         };
-
         this.bundleItem.bundleElem[i].menu.push(item);
-
       };
+
     };
+
   };
 
   // Close bundle page
@@ -193,21 +191,6 @@ export class ModalContentPage {
   // Add item to bundle
   addToBundle(group, index){
     this.bundleItem.bundleElem[group].menu[index].checked = !this.bundleItem.bundleElem[group].menu[index].checked;
-    if (this.bundleItem.bundleElem[group].menu[index].checked == true){
-      console.log("checked");
-      var item = {
-        name: this.bundleItem.bundleElem[group].menu[index].name,
-        description:this.bundleItem.bundleElem[group].menu[index].description,
-        price: this.bundleItem.bundleElem[group].menu[index].price,
-        discount: this.bundleItem.bundleElem[group].menu[index].discount,
-        discountPrice: 0
-      };
-      this.bundle.menu.push(item);
-    } else {
-      console.log("unchecked");
-      // this.bundleItem.splice(index,1);
-    }
-
   }
 
   // Save bundle to storage and push to firebase
