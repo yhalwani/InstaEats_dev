@@ -72,7 +72,7 @@ export class MenuPage {
             <ion-col>
               <ion-item>
                 <ion-label fixed> {{menu.name}} </ion-label>
-                <ion-checkbox (ionChange)="addToBundle(menu, i * menug.menu.length + j, i, j, menug.menu.length, this)"></ion-checkbox>
+                <ion-checkbox (ionChange)="addToBundle(i, j)"></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col>
@@ -109,7 +109,7 @@ export class ModalContentPage {
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
-        name: string, description: string, price: number, checked: boolean, discount: number
+        name: string, description: string, price: number, discount: number, discountPrice: number
       }>
     }>
   }>;
@@ -122,6 +122,13 @@ export class ModalContentPage {
       menu:                Array<{
         name: string, description: string, price: number, checked: boolean, discount: number
       }>
+    }>
+  };
+
+  bundleMenu: {
+    menuGroupName:       string,
+    menu:                Array<{
+      name: string, description: string, price: number, discount: number, discountPrice: number
     }>
   };
 
@@ -144,21 +151,14 @@ export class ModalContentPage {
       this.bundles = list;
     });
 
-    //
+    // Dummy variable to hold bundle
     this.bundleItem = {
       bundleName:            "",
       bundleDescription:     "",
       bundleElem: []
     };
 
-    // var item = {
-    //   name: "",
-    //   description: "",
-    //   price: 0,
-    //   checked: false,
-    //   discount: 0
-    // };
-
+    //
     for (var i = 0; i < this.menuGroup.length; i++ ){
 
       var menuItem = {
@@ -183,29 +183,42 @@ export class ModalContentPage {
 
       };
     };
-
-    console.log(this.bundleItem);
-
   };
 
+  // Close bundle page
   dismiss() {
     this.viewCtrl.dismiss();
   };
 
-  addToBundle(menuItem, total, group, index, length, checked){
-    if (checked == true){
-      // console.log(checked.checked + "  " + total + "  " + group + "  " + index + " " + length);
-      // var item = {name: menuItem.name, description: menuItem.description, price: menuItem.price, discount: this.discount};
-      // this.bundleItem.push(item);
+  // Add item to bundle
+  addToBundle(group, index){
+    this.bundleItem.bundleElem[group].menu[index].checked = !this.bundleItem.bundleElem[group].menu[index].checked;
+    if (this.bundleItem.bundleElem[group].menu[index].checked == true){
+      console.log("checked");
+      var item = {
+        name: this.bundleItem.bundleElem[group].menu[index].name,
+        description:this.bundleItem.bundleElem[group].menu[index].description,
+        price: this.bundleItem.bundleElem[group].menu[index].price,
+        discount: this.bundleItem.bundleElem[group].menu[index].discount,
+        discountPrice: 0
+      };
+      this.bundle.menu.push(item);
     } else {
-      // console.log(checked.checked + "  " + total + "  " + group + "  " + index + " " + length);
+      console.log("unchecked");
       // this.bundleItem.splice(index,1);
     }
 
   }
 
+  // Save bundle to storage and push to firebase
   saveBundle() {
-    // var bundleGroupElem = {bundleName: this.bundleName, bundleDescription: this.bundleDescription, bundleElem: this.bundleItem};
+
+    var bundleGroupElem = {
+      bundleName: this.bundleName,
+      bundleDescription: this.bundleDescription,
+      bundleElem: this.bundleItem
+    };
+
     this.storage.get('bundles').then((list) => {
       this.bundles = list;
       // this.bundles.push(bundleGroupElem);
@@ -214,5 +227,6 @@ export class ModalContentPage {
     });
 
     this.dismiss();
+
   };
 };
