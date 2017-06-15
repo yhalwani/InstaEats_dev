@@ -109,7 +109,7 @@ export class ModalContentPage {
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
-        name: string, description: string, price: number, discount: number, discountPrice: number
+        name: string, description: string, price: number, checked: boolean, discount: number
       }>
     }>
   }>;
@@ -122,13 +122,6 @@ export class ModalContentPage {
       menu:                Array<{
         name: string, description: string, price: number, checked: boolean, discount: number
       }>
-    }>
-  };
-
-  bundleMenu: {
-    menuGroupName:       string,
-    menu:                Array<{
-      name: string, description: string, price: number, discount: number, discountPrice: number
     }>
   };
 
@@ -196,15 +189,12 @@ export class ModalContentPage {
   // Save bundle to storage and push to firebase
   saveBundle() {
 
-    var bundleGroupElem = {
-      bundleName: this.bundleName,
-      bundleDescription: this.bundleDescription,
-      bundleElem: this.bundleItem
-    };
+    this.bundleItem.bundleName = this.bundleName;
+    this.bundleItem.bundleDescription = this.bundleDescription;
 
     this.storage.get('bundles').then((list) => {
       this.bundles = list;
-      // this.bundles.push(bundleGroupElem);
+      this.bundles.push(this.bundleItem);
       this.storage.set('bundles', this.bundles);
       this.events.publish('bundle:created', this.bundles);
     });

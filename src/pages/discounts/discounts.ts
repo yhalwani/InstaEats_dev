@@ -11,7 +11,12 @@ export class DiscountsPage {
   bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
-    bundleElem:        Array<{name: string, description: string, price: number, discount: number}>
+    bundleElem:            Array<{
+      menuGroupName:       string,
+      menu:                Array<{
+        name: string, description: string, price: number, checked: boolean, discount: number
+      }>
+    }>
   }>;
 
   constructor(
@@ -24,6 +29,7 @@ export class DiscountsPage {
 
     this.storage.get('bundles').then((list) => {
       this.bundles = list;
+      console.log(this.bundles);
     })
 
     this.events.subscribe('bundle:created', (bundle) => {

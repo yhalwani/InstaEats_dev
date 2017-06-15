@@ -11,52 +11,62 @@
 
 <ion-content padding>
 
-  <ion-list *ngFor="let bundle of bundles; let i = index;" reorder="true">
+  <ion-list *ngFor="let bundle of bundles; let i = index;">
 
-      <ion-card>
+    <ion-card>
 
-        <ion-card-header>
-          {{bundle.bundleName}}
-          <ion-buttons end>
-            <button ion-button clear="true" (click)="presentActionSheet(i)">
-              <ion-icon color="rdaApp" name="menu"></ion-icon>
-            </button>
-          </ion-buttons>
-        </ion-card-header>
+      <ion-card-header>
+        {{bundle.bundleName}}
+        <ion-buttons end>
+          <button ion-button clear="true" (click)="presentActionSheet(i)">
+            <ion-icon color="rdaApp" name="menu"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-card-header>
 
-        <ion-card-content>
+      <ion-card-content>
 
-          <ion-card-title>
-            {{bundle.bundleDescription}}
-          </ion-card-title>
+        <ion-card-title>
+          {{bundle.bundleDescription}}
+        </ion-card-title>
 
-          <ion-list>
-            <ion-item *ngFor="let item of bundle.bundleElem;">
-              <h4>{{item.name}}</h4>
+        <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
+          <ion-list *ngFor="let menu of item; let k = index">
+            <ion-item *ngIf="menu[k].checked == true">
+              <h4>{{menu[k].name}}</h4>
               <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    Price
-                  </ion-col>
-                  <ion-col>
-                    {{item.price}}
-                  </ion-col>
-                </ion-row>
                 <ion-row>
                   <ion-col>
                     Discount
                   </ion-col>
                   <ion-col>
-                    {{item.discount}}
+                    {{menu[j].discount}}
                   </ion-col>
                 </ion-row>
+                <ion-row>
+                  <ion-col>
+                    Price
+                  </ion-col>
+                  <ion-col>
+                    {{menu[j].price}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    Discounted Price
+                  </ion-col>
+                  <ion-col>
+                    {{((100 - menu[j].discount)/100)  * menu[j].price}}
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
             </ion-item>
           </ion-list>
+        </ion-list>
+      </ion-card-content>
 
-        </ion-card-content>
-
-      </ion-card>
+    </ion-card>
 
   </ion-list>
 
