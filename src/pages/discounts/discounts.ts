@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ActionSheetController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import firebase from 'firebase';
+
 @Component({
   selector: 'page-discounts',
   templateUrl: 'discounts.html',
@@ -45,13 +47,22 @@ export class DiscountsPage {
         {
           text: 'Go Live!',
           handler: () => {
-            console.log('Fuck it! Well do it live!');
+            var restRef = firebase.database().ref("Restaurant Profiles/");
+            var rest = firebase.auth().currentUser;
+            var id = rest.uid;
+            restRef.child(id).update({
+              liveStatus: true
+            });
           }
         },
         {
           text: 'Terminate!',
           handler: () => {
-            console.log('Astalavista!');
+            var restRef = firebase.database().ref("Restaurant Profiles/");
+            var rest = firebase.auth().currentUser;
+            restRef.child(rest.uid).update({
+              liveStatus: false
+            });
           }
         },
         {

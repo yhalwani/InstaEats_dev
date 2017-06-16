@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ModalController, ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import firebase from 'firebase';
+
 @Component({
   selector: 'page-menu',
   templateUrl: 'menu.html',
@@ -198,6 +200,8 @@ export class ModalContentPage {
       this.storage.set('bundles', this.bundles);
       this.events.publish('bundle:created', this.bundles);
     });
+
+
 
     this.dismiss();
 
