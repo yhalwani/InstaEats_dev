@@ -31,39 +31,37 @@
         </ion-card-title>
 
         <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
-          <ion-list *ngFor="let menu of item; let k = index">
-            <ion-item *ngIf="menu[k].checked == true">
-              <h4>{{menu[k].name}}</h4>
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    Discount
-                  </ion-col>
-                  <ion-col>
-                    {{menu[j].discount}}
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    Price
-                  </ion-col>
-                  <ion-col>
-                    {{menu[j].price}}
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    Discounted Price
-                  </ion-col>
-                  <ion-col>
-                    {{((100 - menu[j].discount)/100)  * menu[j].price}}
-                  </ion-col>
-                </ion-row>
-
-              </ion-grid>
-            </ion-item>
-          </ion-list>
+          <ion-item *ngFor="let menuItem of item.menu">
+            <ion-grid *ngIf="menuItem.checked == true">
+              <h4>{{menuItem.name}}</h4>
+              <ion-row>
+                <ion-col>
+                  Discount
+                </ion-col>
+                <ion-col>
+                  % {{menuItem.discount}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  Price
+                </ion-col>
+                <ion-col>
+                  {{menuItem.price}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  Discounted Price
+                </ion-col>
+                <ion-col>
+                  {{((100 - menuItem.discount)/100)  * menuItem.price}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
         </ion-list>
+
       </ion-card-content>
 
     </ion-card>

@@ -29,7 +29,6 @@ export class DiscountsPage {
 
     this.storage.get('bundles').then((list) => {
       this.bundles = list;
-      console.log(this.bundles);
     })
 
     this.events.subscribe('bundle:created', (bundle) => {
