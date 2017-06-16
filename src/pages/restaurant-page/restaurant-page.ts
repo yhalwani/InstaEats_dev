@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import firebase from 'firebase';
+
 declare let google;
 
 @Component({
@@ -13,11 +15,16 @@ export class RestaurantPage {
   @ViewChild('map') mapElement : ElementRef;
   map: any;
 
-  Menu = [
-    {name : "Burger", price : "$8", discount : "%10"},
-    {name : "Fries", price : "$4", discount : "%10"},
-    {name : "Shake", price : "$4", discount : "%10"}
-  ]
+  Menu: {
+    bundleName:            string,
+    bundleDescription:     string,
+    bundleElem:            Array<{
+      menuGroupName:       string,
+      menu:                Array<{
+        name: string, description: string, price: number, checked: boolean, discount: number
+      }>
+    }>
+  }
 
   constructor(
     public navCtrl: NavController,
@@ -26,6 +33,17 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
+
+    var restRef = firebase.database().ref("Restaurant Profiles/");
+
+    restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
+      var restaurantList = [];
+      snapshot.forEach((childSnapshot) => {
+        restaurantList.push(childSnapshot.val());
+
+        return false;
+      });
+    });
 
   }
 //
@@ -77,6 +95,7 @@ export class RestaurantPage {
     });
     this.events.publish('restaurant:favorited');
   }
+
   checkArrayFor(arr, obj){
     for (var x = 0; x < arr.length; x++){
       if(arr[x].restaurantName === obj.restaurantName){
@@ -85,4 +104,7 @@ export class RestaurantPage {
     }
     return false;
   }
+
+
+
 }
