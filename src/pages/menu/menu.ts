@@ -10,7 +10,12 @@ import firebase from 'firebase';
 })
 export class MenuPage {
 
-  menuGroup: Array<{ menuGroupName: string, menu: Array<{name: string, description: string, price: number}>}>;
+  menuGroup: Array<{
+    menuGroupName: string,
+    menu: Array<{
+      name: string, description: string, price: number
+    }>
+  }>;
 
   constructor(
     public navCtrl: NavController,
@@ -32,6 +37,10 @@ export class MenuPage {
   addMenuItem(index){
     var menuItem = {name : "", description: "", price: 0.00};
     this.menuGroup[index].menu.push(menuItem);
+  };
+
+  removeItem(menu, item){
+    this.menuGroup[menu].menu.splice(item, 1);
   };
 
   createBundle(){
@@ -201,9 +210,9 @@ export class ModalContentPage {
       this.events.publish('bundle:created', this.bundles);
     });
 
-
-
     this.dismiss();
 
   };
+
+
 };

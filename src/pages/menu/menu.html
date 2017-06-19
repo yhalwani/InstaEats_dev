@@ -24,20 +24,35 @@
         <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
 
       </ion-list-header>
-      <ion-item-group *ngFor="let menu of menug.menu; let i = index" no-lines>
+      <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
         <ion-card>
-          <ion-item>
-            <ion-label>Item name</ion-label>
-            <ion-input type="text" value="{{menu.name}}" [(ngModel)]="menu.name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Item descripition</ion-label>
-            <ion-input type="text" value="{{menu.description}}" [(ngModel)]="menu.description"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Item price</ion-label>
-            <ion-input type="number" value="{{menu.price}}" [(ngModel)]="menu.price"></ion-input>
-          </ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item name</ion-label>
+                  <ion-input type="text" value="{{menu.name}}" [(ngModel)]="menu.name"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-item>
+                <ion-label>Item descripition</ion-label>
+                <ion-input type="text" value="{{menu.description}}" [(ngModel)]="menu.description"></ion-input>
+              </ion-item>
+            </ion-row>
+            <ion-row>
+              <ion-item>
+                <ion-label>Item price</ion-label>
+                <ion-input type="number" value="{{menu.price}}" [(ngModel)]="menu.price"></ion-input>
+              </ion-item>
+            </ion-row>
+          </ion-grid>
         </ion-card>
       </ion-item-group>
       <button ion-button color="rdaApp" clear item-center icon-right (click)="addMenuItem(i)">
