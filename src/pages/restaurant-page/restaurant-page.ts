@@ -45,12 +45,28 @@ export class RestaurantPage {
       });
     });
 
+    // pull restaurant bundles
+
+    // Might have to pull the restaurants UID based on the the restaurant name
+    var bundleNode = firebase.database();
+    bundleNode.ref('/Bundles/' + this.restaurant.restaurantName).on("value", (snapshot) => {
+      var data = snapshot.val();
+      console.log(data);
+
+      // TODO: populate restaurant page with BUNDLES data from firebase
+    });
+
+    // pull restaurant menu
+    var menuNode = firebase.database();
+    menuNode.ref('/MenuItems/' + this.restaurant.restaurantName).on("value", (snapshot) => {
+      var data = snapshot.val();
+      console.log(data);
+
+      // TODO: populate restaurant page with MENU data from firebase
+    });
+
   }
-//
-// ngAfterViewInit(){
-//   this.loadMap();
-// }
-//
+
 // IonViewDidLoad(){
 //   this.loadMap();
 // }

@@ -42,7 +42,20 @@ export class InfoPage {
   sun_open:     any = null;
   sun_close:    any = null;
 
+  userData: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    var user = firebase.auth().currentUser;
+
+    /*
+       To pull user info from firebase, if
+       user logs in from any device that 
+       does not have info in its local storage
+    */
+    firebase.database().ref("/Restaurant Profiles" + user.uid).on('value', (snapshot) => {
+      var data = snapshot.val();
+      this.userData = data;
+    });
 
     this.storage.get('restInfo').then((list) => {
 
@@ -82,6 +95,43 @@ export class InfoPage {
   }
 
   ionViewDidLoad() {
+  }
+
+  restInfoUpdate(){
+    var ref =  firebase.database().ref("/Restaurant Profiles");
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
+
+    ref.child(uid).update({
+      email: this.email,
+      displayName: this.restaurantName,
+      photoUrl: this.image,
+      slogan: this.slogan,
+      description: this.description,
+      cuisineType: this.cuisineType,
+      website: this.website,
+      phoneNumber: this.phoneNumber,
+      address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
+      liveStatus: false,   // false by default
+
+      hoursOfOperation: {
+        "Mon": [this.mon_open, this.mon_close],
+        "Tues": [this.tues_open, this.tues_close],
+        "Wed": [this.wed_open, this.wed_close],
+        "Thurs": [this.thurs_open, this.thurs_close],
+        "Fri": [this.fri_open, this.fri_close],
+        "Sat": [this.sat_open, this.sat_close],
+        "Sun": [this.sun_open, this.sun_close]
+      }
+    });
+
+  }
+
+  updateUserPassword(newPassword){
+    var user = firebase.auth().currentUser;
+    user.updatePassword(newPassword).then(()=>{
+      alert("Password Updated")
+    })
   }
 
 }

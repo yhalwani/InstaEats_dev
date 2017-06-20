@@ -27,11 +27,21 @@ export class MenuPage {
     var menuItem = {name : "", description: "", price: 0.00};
     var menuGroupElem = {menuGroupName: "", menu: [menuItem]};
     this.menuGroup.push(menuGroupElem);
+
+
   };
 
   addMenuItem(index){
     var menuItem = {name : "", description: "", price: 0.00};
     this.menuGroup[index].menu.push(menuItem);
+
+    var ref = firebase.database().ref('/MenuItems');
+    var user = firebase.auth().currentUser;
+    for (var i = 0; i < length; i++) {
+      ref.child(user.displayName).update({
+        [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
+      });
+    }
   };
 
   createBundle(){
@@ -119,12 +129,13 @@ export class ModalContentPage {
   bundleItem: {
     bundleName:            string,
     bundleDescription:     string,
+    bundleLiveStatus:      boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
         name: string, description: string, price: number, checked: boolean, discount: number
       }>
-    }>
+    }>,
   };
 
   bundleName:                   string;
@@ -149,7 +160,8 @@ export class ModalContentPage {
     this.bundleItem = {
       bundleName:            "",
       bundleDescription:     "",
-      bundleElem: []
+      bundleElem: [],
+      bundleLiveStatus: false
     };
 
     // Loop through menu and init dummy bundle
@@ -191,6 +203,10 @@ export class ModalContentPage {
   // Save bundle to storage and push to firebase
   saveBundle() {
 
+    // reference to firebase database and current user
+    var ref = firebase.database().ref("/Bundles");
+    var user = firebase.auth().currentUser;
+
     this.bundleItem.bundleName = this.bundleName;
     this.bundleItem.bundleDescription = this.bundleDescription;
 
@@ -198,6 +214,15 @@ export class ModalContentPage {
       this.bundles = list;
       this.bundles.push(this.bundleItem);
       this.storage.set('bundles', this.bundles);
+      console.log(this.bundles);
+
+      // update fb 'bundle' node under current user
+      for(let i = 0; i<this.bundles.length; i++){
+        ref.child(user.uid).update({
+          [this.bundles[i].bundleName]: this.bundles[i].bundleElem
+        });
+    }
+
       this.events.publish('bundle:created', this.bundles);
     });
 
@@ -205,5 +230,5 @@ export class ModalContentPage {
 
     this.dismiss();
 
-  };
+  }
 };

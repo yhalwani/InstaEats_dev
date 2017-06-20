@@ -39,7 +39,6 @@ export class DiscountsPage {
 
   }
 
-
   presentActionSheet(index) {
     let actionSheet = this.actionSheetCtrl.create({
       title: this.bundles[index].bundleName,
@@ -68,6 +67,13 @@ export class DiscountsPage {
         {
           text: 'Delete',
           handler: () => {
+            var name = this.bundles[index].bundleName;
+            console.log(name);
+            var user = firebase.auth().currentUser;
+            var ref = firebase.database().ref("/Bundles/" + user.uid);
+            ref.child(name).remove();
+
+
             this.bundles.splice(index,1);
             this.storage.get('bundles').then((list) => {
               list.splice(index,1);
