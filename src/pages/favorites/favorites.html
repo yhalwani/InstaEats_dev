@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Favorites</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let rest of restList; let i = index">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="{{rest.imgUrl}}">
+        </ion-thumbnail>
+        <h2>{{rest.restaurantName}}</h2>
+        <p>{{rest.blurb}}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="rdaApp" (click)="deleteRest(i)">
+          <ion-icon name="undo"></ion-icon>
+          Delete
+        </button>
+        <button ion-button color="rdaApp" (click)="muteRest(i)">
+          <ion-icon name="notifications-off"></ion-icon>
+          Mute
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

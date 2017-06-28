@@ -1,0 +1,261 @@
+<ion-header>
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Info</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <h2 padding> Restaurant Information </h2>
+  <h5 padding-bottom> Please update your information below and click update to save the changes! </h5>
+
+  <ion-list>
+    <ion-item-group>
+    <!-- Restaurant Info -->
+    <ion-item-divider color="light">Account Info</ion-item-divider>
+    <!-- Restaurant Name Input -->
+    <ion-item>
+      <ion-icon item-left name="restaurant"></ion-icon>
+      <ion-label floating>Restaurant Name</ion-label>
+      <ion-input type="text" value="{{restaurantName}}" [(ngModel)]="restaurantName"></ion-input>
+    </ion-item>
+    <!-- Email Input -->
+    <ion-item>
+      <ion-icon item-left name="mail"></ion-icon>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" value="{{email}}" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <!-- Password Input -->
+    <ion-item>
+      <ion-icon item-left name="lock"></ion-icon>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <!-- Restaurant Info -->
+    <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
+    <!-- Img Chooser -->
+    <ion-item>
+      <ion-icon item-left name="image"></ion-icon>
+      <ion-label floating>Choose your icon image</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="image"></ion-input>
+    </ion-item>
+    <!-- Slogan Input -->
+    <ion-item>
+      <ion-icon item-left name="quote"></ion-icon>
+      <ion-label floating>Slogan</ion-label>
+      <ion-input type="text" value="{{slogan}}" [(ngModel)]="slogan"></ion-input>
+    </ion-item>
+    <!-- Description Input -->
+    <ion-item>
+      <ion-icon item-left name="document"></ion-icon>
+      <ion-label floating>Description</ion-label>
+      <ion-input type="text" value="{{description}}" [(ngModel)]="description"></ion-input>
+    </ion-item>
+    <!-- Cuisine Type Input -->
+    <ion-item>
+      <ion-icon item-left name="restaurant"></ion-icon>
+      <ion-label floating>Cuisine Type</ion-label>
+      <ion-select [(ngModel)]="cuisineType">
+        <ion-option *ngFor="let cuisine of cuisineTypes; let i = index" value="{{cuisine.id}}">
+          {{cuisine.type}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <!-- Website Input -->
+    <ion-item>
+      <ion-icon item-left name="globe"></ion-icon>
+      <ion-label floating>Website</ion-label>
+      <ion-input type="url" value="{{website}}" [(ngModel)]="website"></ion-input>
+    </ion-item>
+
+    <!-- Address Input -->
+    <ion-item-divider color="light">Contact Info</ion-item-divider>
+    <ion-item>
+      <ion-icon item-left name="call"></ion-icon>
+      <ion-label floating>Phone Number</ion-label>
+      <ion-input type="tel" value="{{phoneNumber}}" [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-left name="home"></ion-icon>
+      <ion-label floating>Street</ion-label>
+      <ion-input type="text" value="{{street}}" [(ngModel)]="street"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-left></ion-icon>
+      <ion-label floating>City</ion-label>
+      <ion-input type="text" value="{{city}}" [(ngModel)]="city"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-left></ion-icon>
+      <ion-label floating>State</ion-label>
+      <ion-select [(ngModel)]="state">
+        <ion-option *ngFor="let state of stateList; let i = index" value="{{state.id}}">
+          {{state.name}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-left></ion-icon>
+      <ion-label floating>Country</ion-label>
+      <ion-input type="text" value="{{country}}" [(ngModel)]="country"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-left></ion-icon>
+      <ion-label floating>Postal Code</ion-label>
+      <ion-input type="text" value="{{postalCode}}" [(ngModel)]="postalCode"></ion-input>
+    </ion-item>
+
+    <!-- Hours of Operation Input -->
+    <ion-item-divider color="light">Hours of Operations</ion-item-divider>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          Day
+        </ion-col>
+        <ion-col>
+          Open
+        </ion-col>
+        <ion-col>
+          Close
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Mon
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Monday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Monday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon_close"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Tues
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Tuesday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Tuesday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues_close"></ion-datetime>>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Wed
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Wednesday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Wednesday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed_close"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Thurs
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Thursday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Thursday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs_close"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Fri
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Friday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Friday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri_close"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Sat
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Saturday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Saturday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat_close"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Sun
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Sunday Open</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun_open"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Sunday Close</ion-label>
+            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun_close"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-item-group>
+
+  </ion-list>
+
+  <div text-center>
+    <button ion-button large icon-right color="rdaApp" (click)="update()">
+      Update!
+      <ion-icon name="checkmark-circle"></ion-icon>
+    </button>
+  </div>
+
+
+</ion-content>
