@@ -61,6 +61,7 @@ export class OnBoardPage {
   cardNumber: number;
   expiry:     number;
   security:   number;
+  userToken: any;
 
 
   constructor(
@@ -192,6 +193,22 @@ export class OnBoardPage {
     this.storage.set('restMenu', []);
     this.storage.set('restMenu', this.menuGroup);
 
+    // Stripe Key
+    this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
+
+    // Trigger card addition and subscription
+    let card = {
+      number: this.cardNumber.toString(),
+      expMonth: Number(this.expiry.toString().split("-")[1]),
+      expYear: Number(this.expiry.toString().split("-")[0]),
+      cvc: this.security.toString()
+    };
+
+    this.stripe.createCardToken(card)
+      .then(token => console.log(token))
+      //handle error
+      .catch(error => console.log(error));
+
 
     var restRef = firebase.database().ref("/Restaurant Profiles");
 
@@ -233,20 +250,6 @@ export class OnBoardPage {
       this.pushMenu(this.restaurantName);
 
     });
-
-    // Stripe stuff here
-    this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
-
-    let card = {
-      number: this.cardNumber.toString(),
-      expMonth: Number(this.expiry.toString().split("-")[1]),
-      expYear: Number(this.expiry.toString().split("-")[0]),
-      cvc: this.security.toString()
-    };
-
-    this.stripe.createCardToken(card)
-      .then(token => console.log(token))
-      .catch(error => console.log(error));
 
     // Nav to portal
     this.events.publish('restaurant:loggedIn', true, this.username);

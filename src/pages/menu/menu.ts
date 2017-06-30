@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ModalController, ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import firebase from 'firebase';
+// import firebase from 'firebase';
 
 @Component({
   selector: 'page-menu',
@@ -37,6 +37,10 @@ export class MenuPage {
   addMenuItem(index){
     var menuItem = {name : "", description: "", price: 0.00};
     this.menuGroup[index].menu.push(menuItem);
+  };
+
+  removeGroup(index){
+    this.menuGroup.splice(index,1);
   };
 
   removeItem(menu, item){
