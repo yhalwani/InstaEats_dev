@@ -34,6 +34,8 @@ export class RestaurantPage {
   ) {
     this.restaurant = this.navParams.data;
 
+    var menuNode = firebase.database().ref("MenuItems");
+
     var restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
@@ -68,7 +70,6 @@ export class RestaurantPage {
 // }
 
   favRest(){
-    console.log(this.restaurant);
     this.storage.get('favCount').then((val) => {
       if (val == 0) {
         var list = [];
@@ -104,7 +105,6 @@ export class RestaurantPage {
     }
     return false;
   }
-
 
 
 }

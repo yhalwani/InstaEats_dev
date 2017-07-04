@@ -12,6 +12,7 @@ export class NearMePage {
 
   restList: Array<{ blurb: any, description: string, imgURL: string, liveStatus: boolean, restaurantName: any }>;
   nearMeViews: string = "listView";
+  iconName: string = "map";
   locations: Array<{name: any, lat: number, lng: number}>;
   map: any;
 
@@ -46,6 +47,17 @@ export class NearMePage {
 
   ngOnInit() {
     this.loadMap();
+  }
+
+  switchView(){
+    if(this.iconName == "list") {
+      this.iconName = "map";
+      this.nearMeViews = "listView";
+    } else {
+      this.iconName = "list";
+      this.nearMeViews = "mapView";
+    }
+
   }
 
   loadMap(){
