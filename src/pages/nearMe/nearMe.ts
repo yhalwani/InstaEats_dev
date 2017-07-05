@@ -60,6 +60,10 @@ export class NearMePage {
 
   }
 
+  openModal(){
+    
+  }
+
   loadMap(){
     // Set user location
     if(navigator.geolocation){

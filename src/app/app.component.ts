@@ -134,4 +134,5 @@ export class MyApp {
     loader.present();
   };
 
+
 }

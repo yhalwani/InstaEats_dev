@@ -12,6 +12,7 @@ import { Stripe } from '@ionic-native/stripe'
 export class OnBoardPage {
 
   // Variables for restaurant sign up
+  username:       any;
   email:          string;
   password:       string;
   restaurantName: string;
@@ -50,13 +51,15 @@ export class OnBoardPage {
 
   // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
+
   menuGroup: Array<{
     menuGroupName: string,
-    menu: Array<{name: string, description: string, price: number}>
+    menu: Array<{
+      name: string, description: string, price: number
+    }>
   }>;
-  username: any;
 
-
+  // Stripe variables
   cardHolder: string;
   cardNumber: number;
   expiry:     number;
@@ -75,36 +78,36 @@ export class OnBoardPage {
 
     // Set cuisineTypes array
     this.cuisineTypes = [
-      {type : "American",     id : "1"},
-      {type : "Asian",        id : "2"},
-      {type : "Barbecue",     id : "3"},
-      {type : "British",      id : "4"},
-      {type : "Burgers",      id : "5"},
-      {type : "Canadian",     id : "6"},
-      {type : "Caribbean",    id : "7"},
-      {type : "Chinese",      id : "8"},
-      {type : "Comfort Food", id : "9"},
-      {type : "Contemporary", id : "10"},
-      {type : "Continental",  id : "11"},
-      {type : "Creperie",     id : "12"},
-      {type : "European",     id : "13"},
-      {type : "French",       id : "14"},
-      {type : "Gastro",       id : "15"},
-      {type : "Global",       id : "16"},
-      {type : "Indian",       id : "17"},
-      {type : "Italian",      id : "18"},
-      {type : "Jamaican",     id : "19"},
-      {type : "Japanese",     id : "20"},
-      {type : "Latin",        id : "21"},
-      {type : "Mediterranean", id : "22"},
-      {type : "Mexican",      id : "23"},
-      {type : "Pizzeria",     id : "24"},
-      {type : "Seafood",      id : "25"},
-      {type : "Steakhouse",   id : "26"},
-      {type : "Sushi",        id : "27"},
-      {type : "Tapas",        id : "28"},
-      {type : "Thai",         id : "29"},
-      {type : "Bar / Pub",    id : "30"}
+      {type : "American",       id : "1"},
+      {type : "Asian",          id : "2"},
+      {type : "Barbecue",       id : "3"},
+      {type : "British",        id : "4"},
+      {type : "Burgers",        id : "5"},
+      {type : "Canadian",       id : "6"},
+      {type : "Caribbean",      id : "7"},
+      {type : "Chinese",        id : "8"},
+      {type : "Comfort Food",   id : "9"},
+      {type : "Contemporary",   id : "10"},
+      {type : "Continental",    id : "11"},
+      {type : "Creperie",       id : "12"},
+      {type : "European",       id : "13"},
+      {type : "French",         id : "14"},
+      {type : "Gastro",         id : "15"},
+      {type : "Global",         id : "16"},
+      {type : "Indian",         id : "17"},
+      {type : "Italian",        id : "18"},
+      {type : "Jamaican",       id : "19"},
+      {type : "Japanese",       id : "20"},
+      {type : "Latin",          id : "21"},
+      {type : "Mediterranean",  id : "22"},
+      {type : "Mexican",        id : "23"},
+      {type : "Pizzeria",       id : "24"},
+      {type : "Seafood",        id : "25"},
+      {type : "Steakhouse",     id : "26"},
+      {type : "Sushi",          id : "27"},
+      {type : "Tapas",          id : "28"},
+      {type : "Thai",           id : "29"},
+      {type : "Bar / Pub",      id : "30"}
     ];
 
     // Set empty menuGroup
@@ -143,9 +146,6 @@ export class OnBoardPage {
     this.slides.lockSwipeToNext(true);
   }
 
-  printDate(){
-    console.log(this.expiry.toString().split("-")[0]);
-  }
 
   // Finish onboarding and store data
   finish(){
@@ -212,7 +212,7 @@ export class OnBoardPage {
 
     var restRef = firebase.database().ref("/Restaurant Profiles");
 
-      // create account using email and password
+    // create account using email and password
     firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
 
       var currentUser = firebase.auth().currentUser;
@@ -243,15 +243,18 @@ export class OnBoardPage {
           "Sun": [this.sun_open, this.sun_close]
         }
       });
+
       // update the display name with the username provided
       user.updateProfile({
         displayName: this.restaurantName
       });
+
+      // Push menu to firebase
       this.pushMenu(this.restaurantName);
 
     });
 
-    // Nav to portal
+    // Nav to Restaurant Portal
     this.events.publish('restaurant:loggedIn', true, this.username);
     this.navCtrl.setRoot(RestaurantPortalPage);
   }
@@ -298,5 +301,15 @@ export class OnBoardPage {
     var menuItem = {name : "", description: "", price: 0.00};
     this.menuGroup[index].menu.push(menuItem);
   }
+
+  // Remove menu group
+  removeGroup(index){
+    this.menuGroup.splice(index,1);
+  };
+
+  // Remove menu item from group
+  removeItem(menu, item){
+    this.menuGroup[menu].menu.splice(item, 1);
+  };
 
 }

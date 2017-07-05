@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ModalController, ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-// import firebase from 'firebase';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-menu',
@@ -21,11 +21,35 @@ export class MenuPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    public events: Events,
     public storage: Storage
   ) {
-    this.storage.get('restMenu').then((list) => {
-      this.menuGroup = list;
-    });
+
+      var restaurantName = firebase.auth().currentUser.displayName;
+      var menuNode = firebase.database().ref("MenuItems");
+      var childNode = menuNode.child(restaurantName);
+      var menuArr = [];
+      childNode.on("value", (snapshot) => {
+
+        var data = snapshot.val();
+
+        for (var menuG in data){
+          var menuGE = {menuGroupName: menuG, menu: []};
+
+          snapshot.child(menuG).forEach((childSnapshot) => {
+            var childData = childSnapshot.val();
+            var menuI = {name: childData.name, description: childData.description, price: childData.price};
+            menuGE.menu.push(menuI);
+            return false;
+          });
+         menuArr.push(menuGE);
+        }
+
+        this.storage.set('restMenu', menuArr);
+        this.menuGroup = menuArr;
+
+      })
+
   };
 
   addMenuGroup(){
@@ -177,7 +201,7 @@ export class ModalContentPage {
       this.bundleItem.bundleElem.push(menuItem);
 
       for (var j = 0; j < this.menuGroup[i].menu.length; j++ ){
-       var item = {
+        var item = {
           name: this.menuGroup[i].menu[j].name,
           description: this.menuGroup[i].menu[j].description,
           price: this.menuGroup[i].menu[j].price,

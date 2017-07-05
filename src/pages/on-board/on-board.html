@@ -276,23 +276,51 @@
       <br>
 
       <ion-list *ngFor="let menug of menuGroup; let i = index">
-        <ion-list-header>
-          <ion-label>Group name</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="menug.menuGroupName"></ion-input>
-        </ion-list-header>
-        <ion-item-group *ngFor="let menu of menug.menu;">
-          <ion-item>
-            <ion-label>Item name</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="menu.name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Item descripition</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="menu.description"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Item price</ion-label>
-            <ion-input type="number" value="" [(ngModel)]="menu.price"></ion-input>
-          </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-list-header>
+              <ion-label>Group name</ion-label>
+              <ion-input type="text" value="" [(ngModel)]="menug.menuGroupName"></ion-input>
+            </ion-list-header>
+          </ion-col>
+          <ion-col>
+            <button ion-button clear item-right color="rdaApp" (click)="removeGroup(i)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item name</ion-label>
+                  <ion-input type="text" value="" [(ngModel)]="menu.name"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item descripition</ion-label>
+                  <ion-input type="text" value="" [(ngModel)]="menu.description"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item price</ion-label>
+                  <ion-input type="number" value="" [(ngModel)]="menu.price"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item-group>
         <button ion-button color="rdaApp" clear item-right icon-right (click)="addMenuItem(i)">
           Add menu item
@@ -309,7 +337,7 @@
       </button>
     </ion-slide>
 
-    <!-- Menu Info Slide -->
+    <!-- Payment Info Slide -->
     <ion-slide>
 
       <h2 padding> Please add your payment info below. </h2>
@@ -330,7 +358,7 @@
           </ion-item>
           <ion-item>
             <ion-label>Expiry Date</ion-label>
-             <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="expiry" (ionChange)="printDate()"></ion-datetime>
+            <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="expiry"></ion-datetime>
           </ion-item>
           <ion-item>
             <ion-label>Security Code</ion-label>
