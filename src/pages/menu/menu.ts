@@ -101,7 +101,7 @@ export class MenuPage {
       <ion-input type="text" placeholder="Bundle Description" [(ngModel)]="bundleDescription"></ion-input>
     </ion-item>
 
-    <ion-list *ngFor="let menug of menuGroup; let i = index">
+    <ion-list *ngFor="let menug of bundleMenu; let i = index">
       <ion-list-header>
         <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
       </ion-list-header>
@@ -111,12 +111,12 @@ export class MenuPage {
             <ion-col>
               <ion-item>
                 <ion-label fixed> {{menu.name}} </ion-label>
-                <ion-checkbox (ionChange)="addToBundle(i, j)"></ion-checkbox>
+                <ion-checkbox [(ngModel)]="bundleMenu[i].menu[j].checked"></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-input type="number" disabled="!{{bundleItem.bundleElem[i].menu[j].checked}}" placeholder="Discount Percentage" [(ngModel)]="bundleItem.bundleElem[i].menu[j].discount"></ion-input>
+                <ion-input type="number" disabled=!{{bundleMenu[i].menu[j].checked}} placeholder="Discount Percentage" [(ngModel)]="bundleMenu[i].menu[j].discount"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -142,14 +142,10 @@ export class ModalContentPage {
     }>
   }>;
 
-  bundles: Array<{
-    bundleName:            string,
-    bundleDescription:     string,
-    bundleElem:            Array<{
-      menuGroupName:       string,
-      menu:                Array<{
-        name: string, description: string, price: number, checked: boolean, discount: number
-      }>
+  bundleMenu: Array<{
+    menuGroupName:       string,
+    menu:                Array<{
+      name: string, description: string, price: number, checked: boolean, discount: number
     }>
   }>;
 
@@ -176,11 +172,7 @@ export class ModalContentPage {
 
     // Menu is assigned from the input parameter data
     this.menuGroup = this.params.data;
-
-    // Fetch bundles from storage and assign to local variable
-    this.storage.get('bundles').then((list) => {
-      this.bundles = list;
-    });
+    this.bundleMenu = [];
 
     // Dummy variable to hold bundle
     this.bundleItem = {
@@ -198,7 +190,7 @@ export class ModalContentPage {
       }
 
       menuItem.menuGroupName =  this.menuGroup[i].menuGroupName;
-      this.bundleItem.bundleElem.push(menuItem);
+      this.bundleMenu.push(menuItem);
 
       for (var j = 0; j < this.menuGroup[i].menu.length; j++ ){
         var item = {
@@ -208,7 +200,7 @@ export class ModalContentPage {
           checked: false,
           discount: 0
         };
-        this.bundleItem.bundleElem[i].menu.push(item);
+        this.bundleMenu[i].menu.push(item);
       };
 
     };
@@ -222,7 +214,7 @@ export class ModalContentPage {
 
   // Add item to bundle
   addToBundle(group, index){
-    this.bundleItem.bundleElem[group].menu[index].checked = !this.bundleItem.bundleElem[group].menu[index].checked;
+    this.bundleMenu[group].menu[index].checked = !this.bundleMenu[group].menu[index].checked;
   }
 
   // Save bundle to storage and push to firebase
@@ -231,11 +223,20 @@ export class ModalContentPage {
     this.bundleItem.bundleName = this.bundleName;
     this.bundleItem.bundleDescription = this.bundleDescription;
 
+
+
     this.storage.get('bundles').then((list) => {
-      this.bundles = list;
-      this.bundles.push(this.bundleItem);
-      this.storage.set('bundles', this.bundles);
-      this.events.publish('bundle:created', this.bundles);
+      list.push(this.bundleItem);
+      this.storage.set('bundles', list);
+      this.events.publish('bundle:created', list);
+    });
+
+    // reference to firebase database and current user
+    var ref = firebase.database().ref("/Bundles");
+    var user = firebase.auth().currentUser;
+
+    ref.child(user.uid).update({
+      [this.bundleItem.bundleName] : {description : this.bundleItem.bundleDescription, bundle : this.bundleItem.bundleElem }
     });
 
     this.dismiss();
