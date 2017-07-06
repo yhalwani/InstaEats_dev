@@ -26,7 +26,7 @@ export class OnBoardPage {
   // Address info
   street:     any = null;
   city:       any = null;
-  state:      any = null;
+  province:  any = null;
   country:    any = null;
   postalCode: any = null;
 
@@ -51,6 +51,7 @@ export class OnBoardPage {
 
   // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
+  provinces:   ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",  "Yukon"];
 
   menuGroup: Array<{
     menuGroupName: string,
@@ -167,7 +168,7 @@ export class OnBoardPage {
       phoneNumber:      this.phoneNumber,
       street:           this.street,
       city:             this.city,
-      state:            this.state,
+      province:         this.province,
       country:          this.country,
       postalCode:       this.postalCode,
       mon_open:         this.mon_open,
@@ -230,7 +231,7 @@ export class OnBoardPage {
         cuisineType: this.cuisineType,
         website: this.website,
         phoneNumber: this.phoneNumber,
-        address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.state,
+        address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.province,
         liveStatus: false,   // false by default
 
         hoursOfOperation: {

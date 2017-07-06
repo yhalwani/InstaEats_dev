@@ -47,32 +47,37 @@ export class DiscountsPage {
         {
           text: 'Go Live!',
           handler: () => {
-            var restRef = firebase.database().ref("Restaurant Profiles/");
+            var restRef = firebase.database().ref("Bundles/");
             var rest = firebase.auth().currentUser;
-            var id = rest.uid;
-            restRef.child(id).update({
-              liveStatus: true
+            restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
+              live: true
             });
           }
         },
         {
           text: 'Terminate!',
           handler: () => {
-            var restRef = firebase.database().ref("Restaurant Profiles/");
+            var restRef = firebase.database().ref("Bundles/");
             var rest = firebase.auth().currentUser;
-            restRef.child(rest.uid).update({
-              liveStatus: false
+            restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
+              live: false
             });
           }
         },
         {
           text: 'Delete',
           handler: () => {
+
+            var rest = firebase.auth().currentUser;
+            var restRef = firebase.database().ref("/Bundles/" + rest.uid);
+            restRef.child(this.bundles[index].bundleName).remove();
+
             this.bundles.splice(index,1);
             this.storage.get('bundles').then((list) => {
               list.splice(index,1);
               this.storage.set('bundles', list);
             });
+
           }
         }
       ]
