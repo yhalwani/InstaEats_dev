@@ -152,6 +152,7 @@ export class ModalContentPage {
   bundleItem: {
     bundleName:            string,
     bundleDescription:     string,
+    live:                  boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -178,6 +179,7 @@ export class ModalContentPage {
     this.bundleItem = {
       bundleName:            "",
       bundleDescription:     "",
+      live:                  false,
       bundleElem: []
     };
 
@@ -223,6 +225,28 @@ export class ModalContentPage {
     this.bundleItem.bundleName = this.bundleName;
     this.bundleItem.bundleDescription = this.bundleDescription;
 
+    this.bundleMenu.forEach((group, groupIndex) => {
+      var groupE = {menuGroupName: group.menuGroupName, menu: []};
+      group.menu.forEach((item, itemIndex) =>{
+        if(item.checked == true){
+
+          var itemE = {
+            name: item.name,
+            description: item.description,
+            price: item.price,
+            checked: item.checked,
+            discount: item.discount
+          };
+
+          groupE.menu.push(itemE);
+
+        };
+      });
+
+      if(groupE.menu.length != 0){
+        this.bundleItem.bundleElem.push(groupE);
+      };
+    });
 
 
     this.storage.get('bundles').then((list) => {
@@ -236,7 +260,7 @@ export class ModalContentPage {
     var user = firebase.auth().currentUser;
 
     ref.child(user.uid).update({
-      [this.bundleItem.bundleName] : {description : this.bundleItem.bundleDescription, bundle : this.bundleItem.bundleElem }
+      [this.bundleItem.bundleName] : {description : this.bundleItem.bundleDescription, live: this.bundleItem.live, bundle : this.bundleItem.bundleElem }
     });
 
     this.dismiss();

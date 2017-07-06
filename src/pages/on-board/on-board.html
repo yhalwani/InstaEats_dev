@@ -104,9 +104,9 @@
         <ion-item>
           <ion-icon item-left></ion-icon>
           <ion-label floating>State</ion-label>
-          <ion-select [(ngModel)]="state">
-            <ion-option *ngFor="let state of stateList; let i = index" value="{{state.id}}">
-              {{state.name}}
+          <ion-select [(ngModel)]="province">
+            <ion-option *ngFor="let pro of provinces">
+              {{province.name}}
             </ion-option>
           </ion-select>
         </ion-item>

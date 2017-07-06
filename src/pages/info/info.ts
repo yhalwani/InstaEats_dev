@@ -22,7 +22,7 @@ export class InfoPage {
   // address info
   street:     any = null;
   city:       any = null;
-  state:      any = null;
+  province:   any = null;
   country:    any = null;
   postalCode: any = null;
 
@@ -58,7 +58,7 @@ export class InfoPage {
       // address info
       this.street         = list.street;
       this.city           = list.city;
-      this.state          = list.state;
+      this.province       = list.province;
       this.country        = list.country;
       this.postalCode     = list.postalCode;
 
