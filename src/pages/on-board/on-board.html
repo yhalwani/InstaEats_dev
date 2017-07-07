@@ -103,10 +103,10 @@
         </ion-item>
         <ion-item>
           <ion-icon item-left></ion-icon>
-          <ion-label floating>State</ion-label>
+          <ion-label floating>Province</ion-label>
           <ion-select [(ngModel)]="province">
             <ion-option *ngFor="let pro of provinces">
-              {{province.name}}
+              {{province}}
             </ion-option>
           </ion-select>
         </ion-item>

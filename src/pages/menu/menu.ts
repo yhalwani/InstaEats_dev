@@ -48,7 +48,7 @@ export class MenuPage {
         this.storage.set('restMenu', menuArr);
         this.menuGroup = menuArr;
 
-      })
+      });
 
   };
 

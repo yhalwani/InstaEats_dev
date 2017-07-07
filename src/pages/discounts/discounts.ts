@@ -13,6 +13,7 @@ export class DiscountsPage {
   bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
+    live:                  boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -29,15 +30,62 @@ export class DiscountsPage {
     public actionSheetCtrl: ActionSheetController
   ) {
 
-    this.storage.get('bundles').then((list) => {
-      this.bundles = list;
-    })
+    var bundlesArr = [];
+    var restaurantId = firebase.auth().currentUser.uid;
+    var bundleNode = firebase.database().ref("/Bundles/" + restaurantId);
+    bundleNode.on('value', (snapshot) => {
+
+      snapshot.forEach( (childSnapshot) => {
+        var bundle = {
+          bundleName: childSnapshot.key,
+          bundleDescription:"",
+          live: false,
+          bundleElem: []
+        }
+        childSnapshot.forEach((childSnapshot) => {
+          if (childSnapshot.key == "description"){
+            bundle.bundleDescription = childSnapshot.val();
+          } else if (childSnapshot.key == "live") {
+            bundle.live = childSnapshot.val();
+          } else {
+            childSnapshot.forEach((childSnapshot) => {
+              var bundleE = {menuGroupName:"", menu: []};
+              childSnapshot.forEach((childSnapshot) => {
+                if(childSnapshot.key == "menuGroupName"){
+                  bundleE.menuGroupName = childSnapshot.val();
+                } else {
+                  childSnapshot.forEach((childSnapshot) => {
+                    var tmp = childSnapshot.val();
+                    var menu = {
+                      name:         tmp.name,
+                      description:  tmp.description,
+                      price:        tmp.price,
+                      checked:      tmp.checked,
+                      discount:     tmp.discount
+                    };
+                    bundleE.menu.push(menu);
+                    return false;
+                  })
+                };
+                return false;
+              });
+              bundle.bundleElem.push(bundleE);
+              return false;
+            });
+          };
+          return false;
+        });
+        bundlesArr.push(bundle);
+        return false;
+      });
+      this.bundles = bundlesArr;
+    });
 
     this.events.subscribe('bundle:created', (bundle) => {
       this.bundles = bundle;
     });
 
-  }
+  };
 
 
   presentActionSheet(index) {
@@ -52,6 +100,7 @@ export class DiscountsPage {
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
               live: true
             });
+
           }
         },
         {
