@@ -26612,8 +26612,9 @@ page-menu .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):la
 }
 
 page-nearMe #map {
-  height: 400px;
-  transition: opacity 150ms ease-in;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 page-on-board .flex-container {

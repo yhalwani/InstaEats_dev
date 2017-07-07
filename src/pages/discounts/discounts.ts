@@ -116,17 +116,29 @@ export class DiscountsPage {
         {
           text: 'Delete',
           handler: () => {
+            var name = this.bundles[index].bundleName;
+            console.log(name);
 
-            var rest = firebase.auth().currentUser;
-            var restRef = firebase.database().ref("/Bundles/" + rest.uid);
-            restRef.child(this.bundles[index].bundleName).remove();
+            if (name != undefined){
+              // delete the bundle from firebase database
+              var user = firebase.auth().currentUser;
+              var ref = firebase.database().ref("/Bundles/" + user.uid);
+              ref.child(name).remove();
 
-            this.bundles.splice(index,1);
-            this.storage.get('bundles').then((list) => {
-              list.splice(index,1);
-              this.storage.set('bundles', list);
-            });
+              // delete from local as well
+              this.bundles.splice(index,1);
+              this.storage.get('bundles').then((list) => {
+                list.splice(index,1);
+                this.storage.set('bundles', list);
+              })
 
+            }else{
+              this.bundles.splice(index,1);
+              this.storage.get('bundles').then((list) => {
+                list.splice(index,1);
+                this.storage.set('bundles', list);
+              });
+            }
           }
         }
       ]
