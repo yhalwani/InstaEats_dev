@@ -224,7 +224,7 @@ export class OnBoardPage {
       // after creation push the user to realtime database using uid as key
       restRef.child(id).set({
         email: this.email,
-        displayName: this.restaurantName,
+        restaurantName: this.restaurantName,
         photoUrl: this.image,
         slogan: this.slogan,
         description: this.description,
