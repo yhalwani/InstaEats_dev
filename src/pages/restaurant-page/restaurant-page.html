@@ -14,6 +14,8 @@
 
 <ion-content padding>
 
+
+  <!-- Header Card -->
   <ion-card>
 
     <ion-card-header>
@@ -32,6 +34,64 @@
 
   </ion-card>
 
+  <!-- Discounts Card -->
+  <ion-list *ngFor="let bundle of Bundles; let i = index;">
+
+    <ion-card>
+
+      <ion-card-header>
+        {{bundle.bundleName}}
+        <ion-buttons end>
+          <button ion-button clear="true" (click)="presentActionSheet(i)">
+            <ion-icon color="rdaApp" name="menu"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-card-title>
+          {{bundle.bundleDescription}}
+        </ion-card-title>
+
+        <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
+          <ion-item *ngFor="let menuItem of item.menu">
+            <ion-grid *ngIf="menuItem.checked == true">
+              <h4>{{menuItem.name}}</h4>
+              <ion-row>
+                <ion-col>
+                  Discount
+                </ion-col>
+                <ion-col>
+                  % {{menuItem.discount}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  Price
+                </ion-col>
+                <ion-col>
+                  {{menuItem.price}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  Discounted Price
+                </ion-col>
+                <ion-col>
+                  {{((100 - menuItem.discount)/100)  * menuItem.price}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+  <!-- Restaurant Menu Card -->
   <ion-card>
 
     <ion-card-header>
@@ -68,6 +128,8 @@
 
   </ion-card>
 
+
+  <!-- Map Card -->
   <ion-card>
 
     <ion-card-header>

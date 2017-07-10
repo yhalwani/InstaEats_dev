@@ -15,7 +15,7 @@ export class RestaurantPage {
   @ViewChild('map') mapElement : ElementRef;
   map: any;
 
-  Menu: {
+  Bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
     bundleElem:            Array<{
@@ -24,7 +24,7 @@ export class RestaurantPage {
         name: string, description: string, price: number, checked: boolean, discount: number
       }>
     }>
-  }
+  }>
 
   constructor(
     public navCtrl: NavController,
@@ -33,18 +33,62 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
-
-    var menuNode = firebase.database().ref("MenuItems");
-
+    var restaurantUID;
     var restRef = firebase.database().ref("Restaurant Profiles/");
 
-    restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
-      var restaurantList = [];
-      snapshot.forEach((childSnapshot) => {
-        restaurantList.push(childSnapshot.val());
+    restRef.orderByChild("restaurantName").equalTo(this.restaurant.restaurantName).on("value", (snapshot) => {
+        restaurantUID = snapshot.key;
+        return false;
+    });
 
+    var bundlesArr = [];
+    var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
+    bundleNode.on('value', (snapshot) => {
+
+      snapshot.forEach( (childSnapshot) => {
+        var bundle = {
+          bundleName: childSnapshot.key,
+          bundleDescription:"",
+          live: false,
+          bundleElem: []
+        }
+        childSnapshot.forEach((childSnapshot) => {
+          if (childSnapshot.key == "description"){
+            bundle.bundleDescription = childSnapshot.val();
+          } else if (childSnapshot.key == "live") {
+            bundle.live = childSnapshot.val();
+          } else {
+            childSnapshot.forEach((childSnapshot) => {
+              var bundleE = {menuGroupName:"", menu: []};
+              childSnapshot.forEach((childSnapshot) => {
+                if(childSnapshot.key == "menuGroupName"){
+                  bundleE.menuGroupName = childSnapshot.val();
+                } else {
+                  childSnapshot.forEach((childSnapshot) => {
+                    var tmp = childSnapshot.val();
+                    var menu = {
+                      name:         tmp.name,
+                      description:  tmp.description,
+                      price:        tmp.price,
+                      checked:      tmp.checked,
+                      discount:     tmp.discount
+                    };
+                    bundleE.menu.push(menu);
+                    return false;
+                  })
+                };
+                return false;
+              });
+              bundle.bundleElem.push(bundleE);
+              return false;
+            });
+          };
+          return false;
+        });
+        bundlesArr.push(bundle);
         return false;
       });
+      this.Bundles = bundlesArr;
     });
 
   }
