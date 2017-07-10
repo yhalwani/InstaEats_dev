@@ -18,6 +18,7 @@ export class RestaurantPage {
   Bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
+    live:                  boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -33,17 +34,11 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
-    var restaurantUID;
-    var restRef = firebase.database().ref("Restaurant Profiles/");
-
-    restRef.orderByChild("restaurantName").equalTo(this.restaurant.restaurantName).on("value", (snapshot) => {
-        restaurantUID = snapshot.key;
-        return false;
-    });
+    var restaurantUID = this.restaurant.id;
 
     var bundlesArr = [];
     var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
-    bundleNode.on('value', (snapshot) => {
+    bundleNode.orderByChild("live").equalTo(true).on('value', (snapshot) => {
 
       snapshot.forEach( (childSnapshot) => {
         var bundle = {
@@ -92,26 +87,6 @@ export class RestaurantPage {
     });
 
   }
-//
-// ngAfterViewInit(){
-//   this.loadMap();
-// }
-//
-// IonViewDidLoad(){
-//   this.loadMap();
-// }
-//
-// loadMap(){
-//   let latLng = new google.maps.LatLng(43.6010365, -79.641453);
-//
-//   let mapOptions = {
-//     center: latLng,
-//     zoom: 18,
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   }
-//
-//   this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-// }
 
   favRest(){
     this.storage.get('favCount').then((val) => {

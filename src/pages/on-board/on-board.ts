@@ -223,6 +223,7 @@ export class OnBoardPage {
       if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
       // after creation push the user to realtime database using uid as key
       restRef.child(id).set({
+        id: currentUser.uid,
         email: this.email,
         restaurantName: this.restaurantName,
         photoUrl: this.image,
