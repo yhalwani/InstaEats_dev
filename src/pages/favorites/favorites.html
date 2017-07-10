@@ -15,6 +15,9 @@
         </ion-thumbnail>
         <h2>{{rest.restaurantName}}</h2>
         <p>{{rest.blurb}}</p>
+        <button ion-button color="rdaApp" clear icon-only item-right (click)="goToRestPage(i)">
+          <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
+        </button>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="rdaApp" (click)="deleteRest(i)">
