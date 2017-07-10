@@ -27,24 +27,24 @@ export class OnBoardPage {
   street:     any = null;
   city:       any = null;
   province:  any = null;
-  country:    any = null;
   postalCode: any = null;
+  country:    any = null;
 
   // Hours of operation
-  mon_open:     any = null;
-  mon_close:    any = null;
-  tues_open:    any = null;
-  tues_close:   any = null;
-  wed_open:     any = null;
-  wed_close:    any = null;
-  thurs_open:   any = null;
-  thurs_close:  any = null;
-  fri_open:     any = null;
-  fri_close:    any = null;
-  sat_open:     any = null;
-  sat_close:    any = null;
-  sun_open:     any = null;
-  sun_close:    any = null;
+  mon_open:     any = "--:--";
+  mon_close:    any = "--:--";
+  tues_open:    any = "--:--";
+  tues_close:   any = "--:--";
+  wed_open:     any = "--:--";
+  wed_close:    any = "--:--";
+  thurs_open:   any = "--:--";
+  thurs_close:  any = "--:--";
+  fri_open:     any = "--:--";
+  fri_close:    any = "--:--";
+  sat_open:     any = "--:--";
+  sat_close:    any = "--:--";
+  sun_open:     any = "--:--";
+  sun_close:    any = "--:--";
 
   // Slides reference
   @ViewChild(Slides) slides: Slides;
@@ -231,7 +231,7 @@ export class OnBoardPage {
         cuisineType: this.cuisineType,
         website: this.website,
         phoneNumber: this.phoneNumber,
-        address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.province,
+        address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
         liveStatus: false,   // false by default
 
         hoursOfOperation: {
