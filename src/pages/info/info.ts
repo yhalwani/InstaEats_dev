@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 })
 export class InfoPage {
   cuisineTypes: Array<{ type: string, id: string }>;
-  provinces:   ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",  "Yukon"]
+  provinces:   Array<{ name: string, id: string }>;
 
   // variables for restaurant sign up
   email:          string;
@@ -80,7 +80,25 @@ export class InfoPage {
       {type : "Bar / Pub",      id : "30"}
     ];
 
-    var ref = firebase.database().ref("/Restaurant Profiles");
+    // set province array
+    this.provinces = [
+      {name : "Alberta",                   id : "1"},
+      {name : "British Columbia",          id : "2"},
+      {name : "Manitoba",                  id : "3"},
+      {name : "New Brunswick",             id : "4"},
+      {name : "Newfoundland and Labrador", id : "5"},
+      {name : "Northwest Territories",     id : "6"},
+      {name : "Nova Scotia",               id : "7"},
+      {name : "Nunavut",                   id : "8"},
+      {name : "Ontario",                   id : "9"},
+      {name : "Prince Edward Island",      id : "10"},
+      {name : "Quebec",                    id : "11"},
+      {name : "Saskatchewan",              id : "12"},
+      {name : "Yukon",                     id : "13"}
+    ];
+
+
+    var ref = firebase.database().ref("/Restaurant Profiles/");
     var user = firebase.auth().currentUser;
     var userId = user.uid;
 
@@ -104,7 +122,6 @@ export class InfoPage {
 
         // address info
         var arr = data.address.split(",").map((item) => item.trim());
-        console.log(arr);
         this.street         = arr[0];
         this.city           = arr[1];
         this.province       = arr[2];
@@ -134,7 +151,7 @@ export class InfoPage {
           this.description    = "description";
           this.cuisineType    = "cuisineType";
           this.website        = "website";
-          this.phoneNumber    = null ;
+          this.phoneNumber    =  null;
 
           // address info
           this.street         = "street";
@@ -168,13 +185,13 @@ export class InfoPage {
       liveStatus: false,   // false by default
 
       hoursOfOperation: {
-        "Mon":  [this.mon_open, this.mon_close],
-        "Tues": [this.tues_open, this.tues_close],
-        "Wed":  [this.wed_open, this.wed_close],
-        "Thurs": [this.thurs_open, this.thurs_close],
-        "Fri": [this.fri_open, this.fri_close],
-        "Sat": [this.sat_open, this.sat_close],
-        "Sun": [this.sun_open, this.sun_close]
+        "Mon":    [this.mon_open, this.mon_close],
+        "Tues":   [this.tues_open, this.tues_close],
+        "Wed":    [this.wed_open, this.wed_close],
+        "Thurs":  [this.thurs_open, this.thurs_close],
+        "Fri":    [this.fri_open, this.fri_close],
+        "Sat":    [this.sat_open, this.sat_close],
+        "Sun":    [this.sun_open, this.sun_close]
       }
     });
   }
