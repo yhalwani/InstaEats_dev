@@ -33,28 +33,49 @@ export class DiscountsPage {
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
     var bundleNode = firebase.database().ref("/Bundles/" + restaurantId);
-    bundleNode.on('value', (snapshot) => {
 
+    // Entering the restaurants bundles node in fb
+    bundleNode.once('value', (snapshot) => {
+      //
+      console.log("In bundleNode");
+      //
+
+      // For each bundle the rest has loop
       snapshot.forEach( (childSnapshot) => {
+        //
+        console.log("  In forEach loop of " + childSnapshot.key);
+        //
+        // Tmp dummy bundle
         var bundle = {
           bundleName: childSnapshot.key,
           bundleDescription:"",
           live: false,
           bundleElem: []
         }
+
+        // For each node in bundle (bunlde, description, or live) loop
         childSnapshot.forEach((childSnapshot) => {
+          //
+          console.log("    In forEach loop of " + childSnapshot.key);
+          //
           if (childSnapshot.key == "description"){
             bundle.bundleDescription = childSnapshot.val();
           } else if (childSnapshot.key == "live") {
             bundle.live = childSnapshot.val();
           } else {
+            //
             childSnapshot.forEach((childSnapshot) => {
+              //
+              console.log("      In forEach loop of " + childSnapshot.key);
+              //
               var bundleE = {menuGroupName:"", menu: []};
               childSnapshot.forEach((childSnapshot) => {
+                console.log("        In forEach loop of " + childSnapshot.key);
                 if(childSnapshot.key == "menuGroupName"){
                   bundleE.menuGroupName = childSnapshot.val();
                 } else {
                   childSnapshot.forEach((childSnapshot) => {
+                    console.log("          In forEach loop of " + childSnapshot.key);
                     var tmp = childSnapshot.val();
                     var menu = {
                       name:         tmp.name,
@@ -82,6 +103,7 @@ export class DiscountsPage {
     });
 
     this.events.subscribe('bundle:created', (bundle) => {
+      console.log("In the subscription");
       this.bundles = bundle;
     });
 
@@ -117,28 +139,18 @@ export class DiscountsPage {
           text: 'Delete',
           handler: () => {
             var name = this.bundles[index].bundleName;
-            console.log(name);
 
-            if (name != undefined){
-              // delete the bundle from firebase database
-              var user = firebase.auth().currentUser;
-              var ref = firebase.database().ref("/Bundles/" + user.uid);
-              ref.child(name).remove();
+            // delete the bundle from firebase database
+            var user = firebase.auth().currentUser;
+            var ref = firebase.database().ref("/Bundles/" + user.uid);
+            ref.child(name).remove();
 
-              // delete from local as well
-              this.bundles.splice(index,1);
-              this.storage.get('bundles').then((list) => {
-                list.splice(index,1);
-                this.storage.set('bundles', list);
-              })
-
-            }else{
-              this.bundles.splice(index,1);
-              this.storage.get('bundles').then((list) => {
-                list.splice(index,1);
-                this.storage.set('bundles', list);
-              });
-            }
+            // delete from local as well
+            this.bundles.splice(index,1);
+            this.storage.get('bundles').then((list) => {
+              list.splice(index,1);
+              this.storage.set('bundles', list);
+            });
           }
         }
       ]
