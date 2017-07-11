@@ -40,6 +40,7 @@ export class RestaurantPage {
     var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
     bundleNode.orderByChild("live").equalTo(true).on('value', (snapshot) => {
 
+      // retrieve bundle from firabase and populate the restaurant page for users to see
       snapshot.forEach( (childSnapshot) => {
         var bundle = {
           bundleName: childSnapshot.key,

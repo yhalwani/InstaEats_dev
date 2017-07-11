@@ -26,7 +26,7 @@ export class OnBoardPage {
   // Address info
   street:     any = null;
   city:       any = null;
-  province:  any = null;
+  province:   any = null;
   postalCode: any = null;
   country:    any = null;
 
@@ -51,7 +51,7 @@ export class OnBoardPage {
 
   // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
-  provinces:   ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",  "Yukon"];
+  provinces:   Array<{ name: string, id: string }>;
 
   menuGroup: Array<{
     menuGroupName: string,
@@ -109,6 +109,23 @@ export class OnBoardPage {
       {type : "Tapas",          id : "28"},
       {type : "Thai",           id : "29"},
       {type : "Bar / Pub",      id : "30"}
+    ];
+
+    // set province array
+    this.provinces = [
+      {name : "Alberta",                   id : "1"},
+      {name : "British Columbia",          id : "2"},
+      {name : "Manitoba",                  id : "3"},
+      {name : "New Brunswick",             id : "4"},
+      {name : "Newfoundland and Labrador", id : "5"},
+      {name : "Northwest Territories",     id : "6"},
+      {name : "Nova Scotia",               id : "7"},
+      {name : "Nunavut",                   id : "8"},
+      {name : "Ontario",                   id : "9"},
+      {name : "Prince Edward Island",      id : "10"},
+      {name : "Quebec",                    id : "11"},
+      {name : "Saskatchewan",              id : "12"},
+      {name : "Yukon",                     id : "13"}
     ];
 
     // Set empty menuGroup

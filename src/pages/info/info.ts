@@ -28,7 +28,7 @@ export class InfoPage {
   country:    any = null;
   postalCode: any = null;
 
-  //hours of operation
+  // hours of operation
   mon_open:     any = null;
   mon_close:    any = null;
   tues_open:    any = null;
@@ -46,7 +46,7 @@ export class InfoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
 
-    // Set cuisineTypes array
+    // set cuisineTypes array
     this.cuisineTypes = [
       {type : "American",       id : "1"},
       {type : "Asian",          id : "2"},
@@ -97,15 +97,13 @@ export class InfoPage {
       {name : "Yukon",                     id : "13"}
     ];
 
-
     var ref = firebase.database().ref("/Restaurant Profiles/");
-    var user = firebase.auth().currentUser;
-    var userId = user.uid;
+    var userId = firebase.auth().currentUser.uid;
 
     /*
-        pull user info from firebase, if
-        user logs in from any device that
-        does not have info in its local storage
+    pull user info from firebase, if
+    user logs in from any device that
+    does not have info in its local storage
     */
     ref.child(userId).on('value', (snapshot) => {
       var data = snapshot.val();
@@ -143,25 +141,24 @@ export class InfoPage {
         this.sat_close      = data.hoursOfOperation.Sat[1];
         this.sun_open       = data.hoursOfOperation.Sun[0];
         this.sun_close      = data.hoursOfOperation.Sun[1];
-        }catch(err){
-          // variables for restaurant sign up
-          this.email          = "email";
-          this.restaurantName = "restaurantName";
-          this.slogan         = "slogan";
-          this.description    = "description";
-          this.cuisineType    = "cuisineType";
-          this.website        = "website";
-          this.phoneNumber    =  null;
+      }
+      catch(err){
+        // default to
+        this.email          = "email";
+        this.restaurantName = "restaurantName";
+        this.slogan         = "slogan";
+        this.description    = "description";
+        this.cuisineType    = "cuisineType";
+        this.website        = "website";
+        this.phoneNumber    =  null;
 
-          // address info
-          this.street         = "street";
-          this.city           = "city";
-          this.province       = "province";
-          this.country        = "country";
-          this.postalCode     = "postalCode";
-
-        }
-      });
+        this.street         = "street";
+        this.city           = "city";
+        this.province       = "province";
+        this.country        = "country";
+        this.postalCode     = "postalCode";
+      }
+    });
   }
 
   ionViewDidEnter() {
