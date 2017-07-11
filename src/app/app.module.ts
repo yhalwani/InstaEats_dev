@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import  firebase  from 'firebase';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 import { Stripe } from '@ionic-native/stripe';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
@@ -88,6 +90,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
     DiscountsPage
   ],
   providers: [
+    Camera,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

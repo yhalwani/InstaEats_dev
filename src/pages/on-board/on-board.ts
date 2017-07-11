@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides, Events, LoadingController  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
-import { Stripe } from '@ionic-native/stripe'
+import { Stripe } from '@ionic-native/stripe';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 @Component({
@@ -74,7 +75,8 @@ export class OnBoardPage {
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public storage: Storage,
-    public stripe: Stripe
+    public stripe: Stripe,
+    public camera: Camera
   ) {
 
     // Set cuisineTypes array
@@ -276,6 +278,27 @@ export class OnBoardPage {
     }).then(() => {
       console.log("Current user's location has been added to GeoFire");
     });
+  }
+
+
+  // Fetch Img from Device
+  addImg(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     this.image = imageData;
+    }, (err) => {
+     // Handle error
+     console.log("Bad thing happened!");
+    });
+
   }
 
   // Push menu to firebase

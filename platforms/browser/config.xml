@@ -6,6 +6,9 @@
     <feature name="CordovaStripe">
         <param name="browser-package" value="CordovaStripe" />
     </feature>
+    <feature name="Camera">
+        <param name="browser-package" value="Camera" />
+    </feature>
     <name>blankApp2</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>

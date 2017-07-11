@@ -37,6 +37,9 @@
     <feature name="CordovaStripe">
         <param name="android-package" value="com.zyramedia.cordova.stripe.CordovaStripe" />
     </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <name>blankApp2</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>

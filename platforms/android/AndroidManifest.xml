@@ -22,6 +22,9 @@
         <receiver android:name="org.apache.cordova.firebase.OnNotificationOpenReceiver" />
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk" />
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <provider android:authorities="${applicationId}.provider" android:exported="false" android:grantUriPermissions="true" android:name="android.support.v4.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths" />
+        </provider>
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="25" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -32,4 +35,5 @@
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
     <uses-feature android:name="android.hardware.location" />
     <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
