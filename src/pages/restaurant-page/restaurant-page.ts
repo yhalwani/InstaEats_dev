@@ -15,16 +15,17 @@ export class RestaurantPage {
   @ViewChild('map') mapElement : ElementRef;
   map: any;
 
-  Menu: {
+  Bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
+    live:                  boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
         name: string, description: string, price: number, checked: boolean, discount: number
       }>
     }>
-  }
+  }>
 
   constructor(
     public navCtrl: NavController,
@@ -33,41 +34,59 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
+    var restaurantUID = this.restaurant.id;
 
-    var menuNode = firebase.database().ref("MenuItems");
+    var bundlesArr = [];
+    var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
+    bundleNode.orderByChild("live").equalTo(true).on('value', (snapshot) => {
 
-    var restRef = firebase.database().ref("Restaurant Profiles/");
-
-    restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
-      var restaurantList = [];
-      snapshot.forEach((childSnapshot) => {
-        restaurantList.push(childSnapshot.val());
-
+      snapshot.forEach( (childSnapshot) => {
+        var bundle = {
+          bundleName: childSnapshot.key,
+          bundleDescription:"",
+          live: false,
+          bundleElem: []
+        }
+        childSnapshot.forEach((childSnapshot) => {
+          if (childSnapshot.key == "description"){
+            bundle.bundleDescription = childSnapshot.val();
+          } else if (childSnapshot.key == "live") {
+            bundle.live = childSnapshot.val();
+          } else {
+            childSnapshot.forEach((childSnapshot) => {
+              var bundleE = {menuGroupName:"", menu: []};
+              childSnapshot.forEach((childSnapshot) => {
+                if(childSnapshot.key == "menuGroupName"){
+                  bundleE.menuGroupName = childSnapshot.val();
+                } else {
+                  childSnapshot.forEach((childSnapshot) => {
+                    var tmp = childSnapshot.val();
+                    var menu = {
+                      name:         tmp.name,
+                      description:  tmp.description,
+                      price:        tmp.price,
+                      checked:      tmp.checked,
+                      discount:     tmp.discount
+                    };
+                    bundleE.menu.push(menu);
+                    return false;
+                  })
+                };
+                return false;
+              });
+              bundle.bundleElem.push(bundleE);
+              return false;
+            });
+          };
+          return false;
+        });
+        bundlesArr.push(bundle);
         return false;
       });
+      this.Bundles = bundlesArr;
     });
 
   }
-//
-// ngAfterViewInit(){
-//   this.loadMap();
-// }
-//
-// IonViewDidLoad(){
-//   this.loadMap();
-// }
-//
-// loadMap(){
-//   let latLng = new google.maps.LatLng(43.6010365, -79.641453);
-//
-//   let mapOptions = {
-//     center: latLng,
-//     zoom: 18,
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   }
-//
-//   this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-// }
 
   favRest(){
     this.storage.get('favCount').then((val) => {
