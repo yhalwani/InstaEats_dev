@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import firebase from 'firebase';
+
 @Component({
   selector: 'page-info',
   templateUrl: 'info.html',
@@ -57,40 +59,47 @@ export class InfoPage {
     //   this.userData = data;
     // });
 
-    this.storage.get('restInfo').then((list) => {
+    var user = firebase.auth().currentUser.uid;
+    var restNode = firebase.database().ref("Restaurant Profiles/" + user);
 
-      // variables for restaurant sign up
-      this.email          = list.email;
-      this.restaurantName = list.restaurantName;
-      this.slogan         = list.slogan;
-      this.description    = list.description;
-      this.cuisineType    = list.cuisineType;
-      this.website        = list.website;
-      this.phoneNumber    = list.phoneNumber;
+    restNode.on('value', (snapshot) => {
+      console.log(snapshot.val());
+    });
 
-      // address info
-      this.street         = list.street;
-      this.city           = list.city;
-      this.province       = list.province;
-      this.country        = list.country;
-      this.postalCode     = list.postalCode;
-
-      //hours of operation
-      this.mon_open       = list.mon_open;
-      this.mon_close      = list.mon_close;
-      this.tues_open      = list.tues_open;
-      this.tues_close     = list.tues_close;
-      this.wed_open       = list.wed_open;
-      this.wed_close      = list.wed_close;
-      this.thurs_open     = list.thurs_open;
-      this.thurs_close    = list.thurs_close;
-      this.fri_open       = list.fri_open;
-      this.fri_close      = list.fri_close;
-      this.sat_open       = list.sat_open;
-      this.sat_close      = list.sat_close;
-      this.sun_open       = list.sun_open;
-      this.sun_close      = list.sun_close;
-    })
+    // this.storage.get('restInfo').then((list) => {
+    //
+    //   // variables for restaurant sign up
+    //   this.email          = list.email;
+    //   this.restaurantName = list.restaurantName;
+    //   this.slogan         = list.slogan;
+    //   this.description    = list.description;
+    //   this.cuisineType    = list.cuisineType;
+    //   this.website        = list.website;
+    //   this.phoneNumber    = list.phoneNumber;
+    //
+    //   // address info
+    //   this.street         = list.street;
+    //   this.city           = list.city;
+    //   this.province       = list.province;
+    //   this.country        = list.country;
+    //   this.postalCode     = list.postalCode;
+    //
+    //   //hours of operation
+    //   this.mon_open       = list.mon_open;
+    //   this.mon_close      = list.mon_close;
+    //   this.tues_open      = list.tues_open;
+    //   this.tues_close     = list.tues_close;
+    //   this.wed_open       = list.wed_open;
+    //   this.wed_close      = list.wed_close;
+    //   this.thurs_open     = list.thurs_open;
+    //   this.thurs_close    = list.thurs_close;
+    //   this.fri_open       = list.fri_open;
+    //   this.fri_close      = list.fri_close;
+    //   this.sat_open       = list.sat_open;
+    //   this.sat_close      = list.sat_close;
+    //   this.sun_open       = list.sun_open;
+    //   this.sun_close      = list.sun_close;
+    // })
 
   }
 

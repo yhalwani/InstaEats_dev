@@ -21,11 +21,10 @@ export class LoginPage {
     public navCtrl: NavController,
     public events: Events,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController) {
-
+    public toastCtrl: ToastController
+  ) {
       this.userType = "User";
       this.userToggle = false;
-
     }
 
     loginClicked() {

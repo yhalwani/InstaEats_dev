@@ -50,10 +50,16 @@
         <!-- Restaurant Info -->
         <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
         <!-- Img Chooser -->
-        <ion-item onclick="addImg()">
+        <ion-item>
           <ion-icon item-left name="image"></ion-icon>
-          <ion-label readonly="true">Choose your icon image</ion-label>
-          <ion-input readonly="true" type="text" value="" [(ngModel)]="image"></ion-input>
+          <!-- <ion-label readonly="true">Choose your icon image</ion-label> -->
+          <!-- <ion-input readonly="true" type="text" value="" onclick="addImg()"></ion-input> -->
+          <ion-buttons center>
+            <button ion-button large clear icon-right color="rdaApp" (click)="addImg()">
+              Add Image
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-buttons>
         </ion-item>
         <!-- Slogan Input -->
         <ion-item>
