@@ -226,6 +226,7 @@ export class OnBoardPage {
       // run html5 gelocation to get user coordinates
       if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
       this.saveImageToFirebase(this.image, id);
+      
       // after creation push the user to realtime database using uid as key
       restRef.child(id).set({
         id: currentUser.uid,
