@@ -155,148 +155,113 @@ export class OnBoardPage {
 
   // Finish onboarding and store data
   finish(){
-    try{
+    // Set empty JSON array for bundles
+    this.storage.set('bundles', []);
 
-      // Set empty JSON array for bundles
-      this.storage.set('bundles', []);
+    // Set empty JSON array to restInfo
+    this.storage.set('restInfo', {});
 
-      // Set empty JSON array to restInfo
-      this.storage.set('restInfo', {});
+    // Fetch and set variables
+    var info = {
+      restaurantName :  this.restaurantName,
+      email :           this.email,
+      slogan:           this.slogan,
+      description:      this.description,
+      cuisineType:      this.cuisineType,
+      website:          this.website,
+      phoneNumber:      this.phoneNumber,
+      street:           this.street,
+      city:             this.city,
+      province:         this.province,
+      country:          this.country,
+      postalCode:       this.postalCode,
+      mon_open:         this.mon_open,
+      mon_close:        this.mon_close,
+      tues_open:        this.tues_open,
+      tues_close:       this.tues_close,
+      wed_open:         this.wed_open,
+      wed_close:        this.wed_close,
+      thurs_open:       this.thurs_open,
+      thurs_close:      this.thurs_close,
+      fri_open:         this.fri_open,
+      fri_close:        this.fri_close,
+      sat_open:         this.sat_open,
+      sat_close:        this.sat_close,
+      sun_open:         this.sun_open,
+      sun_close:        this.sun_close
+    };
 
-      // Fetch and set variables
-      var info = {
-        restaurantName :  this.restaurantName,
-        email :           this.email,
-        slogan:           this.slogan,
-        description:      this.description,
-        cuisineType:      this.cuisineType,
-        website:          this.website,
-        phoneNumber:      this.phoneNumber,
-        street:           this.street,
-        city:             this.city,
-        province:         this.province,
-        country:          this.country,
-        postalCode:       this.postalCode,
-        mon_open:         this.mon_open,
-        mon_close:        this.mon_close,
-        tues_open:        this.tues_open,
-        tues_close:       this.tues_close,
-        wed_open:         this.wed_open,
-        wed_close:        this.wed_close,
-        thurs_open:       this.thurs_open,
-        thurs_close:      this.thurs_close,
-        fri_open:         this.fri_open,
-        fri_close:        this.fri_close,
-        sat_open:         this.sat_open,
-        sat_close:        this.sat_close,
-        sun_open:         this.sun_open,
-        sun_close:        this.sun_close
-      };
+    // Store restaurant info
+    this.storage.set('restInfo', info);
 
-      // Store restaurant info
-      this.storage.set('restInfo', info);
+    // Store menu
+    this.storage.set('restMenu', []);
+    this.storage.set('restMenu', this.menuGroup);
 
-      // Store menu
-      this.storage.set('restMenu', []);
-      this.storage.set('restMenu', this.menuGroup);
+    // Stripe Key
+    this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
 
-      // Stripe Key
-      this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
+    // Trigger card addition and subscription
+    let card = {
+      number: this.cardNumber.toString(),
+      expMonth: Number(this.expiry.toString().split("-")[1]),
+      expYear: Number(this.expiry.toString().split("-")[0]),
+      cvc: this.security.toString()
+    };
 
-      // Trigger card addition and subscription
-      let card = {
-        number: this.cardNumber.toString(),
-        expMonth: Number(this.expiry.toString().split("-")[1]),
-        expYear: Number(this.expiry.toString().split("-")[0]),
-        cvc: this.security.toString()
-      };
+    this.stripe.createCardToken(card)
+    .then(token => console.log(token))
+    //handle error
+    .catch(error => console.log(error));
 
-      this.stripe.createCardToken(card)
-      .then(token => console.log(token))
-      //handle error
-      .catch(error => console.log(error));
-    } catch (err) {
-      this.toastCtrl.create({
-        message: err,
-        duration: 3000,
-        position: 'bottom'
-      }).present();
-    } finally {
-      this.toastCtrl.create({
-        message: "First part pass",
-        duration: 3000,
-        position: 'bottom'
-      }).present();
-    }
 
-    try{
-      var restRef = firebase.database().ref("/Restaurant Profiles");
+    var restRef = firebase.database().ref("/Restaurant Profiles");
 
-      // create account using email and password
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+    // create account using email and password
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
 
-        var currentUser = firebase.auth().currentUser;
-        var id = currentUser.uid;
+      var currentUser = firebase.auth().currentUser;
+      var id = currentUser.uid;
 
-        var storageRef = firebase.storage().ref();
-        var imgUrl = "";
+      // run html5 gelocation to get user coordinates
+      if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
+      this.saveImageToFirebase(this.image, id);
+      // after creation push the user to realtime database using uid as key
+      restRef.child(id).set({
+        id: currentUser.uid,
+        email: this.email,
+        restaurantName: this.restaurantName,
+        slogan: this.slogan,
+        description: this.description,
+        cuisineType: this.cuisineType,
+        website: this.website,
+        phoneNumber: this.phoneNumber,
+        address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.province,
+        liveStatus: false,   // false by default
 
-        // upload image under images folder/filename
-        // metadata has name, size, contentType and etc.
-        storageRef.child("img/" + this.restaurantName).put(this.image).then((snapshot) => {
-          // this is the url for the image uploaded in firebase storage
-          imgUrl = snapshot.downloadURL;
-
-        });
-
-        // run html5 gelocation to get user coordinates
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
-        // after creation push the user to realtime database using uid as key
-        restRef.child(id).set({
-          id: currentUser.uid,
-          email: this.email,
-          restaurantName: this.restaurantName,
-          photoUrl: imgUrl,
-          slogan: this.slogan,
-          description: this.description,
-          cuisineType: this.cuisineType,
-          website: this.website,
-          phoneNumber: this.phoneNumber,
-          address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.province,
-          liveStatus: false,   // false by default
-
-          hoursOfOperation: {
-            "Mon": [this.mon_open, this.mon_close],
-            "Tues": [this.tues_open, this.tues_close],
-            "Wed": [this.wed_open, this.wed_close],
-            "Thurs": [this.thurs_open, this.thurs_close],
-            "Fri": [this.fri_open, this.fri_close],
-            "Sat": [this.sat_open, this.sat_close],
-            "Sun": [this.sun_open, this.sun_close]
-          }
-        });
-
-        // update the display name with the username provided
-        user.updateProfile({
-          displayName: this.restaurantName
-        });
-
-        // Push menu to firebase
-        this.pushMenu(this.restaurantName);
-
+        hoursOfOperation: {
+          "Mon": [this.mon_open, this.mon_close],
+          "Tues": [this.tues_open, this.tues_close],
+          "Wed": [this.wed_open, this.wed_close],
+          "Thurs": [this.thurs_open, this.thurs_close],
+          "Fri": [this.fri_open, this.fri_close],
+          "Sat": [this.sat_open, this.sat_close],
+          "Sun": [this.sun_open, this.sun_close]
+        }
       });
 
-      // Nav to Restaurant Portal
-      this.events.publish('restaurant:loggedIn', true, this.username);
-      this.navCtrl.setRoot(RestaurantPortalPage);
-    } catch (err) {
-      this.toastCtrl.create({
-        message: err,
-        duration: 3000,
-        position: 'bottom'
-      }).present();
-    }
+      // update the display name with the username provided
+      user.updateProfile({
+        displayName: this.restaurantName
+      });
 
+      // Push menu to firebase
+      this.pushMenu(this.restaurantName);
+    });
+
+    // Nav to Restaurant Portal
+    this.events.publish('restaurant:loggedIn', true, this.username);
+    this.navCtrl.setRoot(RestaurantPortalPage);
   }
 
   // Get LAT/LNG via address
@@ -316,6 +281,17 @@ export class OnBoardPage {
     });
   }
 
+  saveImageToFirebase(imageFile, id){
+    // upload image under images folder/filename
+    var storageRef = firebase.storage().ref();
+    storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64', {contentType: 'image/png'}).then((snapshot) => {
+      // this is the url for the image uploaded in firebase storage
+      var imgUrl = snapshot.downloadURL;
+      firebase.database().ref('/Restaurant Profiles/').child(id).update({
+        photoUrl: imgUrl
+      });
+    });
+  }
 
   // Fetch Img from Device
   addImg(){
@@ -330,11 +306,11 @@ export class OnBoardPage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     this.image = imageData;
+      // imageData is either a base64 encoded string or a file URL
+      this.image = imageData;
     }, (err) => {
-     // Handle error
-     console.log("Bad thing happened!");
+      // Handle error
+      console.log("Bad thing happened!");
     });
 
   }
