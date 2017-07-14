@@ -289,9 +289,29 @@ export class OnBoardPage {
   }
 
     // Nav to Restaurant Portal
-    this.events.publish('restaurant:loggedIn', true, this.username);
-    this.navCtrl.setRoot(RestaurantPortalPage);
+    this.presentLoading();
+
   }
+
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Sign up successful! Please wait...",
+    });
+    loader.present();
+
+    setTimeout(() => {
+      // Nav to Restaurant Portal
+      this.events.publish('restaurant:loggedIn', true, this.username);
+      this.navCtrl.setRoot(RestaurantPortalPage);
+    }, 2000);
+
+    setTimeout(() => {
+      loader.dismiss();
+    }, 4000);
+
+  };
+
 
   // Get LAT/LNG via address
   setPosition(position){
