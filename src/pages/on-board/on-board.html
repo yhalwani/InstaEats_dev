@@ -111,8 +111,8 @@
           <ion-icon item-left></ion-icon>
           <ion-label floating>Province</ion-label>
           <ion-select [(ngModel)]="province">
-            <ion-option *ngFor="let pro of provinces">
-              {{province}}
+            <ion-option *ngFor="let province of provinces; let i = index" value="{{province.id}}">
+              {{province.name}}
             </ion-option>
           </ion-select>
         </ion-item>

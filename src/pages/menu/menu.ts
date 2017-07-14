@@ -25,7 +25,8 @@ export class MenuPage {
     public storage: Storage
   ) {
 
-      var restaurantName = firebase.auth().currentUser.displayName;
+      var user = firebase.auth().currentUser;
+      var restaurantName = user.displayName
       var menuNode = firebase.database().ref("MenuItems");
       var childNode = menuNode.child(restaurantName);
       var menuArr = [];

@@ -29,32 +29,32 @@ export class OnBoardPage {
   // Address info
   street:     any = null;
   city:       any = null;
-  province:  any = null;
-  country:    any = null;
+  province:   any = null;
   postalCode: any = null;
+  country:    any = null;
 
   // Hours of operation
-  mon_open:     any = null;
-  mon_close:    any = null;
-  tues_open:    any = null;
-  tues_close:   any = null;
-  wed_open:     any = null;
-  wed_close:    any = null;
-  thurs_open:   any = null;
-  thurs_close:  any = null;
-  fri_open:     any = null;
-  fri_close:    any = null;
-  sat_open:     any = null;
-  sat_close:    any = null;
-  sun_open:     any = null;
-  sun_close:    any = null;
+  mon_open:     any = "--:--";
+  mon_close:    any = "--:--";
+  tues_open:    any = "--:--";
+  tues_close:   any = "--:--";
+  wed_open:     any = "--:--";
+  wed_close:    any = "--:--";
+  thurs_open:   any = "--:--";
+  thurs_close:  any = "--:--";
+  fri_open:     any = "--:--";
+  fri_close:    any = "--:--";
+  sat_open:     any = "--:--";
+  sat_close:    any = "--:--";
+  sun_open:     any = "--:--";
+  sun_close:    any = "--:--";
 
   // Slides reference
   @ViewChild(Slides) slides: Slides;
 
   // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
-  provinces:   ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",  "Yukon"];
+  provinces:   Array<{ name: string, id: string }>;
 
   menuGroup: Array<{
     menuGroupName: string,
@@ -114,6 +114,23 @@ export class OnBoardPage {
       {type : "Tapas",          id : "28"},
       {type : "Thai",           id : "29"},
       {type : "Bar / Pub",      id : "30"}
+    ];
+
+    // set province array
+    this.provinces = [
+      {name : "Alberta",                   id : "1"},
+      {name : "British Columbia",          id : "2"},
+      {name : "Manitoba",                  id : "3"},
+      {name : "New Brunswick",             id : "4"},
+      {name : "Newfoundland and Labrador", id : "5"},
+      {name : "Northwest Territories",     id : "6"},
+      {name : "Nova Scotia",               id : "7"},
+      {name : "Nunavut",                   id : "8"},
+      {name : "Ontario",                   id : "9"},
+      {name : "Prince Edward Island",      id : "10"},
+      {name : "Quebec",                    id : "11"},
+      {name : "Saskatchewan",              id : "12"},
+      {name : "Yukon",                     id : "13"}
     ];
 
     // Set empty menuGroup
@@ -238,7 +255,7 @@ export class OnBoardPage {
         cuisineType: this.cuisineType,
         website: this.website,
         phoneNumber: this.phoneNumber,
-        address: this.street + ", " + this.city + ", " + this.country + ", " + this.postalCode + ", " + this.province,
+        address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
         liveStatus: false,   // false by default
 
         hoursOfOperation: {
