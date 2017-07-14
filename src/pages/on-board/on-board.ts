@@ -155,7 +155,7 @@ export class OnBoardPage {
 
   // Finish onboarding and store data
   finish(){
-    try{
+
     // Set empty JSON array for bundles
     this.storage.set('bundles', []);
 
@@ -211,24 +211,11 @@ export class OnBoardPage {
     };
 
     this.stripe.createCardToken(card)
-    .then(token => console.log(token))
-    //handle error
-    .catch(error => console.log(error));
-  } catch (err) {
-    this.toastCtrl.create({
-      message: err,
-      duration: 3000,
-      position: 'bottom'
-    }).present();
-  } finally {
-    this.toastCtrl.create({
-      message: "First stage complete",
-      duration: 3000,
-      position: 'bottom'
-    })
-  }
+      .then(token => console.log(token))
+      //handle error
+      .catch(error => console.log(error)
+    );
 
-  try{
     var restRef = firebase.database().ref("/Restaurant Profiles");
 
     // create account using email and password
@@ -273,20 +260,6 @@ export class OnBoardPage {
       // Push menu to firebase
       this.pushMenu(this.restaurantName);
     });
-
-  } catch (err) {
-    this.toastCtrl.create({
-      message: err,
-      duration: 3000,
-      position: 'bottom'
-    }).present();
-  } finally {
-    this.toastCtrl.create({
-      message: "Second Stage Passed",
-      duration: 3000,
-      position: 'bottom'
-    }).present();
-  }
 
     // Nav to Restaurant Portal
     this.presentLoading();
