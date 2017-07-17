@@ -25,13 +25,12 @@ export class MenuPage {
     public storage: Storage
   ) {
 
-      var user = firebase.auth().currentUser;
-      var restaurantName = user.displayName
-      var menuNode = firebase.database().ref("MenuItems");
-      var childNode = menuNode.child(restaurantName);
-      var menuArr = [];
-      childNode.on("value", (snapshot) => {
+      let user = firebase.auth().currentUser;
+      let restaurantName = user.displayName
 
+      var menuArr = [];
+
+      firebase.database().ref('/MenuItems/' + restaurantName).on("value", (snapshot) => {
         var data = snapshot.val();
 
         for (var menuG in data){

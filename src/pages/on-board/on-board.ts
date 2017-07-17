@@ -238,8 +238,8 @@ export class OnBoardPage {
     // create account using email and password
     firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
 
-      var currentUser = firebase.auth().currentUser;
-      var id = currentUser.uid;
+      let currentUser = firebase.auth().currentUser;
+      let id = currentUser.uid;
 
       // run html5 gelocation to get user coordinates
       if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
@@ -323,13 +323,18 @@ export class OnBoardPage {
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
     var storageRef = firebase.storage().ref();
-    storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64', {contentType: 'image/png'}).then((snapshot) => {
-      // this is the url for the image uploaded in firebase storage
-      var imgUrl = snapshot.downloadURL;
-      firebase.database().ref('/Restaurant Profiles/').child(id).update({
-        photoUrl: imgUrl
+    if(imageFile){
+      storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64', {contentType: 'image/png'}).then((snapshot) => {
+        // this is the url for the image uploaded in firebase storage
+        var imgUrl = snapshot.downloadURL;
+        firebase.database().ref('/Restaurant Profiles/').child(id).update({
+          photoUrl: imgUrl
+        });
       });
-    });
+    }else{
+      // TODO: have a proper error handler
+      console.log("image upload failed: invalid file")
+    }
   }
 
   // Fetch Img from Device
