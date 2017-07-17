@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides, Events, LoadingController, ToastController  } from 'ionic-angular';
+import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 import { Stripe } from '@ionic-native/stripe';
@@ -51,6 +51,7 @@ export class OnBoardPage {
 
   // Slides reference
   @ViewChild(Slides) slides: Slides;
+  @ViewChild(Content) content: Content;
 
   // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
@@ -143,30 +144,18 @@ export class OnBoardPage {
     this.slides.lockSwipes(true);
   }
 
-  // If the slide is the first one stop lockSwipes
-  ionSlideDidChange(){
-    if (this.slides.getActiveIndex() === 0){
-      this.slides.lockSwipes(true);
-    }
-  }
-
-  // Lock swipe right and unlock swipe left
-  loginInfo(){
+  nextSlide(){
     this.slides.lockSwipes(false);
     this.slides.slideNext();
-    this.slides.lockSwipeToNext(true);
+    this.slides.lockSwipes(true);
+    this.content.scrollToTop(50);
   }
 
-  generalInfo(){
+  prevSlide(){
     this.slides.lockSwipes(false);
-    this.slides.slideNext();
-    this.slides.lockSwipeToNext(true);
-  }
-
-  menuInfo(){
-    this.slides.lockSwipes(false);
-    this.slides.slideNext();
-    this.slides.lockSwipeToNext(true);
+    this.slides.slidePrev();
+    this.slides.lockSwipes(true);
+    this.content.scrollToTop(50);
   }
 
 
@@ -216,22 +205,24 @@ export class OnBoardPage {
     this.storage.set('restMenu', []);
     this.storage.set('restMenu', this.menuGroup);
 
-    // Stripe Key
-    this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
+    // TODO: Add stripe logic in accordance with plan when finalized
 
-    // Trigger card addition and subscription
-    let card = {
-      number: this.cardNumber.toString(),
-      expMonth: Number(this.expiry.toString().split("-")[1]),
-      expYear: Number(this.expiry.toString().split("-")[0]),
-      cvc: this.security.toString()
-    };
-
-    this.stripe.createCardToken(card)
-      .then(token => console.log(token))
-      //handle error
-      .catch(error => console.log(error)
-    );
+    // // Stripe Key
+    // this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
+    //
+    // // Trigger card addition and subscription
+    // let card = {
+    //   number: this.cardNumber.toString(),
+    //   expMonth: Number(this.expiry.toString().split("-")[1]),
+    //   expYear: Number(this.expiry.toString().split("-")[0]),
+    //   cvc: this.security.toString()
+    // };
+    //
+    // this.stripe.createCardToken(card)
+    //   .then(token => console.log(token))
+    //   //handle error
+    //   .catch(error => console.log(error)
+    // );
 
     var restRef = firebase.database().ref("/Restaurant Profiles");
 
