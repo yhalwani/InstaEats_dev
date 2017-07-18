@@ -19,18 +19,18 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <div [ngSwitch]="nearMeViews">
 
     <ion-list *ngSwitchCase="'mapView'">
       <!-- slider to adjust map bounds -->
-      <ion-item>
+      <!-- <ion-item> -->
         <!-- <ion-range min={{minLimit}} max={{maxLimit}} pin="true" snaps="true" step="1000" [(ngModel)]="distance" color="rdaApp" >
           <ion-label range-left small>0 km</ion-label>
           <ion-label range-right small>100 km</ion-label>
         </ion-range> -->
-      </ion-item>
+      <!-- </ion-item> -->
 
       <sebm-google-map id="map"
       [latitude]="map.lat"

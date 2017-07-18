@@ -119,6 +119,7 @@ export class InfoPage {
         this.cuisineType    = data.cuisineType;
         this.website        = data.website;
         this.phoneNumber    = data.phoneNumber;
+        this.image          = data.photoUrl;
 
         // address info
         var arr = data.address.split(",").map((item) => item.trim());
@@ -153,6 +154,7 @@ export class InfoPage {
         this.cuisineType    = "cuisineType";
         this.website        = "website";
         this.phoneNumber    =  null;
+        this.image          = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FnoImageAvailable.png?alt=media&token=d30f37e9-c408-4da9-b911-dfe411d34cbe"
 
         this.street         = "street";
         this.city           = "city";

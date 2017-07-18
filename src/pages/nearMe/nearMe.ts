@@ -36,7 +36,7 @@ export class NearMePage {
 
     // get coordinates from firebase
     var coords = [];
-    var geoRef = firebase.database().ref("/geofire");
+    var geoRef = firebase.database().ref("/GeoCoordinates/");
     geoRef.on("value", (snapshot) => {
       snapshot.forEach((childSnapshot) => {
         var data = childSnapshot;

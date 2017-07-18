@@ -57,6 +57,7 @@ export class FavoritesPage {
 
   }
 
+  // mute notifications for restaurant
   muteRest(index){
 
   }

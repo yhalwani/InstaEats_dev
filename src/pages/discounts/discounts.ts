@@ -36,9 +36,6 @@ export class DiscountsPage {
 
     // Entering the restaurants bundles node in fb
     bundleNode.once('value', (snapshot) => {
-      //
-      console.log("In bundleNode");
-      //
 
       // For each bundle the rest has loop
       snapshot.forEach( (childSnapshot) => {

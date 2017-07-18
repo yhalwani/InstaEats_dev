@@ -275,7 +275,7 @@ export class OnBoardPage {
       });
 
       // Push menu to firebase
-      this.pushMenu(this.restaurantName);
+      this.pushMenu(id);
     });
 
     // Nav to Restaurant Portal
@@ -305,7 +305,7 @@ export class OnBoardPage {
 
   // Get LAT/LNG via address
   setPosition(position){
-    var geofire = firebase.database().ref("/geofire");
+    var geofire = firebase.database().ref("/GeoCoordinates");
 
     var currentUser = firebase.auth().currentUser;
     var id = currentUser.uid;
@@ -364,11 +364,11 @@ export class OnBoardPage {
   }
 
   // Push menu to firebase
-  pushMenu(name){
+  pushMenu(uid){
     var menuNode = firebase.database().ref("MenuItems");
     var length = this.menuGroup.length;
 
-    var childNode = menuNode.child(name);
+    var childNode = menuNode.child(uid);
     for (var i = 0; i < length; i++) {
       childNode.update({
         [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
