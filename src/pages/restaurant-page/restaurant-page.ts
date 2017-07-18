@@ -15,6 +15,13 @@ export class RestaurantPage {
   @ViewChild('map') mapElement : ElementRef;
   map: any;
 
+  menuGroup: Array<{
+    menuGroupName: string,
+    menu: Array<{
+      name: string, description: string, price: number
+    }>
+  }>;
+
   Bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
@@ -35,6 +42,28 @@ export class RestaurantPage {
   ) {
     this.restaurant = this.navParams.data;
     var restaurantUID = this.restaurant.id;
+
+    var menuArr = [];
+
+    firebase.database().ref('/MenuItems/' + this.restaurant.restaurantName).on("value", (snapshot) => {
+      var data = snapshot.val();
+
+      for (var menuG in data){
+        var menuGE = {menuGroupName: menuG, menu: []};
+
+        snapshot.child(menuG).forEach((childSnapshot) => {
+          var childData = childSnapshot.val();
+          var menuI = {name: childData.name, description: childData.description, price: childData.price};
+          menuGE.menu.push(menuI);
+          return false;
+        });
+       menuArr.push(menuGE);
+      }
+
+      this.storage.set('restMenu', menuArr);
+      this.menuGroup = menuArr;
+
+    });
 
     var bundlesArr = [];
     var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
