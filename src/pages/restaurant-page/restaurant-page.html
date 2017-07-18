@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar color="rdaApp">
     <ion-title>{{restaurant.restaurantName}}</ion-title>
     <ion-buttons end>
@@ -8,19 +7,15 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
-
   <!-- Header Card -->
   <ion-card>
-
     <ion-card-header>
       <ion-item>
-        <ion-thumbnail item-left>
+        <ion-thumbnail class="imageborder" item-left>
           <img src="{{restaurant.photoUrl}}">
         </ion-thumbnail>
         <h2> Description </h2>
@@ -35,22 +30,18 @@
   </ion-card>
 
   <!-- Discounts Card -->
-
   <ion-card>
     <ion-card-header>
       Discounts
     </ion-card-header>
 
   <ion-list *ngFor="let bundle of Bundles; let i = index;">
-
     <ion-card>
-
       <ion-card-header>
         {{bundle.bundleName}}
       </ion-card-header>
 
       <ion-card-content>
-
         <ion-card-title>
           {{bundle.bundleDescription}}
         </ion-card-title>
@@ -72,7 +63,7 @@
                   Price
                 </ion-col>
                 <ion-col>
-                  {{menuItem.price}}
+                  ${{menuItem.price}}
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -80,7 +71,7 @@
                   Discounted Price
                 </ion-col>
                 <ion-col>
-                  {{((100 - menuItem.discount)/100)  * menuItem.price}}
+                  ${{((100 - menuItem.discount)/100)  * menuItem.price}}
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -88,7 +79,6 @@
         </ion-list>
 
       </ion-card-content>
-
     </ion-card>
 
   </ion-list>
@@ -96,7 +86,6 @@
 
   <!-- Restaurant Menu Card -->
   <ion-card>
-
     <ion-card-header>
       Menu
     </ion-card-header>
@@ -128,13 +117,10 @@
       </ion-list>
 
     </ion-card-content>
-
   </ion-card>
-
 
   <!-- Map Card -->
   <ion-card>
-
     <ion-card-header>
       Map
     </ion-card-header>
@@ -142,7 +128,6 @@
     <ion-card-content>
       <div #map id="map"></div>
     </ion-card-content>
-
   </ion-card>
 
 </ion-content>
