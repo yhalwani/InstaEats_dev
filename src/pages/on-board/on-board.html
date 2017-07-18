@@ -103,12 +103,10 @@
           <ion-input type="text" value="" [(ngModel)]="street"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-icon item-left></ion-icon>
           <ion-label floating>City</ion-label>
           <ion-input type="text" value="" [(ngModel)]="city"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-icon item-left></ion-icon>
           <ion-label floating>Province</ion-label>
           <ion-select [(ngModel)]="province">
             <ion-option *ngFor="let province of provinces; let i = index" value="{{province.id}}">
@@ -117,12 +115,10 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-icon item-left></ion-icon>
           <ion-label floating>Country</ion-label>
           <ion-input type="text" value="" [(ngModel)]="country"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-icon item-left></ion-icon>
           <ion-label floating>Postal Code</ion-label>
           <ion-input type="text" value="" [(ngModel)]="postalCode"></ion-input>
         </ion-item>
@@ -146,16 +142,16 @@
               Mon
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Monday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="monopen.open()">
+                 <ion-datetime #monopen pickerFormat="h mm A" [hidden]="mon_open == '--:--'" [(ngModel)]="mon_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="mon_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Monday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="mon_close"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="monclose.open()">
+                 <ion-datetime #monclose pickerFormat="h mm A" [hidden]="mon_close == '--:--'" [(ngModel)]="mon_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="mon_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -163,16 +159,16 @@
               Tues
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Tuesday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="tuesopen.open()">
+                 <ion-datetime #tuesopen pickerFormat="h mm A" [hidden]="tues_open == '--:--'" [(ngModel)]="tues_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="tues_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Tuesday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tues_close"></ion-datetime>>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="tuesclose.open()">
+                 <ion-datetime #tuesclose pickerFormat="h mm A" [hidden]="tues_close == '--:--'" [(ngModel)]="tues_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="tues_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -180,16 +176,16 @@
               Wed
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Wednesday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="wedopen.open()">
+                 <ion-datetime #wedopen pickerFormat="h mm A" [hidden]="wed_open == '--:--'" [(ngModel)]="wed_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="wed_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Wednesday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="wed_close"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="wedclose.open()">
+                 <ion-datetime #wedclose pickerFormat="h mm A" [hidden]="wed_close == '--:--'" [(ngModel)]="wed_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="wed_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -197,16 +193,16 @@
               Thurs
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Thursday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="thursopen.open()">
+                 <ion-datetime #thursopen pickerFormat="h mm A" [hidden]="thurs_open == '--:--'" [(ngModel)]="thurs_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="thurs_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Thursday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="thurs_close"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="thursclose.open()">
+                 <ion-datetime #thursclose pickerFormat="h mm A" [hidden]="thurs_close == '--:--'" [(ngModel)]="thurs_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="thurs_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -214,16 +210,16 @@
               Fri
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Friday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="friopen.open()">
+                 <ion-datetime #friopen pickerFormat="h mm A" [hidden]="fri_open == '--:--'" [(ngModel)]="fri_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="fri_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Friday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="fri_close"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="friclose.open()">
+                 <ion-datetime #friclose pickerFormat="h mm A" [hidden]="fri_close == '--:--'" [(ngModel)]="fri_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="fri_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -231,16 +227,16 @@
               Sat
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Saturday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="satopen.open()">
+                 <ion-datetime #satopen pickerFormat="h mm A" [hidden]="sat_open == '--:--'" [(ngModel)]="sat_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sat_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Saturday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sat_close"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="satclose.open()">
+                 <ion-datetime #satclose pickerFormat="h mm A" [hidden]="sat_close == '--:--'" [(ngModel)]="sat_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sat_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -248,16 +244,16 @@
               Sun
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Sunday Open</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun_open"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="sunopen.open()">
+                 <ion-datetime #sunopen pickerFormat="h mm A" [hidden]="sun_open == '--:--'" [(ngModel)]="sun_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sun_open == '--:--'"></ion-icon>
+               </button>
             </ion-col>
             <ion-col>
-              <ion-item>
-                <ion-label>Sunday Close</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="sun_close"></ion-datetime>
-              </ion-item>
+              <button ion-button color="rdaApp" (click)="sunclose.open()">
+                 <ion-datetime #sunclose pickerFormat="h mm A" [hidden]="sun_close == '--:--'" [(ngModel)]="sun_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sun_close == '--:--'"></ion-icon>
+               </button>
             </ion-col>
           </ion-row>
 
