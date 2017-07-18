@@ -92,28 +92,32 @@
 
     <ion-card-content>
 
-      <ion-list>
-        <ion-item *ngFor="let item of Menu; let i = index">
-          <h4>{{item.name}}</h4>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                Price
-              </ion-col>
-              <ion-col>
-                {{item.price}}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                Discount
-              </ion-col>
-              <ion-col>
-                {{item.discount}}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
+      <ion-list *ngFor="let menug of menuGroup; let i = index" no-lines>
+        <ion-card>
+          <ion-card-header>
+            {{menug.menuGroupName}}
+          </ion-card-header>
+
+
+          <ion-list *ngFor="let menu of menug.menu; let j = index" no-lines>
+            <ion-grid>
+              <ion-item>
+                <ion-row>
+                  <ion-col>
+                    {{menu.name}}
+                  </ion-col>
+                  <ion-col>
+                    {{menu.price}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  {{menu.description}}
+                </ion-row>
+              </ion-item>
+            </ion-grid>
+          </ion-list>
+
+        </ion-card>
       </ion-list>
 
     </ion-card-content>
