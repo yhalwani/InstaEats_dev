@@ -161,9 +161,8 @@ export class RestaurantPage {
 
   // populate map with correct restaurant location
   getMap(){
-    let rest = this.restaurant.restaurantName;
-    var geoRef = firebase.database().ref("GeoCoordinates/" + rest);
-    geoRef.on("value", (snapshot) => {
+    let rest = this.restaurant.id;
+    firebase.database().ref("GeoCoordinates/" + rest).on("value", (snapshot) => {
       let data = snapshot.val();
       this.local_map = {
         lat: data.lat,
