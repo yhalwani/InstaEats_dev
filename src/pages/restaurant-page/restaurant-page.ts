@@ -13,6 +13,7 @@ declare let google;
 export class RestaurantPage {
   restaurant : any;
   @ViewChild('map') mapElement : ElementRef;
+  local_map: any;
   map: any;
 
   menuGroup: Array<{
@@ -43,6 +44,9 @@ export class RestaurantPage {
     this.restaurant = this.navParams.data;
     var restaurantUID = this.restaurant.id;
 
+    // load map everytime
+    this.getMap();
+
     var menuArr = [];
 
     firebase.database().ref('/MenuItems/' + this.restaurant.restaurantName).on("value", (snapshot) => {
@@ -57,7 +61,7 @@ export class RestaurantPage {
           menuGE.menu.push(menuI);
           return false;
         });
-       menuArr.push(menuGE);
+        menuArr.push(menuGE);
       }
 
       this.storage.set('restMenu', menuArr);
@@ -153,6 +157,19 @@ export class RestaurantPage {
       }
     }
     return false;
+  }
+
+  // populate map with correct restaurant location
+  getMap(){
+    let rest = this.restaurant.id;
+    firebase.database().ref("GeoCoordinates/" + rest).on("value", (snapshot) => {
+      let data = snapshot.val();
+      this.local_map = {
+        lat: data.lat,
+        lng: data.lng,
+        zoom: 13,
+      }
+    });
   }
 
 

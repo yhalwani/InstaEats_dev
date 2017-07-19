@@ -41,7 +41,6 @@ export class NearMePage {
       snapshot.forEach((childSnapshot) => {
         var data = childSnapshot;
         var obj = {name: data.key, lat: data.val().lat, lng: data.val().lng};
-        //coords.push(data.key, data.val().l);
         coords.push(obj);
         this.locations = coords;
         return false;
@@ -62,11 +61,9 @@ export class NearMePage {
       this.iconName = "list";
       this.nearMeViews = "mapView";
     }
-
   }
 
   openModal(){
-
   }
 
   loadMap(){

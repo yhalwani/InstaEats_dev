@@ -24,93 +24,81 @@
   <div [ngSwitch]="nearMeViews">
 
     <ion-list *ngSwitchCase="'mapView'">
-      <!-- slider to adjust map bounds -->
-      <!-- <ion-item> -->
-      <!-- <ion-range min={{minLimit}} max={{maxLimit}} pin="true" snaps="true" step="1000" [(ngModel)]="distance" color="rdaApp" >
-      <ion-label range-left small>0 km</ion-label>
-      <ion-label range-right small>100 km</ion-label>
-    </ion-range> -->
-    <!-- </ion-item> -->
+        <!-- slider to adjust map bounds -->
+        <!-- <ion-item> -->
+        <!-- <ion-range min={{minLimit}} max={{maxLimit}} pin="true" snaps="true" step="1000" [(ngModel)]="distance" color="rdaApp" >
+        <ion-label range-left small>0 km</ion-label>
+        <ion-label range-right small>100 km</ion-label>
+      </ion-range> -->
+      <!-- </ion-item> -->
 
-    <sebm-google-map id="map"
-    [latitude]="map.lat"
-    [longitude]="map.lng"
-    [zoom]="map.zoom"
-    [zoomControl]="false"
-    [disableDefaultUI]="true"
+      <sebm-google-map id="map"
+        [latitude]="map.lat"
+        [longitude]="map.lng"
+        [zoom]="map.zoom"
+        [zoomControl]="false"
+        [disableDefaultUI]="true"
+        [scaleControl]="true"
+      >
+
+      <!-- user location marker -->
+      <sebm-google-map-marker
+        [latitude]="map.lat"
+        [longitude]="map.lng"
+        [iconUrl]="map.iconUrl"
+      >
+
+      <sebm-google-map-info-window>
+        <strong>My location</strong>
+        <br>
+        {{map.lat}}, {{map.lng}}
+      </sebm-google-map-info-window>
+
+      </sebm-google-map-marker>
+
+      <!-- restaurant location markers -->
+      <sebm-google-map-marker *ngFor="let m of locations; let i = index"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.name.charAt(0)">
+        <sebm-google-map-info-window>
+          <strong>{{m.name}}</strong>
+          <br>
+          {{m.lat}}, {{m.lng}}
+        </sebm-google-map-info-window>
+      </sebm-google-map-marker>
+
+    <!-- creating map bounds using circle -->
+    <!-- <sebm-google-map-circle [latitude]="map.lat" [longitude]="map.lng"
+    [radius]="distance"
+    [fillOpacity]="0.2"
+    [fillColor]="'#da3937'"
     >
+    </sebm-google-map-circle> -->
+    </sebm-google-map>
 
-    <!-- user location marker -->
-    <sebm-google-map-marker
-    [latitude]="map.lat"
-    [longitude]="map.lng"
-    [iconUrl]="map.iconUrl">
+  </ion-list>
 
-    <sebm-google-map-info-window>
-      <strong>My location</strong>
-      <br>
-      {{map.lat}}, {{map.lng}}
-    </sebm-google-map-info-window>
-
-  </sebm-google-map-marker>
-
-  <!-- restaurant location markers -->
-  <sebm-google-map-marker *ngFor="let m of locations; let i = index"
-  [latitude]="m.lat"
-  [longitude]="m.lng"
-  [label]="m.name.charAt(0)">
-  <sebm-google-map-info-window>
-    <strong>{{m.name}}</strong>
-    <br>
-    {{m.lat}}, {{m.lng}}
-  </sebm-google-map-info-window>
-</sebm-google-map-marker>
-
-<!-- creating map bounds using circle -->
-<!-- <sebm-google-map-circle [latitude]="map.lat" [longitude]="map.lng"
-[radius]="distance"
-[fillOpacity]="0.2"
-[fillColor]="'#da3937'"
->
-</sebm-google-map-circle> -->
-
-</sebm-google-map>
-
-
-</ion-list>
-
-<ion-list *ngSwitchCase="'listView'">
-  <ion-item class="item" *ngFor="let rest of restList; let i = index">
-    <!-- Header Card -->
-    <ion-card class="card" (click)="goToRestPage(i)">
-      <ion-card-header class="header">
-        <ion-item>
-          <ion-avatar class="avatar" item-left>
-            <img class="imageborder" src="{{rest.photoUrl}}">
-          </ion-avatar>
-          <h2>{{rest.restaurantName}}</h2>
-          <p>{{rest.slogan}}</p>
-          <p>{{rest.description}}</p>
-          <button ion-button color="rdaApp" clear icon-only item-right>
-            <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
-          </button>
-        </ion-item>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- <ion-thumbnail item-left>
-    <img src="{{rest.photoUrl}}">
-  </ion-thumbnail>
-  <h2>{{rest.restaurantName}}</h2>
-  <p class="item-text-center item-text-wrap">{{rest.slogan}}</p>
-  <p class="item-text-center item-text-wrap">{{rest.description}}</p>
-  <button ion-button color="rdaApp" clear icon-only item-right (click)="goToRestPage(i)">
-  <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
-</button> -->
-
-</ion-item>
-</ion-list>
-
+  <ion-list *ngSwitchCase="'listView'">
+    <ion-item class="item" *ngFor="let rest of restList; let i = index">
+      <!-- Header Card -->
+      <ion-card class="card" (click)="goToRestPage(i)">
+        <ion-card-header class="header">
+          <ion-item>
+            <ion-avatar class="avatar" item-left>
+              <img class="imageborder" src="{{rest.photoUrl}}">
+            </ion-avatar>
+            <h2>{{rest.restaurantName}}</h2>
+            <p>{{rest.slogan}}</p>
+            <p>{{rest.description}}</p>
+            <button ion-button color="rdaApp" clear icon-only item-right>
+              <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
+            </button>
+          </ion-item>
+        </ion-card-header>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </div>
 
 </ion-content>
