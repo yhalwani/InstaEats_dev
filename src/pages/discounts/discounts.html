@@ -17,6 +17,13 @@
       <ion-card-header>
         {{bundle.bundleName}}
         <ion-buttons end>
+          <button ion-button clear="true" *ngIf="bundle.countDown.hours && bundle.countDown.minutes && bundle.countDown.seconds != 0">
+            {{bundle.countDown.hours}} : {{bundle.countDown.minutes}} : {{bundle.countDown.seconds}}
+          </button>
+          <button ion-button clear="true">
+            <ion-icon *ngIf="bundle.live" color="rdaApp" name="radio-button-on"></ion-icon>
+            <ion-icon *ngIf="!bundle.live" color="rdaApp" name="radio-button-off"></ion-icon>
+          </button>
           <button ion-button clear="true" (click)="presentActionSheet(i)">
             <ion-icon color="rdaApp" name="menu"></ion-icon>
           </button>

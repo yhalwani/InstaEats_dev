@@ -14,6 +14,7 @@ export class DiscountsPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
+    countDown:             {hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -22,6 +23,8 @@ export class DiscountsPage {
     }>
   }>;
 
+  x: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -29,6 +32,8 @@ export class DiscountsPage {
     public storage: Storage,
     public actionSheetCtrl: ActionSheetController
   ) {
+
+    this.x = 0;
 
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
@@ -39,40 +44,33 @@ export class DiscountsPage {
 
       // For each bundle the rest has loop
       snapshot.forEach( (childSnapshot) => {
-        //
-        console.log("  In forEach loop of " + childSnapshot.key);
-        //
+
         // Tmp dummy bundle
         var bundle = {
           bundleName: childSnapshot.key,
           bundleDescription:"",
           live: false,
+          countDown: {hours: 0, minutes: 0, seconds: 0},
           bundleElem: []
         }
 
         // For each node in bundle (bunlde, description, or live) loop
         childSnapshot.forEach((childSnapshot) => {
-          //
-          console.log("    In forEach loop of " + childSnapshot.key);
-          //
+
           if (childSnapshot.key == "description"){
             bundle.bundleDescription = childSnapshot.val();
           } else if (childSnapshot.key == "live") {
             bundle.live = childSnapshot.val();
           } else {
-            //
+
             childSnapshot.forEach((childSnapshot) => {
-              //
-              console.log("      In forEach loop of " + childSnapshot.key);
-              //
+
               var bundleE = {menuGroupName:"", menu: []};
               childSnapshot.forEach((childSnapshot) => {
-                console.log("        In forEach loop of " + childSnapshot.key);
                 if(childSnapshot.key == "menuGroupName"){
                   bundleE.menuGroupName = childSnapshot.val();
                 } else {
                   childSnapshot.forEach((childSnapshot) => {
-                    console.log("          In forEach loop of " + childSnapshot.key);
                     var tmp = childSnapshot.val();
                     var menu = {
                       name:         tmp.name,
@@ -100,7 +98,6 @@ export class DiscountsPage {
     });
 
     this.events.subscribe('bundle:created', (bundle) => {
-      console.log("In the subscription");
       this.bundles = bundle;
     });
 
@@ -116,10 +113,13 @@ export class DiscountsPage {
           handler: () => {
             var restRef = firebase.database().ref("Bundles/");
             var rest = firebase.auth().currentUser;
+            var now = new Date().getTime();
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
-              live: true
+              live: true,
+              startedAt: now
             });
-
+            this.bundles[index].live = !this.bundles[index].live;
+            this.setTime(now, this.bundles[index]);
           }
         },
         {
@@ -128,8 +128,11 @@ export class DiscountsPage {
             var restRef = firebase.database().ref("Bundles/");
             var rest = firebase.auth().currentUser;
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
-              live: false
+              live: false,
+              startedAt: null
             });
+            this.bundles[index].live = !this.bundles[index].live;
+            this.stopTime(this.bundles[index]);
           }
         },
         {
@@ -145,8 +148,9 @@ export class DiscountsPage {
             // delete from local as well
             this.bundles.splice(index,1);
             this.storage.get('bundles').then((list) => {
-              list.splice(index,1);
-              this.storage.set('bundles', list);
+              console.log(list);
+              // list.splice(index,1);
+              // this.storage.set('bundles', list);
             });
           }
         }
@@ -154,6 +158,22 @@ export class DiscountsPage {
     });
 
     actionSheet.present();
-  }
+  };
+
+  setTime(now, bundle){
+    this.x = setInterval(() => {
+      var diff = new Date().getTime() - now ;
+      bundle.countDown.hours = Math.floor((86400000 - diff) / (1000 * 60 * 60));
+      bundle.countDown.minutes =  Math.floor(((86400000 - diff) % (1000 * 60 * 60)) / (1000 * 60));
+      bundle.countDown.seconds = Math.floor(((86400000 - diff) % (1000 * 60)) / 1000)
+    }, 1000);
+  };
+
+  stopTime(bundle){
+    clearInterval(this.x);
+    bundle.countDown.hours = 0;
+    bundle.countDown.minutes = 0;
+    bundle.countDown.seconds = 0;
+  };
 
 }
