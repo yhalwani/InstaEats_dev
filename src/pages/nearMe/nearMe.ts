@@ -62,11 +62,9 @@ export class NearMePage {
       this.iconName = "list";
       this.nearMeViews = "mapView";
     }
-
   }
 
   openModal(){
-
   }
 
   loadMap(){
