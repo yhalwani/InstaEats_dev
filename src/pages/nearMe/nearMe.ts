@@ -10,9 +10,18 @@ import firebase from 'firebase';
 })
 export class NearMePage {
 
-  restList: Array<{ slogan: any, description: string, id: string, imgURL: string, liveStatus: boolean, restaurantName: any }>;
+  restList: Array<{
+    slogan: any,
+    description: string,
+    id: string,
+    imgURL: string,
+    liveStatus: boolean,
+    restaurantName: any
+  }>;
+
   nearMeViews: string = "listView";
   iconName: string = "map";
+
   locations: Array<{name: any, lat: number, lng: number}>;
   map: any;
 

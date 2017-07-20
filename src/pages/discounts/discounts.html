@@ -17,7 +17,7 @@
       <ion-card-header>
         {{bundle.bundleName}}
         <ion-buttons end>
-          <button ion-button clear="true" *ngIf="bundle.countDown.hours && bundle.countDown.minutes && bundle.countDown.seconds != 0">
+          <button ion-button color="rdaApp" clear="true" *ngIf="(bundle.countDown.hours !=0) && (bundle.countDown.minutes !=0) && (bundle.countDown.seconds != 0)">
             {{bundle.countDown.hours}} : {{bundle.countDown.minutes}} : {{bundle.countDown.seconds}}
           </button>
           <button ion-button clear="true">

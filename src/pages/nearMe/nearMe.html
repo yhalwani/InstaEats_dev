@@ -81,22 +81,32 @@
 
   <ion-list *ngSwitchCase="'listView'">
     <ion-item class="item" *ngFor="let rest of restList; let i = index">
-      <!-- Header Card -->
+
       <ion-card class="card" (click)="goToRestPage(i)">
+
         <ion-card-header class="header">
+
           <ion-item>
             <ion-avatar class="avatar" item-left>
               <img class="imageborder" src="{{rest.photoUrl}}">
             </ion-avatar>
+
             <h2>{{rest.restaurantName}}</h2>
+
             <p>{{rest.slogan}}</p>
+
             <p>{{rest.description}}</p>
+
             <button ion-button color="rdaApp" clear icon-only item-right>
               <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
             </button>
+
           </ion-item>
+
         </ion-card-header>
+
       </ion-card>
+
     </ion-item>
   </ion-list>
 </div>
