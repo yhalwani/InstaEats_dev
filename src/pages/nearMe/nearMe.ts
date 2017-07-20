@@ -22,7 +22,7 @@ export class NearMePage {
   nearMeViews: string = "listView";
   iconName: string = "map";
 
-  locations: Array<{name: any, lat: number, lng: number}>;
+  locations: Array<{name: any, lat: number, lng: number, address: string}>;
   map: any;
 
   // TODO: get input from the slider and pass as radius to create circle
@@ -31,7 +31,7 @@ export class NearMePage {
   distance: number = 5000;  // default radius 5 km
 
   constructor(public navCtrl: NavController, public events: Events, public storage: Storage, public toastCtrl: ToastController) {
-
+    let coords = [];
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
@@ -39,22 +39,34 @@ export class NearMePage {
       snapshot.forEach((childSnapshot) => {
         restaurantList.push(childSnapshot.val());
         this.restList = restaurantList;
+
+        // get coordinates of live restauarants only
+        let data = childSnapshot.val();
+        let obj = {name: data.restaurantName, lat: data.coordinates.lat, lng: data.coordinates.lng, address: data.address};
+        coords.push(obj);
+        this.locations = coords;
+
+
         return false;
       });
     });
 
-    // get coordinates from firebase
-    let coords = [];
-    let geoRef = firebase.database().ref("/GeoCoordinates/");
-    geoRef.on("value", (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        let data = childSnapshot;
-        let obj = {name: data.key, lat: data.val().lat, lng: data.val().lng};
-        coords.push(obj);
-        this.locations = coords;
-        return false;
-      });
-    });
+    // TODO: Make two lists. One for live restaurants and second for offline restaurant
+    // get coordinates of all
+    // for live restaurants have red markers
+    // for offline restaurants have gray markers
+
+    // // get coordinates from firebase
+    // let coords = [];
+    //   firebase.database().ref("/Restaurant Profiles/").on("value", (snapshot) => {
+    //   snapshot.forEach((childSnapshot) => {
+    //     let data = childSnapshot.val();
+    //     let obj = {name: data.restaurantName, lat: data.coordinates.lat, lng: data.coordinates.lng, address: data.address};
+    //     coords.push(obj);
+    //     this.locations = coords;
+    //     return false;
+    //   });
+    // });
 
   }
 

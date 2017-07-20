@@ -296,17 +296,16 @@ export class OnBoardPage {
 
   // Get LAT/LNG via address
   setPosition(position){
-    var geofire = firebase.database().ref("/GeoCoordinates");
-
-    var currentUser = firebase.auth().currentUser;
-    var id = currentUser.uid;
+    let userId = firebase.auth().currentUser.uid;
 
     // push users coordinates onto firebase real-time database
-    geofire.child(id).update({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
+    firebase.database().ref("/Restaurant Profiles").child(userId).update({
+      coordinates: {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
     }).then(() => {
-      console.log("Current user's location has been added to GeoFire");
+      console.log("Current user's location has been added to profile");
     });
   }
 
