@@ -23,10 +23,10 @@ export class NearMePage {
 
   constructor(public navCtrl: NavController, public events: Events, public storage: Storage, public toastCtrl: ToastController) {
 
-    var restRef = firebase.database().ref("Restaurant Profiles/");
+    let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
-      var restaurantList = [];
+      let restaurantList = [];
       snapshot.forEach((childSnapshot) => {
         restaurantList.push(childSnapshot.val());
         this.restList = restaurantList;
@@ -35,12 +35,12 @@ export class NearMePage {
     });
 
     // get coordinates from firebase
-    var coords = [];
-    var geoRef = firebase.database().ref("/GeoCoordinates/");
+    let coords = [];
+    let geoRef = firebase.database().ref("/GeoCoordinates/");
     geoRef.on("value", (snapshot) => {
       snapshot.forEach((childSnapshot) => {
-        var data = childSnapshot;
-        var obj = {name: data.key, lat: data.val().lat, lng: data.val().lng};
+        let data = childSnapshot;
+        let obj = {name: data.key, lat: data.val().lat, lng: data.val().lng};
         coords.push(obj);
         this.locations = coords;
         return false;
@@ -82,7 +82,7 @@ export class NearMePage {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
             zoom: 11,
-            iconUrl: "http://www.cary.ae/img/map-marker.png"
+            iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
           }
         });
       }

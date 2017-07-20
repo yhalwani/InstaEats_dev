@@ -30,7 +30,7 @@ export class MenuPage {
 
       var menuArr = [];
 
-      firebase.database().ref('/MenuItems/' + restaurantName).on("value", (snapshot) => {
+      firebase.database().ref('/MenuItems/' + user.uid).on("value", (snapshot) => {
         var data = snapshot.val();
 
         for (var menuG in data){

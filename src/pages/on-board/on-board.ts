@@ -303,7 +303,6 @@ export class OnBoardPage {
 
     // push users coordinates onto firebase real-time database
     geofire.child(id).update({
-      //name: this.restaurantName,
       lat: position.coords.latitude,
       lng: position.coords.longitude
     }).then(() => {

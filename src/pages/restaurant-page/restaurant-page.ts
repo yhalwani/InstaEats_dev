@@ -167,6 +167,7 @@ export class RestaurantPage {
       this.local_map = {
         lat: data.lat,
         lng: data.lng,
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc",
         zoom: 13,
       }
     });

@@ -45,7 +45,7 @@
       <sebm-google-map-marker
         [latitude]="map.lat"
         [longitude]="map.lng"
-        [iconUrl]="map.iconUrl"
+        
       >
 
       <sebm-google-map-info-window>
@@ -60,7 +60,7 @@
       <sebm-google-map-marker *ngFor="let m of locations; let i = index"
         [latitude]="m.lat"
         [longitude]="m.lng"
-        [label]="m.name.charAt(0)">
+        [iconUrl]="map.iconUrl">
         <sebm-google-map-info-window>
           <strong>{{m.name}}</strong>
           <br>
