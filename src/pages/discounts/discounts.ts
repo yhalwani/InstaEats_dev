@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, Events, ActionSheetController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
@@ -14,7 +14,7 @@ export class DiscountsPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
-    countDown:             {hours: any, minutes: any, seconds: any},
+    countDown:             {intvarlID: any; hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -23,17 +23,14 @@ export class DiscountsPage {
     }>
   }>;
 
-  x: any;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
     public storage: Storage,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController
   ) {
-
-    this.x = 0;
 
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
@@ -50,7 +47,7 @@ export class DiscountsPage {
           bundleName: childSnapshot.key,
           bundleDescription:"",
           live: false,
-          countDown: {hours: 0, minutes: 0, seconds: 0},
+          countDown: {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
           bundleElem: []
         }
 
@@ -111,15 +108,7 @@ export class DiscountsPage {
         {
           text: 'Go Live!',
           handler: () => {
-            var restRef = firebase.database().ref("Bundles/");
-            var rest = firebase.auth().currentUser;
-            var now = new Date().getTime();
-            restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
-              live: true,
-              startedAt: now
-            });
-            this.bundles[index].live = !this.bundles[index].live;
-            this.setTime(now, this.bundles[index]);
+            this.getTime(index);
           }
         },
         {
@@ -160,17 +149,68 @@ export class DiscountsPage {
     actionSheet.present();
   };
 
-  setTime(now, bundle){
-    this.x = setInterval(() => {
+  getTime(index){
+    let alert = this.alertCtrl.create({
+      title: 'Input discount duration',
+      inputs: [
+        {
+          name: 'Hours',
+          placeholder: 'Hours',
+          type: 'number'
+        },
+        {
+          name: 'Minutes',
+          placeholder: 'Minutes',
+          type: 'number'
+        },
+        {
+          name: 'Seconds',
+          placeholder: 'Seconds',
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+
+          }
+        },
+        {
+          text: 'Set Time',
+          handler: data => {
+            var timeLimit = (data.Hours * 1000 * 60 * 60) + (data.Minutes * 1000 * 60 ) + (data.Seconds * 1000);
+            var now = new Date().getTime();
+
+            var restRef = firebase.database().ref("Bundles/");
+            var rest = firebase.auth().currentUser;
+            restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
+              live: true,
+              startedAt: now
+            });
+
+            this.bundles[index].live = !this.bundles[index].live;
+            this.setTime(now, timeLimit, this.bundles[index]);
+            return;
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  setTime(now, timeLimit, bundle){
+    bundle.countDown.intvarlID = setInterval(() => {
       var diff = new Date().getTime() - now ;
-      bundle.countDown.hours = Math.floor((86400000 - diff) / (1000 * 60 * 60));
-      bundle.countDown.minutes =  Math.floor(((86400000 - diff) % (1000 * 60 * 60)) / (1000 * 60));
-      bundle.countDown.seconds = Math.floor(((86400000 - diff) % (1000 * 60)) / 1000)
+      bundle.countDown.hours = Math.floor((timeLimit - diff) / (1000 * 60 * 60));
+      bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60));
+      bundle.countDown.seconds = Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
     }, 1000);
   };
 
   stopTime(bundle){
-    clearInterval(this.x);
+    clearInterval(bundle.countDown.intvarlID);
     bundle.countDown.hours = 0;
     bundle.countDown.minutes = 0;
     bundle.countDown.seconds = 0;
