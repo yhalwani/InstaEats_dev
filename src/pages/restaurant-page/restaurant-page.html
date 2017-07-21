@@ -149,6 +149,11 @@
         [longitude]="local_map.lng"
         [iconUrl]="local_map.iconUrl"
       >
+      <sebm-google-map-info-window>
+        <strong>{{local_map.name}}</strong>
+        <br>
+        {{local_map.address}}
+      </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
   </sebm-google-map>

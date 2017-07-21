@@ -14,7 +14,6 @@ export class RestaurantPage {
   restaurant : any;
   @ViewChild('map') mapElement : ElementRef;
   local_map: any;
-  map: any;
 
   menuGroup: Array<{
     menuGroupName: string,
@@ -42,14 +41,14 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
-    var restaurantUID = this.restaurant.id;
+    let restaurantUID = this.restaurant.id;
 
     // load map everytime
     this.getMap();
 
     var menuArr = [];
 
-    firebase.database().ref('/MenuItems/' + this.restaurant.restaurantName).on("value", (snapshot) => {
+    firebase.database().ref('/MenuItems/' + restaurantUID).on("value", (snapshot) => {
       var data = snapshot.val();
 
       for (var menuG in data){
@@ -162,11 +161,14 @@ export class RestaurantPage {
   // populate map with correct restaurant location
   getMap(){
     let rest = this.restaurant.id;
-    firebase.database().ref("GeoCoordinates/" + rest).on("value", (snapshot) => {
+    console.log(rest);
+    firebase.database().ref("Restaurant Profiles/" + rest).on("value", (snapshot) => {
       let data = snapshot.val();
       this.local_map = {
-        lat: data.lat,
-        lng: data.lng,
+        name: data.restaurantName,
+        address: data.address,
+        lat: data.coordinates.lat,
+        lng: data.coordinates.lng,
         iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc",
         zoom: 13,
       }

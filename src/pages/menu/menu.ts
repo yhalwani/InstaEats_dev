@@ -26,8 +26,6 @@ export class MenuPage {
   ) {
 
       let user = firebase.auth().currentUser;
-      let restaurantName = user.displayName
-
       var menuArr = [];
 
       firebase.database().ref('/MenuItems/' + user.uid).on("value", (snapshot) => {
@@ -47,9 +45,7 @@ export class MenuPage {
 
         this.storage.set('restMenu', menuArr);
         this.menuGroup = menuArr;
-
       });
-
   };
 
   addMenuGroup(){
@@ -204,7 +200,6 @@ export class ModalContentPage {
         };
         this.bundleMenu[i].menu.push(item);
       };
-
     };
 
   };
