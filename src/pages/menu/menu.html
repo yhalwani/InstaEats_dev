@@ -19,36 +19,49 @@
 
   <ion-list *ngFor="let menug of menuGroup; let i = index" no-lines>
     <ion-card>
-      <ion-list-header>
-        <ion-label>Group name</ion-label>
-        <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+      <ion-row>
+        <ion-col col-10>
+          <ion-list-header>
+            <ion-label>Group name</ion-label>
+            <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+          </ion-list-header>
+        </ion-col>
+        <ion-col col-2>
+          <ion-buttons end>
+            <button ion-button clear item-right color="rdaApp" (click)="removeGroup(i)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
 
-      </ion-list-header>
       <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
         <ion-card>
           <ion-grid>
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label>Item name</ion-label>
+                  <ion-label>Name</ion-label>
                   <ion-input type="text" value="{{menu.name}}" [(ngModel)]="menu.name"></ion-input>
                 </ion-item>
               </ion-col>
-              <ion-col>
-                <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
-                  <ion-icon name="trash"></ion-icon>
-                </button>
+              <ion-col col-auto>
+                <ion-buttons end>
+                  <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                </ion-buttons>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-item>
-                <ion-label>Item descripition</ion-label>
+                <ion-label>Descripition</ion-label>
                 <ion-input type="text" value="{{menu.description}}" [(ngModel)]="menu.description"></ion-input>
               </ion-item>
             </ion-row>
             <ion-row>
               <ion-item>
-                <ion-label>Item price</ion-label>
+                <ion-label>Price</ion-label>
                 <ion-input type="number" value="{{menu.price}}" [(ngModel)]="menu.price"></ion-input>
               </ion-item>
             </ion-row>

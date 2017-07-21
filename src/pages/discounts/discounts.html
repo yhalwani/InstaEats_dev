@@ -8,7 +8,6 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
   <ion-list *ngFor="let bundle of bundles; let i = index;">
@@ -18,6 +17,13 @@
       <ion-card-header>
         {{bundle.bundleName}}
         <ion-buttons end>
+          <button ion-button color="rdaApp" clear="true" *ngIf="(bundle.countDown.hours !=0) && (bundle.countDown.minutes !=0) && (bundle.countDown.seconds != 0)">
+            {{bundle.countDown.hours}} : {{bundle.countDown.minutes}} : {{bundle.countDown.seconds}}
+          </button>
+          <button ion-button clear="true">
+            <ion-icon *ngIf="bundle.live" color="rdaApp" name="radio-button-on"></ion-icon>
+            <ion-icon *ngIf="!bundle.live" color="rdaApp" name="radio-button-off"></ion-icon>
+          </button>
           <button ion-button clear="true" (click)="presentActionSheet(i)">
             <ion-icon color="rdaApp" name="menu"></ion-icon>
           </button>
@@ -32,14 +38,14 @@
 
         <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
           <ion-item *ngFor="let menuItem of item.menu">
-            <ion-grid *ngIf="menuItem.checked == true">
+            <ion-grid>
               <h4>{{menuItem.name}}</h4>
               <ion-row>
                 <ion-col>
                   Discount
                 </ion-col>
                 <ion-col>
-                  % {{menuItem.discount}}
+                  {{menuItem.discount}}%
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -47,7 +53,7 @@
                   Price
                 </ion-col>
                 <ion-col>
-                  {{menuItem.price}}
+                  ${{menuItem.price}}
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -55,7 +61,7 @@
                   Discounted Price
                 </ion-col>
                 <ion-col>
-                  {{((100 - menuItem.discount)/100)  * menuItem.price}}
+                  ${{((100 - menuItem.discount)/100)  * menuItem.price}}
                 </ion-col>
               </ion-row>
             </ion-grid>

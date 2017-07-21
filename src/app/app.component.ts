@@ -50,6 +50,7 @@ export class MyApp {
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
+        {title: 'My Account', component: this.rootPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -133,5 +134,6 @@ export class MyApp {
     });
     loader.present();
   };
+
 
 }

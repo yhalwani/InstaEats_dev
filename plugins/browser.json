@@ -30,7 +30,17 @@
         },
         "cordova-plugin-googlemaps": {
             "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
+        },
+        "cordova-plugin-stripe": {
+            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
+        }
+    }
 }

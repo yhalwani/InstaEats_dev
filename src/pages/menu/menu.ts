@@ -21,11 +21,35 @@ export class MenuPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    public events: Events,
     public storage: Storage
   ) {
-    this.storage.get('restMenu').then((list) => {
-      this.menuGroup = list;
-    });
+
+      let user = firebase.auth().currentUser;
+      let restaurantName = user.displayName
+
+      var menuArr = [];
+
+      firebase.database().ref('/MenuItems/' + restaurantName).on("value", (snapshot) => {
+        var data = snapshot.val();
+
+        for (var menuG in data){
+          var menuGE = {menuGroupName: menuG, menu: []};
+
+          snapshot.child(menuG).forEach((childSnapshot) => {
+            var childData = childSnapshot.val();
+            var menuI = {name: childData.name, description: childData.description, price: childData.price};
+            menuGE.menu.push(menuI);
+            return false;
+          });
+         menuArr.push(menuGE);
+        }
+
+        this.storage.set('restMenu', menuArr);
+        this.menuGroup = menuArr;
+
+      });
+
   };
 
   addMenuGroup(){
@@ -37,6 +61,10 @@ export class MenuPage {
   addMenuItem(index){
     var menuItem = {name : "", description: "", price: 0.00};
     this.menuGroup[index].menu.push(menuItem);
+  };
+
+  removeGroup(index){
+    this.menuGroup.splice(index,1);
   };
 
   removeItem(menu, item){
@@ -73,7 +101,7 @@ export class MenuPage {
       <ion-input type="text" placeholder="Bundle Description" [(ngModel)]="bundleDescription"></ion-input>
     </ion-item>
 
-    <ion-list *ngFor="let menug of menuGroup; let i = index">
+    <ion-list *ngFor="let menug of bundleMenu; let i = index">
       <ion-list-header>
         <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
       </ion-list-header>
@@ -83,12 +111,12 @@ export class MenuPage {
             <ion-col>
               <ion-item>
                 <ion-label fixed> {{menu.name}} </ion-label>
-                <ion-checkbox (ionChange)="addToBundle(i, j)"></ion-checkbox>
+                <ion-checkbox [(ngModel)]="bundleMenu[i].menu[j].checked"></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-input type="number" disabled="!{{bundleItem.bundleElem[i].menu[j].checked}}" placeholder="Discount Percentage" [(ngModel)]="bundleItem.bundleElem[i].menu[j].discount"></ion-input>
+                <ion-input type="number" disabled=!{{bundleMenu[i].menu[j].checked}} placeholder="Discount Percentage" [(ngModel)]="bundleMenu[i].menu[j].discount"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -114,20 +142,17 @@ export class ModalContentPage {
     }>
   }>;
 
-  bundles: Array<{
-    bundleName:            string,
-    bundleDescription:     string,
-    bundleElem:            Array<{
-      menuGroupName:       string,
-      menu:                Array<{
-        name: string, description: string, price: number, checked: boolean, discount: number
-      }>
+  bundleMenu: Array<{
+    menuGroupName:       string,
+    menu:                Array<{
+      name: string, description: string, price: number, checked: boolean, discount: number
     }>
   }>;
 
   bundleItem: {
     bundleName:            string,
     bundleDescription:     string,
+    live:                  boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -148,16 +173,13 @@ export class ModalContentPage {
 
     // Menu is assigned from the input parameter data
     this.menuGroup = this.params.data;
-
-    // Fetch bundles from storage and assign to local variable
-    this.storage.get('bundles').then((list) => {
-      this.bundles = list;
-    });
+    this.bundleMenu = [];
 
     // Dummy variable to hold bundle
     this.bundleItem = {
       bundleName:            "",
       bundleDescription:     "",
+      live:                  false,
       bundleElem: []
     };
 
@@ -170,17 +192,17 @@ export class ModalContentPage {
       }
 
       menuItem.menuGroupName =  this.menuGroup[i].menuGroupName;
-      this.bundleItem.bundleElem.push(menuItem);
+      this.bundleMenu.push(menuItem);
 
       for (var j = 0; j < this.menuGroup[i].menu.length; j++ ){
-       var item = {
+        var item = {
           name: this.menuGroup[i].menu[j].name,
           description: this.menuGroup[i].menu[j].description,
           price: this.menuGroup[i].menu[j].price,
           checked: false,
           discount: 0
         };
-        this.bundleItem.bundleElem[i].menu.push(item);
+        this.bundleMenu[i].menu.push(item);
       };
 
     };
@@ -194,7 +216,7 @@ export class ModalContentPage {
 
   // Add item to bundle
   addToBundle(group, index){
-    this.bundleItem.bundleElem[group].menu[index].checked = !this.bundleItem.bundleElem[group].menu[index].checked;
+    this.bundleMenu[group].menu[index].checked = !this.bundleMenu[group].menu[index].checked;
   }
 
   // Save bundle to storage and push to firebase
@@ -203,11 +225,42 @@ export class ModalContentPage {
     this.bundleItem.bundleName = this.bundleName;
     this.bundleItem.bundleDescription = this.bundleDescription;
 
+    this.bundleMenu.forEach((group, groupIndex) => {
+      var groupE = {menuGroupName: group.menuGroupName, menu: []};
+      group.menu.forEach((item, itemIndex) =>{
+        if(item.checked == true){
+
+          var itemE = {
+            name: item.name,
+            description: item.description,
+            price: item.price,
+            checked: item.checked,
+            discount: item.discount
+          };
+
+          groupE.menu.push(itemE);
+
+        };
+      });
+
+      if(groupE.menu.length != 0){
+        this.bundleItem.bundleElem.push(groupE);
+      };
+    });
+
+
     this.storage.get('bundles').then((list) => {
-      this.bundles = list;
-      this.bundles.push(this.bundleItem);
-      this.storage.set('bundles', this.bundles);
-      this.events.publish('bundle:created', this.bundles);
+      list.push(this.bundleItem);
+      this.storage.set('bundles', list);
+      this.events.publish('bundle:created', list);
+    });
+
+    // reference to firebase database and current user
+    var ref = firebase.database().ref("/Bundles");
+    var user = firebase.auth().currentUser;
+
+    ref.child(user.uid).update({
+      [this.bundleItem.bundleName] : {description : this.bundleItem.bundleDescription, live: this.bundleItem.live, bundle : this.bundleItem.bundleElem }
     });
 
     this.dismiss();

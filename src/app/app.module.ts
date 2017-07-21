@@ -7,16 +7,20 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import  firebase  from 'firebase';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
+import { Stripe } from '@ionic-native/stripe';
+
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
-  authDomain: "test1-51a17.firebaseapp.com",
-  databaseURL: "https://test1-51a17.firebaseio.com",
-  projectId: "test1-51a17",
-  storageBucket: "test1-51a17.appspot.com",
-  messagingSenderId: "718835534496"
+  apiKey: "AIzaSyAfjgkS5zm-LsPjbaikBlDd9tihvQTBRTg",
+  authDomain: "instaeats-a06a3.firebaseapp.com",
+  databaseURL: "https://instaeats-a06a3.firebaseio.com",
+  projectId: "instaeats-a06a3",
+  storageBucket: "instaeats-a06a3.appspot.com",
+  messagingSenderId: "538741031345"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -65,7 +69,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCfjCqsLgu2mYhxquylBJRzwEfgUIUQD30'
+      apiKey: 'AIzaSyDKBNkIkOl9z09HvScGFKanCJzlgqOMI4M'
     })
   ],
   bootstrap: [IonicApp],
@@ -86,8 +90,11 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
     DiscountsPage
   ],
   providers: [
+    Camera,
     StatusBar,
     SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Stripe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

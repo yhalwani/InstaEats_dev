@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
+import { RestaurantPage } from '../restaurant-page/restaurant-page';
 import { Storage } from '@ionic/storage';
+
+
 @Component({
   selector: 'page-favorites',
   templateUrl: 'favorites.html'
@@ -54,8 +57,14 @@ export class FavoritesPage {
 
   }
 
+  // mute notifications for restaurant
   muteRest(index){
 
+  }
+
+  goToRestPage(index){
+    this.events.publish('restaurant:viewed');
+    this.navCtrl.push(RestaurantPage, this.restList[index]);
   }
 
 }

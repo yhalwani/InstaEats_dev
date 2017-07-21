@@ -65,5 +65,29 @@
             "API_KEY_FOR_ANDROID": "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
             "API_KEY_FOR_IOS": "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk"
         }
+    },
+    "cordova-plugin-stripe": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-stripe"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }

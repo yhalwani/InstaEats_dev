@@ -10,12 +10,12 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item *ngFor="let rest of restList; let i = index">
-      <ion-thumbnail item-left>
-        <img src="{{rest.imgUrl}}">
-      </ion-thumbnail>
+    <ion-item class="item" *ngFor="let rest of restList; let i = index">
+      <ion-avatar class="avatar" item-left>
+        <img class="imageborder" src="{{rest.photoUrl}}">
+      </ion-avatar>
         <h2>{{rest.restaurantName}}</h2>
-        <p>{{rest.blurb}}</p>
+        <p>{{rest.description}}</p>
     </ion-item>
   </ion-list>
 

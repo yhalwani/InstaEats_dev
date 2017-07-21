@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar color="rdaApp">
     <ion-title>{{restaurant.restaurantName}}</ion-title>
     <ion-buttons end>
@@ -8,76 +7,152 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
+  <!-- Header Card -->
   <ion-card>
-
     <ion-card-header>
       <ion-item>
-        <ion-thumbnail item-left>
-          <img src="{{restaurant.imgUrl}}">
+        <ion-thumbnail class="imageborder" item-left>
+          <img src="{{restaurant.photoUrl}}">
         </ion-thumbnail>
         <h2> Description </h2>
         <p> {{restaurant.description}} </p>
+        <p> {{restaurant.slogan}} </p>
       </ion-item>
     </ion-card-header>
 
     <ion-card-content>
-      <p> {{restaurant.blurb}} </p>
     </ion-card-content>
 
   </ion-card>
 
+  <!-- Discounts Card -->
   <ion-card>
-
     <ion-card-header>
-      Menu
+      <h2 style="color:red;">Discounts</h2>
+    </ion-card-header>
+
+    <ion-list *ngFor="let bundle of Bundles; let i = index;">
+      <ion-card>
+        <ion-card-header>
+          {{bundle.bundleName}}
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-card-title>
+            {{bundle.bundleDescription}}
+          </ion-card-title>
+
+          <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
+            <ion-item *ngFor="let menuItem of item.menu">
+              <ion-grid>
+                <h4>{{menuItem.name}}</h4>
+                <ion-row>
+                  <ion-col>
+                    Discount
+                  </ion-col>
+                  <ion-col>
+                    {{menuItem.discount}}%
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    Price
+                  </ion-col>
+                  <ion-col>
+                    ${{menuItem.price}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    Discounted Price
+                  </ion-col>
+                  <ion-col>
+                    ${{((100 - menuItem.discount)/100)  * menuItem.price}}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+
+        </ion-card-content>
+      </ion-card>
+
+    </ion-list>
+  </ion-card>
+
+  <!-- Restaurant Menu Card -->
+  <ion-card>
+    <ion-card-header>
+      <h2 style="color:red;"> Menu </h2>
     </ion-card-header>
 
     <ion-card-content>
 
-      <ion-list>
-        <ion-item *ngFor="let item of Menu; let i = index">
-          <h4>{{item.name}}</h4>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                Price
-              </ion-col>
-              <ion-col>
-                {{item.price}}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                Discount
-              </ion-col>
-              <ion-col>
-                {{item.discount}}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
+      <ion-list *ngFor="let menug of menuGroup; let i = index" no-lines>
+        <ion-card>
+          <ion-card-header>
+            {{menug.menuGroupName}}
+          </ion-card-header>
+
+
+          <ion-list *ngFor="let menu of menug.menu; let j = index" no-lines>
+            <ion-grid>
+              <ion-item>
+                <ion-row>
+                  <ion-col>
+                    <strong>{{menu.name}}</strong>
+                  </ion-col>
+                  <ion-col>
+                    ${{menu.price}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  {{menu.description}}
+                </ion-row>
+              </ion-item>
+            </ion-grid>
+          </ion-list>
+
+        </ion-card>
       </ion-list>
 
     </ion-card-content>
-
   </ion-card>
 
+  <!-- Map Card -->
   <ion-card>
-
     <ion-card-header>
-      Map
+      <h2 style="color:red;">Map</h2>
     </ion-card-header>
 
     <ion-card-content>
-      <div #map id="map"></div>
-    </ion-card-content>
+      <!-- <div #map id="map"></div> -->
 
-  </ion-card>
+      <sebm-google-map id="map"
+        [latitude]="local_map.lat"
+        [longitude]="local_map.lng"
+        [zoom]="local_map.zoom"
+        [zoomControl]="false"
+        [disableDefaultUI]="true"
+        [mapDraggable]="false"
+        [scrollwheel]="false"
+        [streetViewControl]="false"
+        [disableDoubleClickZoom]="true"
+      >
+      <!-- restaurant location marker -->
+      <sebm-google-map-marker
+        [latitude]="local_map.lat"
+        [longitude]="local_map.lng"
+      >
+    </sebm-google-map-marker>
+
+  </sebm-google-map>
+
+</ion-card-content>
+</ion-card>
 
 </ion-content>

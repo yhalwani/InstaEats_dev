@@ -31,7 +31,17 @@
         "cordova-plugin-googlemaps": {
             "API_KEY_FOR_ANDROID": "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
             "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
+        },
+        "cordova-plugin-stripe": {
+            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
+        }
+    }
 }

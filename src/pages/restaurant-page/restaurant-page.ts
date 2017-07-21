@@ -13,18 +13,27 @@ declare let google;
 export class RestaurantPage {
   restaurant : any;
   @ViewChild('map') mapElement : ElementRef;
+  local_map: any;
   map: any;
 
-  Menu: {
+  menuGroup: Array<{
+    menuGroupName: string,
+    menu: Array<{
+      name: string, description: string, price: number
+    }>
+  }>;
+
+  Bundles: Array<{
     bundleName:            string,
     bundleDescription:     string,
+    live:                  boolean,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
         name: string, description: string, price: number, checked: boolean, discount: number
       }>
     }>
-  }
+  }>
 
   constructor(
     public navCtrl: NavController,
@@ -33,42 +42,87 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
+    var restaurantUID = this.restaurant.id;
 
-    var restRef = firebase.database().ref("Restaurant Profiles/");
+    // load map everytime
+    this.getMap();
 
-    restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
-      var restaurantList = [];
-      snapshot.forEach((childSnapshot) => {
-        restaurantList.push(childSnapshot.val());
+    var menuArr = [];
 
+    firebase.database().ref('/MenuItems/' + this.restaurant.restaurantName).on("value", (snapshot) => {
+      var data = snapshot.val();
+
+      for (var menuG in data){
+        var menuGE = {menuGroupName: menuG, menu: []};
+
+        snapshot.child(menuG).forEach((childSnapshot) => {
+          var childData = childSnapshot.val();
+          var menuI = {name: childData.name, description: childData.description, price: childData.price};
+          menuGE.menu.push(menuI);
+          return false;
+        });
+        menuArr.push(menuGE);
+      }
+
+      this.storage.set('restMenu', menuArr);
+      this.menuGroup = menuArr;
+
+    });
+
+    var bundlesArr = [];
+    var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
+    bundleNode.orderByChild("live").equalTo(true).on('value', (snapshot) => {
+
+      // retrieve bundle from firabase and populate the restaurant page for users to see
+      snapshot.forEach( (childSnapshot) => {
+        var bundle = {
+          bundleName: childSnapshot.key,
+          bundleDescription:"",
+          live: false,
+          bundleElem: []
+        }
+        childSnapshot.forEach((childSnapshot) => {
+          if (childSnapshot.key == "description"){
+            bundle.bundleDescription = childSnapshot.val();
+          } else if (childSnapshot.key == "live") {
+            bundle.live = childSnapshot.val();
+          } else {
+            childSnapshot.forEach((childSnapshot) => {
+              var bundleE = {menuGroupName:"", menu: []};
+              childSnapshot.forEach((childSnapshot) => {
+                if(childSnapshot.key == "menuGroupName"){
+                  bundleE.menuGroupName = childSnapshot.val();
+                } else {
+                  childSnapshot.forEach((childSnapshot) => {
+                    var tmp = childSnapshot.val();
+                    var menu = {
+                      name:         tmp.name,
+                      description:  tmp.description,
+                      price:        tmp.price,
+                      checked:      tmp.checked,
+                      discount:     tmp.discount
+                    };
+                    bundleE.menu.push(menu);
+                    return false;
+                  })
+                };
+                return false;
+              });
+              bundle.bundleElem.push(bundleE);
+              return false;
+            });
+          };
+          return false;
+        });
+        bundlesArr.push(bundle);
         return false;
       });
+      this.Bundles = bundlesArr;
     });
 
   }
-//
-// ngAfterViewInit(){
-//   this.loadMap();
-// }
-//
-// IonViewDidLoad(){
-//   this.loadMap();
-// }
-//
-// loadMap(){
-//   let latLng = new google.maps.LatLng(43.6010365, -79.641453);
-//
-//   let mapOptions = {
-//     center: latLng,
-//     zoom: 18,
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   }
-//
-//   this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-// }
 
   favRest(){
-    console.log(this.restaurant);
     this.storage.get('favCount').then((val) => {
       if (val == 0) {
         var list = [];
@@ -105,6 +159,18 @@ export class RestaurantPage {
     return false;
   }
 
+  // populate map with correct restaurant location
+  getMap(){
+    let rest = this.restaurant.id;
+    firebase.database().ref("GeoCoordinates/" + rest).on("value", (snapshot) => {
+      let data = snapshot.val();
+      this.local_map = {
+        lat: data.lat,
+        lng: data.lng,
+        zoom: 13,
+      }
+    });
+  }
 
 
 }
