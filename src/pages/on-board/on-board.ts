@@ -25,6 +25,7 @@ export class OnBoardPage {
   cuisineType:    string = null;
   website:        string = null;
   phoneNumber:    number = null;
+  ownerName:      string = null;
 
   // Address info
   street:     any = null;
@@ -247,6 +248,7 @@ export class OnBoardPage {
         website: this.website,
         phoneNumber: this.phoneNumber,
         address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
+        ownersName: this.ownerName,
         liveStatus: false,   // false by default
 
         hoursOfOperation: {

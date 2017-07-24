@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController, Content } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 
 import firebase from 'firebase';
 
@@ -46,7 +48,7 @@ export class InfoPage {
   sun_open:     any = null;
   sun_close:    any = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController) {
 
     // set cuisineTypes array
     this.cuisineTypes = [
@@ -173,6 +175,8 @@ export class InfoPage {
     var user = firebase.auth().currentUser;
     var uid = user.uid;
 
+    this.saveImageToFirebase(this.image, uid);
+
     ref.child(uid).update({
       email: this.email,
       restaurantName: this.restaurantName,
@@ -195,6 +199,7 @@ export class InfoPage {
         "Sun":    [this.sun_open, this.sun_close]
       }
     });
+
   }
 
   // change user password
@@ -203,6 +208,58 @@ export class InfoPage {
     user.updatePassword(newPassword).then(()=>{
       alert("Password Updated")
     })
+  }
+
+  // Fetch Img from Device
+  addImg(){
+
+    // CameraOptions
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URL
+      this.image = imageData;
+    }, (err) => {
+      // Handle error
+      this.toastCtrl.create({
+        message: err,
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    });
+
+  }
+
+  saveImageToFirebase(imageFile, id){
+    // upload image under images folder/filename
+    let storageRef = firebase.storage().ref("img/" + this.restaurantName);
+    if(imageFile){
+      let task = storageRef.putString(imageFile, 'base64', {contentType: 'image/png'});
+
+      // upload task events of type (next, error, completion)
+      task.on('state_changed', null, null, function(){
+        let downloadURL = task.snapshot.downloadURL;
+
+        // push to database
+        firebase.database().ref('/Restaurant Profiles/').child(id).update({
+          photoUrl: downloadURL
+        });
+
+        let toast = this.toastCtrl.create({
+          message: "Image upload success",
+          duration: 3000,
+          position: 'bottom'
+        })
+        toast.present();
+
+      })
+    }
   }
 
 }

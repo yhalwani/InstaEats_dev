@@ -42,8 +42,12 @@
       <!-- Img Chooser -->
       <ion-item>
         <ion-icon item-left name="image"></ion-icon>
-        <ion-label floating>Choose your icon image</ion-label>
-        <ion-input type="text" value="" [(ngModel)]="image"></ion-input>
+        <ion-buttons center>
+          <button ion-button large clear icon-right color="rdaApp" (click)="addImg()">
+            Add Image
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-buttons>
       </ion-item>
       <!-- Slogan Input -->
       <ion-item>

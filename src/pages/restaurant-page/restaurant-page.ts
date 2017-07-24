@@ -161,7 +161,6 @@ export class RestaurantPage {
   // populate map with correct restaurant location
   getMap(){
     let rest = this.restaurant.id;
-    console.log(rest);
     firebase.database().ref("Restaurant Profiles/" + rest).on("value", (snapshot) => {
       let data = snapshot.val();
       this.local_map = {

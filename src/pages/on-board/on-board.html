@@ -93,6 +93,11 @@
         <!-- Address Input -->
         <ion-item-divider color="light">Contact Info</ion-item-divider>
         <ion-item>
+          <ion-icon item-left name="md-contact"></ion-icon>
+          <ion-label floating>Owner's Name</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="ownerName"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-icon item-left name="call"></ion-icon>
           <ion-label floating>Phone Number</ion-label>
           <ion-input type="tel" value="" [(ngModel)]="phoneNumber"></ion-input>

@@ -40,7 +40,7 @@ export class DiscountsPage {
     bundleNode.once('value', (snapshot) => {
 
       // For each bundle the rest has loop
-      snapshot.forEach( (childSnapshot) => {
+      snapshot.forEach((childSnapshot) => {
 
         // Tmp dummy bundle
         var bundle = {
