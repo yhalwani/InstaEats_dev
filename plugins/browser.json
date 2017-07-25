@@ -28,9 +28,6 @@
         "cordova-plugin-firebase": {
             "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
         },
-        "cordova-plugin-googlemaps": {
-            "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
-        },
         "cordova-plugin-stripe": {
             "PACKAGE_NAME": "com.ionicframework.blankapp2479223"
         },

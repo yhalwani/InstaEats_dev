@@ -60,14 +60,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-googlemaps/www/googlemaps-cdv-plugin.js",
-        "id": "cordova-plugin-googlemaps.cordova-plugin-googlemaps",
-        "pluginId": "cordova-plugin-googlemaps",
-        "clobbers": [
-            "cordova-plugin-googlemaps"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
         "id": "cordova-plugin-stripe.stripe",
         "pluginId": "cordova-plugin-stripe",
@@ -122,7 +114,6 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-firebase": "0.1.20",
-    "cordova-plugin-googlemaps": "1.4.0",
     "cordova-plugin-stripe": "1.4.0",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.4.1"
