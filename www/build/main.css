@@ -26606,14 +26606,59 @@ ion-navbar.toolbar {
   }
 }
 
+page-favorites .image {
+  border: 2px solid #fff;
+  border-radius: 5% 5%;
+  box-shadow: 0 0 10px gray;
+  display: inline-block;
+}
+
+page-favorites .avatar {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
 page-menu .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
   border-bottom-color: #fff;
   box-shadow: inset 0 -1px 0 0 #fff;
 }
 
 page-nearMe #map {
-  height: 400px;
-  transition: opacity 150ms ease-in;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+page-nearMe .item {
+  padding-left: 10px !important;
+}
+
+page-nearMe .card {
+  height: 100%;
+  width: 100%;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+page-nearMe .avatar {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 20px !important;
+  max-height: 50px !important;
+}
+
+page-nearMe .imageborder {
+  border: 2px solid #fff;
+  border-radius: 5% 5%;
+  box-shadow: 0 0 10px gray;
+  display: inline-block;
+}
+
+page-nearMe .header {
+  margin: 0px !important;
+  padding: 0px !important;
 }
 
 page-on-board .flex-container {
@@ -26642,6 +26687,24 @@ page-on-board .item-datetime ion-datetime {
   text-align: center;
 }
 
+page-about .item {
+  padding-left: 5px !important;
+}
+
+page-about .avatar {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
+page-about .imageborder {
+  border: 2px solid #fff;
+  border-radius: 5% 5%;
+  box-shadow: 0 0 10px gray;
+  display: inline-block;
+}
+
 .ios page-restaurant-page .scroll, .md page-restaurant-page .scroll {
   height: 100%;
 }
@@ -26649,4 +26712,14 @@ page-on-board .item-datetime ion-datetime {
 .ios page-restaurant-page #map, .md page-restaurant-page #map {
   width: 100%;
   height: 100%;
+  position: absolute;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.ios page-restaurant-page .imageborder, .md page-restaurant-page .imageborder {
+  border: 2px solid #fff;
+  border-radius: 5% 5%;
+  box-shadow: 0 0 10px gray;
+  display: inline-block;
 }
