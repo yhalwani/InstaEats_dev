@@ -16,16 +16,10 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-firebase": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-stripe": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-whitelist": {

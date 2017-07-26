@@ -41,14 +41,6 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova-plugin-firebase.FirebasePlugin",
-        "file": "plugins/cordova-plugin-firebase/www/firebase.js",
-        "pluginId": "cordova-plugin-firebase",
-        "clobbers": [
-            "FirebasePlugin"
-        ]
-    },
-    {
         "id": "cordova-plugin-splashscreen.SplashScreen",
         "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
         "pluginId": "cordova-plugin-splashscreen",
@@ -62,14 +54,6 @@ module.exports = [
         "pluginId": "cordova-plugin-statusbar",
         "clobbers": [
             "window.StatusBar"
-        ]
-    },
-    {
-        "id": "cordova-plugin-stripe.stripe",
-        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
-        "pluginId": "cordova-plugin-stripe",
-        "clobbers": [
-            "cordova.plugins.stripe"
         ]
     },
     {
@@ -89,10 +73,8 @@ module.exports.metadata =
     "cordova-plugin-camera": "2.4.1",
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-device": "1.1.4",
-    "cordova-plugin-firebase": "0.1.20",
-    "cordova-plugin-splashscreen": "4.0.2",
+    "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
-    "cordova-plugin-stripe": "1.4.0",
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1"
 };

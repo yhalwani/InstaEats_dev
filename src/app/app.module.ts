@@ -15,18 +15,20 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyAfjgkS5zm-LsPjbaikBlDd9tihvQTBRTg",
-  authDomain: "instaeats-a06a3.firebaseapp.com",
-  databaseURL: "https://instaeats-a06a3.firebaseio.com",
-  projectId: "instaeats-a06a3",
-  storageBucket: "instaeats-a06a3.appspot.com",
-  messagingSenderId: "538741031345"
+  apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
+  authDomain: "test1-51a17.firebaseapp.com",
+  databaseURL: "https://test1-51a17.firebaseio.com",
+  projectId: "test1-51a17",
+  storageBucket: "test1-51a17.appspot.com",
+  messagingSenderId: "718835534496"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 
 import { MyApp }                from './app.component';
+import { SplashContentPage }    from './app.component';
+
 import { TabsPage }             from '../pages/tabs/tabs';
 
 import { LoginPage }            from '../pages/login/login';
@@ -43,6 +45,7 @@ import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-port
 
 import { MenuPage }       from '../pages/menu/menu';
 import { ModalContentPage } from '../pages/menu/menu';
+
 import { InfoPage }       from '../pages/info/info';
 import { DiscountsPage }  from '../pages/discounts/discounts';
 
@@ -50,6 +53,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
 @NgModule({
   declarations: [
     MyApp,
+    SplashContentPage,
     TabsPage,
     LoginPage,
     SignupPage,
@@ -75,6 +79,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    SplashContentPage,
     TabsPage,
     LoginPage,
     SignupPage,
