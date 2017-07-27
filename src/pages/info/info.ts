@@ -156,7 +156,7 @@ export class InfoPage {
         this.cuisineType    = "cuisineType";
         this.website        = "website";
         this.phoneNumber    =  null;
-        this.image          = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FnoImageAvailable.png?alt=media&token=d30f37e9-c408-4da9-b911-dfe411d34cbe"
+        // this.image          = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FnoImageAvailable.png?alt=media&token=d30f37e9-c408-4da9-b911-dfe411d34cbe"
 
         this.street         = "street";
         this.city           = "city";
@@ -175,12 +175,10 @@ export class InfoPage {
     var user = firebase.auth().currentUser;
     var uid = user.uid;
 
-    this.saveImageToFirebase(this.image, uid);
-
     ref.child(uid).update({
       email: this.email,
       restaurantName: this.restaurantName,
-      photoUrl: this.image,
+      // photoUrl: this.image,
       slogan: this.slogan,
       description: this.description,
       cuisineType: this.cuisineType,
@@ -200,6 +198,10 @@ export class InfoPage {
       }
     });
 
+    if(this.image != null){
+      this.saveImageToFirebase(this.image, uid);
+    }
+
   }
 
   // change user password
@@ -212,7 +214,6 @@ export class InfoPage {
 
   // Fetch Img from Device
   addImg(){
-
     // CameraOptions
     const options: CameraOptions = {
       quality: 100,
@@ -233,33 +234,37 @@ export class InfoPage {
         position: 'bottom'
       }).present();
     });
-
   }
 
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
     let storageRef = firebase.storage().ref("img/" + this.restaurantName);
-    if(imageFile){
-      let task = storageRef.putString(imageFile, 'base64', {contentType: 'image/png'});
+    let task = storageRef.putString(imageFile, 'base64', {contentType: 'image/png'});
 
-      // upload task events of type (next, error, completion)
-      task.on('state_changed', null, null, function(){
-        let downloadURL = task.snapshot.downloadURL;
+    // upload task events of type (next, error, completion)
+    task.on('state_changed', null, function(err){
+      let url = firebase.auth().currentUser.photoURL;
 
-        // push to database
-        firebase.database().ref('/Restaurant Profiles/').child(id).update({
-          photoUrl: downloadURL
-        });
+      // push to database
+      firebase.database().ref('/Restaurant Profiles/').child(id).update({
+        photoUrl: url
+      });
+    }, function(){
+      let downloadURL = task.snapshot.downloadURL;
 
-        let toast = this.toastCtrl.create({
-          message: "Image upload success",
-          duration: 3000,
-          position: 'bottom'
-        })
-        toast.present();
+      // push to database
+      firebase.database().ref('/Restaurant Profiles/').child(id).update({
+        photoUrl: downloadURL
+      });
 
+      let toast = this.toastCtrl.create({
+        message: "Image upload success",
+        duration: 3000,
+        position: 'bottom'
       })
-    }
+      toast.present();
+
+    })
   }
 
 }

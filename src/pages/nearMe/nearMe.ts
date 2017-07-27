@@ -31,6 +31,34 @@ export class NearMePage {
   distance: number = 5000;  // default radius 5 km
 
   constructor(public navCtrl: NavController, public events: Events, public storage: Storage, public toastCtrl: ToastController) {
+
+    let restRef = firebase.database().ref("Restaurant Profiles/");
+
+    restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
+      let restaurantList = [];
+      let coords = [];
+      snapshot.forEach((childSnapshot) => {
+        restaurantList.push(childSnapshot.val());
+        this.restList = restaurantList;
+
+        // get coordinates of live restauarants only
+        let data = childSnapshot.val();
+        let obj = {name: data.restaurantName, lat: data.coordinates.lat, lng: data.coordinates.lng, address: data.address};
+        coords.push(obj);
+        this.locations = coords;
+        
+        return false;
+      });
+    });
+
+    // TODO: Make two lists. One for live restaurants and second for offline restaurant
+    // get coordinates of all
+    // for live restaurants have red markers
+    // for offline restaurants have gray markers
+
+  }
+
+  doRefresh(refresher){
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
@@ -50,12 +78,9 @@ export class NearMePage {
         return false;
       });
     });
-
-    // TODO: Make two lists. One for live restaurants and second for offline restaurant
-    // get coordinates of all
-    // for live restaurants have red markers
-    // for offline restaurants have gray markers
-
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 {
     "name": "InstaEats",
     "author": "Retoll Engineering Team",
-    "description": "InstaEats: An Ionic project",
+    "description": "Local restaurants running at-the-moment deals.",
     "homepage": "http://www.instaeats.com/",
     "private": true,
     "scripts": {

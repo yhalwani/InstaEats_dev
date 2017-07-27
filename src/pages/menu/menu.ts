@@ -48,6 +48,20 @@ export class MenuPage {
       });
   };
 
+  // Push menu to firebase
+  updateMenu(){
+    let uid = firebase.auth().currentUser.uid;
+    let menuNode = firebase.database().ref("MenuItems");
+    let length = this.menuGroup.length;
+
+    let childNode = menuNode.child(uid);
+    for (var i = 0; i < length; i++) {
+      childNode.update({
+        [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
+      });
+    }
+  }
+
   addMenuGroup(){
     var menuItem = {name : "", description: "", price: 0.00};
     var menuGroupElem = {menuGroupName: "", menu: [menuItem]};

@@ -41,10 +41,12 @@
       <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
       <!-- Img Chooser -->
       <ion-item>
-        <ion-icon item-left name="image"></ion-icon>
-        <ion-buttons center>
-          <button ion-button large clear icon-right color="rdaApp" (click)="addImg()">
-            Add Image
+        <ion-avatar item-left>
+          <img src="{{image}}">
+        </ion-avatar>
+        <ion-buttons>
+          <button ion-button clear icon-right color="rdaApp" (click)="addImg()">
+            Upload Image
             <ion-icon name="add"></ion-icon>
           </button>
         </ion-buttons>
@@ -66,7 +68,7 @@
         <ion-icon item-left name="restaurant"></ion-icon>
         <ion-label floating>Cuisine Type</ion-label>
         <ion-select [(ngModel)]="cuisineType">
-          <ion-option *ngFor="let cuisine of cuisineTypes; let i = index" value="{{cuisine.id}}">
+          <ion-option *ngFor="let cuisine of cuisineTypes; let i = index" value="{{cuisine.type}}">
             {{cuisine.type}}
           </ion-option>
         </ion-select>
@@ -99,7 +101,7 @@
         <ion-icon item-left></ion-icon>
         <ion-label floating>Province</ion-label>
         <ion-select [(ngModel)]="province">
-          <ion-option *ngFor="let province of provinces; let i = index" value="{{province.id}}">
+          <ion-option *ngFor="let province of provinces; let i = index" value="{{province.name}}">
             {{province.name}}
           </ion-option>
         </ion-select>
