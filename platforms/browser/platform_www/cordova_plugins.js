@@ -52,28 +52,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-plugin-firebase/www/firebase-browser.js",
-        "id": "cordova-plugin-firebase.FirebasePlugin",
-        "pluginId": "cordova-plugin-firebase",
-        "clobbers": [
-            "FirebasePlugin"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
-        "id": "cordova-plugin-stripe.stripe",
-        "pluginId": "cordova-plugin-stripe",
-        "clobbers": [
-            "cordova.plugins.stripe"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-stripe/src/browser/CordovaStripe.js",
-        "id": "cordova-plugin-stripe.CordovaStripe",
-        "pluginId": "cordova-plugin-stripe",
-        "runs": true
-    },
-    {
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "id": "cordova-plugin-camera.Camera",
         "pluginId": "cordova-plugin-camera",
@@ -109,12 +87,10 @@ module.exports.metadata =
 {
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-device": "1.1.4",
-    "cordova-plugin-splashscreen": "4.0.2",
+    "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
-    "cordova-plugin-firebase": "0.1.20",
-    "cordova-plugin-stripe": "1.4.0",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.4.1"
 }

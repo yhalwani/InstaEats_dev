@@ -14,3 +14,44 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+#custom-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 100000;
+  overflow: hidden;
+  background-color: #da3937;
+  font-family: sans-serif;
+}
+
+#canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  overflow: hidden;
+}
+
+.modal-wrapper {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+@keyframes fadeInAndSpin {
+  100% {
+    opacity: 1;
+    transform: rotate3d(1, 1, 0, 0deg);
+  }
+}
+
+@keyframes fadeIn {
+  100% {
+    opacity: 1;
+  }
+}

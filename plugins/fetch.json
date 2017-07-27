@@ -47,26 +47,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-firebase": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-firebase"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-stripe": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-stripe"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-camera": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-camera"
+            "id": "cordova-plugin-camera@^2.4.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -74,7 +58,7 @@
     "cordova-plugin-compat": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat@^1.1.0"
+            "id": "cordova-plugin-compat"
         },
         "is_top_level": false,
         "variables": {}

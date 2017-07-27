@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events, LoadingController, ToastController }  from 'ionic-angular';
+import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage }      from '@ionic/storage';
@@ -11,7 +11,12 @@ import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
 
-import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal'
+import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
+
+declare var Snap,svg,min,js: any;
+declare var Snap,svg,easing,min,js: any;
+declare var svgTween,js: any;
+declare var svgAnimation,js: any;
 
 @Component({
   templateUrl: 'app.html'
@@ -33,6 +38,7 @@ export class MyApp {
     public events: Events,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
+    public modalCtrl: ModalController,
     public storage: Storage
   ) {
 
@@ -84,7 +90,13 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+
+      // this.splashScreen.show();
+      // this.splashScreen.hide();
+
+      let splash = this.modalCtrl.create(SplashContentPage);
+      splash.present();
+
       this.storage.ready().then(() => {
         this.storage.length().then((numOfKeys) => {
           if (numOfKeys < 1) {
@@ -135,5 +147,47 @@ export class MyApp {
     loader.present();
   };
 
+};
 
-}
+
+@Component({
+  template: `
+  <ion-content>
+
+    <div id="custom-overlay">
+      <div id="canvas"></div>
+    </div>
+
+  </ion-content>
+  `
+})
+export class SplashContentPage {
+
+  constructor(
+    public viewCtrl: ViewController,
+    public splashScreen: SplashScreen
+  ) {
+
+  };
+
+  ionViewDidEnter() {
+
+    this.splashScreen.hide();
+
+    (function() {
+      var animation = new svgAnimation({
+        canvas: 		  Snap('#canvas'),
+        svg: 					'assets/svg/InstaEats-ClockWork.svg',
+        data: 				'assets/svg/json/clockWork.json',
+        duration: 		5000,
+        steps: 				1
+      });
+    })();
+
+    setTimeout(() => {
+      this.viewCtrl.dismiss();
+    }, 6000);
+
+  }
+
+};

@@ -27,6 +27,8 @@ firebase.initializeApp(firebaseConfig);
 
 
 import { MyApp }                from './app.component';
+import { SplashContentPage }    from './app.component';
+
 import { TabsPage }             from '../pages/tabs/tabs';
 
 import { LoginPage }            from '../pages/login/login';
@@ -43,6 +45,7 @@ import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-port
 
 import { MenuPage }       from '../pages/menu/menu';
 import { ModalContentPage } from '../pages/menu/menu';
+
 import { InfoPage }       from '../pages/info/info';
 import { DiscountsPage }  from '../pages/discounts/discounts';
 
@@ -50,6 +53,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
 @NgModule({
   declarations: [
     MyApp,
+    SplashContentPage,
     TabsPage,
     LoginPage,
     SignupPage,
@@ -75,6 +79,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    SplashContentPage,
     TabsPage,
     LoginPage,
     SignupPage,
