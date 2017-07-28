@@ -28,7 +28,7 @@ export class MenuPage {
       let user = firebase.auth().currentUser;
       var menuArr = [];
 
-      firebase.database().ref('/MenuItems/' + user.uid).on("value", (snapshot) => {
+      firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
         var data = snapshot.val();
 
         for (var menuG in data){
@@ -258,11 +258,11 @@ export class ModalContentPage {
     });
 
 
-    this.storage.get('bundles').then((list) => {
-      list.push(this.bundleItem);
-      this.storage.set('bundles', list);
-      this.events.publish('bundle:created', list);
-    });
+    // this.storage.get('bundles').then((list) => {
+    //   list.push(this.bundleItem);
+    //   this.storage.set('bundles', list);
+    //   this.events.publish('bundle:created', list);
+    // });
 
     // reference to firebase database and current user
     var ref = firebase.database().ref("/Bundles");

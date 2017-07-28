@@ -26,6 +26,9 @@ export class RestaurantPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
+    timeStarted:           any,
+    duration:              any,
+    countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -48,7 +51,7 @@ export class RestaurantPage {
 
     var menuArr = [];
 
-    firebase.database().ref('/MenuItems/' + restaurantUID).on("value", (snapshot) => {
+    firebase.database().ref('/MenuItems/' + restaurantUID).once("value", (snapshot) => {
       var data = snapshot.val();
 
       for (var menuG in data){
@@ -70,7 +73,7 @@ export class RestaurantPage {
 
     var bundlesArr = [];
     var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
-    bundleNode.orderByChild("live").equalTo(true).on('value', (snapshot) => {
+    bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
 
       // retrieve bundle from firabase and populate the restaurant page for users to see
       snapshot.forEach( (childSnapshot) => {
@@ -78,6 +81,9 @@ export class RestaurantPage {
           bundleName: childSnapshot.key,
           bundleDescription:"",
           live: false,
+          timeStarted: 0,
+          duration: 0,
+          countDown: {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
           bundleElem: []
         }
         childSnapshot.forEach((childSnapshot) => {
@@ -85,6 +91,10 @@ export class RestaurantPage {
             bundle.bundleDescription = childSnapshot.val();
           } else if (childSnapshot.key == "live") {
             bundle.live = childSnapshot.val();
+          } else if (childSnapshot.key == "startedAt") {
+            bundle.timeStarted = childSnapshot.val();
+          } else if (childSnapshot.key == "duration") {
+            bundle.duration = childSnapshot.val();
           } else {
             childSnapshot.forEach((childSnapshot) => {
               var bundleE = {menuGroupName:"", menu: []};
@@ -117,6 +127,7 @@ export class RestaurantPage {
         return false;
       });
       this.Bundles = bundlesArr;
+      this.Bundles.forEach(this.setTimers);
     });
 
   }
@@ -147,7 +158,7 @@ export class RestaurantPage {
       };
     });
     this.events.publish('restaurant:favorited');
-  }
+  };
 
   checkArrayFor(arr, obj){
     for (var x = 0; x < arr.length; x++){
@@ -156,7 +167,7 @@ export class RestaurantPage {
       }
     }
     return false;
-  }
+  };
 
   // populate map with correct restaurant location
   getMap(){
@@ -172,7 +183,29 @@ export class RestaurantPage {
         zoom: 13,
       }
     });
-  }
+  };
+
+  setTimers(bundle){
+
+    var nowCheck = new Date().getTime() - bundle.timeStarted;
+
+    if ( nowCheck > bundle.duration ) {
+      clearInterval(bundle.countDown.intvarlID);
+      bundle.countDown.hours = 0;
+      bundle.countDown.minutes = 0;
+      bundle.countDown.seconds = 0;
+    } else {
+      bundle.countDown.intvarlID = setInterval(() => {
+        var now = new Date().getTime();
+        var diff = now - bundle.timeStarted;
+
+        bundle.countDown.hours = Math.floor((bundle.duration - diff) / (1000 * 60 * 60));
+        bundle.countDown.minutes =  Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60));
+        bundle.countDown.seconds = Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
+      }, 1000);
+    };
+
+  };
 
 
 }

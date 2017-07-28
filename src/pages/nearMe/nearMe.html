@@ -90,9 +90,17 @@
           <h2>{{rest.restaurantName}}</h2>
           <p>{{rest.slogan}}</p>
           <p>{{rest.description}}</p>
-          <button ion-button color="rdaApp" clear icon-only item-right>
-            <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
-          </button>
+
+          <ion-buttons item-right>
+            <button ion-button color="rdaApp" clear icon-only item-right>
+              <ion-icon *ngIf="rest.liveStatus" name="radio-button-on"></ion-icon>
+              <ion-icon *ngIf="!rest.liveStatus" name="radio-button-off"></ion-icon>
+            </button>
+            <button ion-button color="rdaApp" clear icon-only item-right>
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+          </ion-buttons>
+
         </ion-item>
       </ion-card-content>
     </ion-card>
