@@ -28,7 +28,7 @@ export class MenuPage {
       let user = firebase.auth().currentUser;
       var menuArr = [];
 
-      firebase.database().ref('/MenuItems/' + user.uid).on("value", (snapshot) => {
+      firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
         var data = snapshot.val();
 
         for (var menuG in data){

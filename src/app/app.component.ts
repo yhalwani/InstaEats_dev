@@ -13,10 +13,9 @@ import { SignupPage }   from '../pages/signup/signup';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
-declare var Snap,svg,min,js: any;
 declare var Snap,svg,easing,min,js: any;
-declare var svgTween,js: any;
-declare var svgAnimation,js: any;
+declare var svgTween: any;
+declare var svgAnimation: any;
 
 @Component({
   templateUrl: 'app.html'
