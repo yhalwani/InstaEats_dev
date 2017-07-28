@@ -1,0 +1,26 @@
+page-intro {
+
+  ion-content{
+    background-color: #da3937 !important;
+  }
+
+  .logoSection {
+    height: 10vh;
+  }
+
+  ion-slides {
+    height: 70vh;
+  }
+  .actionSection {
+    height: 20vh;
+  }
+
+  h5,p {
+    color: white;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: white;
+  }
+
+}

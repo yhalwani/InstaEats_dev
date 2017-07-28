@@ -29,6 +29,8 @@ firebase.initializeApp(firebaseConfig);
 import { MyApp }                from './app.component';
 import { SplashContentPage }    from './app.component';
 
+import { IntroPage }            from '../pages/intro/intro';
+
 import { TabsPage }             from '../pages/tabs/tabs';
 
 import { LoginPage }            from '../pages/login/login';
@@ -39,20 +41,21 @@ import { RecentPage }           from '../pages/recent/recent';
 import { FavoritesPage }        from '../pages/favorites/favorites';
 import { NearMePage }           from '../pages/nearMe/nearMe';
 
-import { RestaurantPage }   from '../pages/restaurant-page/restaurant-page';
+import { RestaurantPage }       from '../pages/restaurant-page/restaurant-page';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
-import { MenuPage }       from '../pages/menu/menu';
-import { ModalContentPage } from '../pages/menu/menu';
+import { MenuPage }             from '../pages/menu/menu';
+import { ModalContentPage }     from '../pages/menu/menu';
 
-import { InfoPage }       from '../pages/info/info';
-import { DiscountsPage }  from '../pages/discounts/discounts';
+import { InfoPage }             from '../pages/info/info';
+import { DiscountsPage }        from '../pages/discounts/discounts';
 
 
 @NgModule({
   declarations: [
     MyApp,
+    IntroPage,
     SplashContentPage,
     TabsPage,
     LoginPage,
@@ -79,6 +82,7 @@ import { DiscountsPage }  from '../pages/discounts/discounts';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    IntroPage,
     SplashContentPage,
     TabsPage,
     LoginPage,

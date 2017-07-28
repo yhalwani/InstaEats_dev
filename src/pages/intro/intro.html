@@ -1,0 +1,35 @@
+<ion-content>
+  <ion-grid class="logoSection">
+    <ion-row>
+      <ion-col col-8 offset-2><img src="assets/img/InstaEats-FullLogo.png"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-slides pager="true" parallax="true">
+    <ion-slide>
+      <img width="60%" src="assets/img/Artboard1.png">
+      <h5>Find your local restaurant running at the moment deals.</h5>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/Artboard2.png">
+      <h5>Use InstaEats to save up to 50% on your next meal.</h5>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/Artboard3.png">
+      <h5>No need to hang on to old cupons, fresh deals are generated daily.</h5>
+    </ion-slide>
+  </ion-slides>
+  
+  <ion-grid class="actionSection">
+    <ion-row>
+      <ion-col col-12><button ion-button full color="secondary"> I'M NEW </button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6><button ion-button block outline  color="light">LOG IN</button></ion-col>
+      <ion-col col-6><button ion-button block outline  color="light" (click)="navHome()">SKIP</button></ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
