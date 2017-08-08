@@ -37,9 +37,47 @@ page-nearMe {
   }
 
   // class for card header
-  .header{
+  .header {
     margin: 0px !important;
     padding: 0px !important;
-
   }
+
+  .header-icon-md {
+    max-width: 40px;
+    max-height: 40px;
+    margin-left: 10%;
+  }
+
+  .header-icon-ios {
+    max-width: 40px;
+    max-height: 40px;
+    margin: auto;
+  }
+
+  .toolbar-content-md {
+    display: inline-flex;
+    vertical-align: middle;
+    .title-md {
+      max-width: 80px;
+      min-width: 80px;
+      .toolbar-title-md {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: auto;
+      }
+    }
+  }
+
+  .toolbar-content-ios {
+    display: inline-flex;
+    vertical-align: middle;
+    .title-ios {
+      padding-left: 12%;
+      width: auto;
+      .toolbar-title-ios {
+        padding: 0px;
+      }
+    }
+  }
+
 }

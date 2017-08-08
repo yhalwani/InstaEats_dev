@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events, ToastController } from 'ionic-angular';
+import { NavController, Events, ToastController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 import firebase from 'firebase';
@@ -30,7 +30,15 @@ export class NearMePage {
   maxLimit: number = 100000; // 100 km
   distance: number = 5000;  // default radius 5 km
 
-  constructor(public navCtrl: NavController, public events: Events, public storage: Storage, public toastCtrl: ToastController) {
+  plat: any;
+
+  constructor(
+    public navCtrl: NavController,
+    public events: Events,
+    public storage: Storage,
+    public toastCtrl: ToastController,
+    public plt: Platform
+  ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
@@ -50,6 +58,12 @@ export class NearMePage {
         return false;
       });
     });
+
+    if(this.plt.is('ios')){
+      this.plat = "header-icon-ios";
+    } else {
+      this.plat = "header-icon-md";
+    };
 
     // TODO: Make two lists. One for live restaurants and second for offline restaurant
     // get coordinates of all
@@ -104,31 +118,32 @@ export class NearMePage {
   }
 
   loadMap(){
-    // Set user location
-    if(!navigator.geolocation){
-
-      // if (error.code == error.PERMISSION_DENIED)
+    // // Set user location
+    // if(!navigator.geolocation){
+    //
+    //   // if (error.code == error.PERMISSION_DENIED)
       this.map = {
         // location of development
         lat: 43.6011579,
         lng: -79.64162270000001,
-        zoom: 8
+        zoom: 8,
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
       };
 
-    } else {
-
-      navigator.geolocation.getCurrentPosition((position) => {
-
-        this.map = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          zoom: 11,
-          iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-        };
-
-      });
-
-    };
+    // } else {
+    //
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //
+    //     this.map = {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude,
+    //       zoom: 11,
+    //       iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
+    //     };
+    //
+    //   });
+    //
+    // };
 
   };
 
