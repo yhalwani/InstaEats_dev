@@ -7,6 +7,7 @@ import { Storage }      from '@ionic/storage';
 import firebase         from 'firebase';
 
 import { TabsPage }     from '../pages/tabs/tabs';
+import { AccountPage }  from '../pages/account/account';
 import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
@@ -58,7 +59,7 @@ export class MyApp {
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
-        {title: 'My Account', component: this.rootPage },
+        {title: 'My Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });

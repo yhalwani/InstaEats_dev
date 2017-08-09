@@ -5,21 +5,45 @@ page-nearMe {
     position: absolute;
   }
 
+  #buttons {
+    margin: 0px;
+    width: auto;
+    .button {
+      margin: 0px;
+    }
+  }
+
+  #mapViewList {
+    margin: 0px;
+    width: 100%;
+  }
+
+  .scroll-content {
+    overflow-y: hidden;
+  }
+
+
   // class for ion-item
-  .item{
+  .item {
     padding-left: 10px !important;
   }
 
+  .label {
+    margin: 0px;
+    .label-md {
+      margin: 0px;
+    }
+  }
+
   // class for cards that hold restaurant info
-  .card
-  {
+  .card {
     height: 100%;
     width: 100%;
     margin: 0px !important;
     padding: 0px !important;
   }
 
-  .avatar{
+  .avatar {
     width:100% !important;
     height: 100% !important;
     max-width: 20px !important;  //any size
@@ -45,39 +69,23 @@ page-nearMe {
   .header-icon-md {
     max-width: 40px;
     max-height: 40px;
-    margin-left: 10%;
+    margin: 0 auto;
   }
 
   .header-icon-ios {
     max-width: 40px;
     max-height: 40px;
-    margin: auto;
+    margin: 0 auto;
   }
 
   .toolbar-content-md {
     display: inline-flex;
     vertical-align: middle;
-    .title-md {
-      max-width: 80px;
-      min-width: 80px;
-      .toolbar-title-md {
-        padding-left: 0px;
-        padding-right: 0px;
-        width: auto;
-      }
-    }
   }
 
   .toolbar-content-ios {
     display: inline-flex;
     vertical-align: middle;
-    .title-ios {
-      padding-left: 12%;
-      width: auto;
-      .toolbar-title-ios {
-        padding: 0px;
-      }
-    }
   }
 
 }
