@@ -1,6 +1,5 @@
 <ion-tabs selectedIndex = "1" color = "rdaApp">
-  <ion-tab [root]="tab2Root" tabTitle="Recent" tabIcon="clock"></ion-tab>
-  <ion-tab [root]="tab1Root" tabTitle="Near Me" tabIcon="pin"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
-  <ion-tab show={{loggedIn}} [root]="tab4Root" tabTitle="Account" tabIcon="person"></ion-tab>
+
+  <ion-tab *ngFor="let tab of tabs" [root]="tab.component" tabTitle={{tab.title}} tabIcon={{tab.icon}}></ion-tab>
+
 </ion-tabs>

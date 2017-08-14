@@ -16,6 +16,8 @@ import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
+import { User }         from '../providers/user';
+
 declare var Snap,svg,min,js: any;
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween,js: any;
@@ -42,7 +44,8 @@ export class MyApp {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
-    public storage: Storage
+    public storage: Storage,
+    public userService: User
   ) {
 
     this.initializeApp();
@@ -90,8 +93,6 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
 
       // this.statusBar.styleDefault();
       // this.splashScreen.show();
@@ -113,6 +114,10 @@ export class MyApp {
         });
       });
 
+      console.log("App Launch " + this.loggedIn);
+      this.events.publish('app:launch', this.loggedIn);
+
+
     });
   };
 
@@ -122,8 +127,11 @@ export class MyApp {
     if(page.component === this.loggedIn) {
       firebase.auth().signOut().then(() =>{
         this.loggedIn = false;
+        this.userService.user = {username: "", loggedIn: this.loggedIn};
+        this.nav.setRoot(TabsPage)
         this.presentLoading();
         this.events.publish('user:loggedOut', false);
+
       }).catch((error) => {
         this.errToast(error.message);
       });

@@ -26,31 +26,32 @@ export const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-import { MyApp }                      from './app.component';
-import { SplashContentPage }          from './app.component';
+import { MyApp }                        from './app.component';
+import { SplashContentPage }            from './app.component';
 
-import { IntroPage }                  from '../pages/intro/intro';
+import { IntroPage }                    from '../pages/intro/intro';
 
-import { TabsPage }                   from '../pages/tabs/tabs';
+import { TabsPage }                     from '../pages/tabs/tabs';
 
-import { LoginPage }                  from '../pages/login/login';
-import { SignupPage }                 from '../pages/signup/signup';
-import { OnBoardPage }                from '../pages/on-board/on-board';
+import { LoginPage }                    from '../pages/login/login';
+import { SignupPage }                   from '../pages/signup/signup';
+import { OnBoardPage }                  from '../pages/on-board/on-board';
 
-import { AccountPage }                from '../pages/account/account';
-import { RecentPage }                 from '../pages/recent/recent';
-import { FavoritesPage }              from '../pages/favorites/favorites';
-import { NearMePage }                 from '../pages/nearMe/nearMe';
+import { AccountPage }                  from '../pages/account/account';
+import { RecentPage }                   from '../pages/recent/recent';
+import { FavoritesPage }                from '../pages/favorites/favorites';
+import { NearMePage }                   from '../pages/nearMe/nearMe';
 
-import { RestaurantPage }             from '../pages/restaurant-page/restaurant-page';
+import { RestaurantPage, DiscountPage } from '../pages/restaurant-page/restaurant-page';
 
-import { RestaurantPortalPage }       from '../pages/restaurant-portal/restaurant-portal';
+import { RestaurantPortalPage }         from '../pages/restaurant-portal/restaurant-portal';
 
-import { MenuPage }                   from '../pages/menu/menu';
-import { ModalContentPage }           from '../pages/menu/menu';
+import { MenuPage, ModalContentPage }   from '../pages/menu/menu';
 
-import { InfoPage }                   from '../pages/info/info';
-import { DiscountsPage }              from '../pages/discounts/discounts';
+import { InfoPage }                     from '../pages/info/info';
+import { DiscountsPage }                from '../pages/discounts/discounts';
+
+import { User }                         from '../providers/user';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { DiscountsPage }              from '../pages/discounts/discounts';
     FavoritesPage,
     NearMePage,
     RestaurantPage,
+    DiscountPage,
     OnBoardPage,
     RestaurantPortalPage,
     MenuPage,
@@ -94,6 +96,7 @@ import { DiscountsPage }              from '../pages/discounts/discounts';
     FavoritesPage,
     NearMePage,
     RestaurantPage,
+    DiscountPage,
     OnBoardPage,
     RestaurantPortalPage,
     MenuPage,
@@ -103,6 +106,7 @@ import { DiscountsPage }              from '../pages/discounts/discounts';
   ],
   providers: [
     Camera,
+    User,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

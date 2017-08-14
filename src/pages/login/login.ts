@@ -3,6 +3,8 @@ import { NavController, Events, LoadingController, ToastController } from 'ionic
 import { TabsPage } from '../tabs/tabs';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 
+import { User } from '../../providers/user';
+
 import firebase from 'firebase';
 
 @Component({
@@ -21,7 +23,8 @@ export class LoginPage {
     public navCtrl: NavController,
     public events: Events,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public userService: User
   ) {
       this.userType = "User";
       this.userToggle = false;
@@ -50,6 +53,7 @@ export class LoginPage {
           else if(this.userType == "User")
           {
             this.events.publish('user:loggedIn', true, auth.currentUser.displayName);
+            this.userService.user = {username: auth.currentUser.displayName, loggedIn: true};
             this.presentLoading(this.userToggle);
           }
           // if usertype is restaurant and exists in Restauarant Profiles child node -> login as restaurant

@@ -27,8 +27,38 @@
     <!-- </ion-card-header> -->
   </ion-card>
 
+
+<!--Mini Discount Card Template-->
+  <ion-item-divider text-center color="background"> Mini Discount Card Template </ion-item-divider>
+
+  <ion-list *ngFor="let bundle of Bundles; let i = index;">
+  <ion-card class="widget mini" (click)="goToDiscount(i)">
+    <div class="rip top-edge"><div class="inner"></div></div>
+    <div class="top">
+
+      <ion-item>
+        <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
+        </ion-icon>
+        <p>Live</p>
+        <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+
+        <div item-right>
+          <p text-right class="-bold" style="text-decoration: line-through;">$100</p>
+          <h1 class="-bold">$75</h1>
+        </div>
+      </ion-item>
+      <ion-item>
+        <h1 ion-text text-right style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
+        <p ion-text text-right style="color: rgba(0, 0, 0, 0.5);">Click here for details!</p>
+      </ion-item>
+
+    </div>
+    <div class="rip"><div class="inner"></div></div>
+  </ion-card>
+  </ion-list>
+
   <!-- Discounts Card -->
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-header>
       <h2 style="color:red;">Discounts</h2>
     </ion-card-header>
@@ -87,7 +117,7 @@
       </ion-card>
 
     </ion-list>
-  </ion-card>
+  </ion-card> -->
 
   <!-- Restaurant Menu Card -->
   <ion-card>
