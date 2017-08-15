@@ -1,17 +1,21 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, Events, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
 
 declare let google;
 
+@IonicPage({
+  segment: 'Restaurant/:this.restaurantName'
+})
 @Component({
   selector: 'page-restaurant-page',
   templateUrl: 'restaurant-page.html',
 })
 export class RestaurantPage {
   restaurant : any;
+  restaurantName: string;
   @ViewChild('map') mapElement : ElementRef;
   local_map: any;
 
@@ -45,6 +49,7 @@ export class RestaurantPage {
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
+    this.restaurantName = this.restaurant.restaurantName;
     let restaurantUID = this.restaurant.id;
 
     // load map everytime
@@ -160,6 +165,11 @@ export class RestaurantPage {
     });
     this.events.publish('restaurant:favorited');
   };
+
+  shareRest(){
+    
+  };
+
 
   checkArrayFor(arr, obj){
     for (var x = 0; x < arr.length; x++){

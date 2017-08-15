@@ -2,6 +2,9 @@
   <ion-navbar color="rdaApp">
     <ion-title>{{restaurant.restaurantName}}</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="shareRest()">
+        <ion-icon name="md-share"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="favRest()">
         <ion-icon name="heart"></ion-icon>
       </button>

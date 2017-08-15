@@ -114,9 +114,7 @@ export class MyApp {
         });
       });
 
-      console.log("App Launch " + this.loggedIn);
       this.events.publish('app:launch', this.loggedIn);
-
 
     });
   };
