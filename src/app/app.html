@@ -6,11 +6,6 @@
   </ion-header>
 
   <ion-content>
-    <ion-searchbar [showCancelButton]="shouldShowCancel">
-    </ion-searchbar>
-
-    <!--<div class="spacer" padding-top></div>-->
-
     <ion-list padding-top>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}

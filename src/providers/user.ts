@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 export class User {
 
   user : {
+    email: string,
     username: any,
     loggedIn: boolean
   };
 
   constructor() {
-    this.user = {username: "", loggedIn: false};
+    this.user = {email: "", username: "", loggedIn: false};
   }
 
 }

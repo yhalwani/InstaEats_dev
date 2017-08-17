@@ -125,7 +125,7 @@ export class MyApp {
     if(page.component === this.loggedIn) {
       firebase.auth().signOut().then(() =>{
         this.loggedIn = false;
-        this.userService.user = {username: "", loggedIn: this.loggedIn};
+        this.userService.user = {email: "", username: "", loggedIn: this.loggedIn};
         this.nav.setRoot(TabsPage)
         this.presentLoading();
         this.events.publish('user:loggedOut', false);

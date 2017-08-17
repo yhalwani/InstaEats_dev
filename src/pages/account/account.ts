@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+
+import { User } from '../../providers/user';
 
 @Component({
   selector: 'page-account',
@@ -7,8 +9,34 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AccountPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  email:    string;
+  password: string;
+  userName: string;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public userService: User
+  ) {
+
+    this.email = this.userService.user.email;
+    this.userName = this.userService.user.username;
+    this.password = "";
+
+  };
+
+  accountInfoUpdate(){
+    var ref =  firebase.database().ref("/User Profiles");
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
+
+    ref.child(uid).update({
+      displayName: this.userName,
+      email: this.email,
+      pass: this.password
+    });
+
+  };
 
 
-}
+};
