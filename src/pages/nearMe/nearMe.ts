@@ -42,7 +42,7 @@ export class NearMePage {
   maxLimit: number = 100000; // 100 km
   distance: number = 5000;  // default radius 5 km
 
-  plat:        any;
+  plat: { platform: any, assetPath: any};
   searchInput: any = null;
 
   constructor(
@@ -80,9 +80,9 @@ export class NearMePage {
     });
 
     if(this.plt.is('ios')){
-      this.plat = "header-icon-ios";
+      this.plat = { platform: "header-icon-ios", assetPath: "assets/icon/icon.png"};
     } else {
-      this.plat = "header-icon-md";
+      this.plat = { platform: "header-icon-md", assetPath: "assets/icon/icon.png"};
     };
 
   };
