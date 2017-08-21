@@ -14,7 +14,7 @@ export class DiscountsPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
-    countDown:             {intvarlID: any; hours: any, minutes: any, seconds: any},
+    countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -118,7 +118,8 @@ export class DiscountsPage {
             var rest = firebase.auth().currentUser;
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
               live: false,
-              startedAt: null
+              startedAt: null,
+              duration: null
             });
             this.bundles[index].live = !this.bundles[index].live;
             this.stopTime(this.bundles[index]);
@@ -187,7 +188,8 @@ export class DiscountsPage {
             var rest = firebase.auth().currentUser;
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
               live: true,
-              startedAt: now
+              startedAt: now,
+              duration: timeLimit
             });
 
             this.bundles[index].live = !this.bundles[index].live;

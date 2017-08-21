@@ -46,7 +46,7 @@ export class NearMePage {
         let obj = {name: data.restaurantName, lat: data.coordinates.lat, lng: data.coordinates.lng, address: data.address};
         coords.push(obj);
         this.locations = coords;
-        
+
         return false;
       });
     });
@@ -56,7 +56,7 @@ export class NearMePage {
     // for live restaurants have red markers
     // for offline restaurants have gray markers
 
-  }
+  };
 
   doRefresh(refresher){
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -64,6 +64,7 @@ export class NearMePage {
     restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
       let restaurantList = [];
       let coords = [];
+
       snapshot.forEach((childSnapshot) => {
         restaurantList.push(childSnapshot.val());
         this.restList = restaurantList;
@@ -74,18 +75,20 @@ export class NearMePage {
         coords.push(obj);
         this.locations = coords;
 
-
         return false;
       });
+
     });
+
     setTimeout(() => {
       refresher.complete();
     }, 2000);
-  }
+
+  };
 
   ngOnInit() {
     this.loadMap();
-  }
+  };
 
   switchView(){
     if(this.iconName == "list") {
@@ -94,47 +97,54 @@ export class NearMePage {
     } else {
       this.iconName = "list";
       this.nearMeViews = "mapView";
-    }
-  }
+    };
+  };
 
   openModal(){
   }
 
   loadMap(){
-      // Set user location
-      if(!navigator.geolocation){
-        // if (error.code == error.PERMISSION_DENIED)
+    // Set user location
+    if(!navigator.geolocation){
+
+      // if (error.code == error.PERMISSION_DENIED)
+      this.map = {
+        // location of development
+        lat: 43.6011579,
+        lng: -79.64162270000001,
+        zoom: 8
+      };
+
+    } else {
+
+      navigator.geolocation.getCurrentPosition((position) => {
+
         this.map = {
-          // location of development
-          lat: 43.6011579,
-          lng: -79.64162270000001,
-          zoom: 8
-        }
-      }else{
-        navigator.geolocation.getCurrentPosition((position) => {
-          this.map = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-            zoom: 11,
-            iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-          }
-        });
-      }
-    }
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          zoom: 11,
+          iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
+        };
 
-    // TODO:  install NativeGeocoderModules
-    //        import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
-    //        import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';\
-    //        add to constructor
+      });
 
-    // reverse geocode (use coordinates and return string: street address)
-    // geolocate(){
-    //   this.nativeGeocoder.reverseGeocode(this.map.lat, this.map.lng)
-    //   .then((result: NativeGeocoderReverseResult) =>
-    //   {let msg = result.street + result.countryCode;
-    //   this.toast(msg)})
-    //   .catch((error: any) => console.log(error));
-    // }
+    };
+
+  };
+
+  // TODO:  install NativeGeocoderModules
+  //        import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
+  //        import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';\
+  //        add to constructor
+
+  // reverse geocode (use coordinates and return string: street address)
+  // geolocate(){
+  //   this.nativeGeocoder.reverseGeocode(this.map.lat, this.map.lng)
+  //   .then((result: NativeGeocoderReverseResult) =>
+  //   {let msg = result.street + result.countryCode;
+  //   this.toast(msg)})
+  //   .catch((error: any) => console.log(error));
+  // }
 
   goToRestPage(index) {
 
@@ -154,7 +164,7 @@ export class NearMePage {
             list.push(this.restList[index]);
             list.shift();
             this.storage.set('recentList', list);
-          }
+          };
         });
 
       } else {
@@ -164,7 +174,7 @@ export class NearMePage {
             list.push(this.restList[index]);
             this.storage.set('recentList', list);
             this.storage.set('recentCount', ++val);
-          }
+          };
         });
 
       };
@@ -174,7 +184,7 @@ export class NearMePage {
     this.events.publish('restaurant:viewed');
     this.navCtrl.push(RestaurantPage, this.restList[index]);
 
-  }
+  };
 
   checkArrayFor(arr, obj) {
     for (var x = 0; x < arr.length; x++){
@@ -183,6 +193,6 @@ export class NearMePage {
       }
     }
     return false;
-  }
+  };
 
-}
+};

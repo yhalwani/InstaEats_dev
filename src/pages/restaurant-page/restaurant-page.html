@@ -35,12 +35,21 @@
 
     <ion-list *ngFor="let bundle of Bundles; let i = index;">
       <ion-card>
-        <ion-card-header>
-          {{bundle.bundleName}}
-        </ion-card-header>
-        <ion-card-title>
-          {{bundle.bundleDescription}}
+
+        <ion-card-title item-left>
+            {{bundle.bundleName}}
         </ion-card-title>
+
+        <ion-buttons end>
+          <button ion-button color="rdaApp" clear="true" *ngIf="bundle.live">
+            {{bundle.countDown.hours}} : {{bundle.countDown.minutes}} : {{bundle.countDown.seconds}}
+          </button>
+        </ion-buttons>
+
+        <ion-card-header>
+          {{bundle.bundleDescription}}
+        </ion-card-header>
+
         <ion-card-content>
           <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
             <ion-item *ngFor="let menuItem of item.menu">

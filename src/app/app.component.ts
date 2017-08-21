@@ -11,6 +11,8 @@ import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
 
+import { IntroPage }    from '../pages/intro/intro';
+
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
 declare var Snap,svg,easing,min,js: any;
@@ -88,8 +90,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
 
+      // this.statusBar.styleDefault();
       // this.splashScreen.show();
       // this.splashScreen.hide();
 
@@ -99,6 +101,7 @@ export class MyApp {
       this.storage.ready().then(() => {
         this.storage.length().then((numOfKeys) => {
           if (numOfKeys < 1) {
+            this.rootPage = IntroPage;
             var list = [];
             this.storage.set('favList', list);
             this.storage.set('favCount', 0);

@@ -258,11 +258,11 @@ export class ModalContentPage {
     });
 
 
-    this.storage.get('bundles').then((list) => {
-      list.push(this.bundleItem);
-      this.storage.set('bundles', list);
-      this.events.publish('bundle:created', list);
-    });
+    // this.storage.get('bundles').then((list) => {
+    //   list.push(this.bundleItem);
+    //   this.storage.set('bundles', list);
+    //   this.events.publish('bundle:created', list);
+    // });
 
     // reference to firebase database and current user
     var ref = firebase.database().ref("/Bundles");
