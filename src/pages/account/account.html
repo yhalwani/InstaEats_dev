@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title> Account </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <h2> Account Information </h2>
+  <h5 padding-bottom> Please update your information below and click update to save the changes! </h5>
+
+  <ion-list>
+    <ion-item-group>
+      <!-- Account Info -->
+      <ion-item-divider color="light">Account Info</ion-item-divider>
+      <!-- User Name Input -->
+      <ion-item>
+        <ion-icon item-left name="restaurant"></ion-icon>
+        <ion-label floating>User Name</ion-label>
+        <ion-input type="text" value="{{userName}}" [(ngModel)]="userName"></ion-input>
+      </ion-item>
+      <!-- Email Input -->
+      <ion-item>
+        <ion-icon item-left name="mail"></ion-icon>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" value="{{email}}" [(ngModel)]="email"></ion-input>
+      </ion-item>
+      <!-- Password Input -->
+      <ion-item>
+        <ion-icon item-left name="lock"></ion-icon>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+    <div text-center>
+      <button ion-button large icon-right color="rdaApp" (click)="accountInfoUpdate()">
+        Update!
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </button>
+    </div>
+
+</ion-content>

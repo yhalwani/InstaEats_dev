@@ -7,6 +7,7 @@ import { Storage }      from '@ionic/storage';
 import firebase         from 'firebase';
 
 import { TabsPage }     from '../pages/tabs/tabs';
+import { AccountPage }  from '../pages/account/account';
 import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
@@ -15,6 +16,12 @@ import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
+<<<<<<< HEAD
+=======
+import { User }         from '../providers/user';
+
+declare var Snap,svg,min,js: any;
+>>>>>>> master
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
@@ -40,7 +47,8 @@ export class MyApp {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
-    public storage: Storage
+    public storage: Storage,
+    public userService: User
   ) {
 
     this.initializeApp();
@@ -57,7 +65,7 @@ export class MyApp {
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
-        {title: 'My Account', component: this.rootPage },
+        {title: 'My Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -88,8 +96,6 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
 
       // this.statusBar.styleDefault();
       // this.splashScreen.show();
@@ -111,6 +117,8 @@ export class MyApp {
         });
       });
 
+      this.events.publish('app:launch', this.loggedIn);
+
     });
   };
 
@@ -120,8 +128,11 @@ export class MyApp {
     if(page.component === this.loggedIn) {
       firebase.auth().signOut().then(() =>{
         this.loggedIn = false;
+        this.userService.user = {email: "", username: "", loggedIn: this.loggedIn};
+        this.nav.setRoot(TabsPage)
         this.presentLoading();
         this.events.publish('user:loggedOut', false);
+
       }).catch((error) => {
         this.errToast(error.message);
       });

@@ -1,17 +1,21 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
 
 declare let google;
 
+@IonicPage({
+  segment: 'Restaurant/:this.restaurantName'
+})
 @Component({
   selector: 'page-restaurant-page',
   templateUrl: 'restaurant-page.html',
 })
 export class RestaurantPage {
   restaurant : any;
+  restaurantName: string;
   @ViewChild('map') mapElement : ElementRef;
   local_map: any;
 
@@ -39,11 +43,13 @@ export class RestaurantPage {
 
   constructor(
     public navCtrl: NavController,
+    public modalCtrl: ModalController,
     public navParams: NavParams,
     public storage: Storage,
     public events: Events
   ) {
     this.restaurant = this.navParams.data;
+    this.restaurantName = this.restaurant.restaurantName;
     let restaurantUID = this.restaurant.id;
 
     // load map everytime
@@ -160,6 +166,11 @@ export class RestaurantPage {
     this.events.publish('restaurant:favorited');
   };
 
+  shareRest(){
+    
+  };
+
+
   checkArrayFor(arr, obj){
     for (var x = 0; x < arr.length; x++){
       if(arr[x].restaurantName === obj.restaurantName){
@@ -207,5 +218,105 @@ export class RestaurantPage {
 
   };
 
+  goToDiscount(index){
+    let modal = this.modalCtrl.create(DiscountPage, this.Bundles[index]);
+    modal.present();
+  };
 
-}
+
+};
+
+@Component({
+  selector: 'page-DiscountPage',
+  template: `
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Redeem Coupon
+      </ion-title>
+      <ion-buttons start>
+        <button ion-button (click)="dismiss()">
+          Cancel
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content padding>
+  <!-- Discount Card Template-->
+
+    <ion-card class="widget">
+      <div class="top">
+
+        <ion-item>
+          <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
+          </ion-icon>
+          <p>Live</p>
+          <h3 class="-bold">{{bundleItem.countDown.hours}}:{{bundleItem.countDown.minutes}}:{{bundleItem.countDown.seconds}}</h3>
+
+          <div item-right>
+            <p text-right class="-bold" style="text-decoration: line-through;">$100</p>
+            <h1 class="-bold">$75</h1>
+          </div>
+        </ion-item>
+        <ion-item>
+          <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundleItem.bundleName}}</h1>
+          <p ion-text text-center text-wrap style="color: rgba(0, 0, 0, 0.5);">{{bundleItem.bundleDescription}}</p>
+        </ion-item>
+
+      </div>
+      <div class="rip"><div class="inner"></div></div>
+      <div class="bottom">
+        <ion-list *ngFor="let item of bundleItem.bundleElem">
+          <ion-item *ngFor="let menuItem of item.menu" class="bundle-item">
+
+          <h3 ion-text item-left class="-bold">{{menuItem.name}}</h3>
+          <p *ngIf="menuItem.discount != 0" text-right class="-bold" style="text-decoration: line-through;"> $ {{menuItem.price}}</p>
+          <h3 ion-text text-right class="-bold"> $ {{((100 - menuItem.discount)/100)  * menuItem.price}}</h3>
+
+        </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+
+    <h2 padding text-center> Please present this page to redeem coupon </h2>
+
+  </ion-content>
+  `
+})
+export class DiscountPage {
+
+  bundleItem: {
+    bundleName:            string,
+    bundleDescription:     string,
+    live:                  boolean,
+    timeStarted:           any,
+    duration:              any,
+    countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
+    bundleElem:            Array<{
+      menuGroupName:       string,
+      menu:                Array<{
+        name: string, description: string, price: number, checked: boolean, discount: number
+      }>
+    }>
+  };
+
+  constructor(
+    public params: NavParams,
+    public viewCtrl: ViewController,
+    public storage: Storage,
+    public events: Events
+  ) {
+
+    // Menu is assigned from the input parameter data
+    this.bundleItem = this.params.data;
+
+  };
+
+  // Close bundle page
+  dismiss() {
+    this.viewCtrl.dismiss();
+  };
+
+
+};
