@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import  firebase  from 'firebase';
 
 import { Camera } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { Stripe } from '@ionic-native/stripe';
 
@@ -106,6 +107,7 @@ import { User }                         from '../providers/user';
   ],
   providers: [
     Camera,
+    Geolocation,
     User,
     StatusBar,
     SplashScreen,

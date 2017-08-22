@@ -3,6 +3,7 @@ import { NavController, Events, ToastController, Platform } from 'ionic-angular'
 import { Storage } from '@ionic/storage';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 import firebase from 'firebase';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-nearMe',
@@ -50,7 +51,8 @@ export class NearMePage {
     public events: Events,
     public storage: Storage,
     public toastCtrl: ToastController,
-    public plt: Platform
+    public plt: Platform,
+    private geolocation: Geolocation
   ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -106,13 +108,22 @@ export class NearMePage {
   };
 
   loadMap(){
-    this.map = {
-      // location of development
-      lat: 43.6011579,
-      lng: -79.64162270000001,
-      zoom: 8,
-      iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-    };
+    this.geolocation.getCurrentPosition().then((data) =>{
+      this.map = {
+        // location of development
+        lat: data.coords.latitude,
+        lng: data.coords.longitude,
+        zoom: 8,
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
+      };
+    }).catch((error) => {
+      this.map = {
+        // location of development
+        lat: 45.216612,
+        lng: -82.523330,
+        zoom: 4,
+      };
+    })
   };
 
   goToRestPage(list, index) {
@@ -171,7 +182,20 @@ export class NearMePage {
   };
 
   onSearch(){
-    console.log(this.searchInput);
+    // create tmp list and search list. If query is in tmp list, push to search list
+    let restRef = firebase.database().ref("Restaurant Profiles/");
+    var query = this.searchInput;
+    var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
+      userQuery.once("value", function(snapshot) {
+    var data = snapshot.val();
+    console.log(data);
+
+    /* TODO: create a list and show as search resutls */
+
+    }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+    });
+    // console.log(this.searchInput);
   };
 
 };
@@ -217,33 +241,3 @@ export class NearMePage {
 //   this.toast(msg)})
 //   .catch((error: any) => console.log(error));
 // }
-
-// loadMap(){
-//   // Set user location
-//   if(!navigator.geolocation){
-//
-//     // if (error.code == error.PERMISSION_DENIED)
-//     this.map = {
-//       // location of development
-//       lat: 43.6011579,
-//       lng: -79.64162270000001,
-//       zoom: 8,
-//       iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-//     };
-//
-//   } else {
-//
-//     navigator.geolocation.getCurrentPosition((position) => {
-//
-//       this.map = {
-//         lat: position.coords.latitude,
-//         lng: position.coords.longitude,
-//         zoom: 11,
-//         iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-//       };
-//
-//     });
-//
-//   };
-//
-// };

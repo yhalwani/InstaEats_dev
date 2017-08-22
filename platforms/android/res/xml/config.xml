@@ -22,6 +22,9 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
     <name>InstaEats</name>
     <description>Local restaurants running at-the-moment deals.</description>
     <author email="youssef@retoll.com" href="https://www.retoll.com/">

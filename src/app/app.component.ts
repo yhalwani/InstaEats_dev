@@ -16,12 +16,8 @@ import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
-<<<<<<< HEAD
-=======
 import { User }         from '../providers/user';
 
-declare var Snap,svg,min,js: any;
->>>>>>> master
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
