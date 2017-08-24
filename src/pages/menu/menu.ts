@@ -160,12 +160,12 @@ export class MenuPage {
             </ion-col>
             <ion-col col-2>
               <ion-item>
-                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice()'></ion-input>
+                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
               </ion-item>
             </ion-col>
             <ion-col col-2>
               <ion-item>
-                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked value="100 - (bundleMenu[i].menu[j].discount / bundleMenu[i].menu[j].price)" (change)='sumTotalPercent(i,j)'></ion-input>
+                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -201,7 +201,7 @@ export class MenuPage {
           $ {{totalDiscountPrice}}
         </ion-col>
         <ion-col col-2>
-          % {{100 - (100 * (totalDiscountPrice / totalPrice))}}
+          % {{totalDiscountPercent}}
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -229,7 +229,7 @@ export class ModalContentPage {
   bundleMenu: Array<{
     menuGroupName:       string,
     menu:                Array<{
-      name: string, description: string, price: number, checked: boolean, discount: number
+      name: string, description: string, price: number, checked: boolean, discount: number, percent: number
     }>
   }>;
 
@@ -237,10 +237,13 @@ export class ModalContentPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
+    total:                 number,
+    totalDiscount:         number,
+    totalPercent:          number,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
-        name: string, description: string, price: number, checked: boolean, discount: number
+        name: string, description: string, price: number, checked: boolean, discount: number, percent: number
       }>
     }>
   };
@@ -272,6 +275,9 @@ export class ModalContentPage {
       bundleName:            "",
       bundleDescription:     "",
       live:                  false,
+      total:                 0,
+      totalDiscount:         0,
+      totalPercent:          0,
       bundleElem: []
     };
 
@@ -292,7 +298,8 @@ export class ModalContentPage {
           description: this.menuGroup[i].menu[j].description,
           price: this.menuGroup[i].menu[j].price,
           checked: false,
-          discount: 0
+          discount: 0,
+          percent: 0
         };
         this.bundleMenu[i].menu.push(item);
       };
@@ -316,39 +323,38 @@ export class ModalContentPage {
       group.menu.forEach((item, itemIndex) => {
         if(item.checked == true){
           sum += Number(item.price);
+        } else {
+          item.discount = 0;
+          item.percent = 0;
         };
       });
     });
     this.totalPrice = sum;
+    this.sumTotals();
   }
 
-  sumTotalPrice(){
-    console.log("sumTotalPrice");
-    var sum = 0;
-    this.bundleMenu.forEach((group, groupIndex) => {
-      group.menu.forEach((item, itemIndex) => {
-        if(item.checked == true){
-          sum += Number(item.discount);
-        };
-      });
-    });
-    this.totalDiscountPrice = sum;
+  sumTotalPrice(i,j){
+    this.bundleMenu[i].menu[j].percent = Math.floor(100 - ((this.bundleMenu[i].menu[j].discount / this.bundleMenu[i].menu[j].price) * 100));
+    this.sumTotals()
   }
 
   sumTotalPercent(i,j){
-    console.log("sumTotalPercent");
-    this.bundleMenu[i]
-    var sum = 0;
-    var counter = 0;
+    this.bundleMenu[i].menu[j].discount = this.bundleMenu[i].menu[j].price * ((100 - this.bundleMenu[i].menu[j].percent) / 100)
+    this.sumTotals();
+  }
+
+  sumTotals(){
+    var sumDiscount = 0;
     this.bundleMenu.forEach((group, groupIndex) => {
       group.menu.forEach((item, itemIndex) => {
         if(item.checked == true){
-          sum += Number(item.discount);
-          counter++;
+          sumDiscount += Number(item.discount);
         };
       });
     });
-    this.totalDiscountPercent = (sum / (counter * 100));
+    this.totalDiscountPrice = sumDiscount;
+    var percent = Math.floor(100 - (100 * this.totalDiscountPrice / this.totalPrice));
+    this.totalDiscountPercent = ( percent > 0) ? percent : 0;
   }
 
   // Save bundle to storage and push to firebase
@@ -356,6 +362,10 @@ export class ModalContentPage {
 
     this.bundleItem.bundleName = this.bundleName;
     this.bundleItem.bundleDescription = this.bundleDescription;
+
+    this.bundleItem.total = this.totalPrice;
+    this.bundleItem.totalDiscount = this.totalDiscountPrice;
+    this.bundleItem.totalPercent = this.totalDiscountPercent;
 
     this.bundleMenu.forEach((group, groupIndex) => {
       var groupE = {menuGroupName: group.menuGroupName, menu: []};
@@ -367,7 +377,8 @@ export class ModalContentPage {
             description: item.description,
             price: item.price,
             checked: item.checked,
-            discount: item.discount
+            discount: item.discount,
+            percent: item.percent
           };
 
           groupE.menu.push(itemE);
@@ -392,7 +403,15 @@ export class ModalContentPage {
     var user = firebase.auth().currentUser;
 
     ref.child(user.uid).update({
-      [this.bundleItem.bundleName] : {description : this.bundleItem.bundleDescription, live: this.bundleItem.live, bundle : this.bundleItem.bundleElem }
+      [this.bundleItem.bundleName] : {
+        bundleName: this.bundleItem.bundleName,
+        bundleDescription : this.bundleItem.bundleDescription,
+        live: this.bundleItem.live,
+        total: this.bundleItem.total,
+        totalDiscount: this.bundleItem.totalDiscount,
+        totalPercent: this.bundleItem.totalPercent,
+        bundleElem : this.bundleItem.bundleElem
+      }
     });
 
     this.dismiss();

@@ -28,6 +28,7 @@
             <ion-icon color="rdaApp" name="menu"></ion-icon>
           </button>
         </ion-buttons>
+
       </ion-card-header>
 
       <ion-card-content>
@@ -45,7 +46,7 @@
                   Discount
                 </ion-col>
                 <ion-col>
-                  {{menuItem.discount}}%
+                  {{menuItem.percent}}%
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -61,7 +62,7 @@
                   Discounted Price
                 </ion-col>
                 <ion-col>
-                  ${{((100 - menuItem.discount)/100)  * menuItem.price}}
+                  ${{menuItem.discount}}
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -69,7 +70,6 @@
         </ion-list>
 
       </ion-card-content>
-
     </ion-card>
 
   </ion-list>

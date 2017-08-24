@@ -14,11 +14,14 @@ export class DiscountsPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
+    total:                 number,
+    totalDiscount:         number,
+    totalPercent:          number,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
-        name: string, description: string, price: number, checked: boolean, discount: number
+        name: string, description: string, price: number, checked: boolean, discount: number, percent: number
       }>
     }>
   }>;
@@ -42,63 +45,33 @@ export class DiscountsPage {
       // For each bundle the rest has loop
       snapshot.forEach((childSnapshot) => {
 
-        // Tmp dummy bundle
-        var bundle = {
-          bundleName: childSnapshot.key,
-          bundleDescription:"",
-          live: false,
-          countDown: {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
-          bundleElem: []
-        }
-
-        // For each node in bundle (bunlde, description, or live) loop
-        childSnapshot.forEach((childSnapshot) => {
-
-          if (childSnapshot.key == "description"){
-            bundle.bundleDescription = childSnapshot.val();
-          } else if (childSnapshot.key == "live") {
-            bundle.live = childSnapshot.val();
-          } else {
-
-            childSnapshot.forEach((childSnapshot) => {
-
-              var bundleE = {menuGroupName:"", menu: []};
-              childSnapshot.forEach((childSnapshot) => {
-                if(childSnapshot.key == "menuGroupName"){
-                  bundleE.menuGroupName = childSnapshot.val();
-                } else {
-                  childSnapshot.forEach((childSnapshot) => {
-                    var tmp = childSnapshot.val();
-                    var menu = {
-                      name:         tmp.name,
-                      description:  tmp.description,
-                      price:        tmp.price,
-                      checked:      tmp.checked,
-                      discount:     tmp.discount
-                    };
-                    bundleE.menu.push(menu);
-                    return false;
-                  })
-                };
-                return false;
-              });
-              bundle.bundleElem.push(bundleE);
-              return false;
-            });
-          };
-          return false;
-        });
-        bundlesArr.push(bundle);
+        bundlesArr.push(childSnapshot.val());
+        this.bundles = bundlesArr;
         return false;
+
       });
-      this.bundles = bundlesArr;
-    });
+
+      this.bundles.forEach((bundle, bundleIndex) => {
+            var bundleTmp = {
+              bundleName:       bundle.bundleName,
+              bundleDescription:bundle.bundleDescription,
+              total:            bundle.total,
+              totalDiscount:    bundle.totalDiscount,
+              totalPercent:     bundle.totalPercent,
+              live:             bundle.live,
+              countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
+              bundleElem:       bundle.bundleElem
+            };
+            this.bundles[bundleIndex] = bundleTmp;
+      });
 
     this.events.subscribe('bundle:created', (bundle) => {
       this.bundles = bundle;
     });
 
-  };
+  });
+
+}
 
 
   presentActionSheet(index) {
@@ -118,7 +91,7 @@ export class DiscountsPage {
             var rest = firebase.auth().currentUser;
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
               live: false,
-              startedAt: null,
+              timeStarted: null,
               duration: null
             });
             this.bundles[index].live = !this.bundles[index].live;
@@ -148,6 +121,7 @@ export class DiscountsPage {
     });
 
     actionSheet.present();
+
   };
 
   getTime(index){
@@ -188,7 +162,7 @@ export class DiscountsPage {
             var rest = firebase.auth().currentUser;
             restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
               live: true,
-              startedAt: now,
+              timeStarted: now,
               duration: timeLimit
             });
 
@@ -204,10 +178,10 @@ export class DiscountsPage {
 
   setTime(now, timeLimit, bundle){
     bundle.countDown.intvarlID = setInterval(() => {
-      var diff = new Date().getTime() - now ;
-      bundle.countDown.hours = Math.floor((timeLimit - diff) / (1000 * 60 * 60));
+      var diff = new Date().getTime() - now;
+      bundle.countDown.hours   =  Math.floor( (timeLimit - diff) / (1000 * 60 * 60));
       bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60));
-      bundle.countDown.seconds = Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
+      bundle.countDown.seconds =  Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
     }, 1000);
   };
 

@@ -46,8 +46,8 @@
         <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
 
         <div item-right>
-          <p text-right class="-bold" style="text-decoration: line-through;">$100</p>
-          <h1 class="-bold">$75</h1>
+          <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
+          <h1 class="-bold"> $ {{bundle.totalDiscount}} </h1>
         </div>
       </ion-item>
       <ion-item>
@@ -60,67 +60,6 @@
   </ion-card>
   </ion-list>
 
-  <!-- Discounts Card -->
-  <!-- <ion-card>
-    <ion-card-header>
-      <h2 style="color:red;">Discounts</h2>
-    </ion-card-header>
-
-    <ion-list *ngFor="let bundle of Bundles; let i = index;">
-      <ion-card>
-
-        <ion-card-title item-left>
-            {{bundle.bundleName}}
-        </ion-card-title>
-
-        <ion-buttons end>
-          <button ion-button color="rdaApp" clear="true" *ngIf="bundle.live">
-            {{bundle.countDown.hours}} : {{bundle.countDown.minutes}} : {{bundle.countDown.seconds}}
-          </button>
-        </ion-buttons>
-
-        <ion-card-header>
-          {{bundle.bundleDescription}}
-        </ion-card-header>
-
-        <ion-card-content>
-          <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
-            <ion-item *ngFor="let menuItem of item.menu">
-              <ion-grid>
-                <h4>{{menuItem.name}}</h4>
-                <ion-row>
-                  <ion-col>
-                    Discount
-                  </ion-col>
-                  <ion-col>
-                    {{menuItem.discount}}%
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    Price
-                  </ion-col>
-                  <ion-col>
-                    ${{menuItem.price}}
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    Discounted Price
-                  </ion-col>
-                  <ion-col>
-                    ${{((100 - menuItem.discount)/100)  * menuItem.price}}
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-list>
-
-        </ion-card-content>
-      </ion-card>
-
-    </ion-list>
-  </ion-card> -->
 
   <!-- Restaurant Menu Card -->
   <ion-card>
