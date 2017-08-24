@@ -25,6 +25,13 @@
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
+    <feature name="Diagnostic">
+        <param name="android-package" value="cordova.plugins.Diagnostic" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="RequestLocationAccuracy">
+        <param name="android-package" value="cordova.plugin.RequestLocationAccuracy" />
+    </feature>
     <name>InstaEats</name>
     <description>Local restaurants running at-the-moment deals.</description>
     <author email="youssef@retoll.com" href="https://www.retoll.com/">

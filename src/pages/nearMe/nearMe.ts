@@ -4,6 +4,8 @@ import { Storage } from '@ionic/storage';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 import firebase from 'firebase';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @Component({
   selector: 'page-nearMe',
@@ -52,7 +54,9 @@ export class NearMePage {
     public storage: Storage,
     public toastCtrl: ToastController,
     public plt: Platform,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private diagnostic: Diagnostic,
+    private locationAccuracy: LocationAccuracy
   ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -108,23 +112,49 @@ export class NearMePage {
   };
 
   loadMap(){
-    this.geolocation.getCurrentPosition().then((data) =>{
-      this.map = {
-        // location of development
-        lat: data.coords.latitude,
-        lng: data.coords.longitude,
-        zoom: 8,
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-      };
+    /*
+     TODO: if location is off, prompt user to turn on location services
+           if permission denied, initialize map using default values
+    */
+    // NOTE: Look at requestLocationAuthorization()
+
+    this.diagnostic.isLocationEnabled().then((isAvailable) => {
+      if(isAvailable == true){
+        this.getLocation();
+      }
+      else{
+        this.diagnostic.switchToLocationSettings();
+      }
+      this.getLocation();
     }).catch((error) => {
       this.map = {
         // location of development
         lat: 45.216612,
         lng: -82.523330,
-        zoom: 4,
+        zoom: 4
       };
     })
-  };
+  }
+
+  // call native geolocation plugin to pull coordinates
+  getLocation(){
+    let options = {timeout:10000, enableHighAccuracy: true};
+    this.geolocation.getCurrentPosition(options).then((data) => {
+      this.map = {
+        lat: data.coords.latitude,
+        lng: data.coords.longitude,
+        zoom: 8,
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/test1-51a17.appspot.com/o/img%2Fbluedot.png?alt=media&token=9b8e9d6b-c526-485b-a291-ab52160dbc7e"
+      };
+    }).catch((error) => {
+        this.map = {
+          // location of development
+          lat: 45.216612,
+          lng: -82.523330,
+          zoom: 4,
+        };
+    });
+  }
 
   goToRestPage(list, index) {
 

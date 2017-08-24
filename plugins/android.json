@@ -30,6 +30,12 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {

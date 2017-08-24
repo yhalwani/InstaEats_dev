@@ -78,6 +78,22 @@ module.exports = [
         "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
         "pluginId": "cordova-plugin-geolocation",
         "runs": true
+    },
+    {
+        "id": "cordova.plugins.diagnostic.Diagnostic",
+        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+        "pluginId": "cordova.plugins.diagnostic",
+        "clobbers": [
+            "cordova.plugins.diagnostic"
+        ]
+    },
+    {
+        "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+        "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
+        "pluginId": "cordova-plugin-request-location-accuracy",
+        "clobbers": [
+            "cordova.plugins.locationAccuracy"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -91,7 +107,9 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
-    "cordova-plugin-geolocation": "2.4.3"
+    "cordova-plugin-geolocation": "2.4.3",
+    "cordova.plugins.diagnostic": "3.6.6",
+    "cordova-plugin-request-location-accuracy": "2.2.1"
 };
 // BOTTOM OF METADATA
 });

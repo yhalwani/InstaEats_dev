@@ -9,6 +9,8 @@ import  firebase  from 'firebase';
 
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { Stripe } from '@ionic-native/stripe';
 
@@ -108,6 +110,8 @@ import { User }                         from '../providers/user';
   providers: [
     Camera,
     Geolocation,
+    LocationAccuracy,
+    Diagnostic,
     User,
     StatusBar,
     SplashScreen,
