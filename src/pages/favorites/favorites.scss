@@ -1,0 +1,16 @@
+page-favorites {
+
+  // class for restaurant image
+  .image {
+    border: 2px solid #fff;
+    border-radius: 5% 5%;
+    box-shadow: 0 0 10px gray;
+    display: inline-block;
+  }
+  .avatar{
+    width:100% !important;
+    height: 100% !important;
+    max-width: 50px !important;  //any size
+    max-height: 50px !important; //any size
+  }
+}

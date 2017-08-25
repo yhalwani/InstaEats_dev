@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <ion-label text-center> Log in as </ion-label>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-label>{{userType}}</ion-label>
+        <ion-toggle color="rdaApp" checked="false" [(ngModel)]="userToggle" (ionChange)="userToggled()"></ion-toggle>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+  <div padding>
+    <button ion-button color="rdaApp" block (click)="loginClicked()"> Login </button>
+  </div>
+</ion-content>

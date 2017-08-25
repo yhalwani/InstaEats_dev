@@ -1,0 +1,410 @@
+<!-- Header / Menu -->
+<ion-header>
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>SignUp Your Restaurant!</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+
+  <!-- Slides Container -->
+  <ion-slides pager paginationType="progress" color="rdaApp" style="height: auto">
+
+    <!-- General Info Slide -->
+    <ion-slide>
+      <h2 padding> Please enter your account information below and continue to the next step! </h2>
+      <ion-list>
+        <!-- Restaurant Name Input -->
+        <ion-item>
+          <ion-icon item-left name="restaurant"></ion-icon>
+          <ion-label floating>Restaurant Name</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="restaurantName"></ion-input>
+        </ion-item>
+        <!-- Email Input -->
+        <ion-item>
+          <ion-icon item-left name="mail"></ion-icon>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <!-- Password Input -->
+        <ion-item>
+          <ion-icon item-left name="lock"></ion-icon>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
+        </ion-item>
+      </ion-list>
+      <!-- Continue to Next Slide -->
+      <ion-buttons>
+        <button ion-button medium clear icon-right color="rdaApp" (click)="nextSlide()">
+          Continue
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-slide>
+
+    <!-- Meta Info Slide -->
+    <ion-slide>
+      <h2 padding> Please enter your Restaurants information below and continue to the next step!  </h2>
+      <ion-item-group>
+        <!-- Restaurant Info -->
+        <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
+        <!-- Img Chooser -->
+        <ion-item>
+          <ion-icon item-left name="image"></ion-icon>
+          <ion-buttons center>
+            <button ion-button large clear icon-right color="rdaApp" (click)="addImg()">
+              Add Image
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-item>
+        <!-- Slogan Input -->
+        <ion-item>
+          <ion-icon item-left name="quote"></ion-icon>
+          <ion-label floating>Slogan</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="slogan"></ion-input>
+        </ion-item>
+        <!-- Description Input -->
+        <ion-item>
+          <ion-icon item-left name="document"></ion-icon>
+          <ion-label floating>Description</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+        </ion-item>
+        <!-- Cuisine Type Input -->
+        <ion-item>
+          <ion-icon item-left name="restaurant"></ion-icon>
+          <ion-label floating>Cuisine Type</ion-label>
+          <ion-select [(ngModel)]="cuisineType">
+            <ion-option *ngFor="let cuisine of cuisineTypes; let i = index" value="{{cuisine.type}}">
+              {{cuisine.type}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <!-- Website Input -->
+        <ion-item>
+          <ion-icon item-left name="globe"></ion-icon>
+          <ion-label floating>Website</ion-label>
+          <ion-input type="url" value="" [(ngModel)]="website"></ion-input>
+        </ion-item>
+
+        <!-- Address Input -->
+        <ion-item-divider color="light">Contact Info</ion-item-divider>
+        <ion-item>
+          <ion-icon item-left name="md-contact"></ion-icon>
+          <ion-label floating>Owner's Name</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="ownerName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left name="call"></ion-icon>
+          <ion-label floating>Phone Number</ion-label>
+          <ion-input type="tel" value="" [(ngModel)]="phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-left name="home"></ion-icon>
+          <ion-label floating>Street</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="street"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>City</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="city"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Province</ion-label>
+          <ion-select [(ngModel)]="province">
+            <ion-option *ngFor="let province of provinces; let i = index" value="{{province.name}}">
+              {{province.name}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Country</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="country"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Postal Code</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="postalCode"></ion-input>
+        </ion-item>
+
+        <!-- Hours of Operation Input -->
+        <ion-item-divider color="light">Hours of Operations</ion-item-divider>
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col col-3>
+              Day
+            </ion-col>
+            <ion-col>
+              Open
+            </ion-col>
+            <ion-col>
+              Close
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Mon
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="monopen.open()">
+                 <ion-datetime #monopen pickerFormat="h mm A" [hidden]="mon_open == '--:--'" [(ngModel)]="mon_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="mon_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="monclose.open()">
+                 <ion-datetime #monclose pickerFormat="h mm A" [hidden]="mon_close == '--:--'" [(ngModel)]="mon_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="mon_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Tues
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="tuesopen.open()">
+                 <ion-datetime #tuesopen pickerFormat="h mm A" [hidden]="tues_open == '--:--'" [(ngModel)]="tues_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="tues_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="tuesclose.open()">
+                 <ion-datetime #tuesclose pickerFormat="h mm A" [hidden]="tues_close == '--:--'" [(ngModel)]="tues_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="tues_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Wed
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="wedopen.open()">
+                 <ion-datetime #wedopen pickerFormat="h mm A" [hidden]="wed_open == '--:--'" [(ngModel)]="wed_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="wed_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="wedclose.open()">
+                 <ion-datetime #wedclose pickerFormat="h mm A" [hidden]="wed_close == '--:--'" [(ngModel)]="wed_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="wed_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Thurs
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="thursopen.open()">
+                 <ion-datetime #thursopen pickerFormat="h mm A" [hidden]="thurs_open == '--:--'" [(ngModel)]="thurs_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="thurs_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="thursclose.open()">
+                 <ion-datetime #thursclose pickerFormat="h mm A" [hidden]="thurs_close == '--:--'" [(ngModel)]="thurs_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="thurs_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Fri
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="friopen.open()">
+                 <ion-datetime #friopen pickerFormat="h mm A" [hidden]="fri_open == '--:--'" [(ngModel)]="fri_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="fri_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="friclose.open()">
+                 <ion-datetime #friclose pickerFormat="h mm A" [hidden]="fri_close == '--:--'" [(ngModel)]="fri_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="fri_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Sat
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="satopen.open()">
+                 <ion-datetime #satopen pickerFormat="h mm A" [hidden]="sat_open == '--:--'" [(ngModel)]="sat_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sat_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="satclose.open()">
+                 <ion-datetime #satclose pickerFormat="h mm A" [hidden]="sat_close == '--:--'" [(ngModel)]="sat_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sat_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              Sun
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="sunopen.open()">
+                 <ion-datetime #sunopen pickerFormat="h mm A" [hidden]="sun_open == '--:--'" [(ngModel)]="sun_open"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sun_open == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+            <ion-col no-padding>
+              <button ion-button clear color="rdaApp" (click)="sunclose.open()">
+                 <ion-datetime #sunclose pickerFormat="h mm A" [hidden]="sun_close == '--:--'" [(ngModel)]="sun_close"></ion-datetime>
+                 <ion-icon name="add-circle" *ngIf="sun_close == '--:--'"></ion-icon>
+               </button>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-item-group>
+
+      <ion-buttons>
+        <button ion-button medium clear icon-left color="rdaApp" (click)="prevSlide()">
+          <ion-icon name="arrow-back"></ion-icon>
+          Back
+        </button>
+
+        <button ion-button medium clear icon-right color="rdaApp" (click)="nextSlide()">
+          Continue
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+
+    </ion-slide>
+
+    <!-- Menu Info Slide -->
+    <ion-slide>
+
+      <h2 padding> Please add your Restaurants menu below, create groups (Appetizers, Entrees, Desserts etc) and add items to group. </h2>
+
+      <button ion-button large icon-right color="rdaApp" (click)="addMenuGroup()">
+        Add menu group
+        <ion-icon name="add"></ion-icon>
+      </button>
+
+      <br>
+
+      <ion-list *ngFor="let menug of menuGroup; let i = index">
+        <ion-row>
+          <ion-col>
+            <ion-list-header>
+              <ion-label>Group name</ion-label>
+              <ion-input type="text" value="" [(ngModel)]="menug.menuGroupName"></ion-input>
+            </ion-list-header>
+          </ion-col>
+          <ion-col>
+            <button ion-button clear item-right color="rdaApp" (click)="removeGroup(i)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item name</ion-label>
+                  <ion-input type="text" value="" [(ngModel)]="menu.name"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item descripition</ion-label>
+                  <ion-input type="text" value="" [(ngModel)]="menu.description"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Item price</ion-label>
+                  <ion-input type="number" value="" [(ngModel)]="menu.price"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item-group>
+        <button ion-button color="rdaApp" clear item-right icon-right (click)="addMenuItem(i)">
+          Add menu item
+          <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
+        </button>
+        <br>
+      </ion-list>
+
+      <br>
+
+      <ion-buttons>
+        <button ion-button medium clear icon-left color="rdaApp" (click)="prevSlide()">
+          <ion-icon name="arrow-back"></ion-icon>
+          Back
+        </button>
+
+        <button ion-button medium clear icon-right color="rdaApp" (click)="finish()">
+          Finish!
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+
+      <!-- <button ion-button large clear icon-right color="rdaApp" (click)="menuInfo()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button> -->
+    </ion-slide>
+
+    <!-- TODO: Will add when stripe plan finalized -->
+
+    <!-- Payment Info Slide -->
+    <!-- <ion-slide>
+
+      <h2 padding> Please add your payment info below. </h2>
+
+      <br>
+      <ion-list>
+        <ion-list-header>
+          Credit Card Info
+        </ion-list-header>
+        <ion-item-group>
+          <ion-item>
+            <ion-label>Card Holder</ion-label>
+            <ion-input type="text" placeholder="Name on Card" value="" [(ngModel)]="cardHolder"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Card Number</ion-label>
+            <ion-input type="number" value="" [(ngModel)]="cardNumber"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Expiry Date</ion-label>
+            <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="expiry"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label>Security Code</ion-label>
+            <ion-input type="number" value="" [(ngModel)]="security"></ion-input>
+          </ion-item>
+        </ion-item-group>
+        <br>
+      </ion-list>
+      <br>
+      <button ion-button large clear icon-right color="rdaApp" (click)="finish()">
+        Finish!
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide> -->
+
+
+  </ion-slides>
+
+</ion-content>

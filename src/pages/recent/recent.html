@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color = "rdaApp">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Recent</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item class="item" *ngFor="let rest of restList; let i = index">
+      <ion-avatar class="avatar" item-left>
+        <img class="imageborder" src="{{rest.photoUrl}}">
+      </ion-avatar>
+        <h2>{{rest.restaurantName}}</h2>
+        <p>{{rest.description}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

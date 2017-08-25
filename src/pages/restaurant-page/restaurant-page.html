@@ -1,0 +1,141 @@
+<ion-header>
+  <ion-navbar color="rdaApp">
+    <ion-title>{{restaurant.restaurantName}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="shareRest()">
+        <ion-icon name="md-share"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="favRest()">
+        <ion-icon name="heart"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Header Card -->
+  <ion-card>
+    <!-- <ion-card-header> -->
+      <ion-item>
+        <ion-thumbnail class="imageborder" item-left>
+          <img src="{{restaurant.photoUrl}}">
+        </ion-thumbnail>
+        <h2> {{restaurant.restaurantName}} </h2>
+        <p> {{restaurant.address}} </p>
+        <p> {{restaurant.cuisineType}} </p>
+        <p> {{restaurant.slogan}} </p>
+
+      </ion-item>
+    <!-- </ion-card-header> -->
+  </ion-card>
+
+
+<!--Mini Discount Card Template-->
+  <ion-item-divider text-center color="background"> Mini Discount Card Template </ion-item-divider>
+
+  <ion-list *ngFor="let bundle of Bundles; let i = index;">
+  <ion-card class="widget mini" (click)="goToDiscount(i)">
+    <div class="rip top-edge"><div class="inner"></div></div>
+    <div class="top">
+
+      <ion-item>
+        <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
+        </ion-icon>
+        <p>Live</p>
+        <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+
+        <div item-right>
+          <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
+          <h1 class="-bold"> $ {{bundle.totalDiscount}} </h1>
+        </div>
+      </ion-item>
+      <ion-item>
+        <h1 ion-text text-right style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
+        <p ion-text text-right style="color: rgba(0, 0, 0, 0.5);">Click here for details!</p>
+      </ion-item>
+
+    </div>
+    <div class="rip"><div class="inner"></div></div>
+  </ion-card>
+  </ion-list>
+
+
+  <!-- Restaurant Menu Card -->
+  <ion-card>
+    <ion-card-header>
+      <h2 style="color:red;"> Menu </h2>
+    </ion-card-header>
+
+    <!-- <ion-card-content> -->
+
+      <ion-list *ngFor="let menug of menuGroup; let i = index" no-lines>
+        <ion-card>
+          <ion-card-header>
+            {{menug.menuGroupName}}
+          </ion-card-header>
+
+
+          <ion-list *ngFor="let menu of menug.menu; let j = index" no-lines>
+            <ion-grid>
+              <ion-item>
+                <ion-row>
+                  <ion-col>
+                    <strong>{{menu.name}}</strong>
+                  </ion-col>
+                  <ion-col>
+                    ${{menu.price}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  {{menu.description}}
+                </ion-row>
+              </ion-item>
+            </ion-grid>
+          </ion-list>
+
+        </ion-card>
+      </ion-list>
+
+    <!-- </ion-card-content> -->
+  </ion-card>
+
+  <!-- Map Card -->
+  <!-- <ion-card>
+    <ion-card-header>
+      <h2 style="color:red;">Map</h2>
+    </ion-card-header> -->
+
+    <!-- <ion-card-content> -->
+      <!-- <div #map id="map"></div> -->
+
+      <sebm-google-map id="map"
+        [latitude]="local_map.lat"
+        [longitude]="local_map.lng"
+        [zoom]="local_map.zoom"
+        [zoomControl]="false"
+        [disableDefaultUI]="true"
+        [mapDraggable]="false"
+        [scrollwheel]="false"
+        [streetViewControl]="false"
+        [disableDoubleClickZoom]="true"
+      >
+      <!-- restaurant location marker -->
+      <sebm-google-map-marker
+        [latitude]="local_map.lat"
+        [longitude]="local_map.lng"
+        [iconUrl]="local_map.iconUrl"
+      >
+      <sebm-google-map-info-window>
+        <strong>{{local_map.name}}</strong>
+        <br>
+        {{local_map.address}}
+      </sebm-google-map-info-window>
+    </sebm-google-map-marker>
+
+  </sebm-google-map>
+
+<!-- </ion-card-content>
+</ion-card> -->
+
+</ion-content>
