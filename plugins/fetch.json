@@ -82,7 +82,15 @@
     "cordova-plugin-request-location-accuracy": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-request-location-accuracy"
+            "id": "cordova-plugin-request-location-accuracy@^2.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-open-native-settings": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-open-native-settings"
         },
         "is_top_level": true,
         "variables": {}

@@ -32,9 +32,9 @@
 
       <!-- Map Container -->
       <sebm-google-map id="map"
-      [latitude]="map.lat"
-      [longitude]="map.lng"
-      [zoom]="map.zoom"
+      [latitude]="_map.lat"
+      [longitude]="_map.lng"
+      [zoom]="_map.zoom"
       [zoomControl]="false"
       [disableDefaultUI]="true"
       [scaleControl]="true"
@@ -42,14 +42,16 @@
 
         <!-- user location marker -->
         <sebm-google-map-marker
-        [latitude]="map.lat"
-        [longitude]="map.lng"
+        [latitude]="_map.lat"
+        [longitude]="_map.lng"
+        [visible]="_map.visible"
+        [iconUrl]="_map.iconUrl"
         >
 
           <sebm-google-map-info-window>
             <strong>My location</strong>
             <br>
-            {{map.lat}}, {{map.lng}}
+            {{_map.lat}}, {{_map.lng}}
           </sebm-google-map-info-window>
 
         </sebm-google-map-marker>
@@ -58,7 +60,7 @@
         <sebm-google-map-marker *ngFor="let m of locations; let i = index"
         [latitude]="m.lat"
         [longitude]="m.lng"
-        [iconUrl]="map.iconUrl"
+        [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc'"
         >
 
           <sebm-google-map-info-window>

@@ -94,6 +94,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.locationAccuracy"
         ]
+    },
+    {
+        "id": "cordova-open-native-settings.Settings",
+        "file": "plugins/cordova-open-native-settings/www/settings.js",
+        "pluginId": "cordova-open-native-settings",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -109,7 +117,8 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-geolocation": "2.4.3",
     "cordova.plugins.diagnostic": "3.6.6",
-    "cordova-plugin-request-location-accuracy": "2.2.1"
+    "cordova-plugin-request-location-accuracy": "2.2.1",
+    "cordova-open-native-settings": "1.4.1"
 };
 // BOTTOM OF METADATA
 });

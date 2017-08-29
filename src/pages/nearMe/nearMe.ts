@@ -3,9 +3,8 @@ import { NavController, Events, ToastController, Platform } from 'ionic-angular'
 import { Storage } from '@ionic/storage';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 import firebase from 'firebase';
-import { Geolocation } from '@ionic-native/geolocation';
-import { Diagnostic } from '@ionic-native/diagnostic';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
+
+import { Map }          from '../../providers/map';
 
 @Component({
   selector: 'page-nearMe',
@@ -38,7 +37,7 @@ export class NearMePage {
   iconName: string = "map";
 
   locations: Array<{name: any, lat: number, lng: number, address: string}>;
-  map: any;
+  _map: any;
 
   // TODO: get input from the slider and pass as radius to create circle
   minLimit: number = 0;  // 0 km
@@ -54,9 +53,8 @@ export class NearMePage {
     public storage: Storage,
     public toastCtrl: ToastController,
     public plt: Platform,
-    private geolocation: Geolocation,
-    private diagnostic: Diagnostic,
-    private locationAccuracy: LocationAccuracy
+    public map: Map
+
   ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -93,7 +91,6 @@ export class NearMePage {
 
   };
 
-
   ngOnInit() {
     this.loadMap();
   };
@@ -112,48 +109,8 @@ export class NearMePage {
   };
 
   loadMap(){
-    /*
-     TODO: if location is off, prompt user to turn on location services
-           if permission denied, initialize map using default values
-    */
-    // NOTE: Look at requestLocationAuthorization()
+    this._map = this.map.mapObject;
 
-    this.diagnostic.isLocationEnabled().then((isAvailable) => {
-      if(isAvailable == true){
-        this.getLocation();
-      }
-      else{
-        this.diagnostic.switchToLocationSettings();
-      }
-      this.getLocation();
-    }).catch((error) => {
-      this.map = {
-        // location of development
-        lat: 45.216612,
-        lng: -82.523330,
-        zoom: 4
-      };
-    })
-  }
-
-  // call native geolocation plugin to pull coordinates
-  getLocation(){
-    let options = {timeout:10000, enableHighAccuracy: true};
-    this.geolocation.getCurrentPosition(options).then((data) => {
-      this.map = {
-        lat: data.coords.latitude,
-        lng: data.coords.longitude,
-        zoom: 8,
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/test1-51a17.appspot.com/o/img%2Fbluedot.png?alt=media&token=9b8e9d6b-c526-485b-a291-ab52160dbc7e"
-      };
-    }).catch((error) => {
-        this.map = {
-          // location of development
-          lat: 45.216612,
-          lng: -82.523330,
-          zoom: 4,
-        };
-    });
   }
 
   goToRestPage(list, index) {
@@ -225,7 +182,6 @@ export class NearMePage {
     }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
     });
-    // console.log(this.searchInput);
   };
 
 };

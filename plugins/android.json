@@ -36,6 +36,9 @@
         },
         "cordova-plugin-request-location-accuracy": {
             "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-open-native-settings": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {

@@ -80,6 +80,14 @@ module.exports = [
         "id": "cordova-plugin-camera.CameraProxy",
         "pluginId": "cordova-plugin-camera",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-open-native-settings/www/settings.js",
+        "id": "cordova-open-native-settings.Settings",
+        "pluginId": "cordova-open-native-settings",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -95,7 +103,8 @@ module.exports.metadata =
     "cordova-plugin-camera": "2.4.1",
     "cordova-plugin-geolocation": "2.4.3",
     "cordova.plugins.diagnostic": "3.6.6",
-    "cordova-plugin-request-location-accuracy": "2.2.1"
+    "cordova-plugin-request-location-accuracy": "2.2.1",
+    "cordova-open-native-settings": "1.4.1"
 }
 // BOTTOM OF METADATA
 });

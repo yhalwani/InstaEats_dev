@@ -187,7 +187,7 @@
         [longitude]="local_map.lng"
         [iconUrl]="local_map.iconUrl"
       >
-      <sebm-google-map-info-window>
+      <sebm-google-map-info-window [isOpen]="'true'">
         <strong>{{local_map.name}}</strong>
         <br>
         {{local_map.address}}

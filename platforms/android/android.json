@@ -35,6 +35,10 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NativeSettings\"><param name=\"android-package\" value=\"com.phonegap.plugins.nativesettings.NativeSettings\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -125,6 +129,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-open-native-settings": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
@@ -224,6 +231,14 @@
             "clobbers": [
                 "cordova.plugins.locationAccuracy"
             ]
+        },
+        {
+            "id": "cordova-open-native-settings.Settings",
+            "file": "plugins/cordova-open-native-settings/www/settings.js",
+            "pluginId": "cordova-open-native-settings",
+            "clobbers": [
+                "cordova.plugins.settings"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -237,6 +252,7 @@
         "ionic-plugin-keyboard": "2.2.1",
         "cordova-plugin-geolocation": "2.4.3",
         "cordova.plugins.diagnostic": "3.6.6",
-        "cordova-plugin-request-location-accuracy": "2.2.1"
+        "cordova-plugin-request-location-accuracy": "2.2.1",
+        "cordova-open-native-settings": "1.4.1"
     }
 }

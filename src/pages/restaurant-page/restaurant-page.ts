@@ -167,7 +167,7 @@ export class RestaurantPage {
   };
 
   shareRest(){
-    
+
   };
 
 

@@ -18,6 +18,8 @@ import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-port
 
 import { User }         from '../providers/user';
 
+import { Map }          from '../providers/map';
+
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
@@ -44,10 +46,12 @@ export class MyApp {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     public storage: Storage,
-    public userService: User
+    public userService: User,
+    public map: Map
   ) {
 
     this.initializeApp();
+    this.map.getLocationServices();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -113,6 +117,7 @@ export class MyApp {
         });
       });
 
+      // this.map.getLocationServices();
       this.events.publish('app:launch', this.loggedIn);
 
     });

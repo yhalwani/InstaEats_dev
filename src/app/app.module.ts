@@ -11,6 +11,7 @@ import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 import { Stripe } from '@ionic-native/stripe';
 
@@ -55,7 +56,7 @@ import { InfoPage }                     from '../pages/info/info';
 import { DiscountsPage }                from '../pages/discounts/discounts';
 
 import { User }                         from '../providers/user';
-
+import { Map }                          from '../providers/map';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,9 @@ import { User }                         from '../providers/user';
     Geolocation,
     LocationAccuracy,
     Diagnostic,
+    OpenNativeSettings,
     User,
+    Map,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
