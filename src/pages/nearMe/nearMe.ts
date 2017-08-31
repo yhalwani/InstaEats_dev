@@ -6,6 +6,10 @@ import firebase from 'firebase';
 
 import { Map }          from '../../providers/map';
 
+import { Geolocation } from '@ionic-native/geolocation';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { Dialogs }      from '@ionic-native/dialogs';
+
 @Component({
   selector: 'page-nearMe',
   templateUrl: 'nearMe.html'
@@ -31,7 +35,6 @@ export class NearMePage {
     restaurantName: any
   }>;
 
-
   // Dynamic variables that change according to
   nearMeViews: string = "listView";
   iconName: string = "map";
@@ -53,7 +56,10 @@ export class NearMePage {
     public storage: Storage,
     public toastCtrl: ToastController,
     public plt: Platform,
-    public map: Map
+    public map: Map,
+    private dialogs: Dialogs,
+    private geolocation: Geolocation,
+    private diagnostic: Diagnostic,
 
   ) {
 
@@ -91,7 +97,7 @@ export class NearMePage {
 
   };
 
-  ngOnInit() {
+  ngAfterViewInit(){
     this.loadMap();
   };
 
@@ -110,7 +116,18 @@ export class NearMePage {
 
   loadMap(){
     this._map = this.map.mapObject;
+    this.map.checkDeviceSettings();
+    this.map.getLocationServices();
+  }
 
+  errToast(msg){
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.present();
   }
 
   goToRestPage(list, index) {

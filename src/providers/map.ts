@@ -7,6 +7,7 @@ import { Events, LoadingController, ToastController } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { Dialogs }      from '@ionic-native/dialogs';
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class Map {
     iconUrl: string
   };
 
-  constructor(public platform: Platform, private geolocation: Geolocation, private diagnostic: Diagnostic, public toastCtrl: ToastController) {
+  constructor(public platform: Platform, private geolocation: Geolocation, private diagnostic: Diagnostic, public toastCtrl: ToastController, private dialogs: Dialogs) {
     this.mapObject = {
       // (default)
       lat: 45.216612,
@@ -31,6 +32,7 @@ export class Map {
     }
   }
 
+  // checks what platform is being used and then calls respective functions to pull GPS coordinates
   getLocationServices(){
     if(this.platform.is('core')){
       // Set user location using html5 geolocation
@@ -49,30 +51,13 @@ export class Map {
         });
     }else{
       // check if device location is turned on
-      this.diagnostic.isLocationEnabled().then((isAvailable) => {
-        if(isAvailable == true){
-          this.getLocation();
-        }
-        else{
-          // this.openNativeSettings.open("location");
-          this.diagnostic.switchToLocationSettings();
-        }
-        // this.getLocation();
-      }).then(() => {
-        if(this.diagnostic.permissionStatus.GRANTED){
-          this.getLocation();
-        }
-        if(this.diagnostic.permissionStatus.DENIED){
-          this.errToast("Please turn on device location to use this apps full features")
-        }
-      }).catch((error) => {
-        this.errToast("Unable to detect user location")
-      })
+      this.getDeviceLocation();
     }
   }
 
-  // call native geolocation plugin to pull coordinates
-  getLocation(){
+
+  // call native geolocation plugin to pull coordinates (Android & iOS)
+  getDeviceLocation(){
     let options = {enableHighAccuracy: true};
     this.geolocation.getCurrentPosition(options).then((data) => {
       this.mapObject = {
@@ -85,6 +70,33 @@ export class Map {
     }).catch((error) => {
       this.errToast("Unable to detect user location")
     });
+  }
+
+  // check if device location is switched on (Android & iOS)
+  checkDeviceSettings(){
+    this.diagnostic.isLocationEnabled().then((isAvailable) => {
+      if(isAvailable){
+        this.getDeviceLocation();
+      }
+      else{
+        this.dialogs.confirm("This app requires devices Location Services", "Permission Required", ["Go to Settings", "Cancel"]).then((response) => {
+          if(response == 1){
+            this.diagnostic.switchToLocationSettings();
+          }else{
+            // user cancelled prompt
+          }
+        }).then(() => {
+          if(this.diagnostic.permissionStatus.GRANTED){
+            this.getDeviceLocation();
+            return;
+          }
+          if(this.diagnostic.permissionStatus.DENIED){
+          }
+        }).catch((error) => {
+          this.errToast("Unable to detect location");
+        })
+      }
+    })
   }
 
   errToast(msg){

@@ -51,7 +51,6 @@ export class MyApp {
   ) {
 
     this.initializeApp();
-    this.map.getLocationServices();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -117,9 +116,8 @@ export class MyApp {
         });
       });
 
-      // this.map.getLocationServices();
       this.events.publish('app:launch', this.loggedIn);
-
+      this.map.getLocationServices();
     });
   };
 
