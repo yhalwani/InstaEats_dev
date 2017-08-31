@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { User } from '../../providers/user';
+import { User }             from '../../providers/user';
+import { FcmNotifications } from '../../providers/fcm-notifications';
 
 @Component({
   selector: 'page-account',
@@ -12,16 +13,19 @@ export class AccountPage {
   email:    string;
   password: string;
   userName: string;
+  token:    any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public userService: User
+    public userService: User,
+    public fcm: FcmNotifications
   ) {
 
-    this.email = this.userService.user.email;
+    this.email    = this.userService.user.email;
     this.userName = this.userService.user.username;
     this.password = "";
+    this.token    = this.fcm.token;
 
   };
 

@@ -16,14 +16,14 @@ import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
-import { User }         from '../providers/user';
+import { User }                 from '../providers/user';
+import { FcmNotifications }     from '../providers/fcm-notifications';
 
 declare var Snap,svg,min,js: any;
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween,js: any;
 declare var svgAnimation,js: any;
 
-declare var FCMPlugin;
 
 @Component({
   templateUrl: 'app.html'
@@ -47,10 +47,12 @@ export class MyApp {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     public storage: Storage,
-    public userService: User
+    public userService: User,
+    public fcm: FcmNotifications
   ){
 
     this.initializeApp();
+    this.fcm.fcmInit();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -115,29 +117,6 @@ export class MyApp {
           };
         });
       });
-
-      if(typeof(FCMPlugin) !== "undefined"){
-        alert("FCMPlugin defined");
-        FCMPlugin.getToken(function(t){
-          alert(t);
-          this.userService.user.fcmToken = t;
-        }, function(e){
-          alert("Uh-Oh no token!");
-        });
-
-        FCMPlugin.onNotification(function(d){
-          if(d.wasTapped){
-            alert(JSON.stringify(d));
-          } else {
-            alert(JSON.stringify(d));
-          }
-        }, function(msg){
-          // No problemo, registered callback
-          alert(msg);
-        }, function(err){
-          alert(err);
-        });
-      } else alert("Notifications disabled, only provided in Android/iOS environment");
 
       this.events.publish('app:launch', this.loggedIn);
 

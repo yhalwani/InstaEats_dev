@@ -52,6 +52,7 @@ import { InfoPage }                     from '../pages/info/info';
 import { DiscountsPage }                from '../pages/discounts/discounts';
 
 import { User }                         from '../providers/user';
+import { FcmNotifications }             from '../providers/fcm-notifications';
 
 @NgModule({
   declarations: [
@@ -106,11 +107,12 @@ import { User }                         from '../providers/user';
   providers: [
     Camera,
     User,
+    FcmNotifications,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}
