@@ -22,6 +22,10 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="FCMPlugin">
+        <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <name>InstaEats</name>
     <description>Local restaurants running at-the-moment deals.</description>
     <author email="youssef@retoll.com" href="https://www.retoll.com/">
@@ -37,6 +41,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
+    <allow-navigation href="http://192.168.2.28:8100" />
     <allow-intent href="market:*" />
     <icon density="ldpi" src="resources\android\icon\drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources\android\icon\drawable-mdpi-icon.png" />

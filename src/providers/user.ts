@@ -6,11 +6,12 @@ export class User {
   user : {
     email: string,
     username: any,
-    loggedIn: boolean
+    loggedIn: boolean,
+    fcmToken: any
   };
 
   constructor() {
-    this.user = {email: "", username: "", loggedIn: false};
+    this.user = {email: "", username: "", loggedIn: false, fcmToken: ""};
   }
 
 }

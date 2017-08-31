@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "718835534496",
+    "firebase_url": "https://test1-51a17.firebaseio.com",
+    "project_id": "test1-51a17",
+    "storage_bucket": "test1-51a17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718835534496:android:a7139e07fce018f0",
+        "android_client_info": {
+          "package_name": "com.retoll.instaeats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718835534496-6k89c69h0oufut63d54ur47slobhb6to.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxD2TCv0GLv574L5JlpIL-9Wx0ZcvpDxA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

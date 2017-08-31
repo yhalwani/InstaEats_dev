@@ -53,7 +53,6 @@ import { DiscountsPage }                from '../pages/discounts/discounts';
 
 import { User }                         from '../providers/user';
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -111,7 +110,7 @@ import { User }                         from '../providers/user';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {}
