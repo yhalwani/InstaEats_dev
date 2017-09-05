@@ -50,8 +50,9 @@ export class Map {
           }
         });
     }else{
-      // check if device location is turned on
-      this.getDeviceLocation();
+      // check if device location is turned on then get location
+      this.checkDeviceSettings();
+      // this.getDeviceLocation();
     }
   }
 
