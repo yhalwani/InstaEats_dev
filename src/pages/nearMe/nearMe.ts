@@ -97,7 +97,7 @@ export class NearMePage {
 
   };
 
-  ngAfterViewInit(){
+  ngOnInit(){
     this.loadMap();
   };
 
@@ -115,8 +115,9 @@ export class NearMePage {
   };
 
   loadMap(){
-    this._map = this.map.mapObject;
+    // this._map = this.map.mapObject;
     this.map.getLocationServices();
+    this._map = this.map.mapObject;
   }
 
   errToast(msg){
