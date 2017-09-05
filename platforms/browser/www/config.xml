@@ -21,6 +21,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
+    <allow-navigation href="http://192.168.2.28:8100" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />

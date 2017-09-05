@@ -24,6 +24,8 @@ declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
 
+declare var FCMPlugin;
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -116,6 +118,33 @@ export class MyApp {
         });
         this.map.getLocationServices();
       });
+<<<<<<< HEAD
+=======
+
+      if(typeof(FCMPlugin) !== "undefined"){
+        alert("FCMPlugin defined");
+        FCMPlugin.getToken(function(t){
+          alert(t);
+          this.userService.user.fcmToken = t;
+        }, function(e){
+          alert("Uh-Oh no token!");
+        });
+
+        FCMPlugin.onNotification(function(d){
+          if(d.wasTapped){
+            alert(JSON.stringify(d));
+          } else {
+            alert(JSON.stringify(d));
+          }
+        }, function(msg){
+          // No problemo, registered callback
+          alert(msg);
+        }, function(err){
+          alert(err);
+        });
+      } else alert("Notifications disabled, only provided in Android/iOS environment");
+
+>>>>>>> master
       this.events.publish('app:launch', this.loggedIn);
     });
   };
@@ -126,7 +155,7 @@ export class MyApp {
     if(page.component === this.loggedIn) {
       firebase.auth().signOut().then(() =>{
         this.loggedIn = false;
-        this.userService.user = {email: "", username: "", loggedIn: this.loggedIn};
+        this.userService.user.loggedIn = this.loggedIn;
         this.nav.setRoot(TabsPage)
         this.presentLoading();
         this.events.publish('user:loggedOut', false);

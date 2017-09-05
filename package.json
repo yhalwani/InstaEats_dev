@@ -23,6 +23,7 @@
         "@ionic-native/core": "^3.12.1",
         "@ionic-native/diagnostic": "^4.1.0",
         "@ionic-native/dialogs": "^4.2.1",
+        "@ionic-native/fcm": "^4.2.1",
         "@ionic-native/firebase": "^3.4.4",
         "@ionic-native/geolocation": "^4.1.0",
         "@ionic-native/google-maps": "^3.5.0",

@@ -117,10 +117,18 @@ module.exports = [
         "pluginId": "cordova-plugin-dialogs",
         "merges": [
             "navigator.notification"
+          ]
+    },
+    {        
+        "id": "cordova-plugin-fcm.FCMPlugin",
+        "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+        "pluginId": "cordova-plugin-fcm",
+        "clobbers": [
+            "FCMPlugin"
         ]
     }
 ];
-module.exports.metadata = 
+module.exports.metadata =
 // TOP OF METADATA
 {
     "cordova-plugin-compat": "1.1.0",
@@ -131,11 +139,15 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
+<<<<<<< HEAD
     "cordova-plugin-geolocation": "2.4.3",
     "cordova.plugins.diagnostic": "3.6.6",
     "cordova-plugin-request-location-accuracy": "2.2.1",
     "cordova-open-native-settings": "1.4.1",
     "cordova-plugin-dialogs": "1.3.3"
+=======
+    "cordova-plugin-fcm": "2.1.2"
+>>>>>>> master
 };
 // BOTTOM OF METADATA
 });

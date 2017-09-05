@@ -53,7 +53,9 @@ export class LoginPage {
           else if(this.userType == "User")
           {
             this.events.publish('user:loggedIn', true, auth.currentUser.displayName);
-            this.userService.user = {email: this.email, username: auth.currentUser.displayName, loggedIn: true};
+            this.userService.user.email = this.email;
+            this.userService.user.username = auth.currentUser.displayName;
+            this.userService.user.loggedIn = true;
             this.presentLoading(this.userToggle);
           }
           // if usertype is restaurant and exists in Restauarant Profiles child node -> login as restaurant

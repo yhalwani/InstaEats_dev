@@ -104,9 +104,17 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+        "id": "cordova-plugin-fcm.FCMPlugin",
+        "pluginId": "cordova-plugin-fcm",
+        "clobbers": [
+            "FCMPlugin"
+        ]
     }
 ];
-module.exports.metadata = 
+module.exports.metadata =
 // TOP OF METADATA
 {
     "cordova-plugin-console": "1.0.5",
@@ -117,6 +125,7 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.4.1",
+    "cordova-plugin-fcm": "2.1.2"
     "cordova-plugin-geolocation": "2.4.3",
     "cordova.plugins.diagnostic": "3.6.6",
     "cordova-plugin-request-location-accuracy": "2.2.1",

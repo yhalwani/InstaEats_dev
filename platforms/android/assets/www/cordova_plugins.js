@@ -118,9 +118,17 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "id": "cordova-plugin-fcm.FCMPlugin",
+        "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+        "pluginId": "cordova-plugin-fcm",
+        "clobbers": [
+            "FCMPlugin"
+        ]
     }
 ];
-module.exports.metadata = 
+module.exports.metadata =
 // TOP OF METADATA
 {
     "cordova-plugin-compat": "1.1.0",
@@ -136,6 +144,7 @@ module.exports.metadata =
     "cordova-plugin-request-location-accuracy": "2.2.1",
     "cordova-open-native-settings": "1.4.1",
     "cordova-plugin-dialogs": "1.3.3"
+    "cordova-plugin-fcm": "2.1.2"
 };
 // BOTTOM OF METADATA
 });

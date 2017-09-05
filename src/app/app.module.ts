@@ -123,7 +123,7 @@ import { Map }                          from '../providers/map';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {}

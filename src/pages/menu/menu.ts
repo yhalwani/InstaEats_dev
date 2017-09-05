@@ -111,6 +111,30 @@ export class MenuPage {
       <ion-input type="text" placeholder="Bundle Description" [(ngModel)]="bundleDescription"></ion-input>
     </ion-item>
 
+    <br>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-2>
+          Check to add to discount
+        </ion-col>
+        <ion-col col-4>
+          Item Name
+        </ion-col>
+        <ion-col col-2>
+          Price
+        </ion-col>
+        <ion-col col-2>
+          Discounted Price
+        </ion-col>
+        <ion-col col-2>
+          Discount Percentage
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <br>
+
     <ion-list *ngFor="let menug of bundleMenu; let i = index">
       <ion-list-header>
         <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
@@ -118,21 +142,71 @@ export class MenuPage {
       <ion-grid>
         <ion-item-group *ngFor="let menu of menug.menu; let j = index">
           <ion-row>
-            <ion-col>
+            <ion-col col-2>
               <ion-item>
-                <ion-label fixed> {{menu.name}} </ion-label>
-                <ion-checkbox [(ngModel)]="bundleMenu[i].menu[j].checked"></ion-checkbox>
+                <!-- <ion-label> {{menu.name}} </ion-label> -->
+                <ion-checkbox [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
               </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col col-4>
               <ion-item>
-                <ion-input type="number" disabled=!{{bundleMenu[i].menu[j].checked}} placeholder="Discount Percentage" [(ngModel)]="bundleMenu[i].menu[j].discount"></ion-input>
+                {{menu.name}}
+              </ion-item>
+            </ion-col>
+            <ion-col col-2>
+              <ion-item>
+                 $ {{menu.price}}
+              </ion-item>
+            </ion-col>
+            <ion-col col-2>
+              <ion-item>
+                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-2>
+              <ion-item>
+                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
         </ion-item-group>
       </ion-grid>
     </ion-list>
+
+    <br>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+
+        </ion-col>
+        <ion-col col-2>
+          Total Price
+        </ion-col>
+        <ion-col col-2>
+          Total Discounted Price
+        </ion-col>
+        <ion-col col-2>
+          Total Discount Percentage
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+
+        </ion-col>
+        <ion-col col-2>
+          {{totalPrice}}
+        </ion-col>
+        <ion-col col-2>
+          $ {{totalDiscountPrice}}
+        </ion-col>
+        <ion-col col-2>
+          % {{totalDiscountPercent}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <br>
 
     <div text-center>
       <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
@@ -155,7 +229,7 @@ export class ModalContentPage {
   bundleMenu: Array<{
     menuGroupName:       string,
     menu:                Array<{
-      name: string, description: string, price: number, checked: boolean, discount: number
+      name: string, description: string, price: number, checked: boolean, discount: number, percent: number
     }>
   }>;
 
@@ -163,10 +237,13 @@ export class ModalContentPage {
     bundleName:            string,
     bundleDescription:     string,
     live:                  boolean,
+    total:                 number,
+    totalDiscount:         number,
+    totalPercent:          number,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
-        name: string, description: string, price: number, checked: boolean, discount: number
+        name: string, description: string, price: number, checked: boolean, discount: number, percent: number
       }>
     }>
   };
@@ -174,12 +251,20 @@ export class ModalContentPage {
   bundleName:                   string;
   bundleDescription:            string;
 
+  totalDiscountPrice:           number;
+  totalDiscountPercent:         number;
+  totalPrice:                   number;
+
   constructor(
     public params: NavParams,
     public viewCtrl: ViewController,
     public storage: Storage,
     public events: Events
   ) {
+
+    this.totalDiscountPrice    = 0;
+    this.totalDiscountPercent  = 0;
+    this.totalPrice            = 0;
 
     // Menu is assigned from the input parameter data
     this.menuGroup = this.params.data;
@@ -190,6 +275,9 @@ export class ModalContentPage {
       bundleName:            "",
       bundleDescription:     "",
       live:                  false,
+      total:                 0,
+      totalDiscount:         0,
+      totalPercent:          0,
       bundleElem: []
     };
 
@@ -210,7 +298,8 @@ export class ModalContentPage {
           description: this.menuGroup[i].menu[j].description,
           price: this.menuGroup[i].menu[j].price,
           checked: false,
-          discount: 0
+          discount: 0,
+          percent: 0
         };
         this.bundleMenu[i].menu.push(item);
       };
@@ -226,6 +315,46 @@ export class ModalContentPage {
   // Add item to bundle
   addToBundle(group, index){
     this.bundleMenu[group].menu[index].checked = !this.bundleMenu[group].menu[index].checked;
+  };
+
+  sumTotal(){
+    var sum = 0;
+    this.bundleMenu.forEach((group, groupIndex) => {
+      group.menu.forEach((item, itemIndex) => {
+        if(item.checked == true){
+          sum += Number(item.price);
+        } else {
+          item.discount = 0;
+          item.percent = 0;
+        };
+      });
+    });
+    this.totalPrice = sum;
+    this.sumTotals();
+  }
+
+  sumTotalPrice(i,j){
+    this.bundleMenu[i].menu[j].percent = Math.floor(100 - ((this.bundleMenu[i].menu[j].discount / this.bundleMenu[i].menu[j].price) * 100));
+    this.sumTotals()
+  }
+
+  sumTotalPercent(i,j){
+    this.bundleMenu[i].menu[j].discount = this.bundleMenu[i].menu[j].price * ((100 - this.bundleMenu[i].menu[j].percent) / 100)
+    this.sumTotals();
+  }
+
+  sumTotals(){
+    var sumDiscount = 0;
+    this.bundleMenu.forEach((group, groupIndex) => {
+      group.menu.forEach((item, itemIndex) => {
+        if(item.checked == true){
+          sumDiscount += Number(item.discount);
+        };
+      });
+    });
+    this.totalDiscountPrice = sumDiscount;
+    var percent = Math.floor(100 - (100 * this.totalDiscountPrice / this.totalPrice));
+    this.totalDiscountPercent = ( percent > 0) ? percent : 0;
   }
 
   // Save bundle to storage and push to firebase
@@ -233,6 +362,10 @@ export class ModalContentPage {
 
     this.bundleItem.bundleName = this.bundleName;
     this.bundleItem.bundleDescription = this.bundleDescription;
+
+    this.bundleItem.total = this.totalPrice;
+    this.bundleItem.totalDiscount = this.totalDiscountPrice;
+    this.bundleItem.totalPercent = this.totalDiscountPercent;
 
     this.bundleMenu.forEach((group, groupIndex) => {
       var groupE = {menuGroupName: group.menuGroupName, menu: []};
@@ -244,7 +377,8 @@ export class ModalContentPage {
             description: item.description,
             price: item.price,
             checked: item.checked,
-            discount: item.discount
+            discount: item.discount,
+            percent: item.percent
           };
 
           groupE.menu.push(itemE);
@@ -269,7 +403,15 @@ export class ModalContentPage {
     var user = firebase.auth().currentUser;
 
     ref.child(user.uid).update({
-      [this.bundleItem.bundleName] : {description : this.bundleItem.bundleDescription, live: this.bundleItem.live, bundle : this.bundleItem.bundleElem }
+      [this.bundleItem.bundleName] : {
+        bundleName: this.bundleItem.bundleName,
+        bundleDescription : this.bundleItem.bundleDescription,
+        live: this.bundleItem.live,
+        total: this.bundleItem.total,
+        totalDiscount: this.bundleItem.totalDiscount,
+        totalPercent: this.bundleItem.totalPercent,
+        bundleElem : this.bundleItem.bundleElem
+      }
     });
 
     this.dismiss();
