@@ -116,7 +116,6 @@ export class NearMePage {
 
   loadMap(){
     this._map = this.map.mapObject;
-    // this.map.checkDeviceSettings();
     this.map.getLocationServices();
   }
 

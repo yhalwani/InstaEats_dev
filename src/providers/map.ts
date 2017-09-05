@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 
 import { Platform } from 'ionic-angular';
 import { Events, LoadingController, ToastController } from 'ionic-angular';
@@ -51,8 +49,28 @@ export class Map {
         });
     }else{
       // check if device location is turned on then get location
-      this.checkDeviceSettings();
-      // this.getDeviceLocation();
+      this.diagnostic.isLocationEnabled().then((isAvailable) => {
+        if(isAvailable){
+          this.getDeviceLocation();
+        } else {
+          this.dialogs.confirm("This app requires devices Location Services", "Permission Required", ["Go to Settings", "Cancel"]).then((response) => {
+            if(response == 1){
+              this.diagnostic.switchToLocationSettings();
+            }else{
+              // user cancelled prompt
+            }
+          }).then(() => {
+            if(this.diagnostic.permissionStatus.GRANTED){
+              this.getDeviceLocation();
+            }
+            if(this.diagnostic.permissionStatus.DENIED){
+            }
+          }).catch((error) => {
+            // this.errToast("Unable to detect location");
+            // this.errToast("error");
+          });
+        }
+      });
     }
   }
 
@@ -74,31 +92,30 @@ export class Map {
   }
 
   // check if device location is switched on (Android & iOS)
-  checkDeviceSettings(){
-    this.diagnostic.isLocationEnabled().then((isAvailable) => {
-      if(isAvailable){
-        this.getDeviceLocation();
-      }
-      else{
-        this.dialogs.confirm("This app requires devices Location Services", "Permission Required", ["Go to Settings", "Cancel"]).then((response) => {
-          if(response == 1){
-            this.diagnostic.switchToLocationSettings();
-          }else{
-            // user cancelled prompt
-          }
-        }).then(() => {
-          if(this.diagnostic.permissionStatus.GRANTED){
-            this.getDeviceLocation();
-            return;
-          }
-          if(this.diagnostic.permissionStatus.DENIED){
-          }
-        }).catch((error) => {
-          this.errToast("Unable to detect location");
-        })
-      }
-    })
-  }
+  // checkDeviceSettings(){
+  //   this.diagnostic.isLocationEnabled().then((isAvailable) => {
+  //     if(isAvailable){
+  //       this.getDeviceLocation();
+  //     } else {
+  //       this.dialogs.confirm("This app requires devices Location Services", "Permission Required", ["Go to Settings", "Cancel"]).then((response) => {
+  //         if(response == 1){
+  //           this.diagnostic.switchToLocationSettings();
+  //         }else{
+  //           // user cancelled prompt
+  //         }
+  //       }).then(() => {
+  //         if(this.diagnostic.permissionStatus.GRANTED){
+  //           this.getDeviceLocation();
+  //         }
+  //         if(this.diagnostic.permissionStatus.DENIED){
+  //         }
+  //       }).catch((error) => {
+  //         // this.errToast("Unable to detect location");
+  //         // this.errToast("error");
+  //       });
+  //     }
+  //   });
+  // }
 
   errToast(msg){
     let toast = this.toastCtrl.create({

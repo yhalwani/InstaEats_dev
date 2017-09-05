@@ -114,10 +114,9 @@ export class MyApp {
             this.storage.set('recentCount', 0);
           };
         });
+        this.map.getLocationServices();
       });
-
       this.events.publish('app:launch', this.loggedIn);
-      this.map.getLocationServices();
     });
   };
 
