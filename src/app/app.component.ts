@@ -118,8 +118,6 @@ export class MyApp {
         });
         this.map.getLocationServices();
       });
-<<<<<<< HEAD
-=======
 
       if(typeof(FCMPlugin) !== "undefined"){
         alert("FCMPlugin defined");
@@ -144,7 +142,6 @@ export class MyApp {
         });
       } else alert("Notifications disabled, only provided in Android/iOS environment");
 
->>>>>>> master
       this.events.publish('app:launch', this.loggedIn);
     });
   };
