@@ -17,7 +17,6 @@ import { IntroPage }    from '../pages/intro/intro';
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
 import { User }                 from '../providers/user';
-import { FcmNotifications }     from '../providers/fcm-notifications';
 
 declare var Snap,svg,min,js: any;
 declare var Snap,svg,easing,min,js: any;
@@ -47,12 +46,10 @@ export class MyApp {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     public storage: Storage,
-    public userService: User,
-    public fcm: FcmNotifications
+    public userService: User
   ){
 
     this.initializeApp();
-    this.fcm.fcmInit();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -133,7 +130,6 @@ export class MyApp {
         this.nav.setRoot(TabsPage)
         this.presentLoading();
         this.events.publish('user:loggedOut', false);
-
       }).catch((error) => {
         this.errToast(error.message);
       });
