@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-open-native-settings": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -14,6 +17,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-splashscreen": {
@@ -25,30 +31,18 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-request-location-accuracy": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-open-native-settings": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-dialogs": {
-          "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-fcm": {
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     }
