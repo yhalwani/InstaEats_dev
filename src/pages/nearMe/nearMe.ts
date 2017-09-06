@@ -77,7 +77,7 @@ export class NearMePage {
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
-        }
+        };
 
         // get coordinates of live restauarants only
         let data = childSnapshot.val();
@@ -131,6 +131,10 @@ export class NearMePage {
   }
 
   goToRestPage(list, index) {
+
+    console.log("List: " + list);
+
+    console.log("Index: "+ index);
 
     if (list == "live") {
       var restList = this.liveList;
