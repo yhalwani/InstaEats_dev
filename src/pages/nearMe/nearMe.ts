@@ -6,10 +6,6 @@ import firebase from 'firebase';
 
 import { Map }          from '../../providers/map';
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { Diagnostic } from '@ionic-native/diagnostic';
-import { Dialogs }      from '@ionic-native/dialogs';
-
 @Component({
   selector: 'page-nearMe',
   templateUrl: 'nearMe.html'
@@ -57,10 +53,6 @@ export class NearMePage {
     public toastCtrl: ToastController,
     public plt: Platform,
     public map: Map,
-    private dialogs: Dialogs,
-    private geolocation: Geolocation,
-    private diagnostic: Diagnostic,
-
   ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -186,19 +178,19 @@ export class NearMePage {
   };
 
   onSearch(){
-    // create tmp list and search list. If query is in tmp list, push to search list
-    let restRef = firebase.database().ref("Restaurant Profiles/");
-    var query = this.searchInput;
-    var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
-      userQuery.once("value", function(snapshot) {
-    var data = snapshot.val();
-    console.log(data);
-
-    /* TODO: create a list and show as search resutls */
-
-    }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-    });
+    // // create tmp list and search list. If query is in tmp list, push to search list
+    // let restRef = firebase.database().ref("Restaurant Profiles/");
+    // var query = this.searchInput;
+    // var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
+    //   userQuery.once("value", function(snapshot) {
+    // var data = snapshot.val();
+    // console.log(data);
+    //
+    // /* TODO: create a list and show as search resutls */
+    //
+    // }, function (errorObject) {
+    // console.log("The read failed: " + errorObject.code);
+    // });
   };
 
 };

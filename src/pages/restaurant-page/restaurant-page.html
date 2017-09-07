@@ -2,7 +2,7 @@
   <ion-navbar color="rdaApp">
     <ion-title>{{restaurant.restaurantName}}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="shareRest()">
+      <button ion-button icon-only (click)="shareRest(restaurant.restaurantName)">
         <ion-icon name="md-share"></ion-icon>
       </button>
       <button ion-button icon-only (click)="favRest()">
@@ -15,9 +15,9 @@
 <ion-content>
 
   <!-- Header Card -->
-  <ion-card>
+  <!-- <ion-card> -->
     <!-- <ion-card-header> -->
-      <ion-item>
+      <!-- <ion-item>
         <ion-thumbnail class="imageborder" item-left>
           <img src="{{restaurant.photoUrl}}">
         </ion-thumbnail>
@@ -26,10 +26,75 @@
         <p> {{restaurant.cuisineType}} </p>
         <p> {{restaurant.slogan}} </p>
 
-      </ion-item>
+      </ion-item> -->
     <!-- </ion-card-header> -->
-  </ion-card>
+  <!-- </ion-card> -->
 
+  <ion-list>
+  <!-- <ion-card-header> -->
+    <ion-item class="item_stretch">
+      <ion-card class="cardNot">
+        <ion-card-content class="headerNot">
+          <ion-item>
+            <ion-thumbnail item-left>
+              <img class="imageborder" src="{{restaurant.photoUrl}}">
+            </ion-thumbnail>
+            <ion-item-group>
+            <h2> {{restaurant.restaurantName}} </h2>
+            <p> {{restaurant.address}} </p>
+            <p> {{restaurant.cuisineType}} </p>
+            <p> {{restaurant.slogan}} </p>
+          </ion-item-group>
+        </ion-item>
+  </ion-card-content>
+</ion-card>
+    </ion-item>
+
+
+    <ion-card class="cardNot">
+            <ion-grid>
+              <ion-row class="tabMenu">
+                <ion-col col-4>
+                  <button ion-button clear>
+                    <ion-row align-items-center>
+                      <ion-col>
+                        <ion-icon name="book"></ion-icon>
+                    </ion-col>
+                    <ion-col>
+                    <p text-capitalize>Menu</p>
+                    </ion-col>
+                    </ion-row>
+                  </button>
+                </ion-col>
+                <ion-col col-4>
+                  <button ion-button clear>
+                    <ion-row align-items-center>
+                      <ion-col>
+                    <ion-icon name="heart"></ion-icon>
+                  </ion-col>
+                  <ion-col>
+                    <p text-capitalize>Favouite</p>
+                  </ion-col>
+                  </ion-row>
+                </button>
+                </ion-col>
+                <ion-col col-4>
+                  <button ion-button clear>
+                    <ion-row align-items-center>
+                      <ion-col>
+                        <ion-icon name="navigate"></ion-icon>
+                      </ion-col>
+                      <ion-col>
+                        <p text-capitalize>Directions</p>
+                    </ion-col>
+                  </ion-row>
+                </button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+          <!-- </ion-card-header> -->
+        </ion-list>
 
 <!--Mini Discount Card Template-->
   <ion-item-divider text-center color="background"> Mini Discount Card Template </ion-item-divider>

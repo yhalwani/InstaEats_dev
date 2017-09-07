@@ -90,11 +90,18 @@
                   <ion-thumbnail item-left>
                     <img class="imageborder" src="{{rest.photoUrl}}">
                   </ion-thumbnail>
-                  <h2>{{rest.restaurantName}}</h2>
+                  <h3>{{rest.restaurantName}}</h3>
                   <p>{{rest.slogan}}</p>
                   <p>{{rest.description}}</p>
 
-                  <ion-buttons item-right id="buttons">
+                  <div item-right>
+                    <ion-icon *ngIf="rest.liveStatus" color="secondary" name="md-pricetags"></ion-icon>
+                    <ion-icon *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
+                    <br>
+                    <ion-note>2.4km</ion-note>
+                  </div>
+
+                  <!-- <ion-buttons item-right id="buttons">
                     <button ion-button color="rdaApp" clear small icon-only item-right>
                       <ion-icon *ngIf="rest.liveStatus" name="radio-button-on"></ion-icon>
                       <ion-icon *ngIf="!rest.liveStatus" name="radio-button-off"></ion-icon>
@@ -102,7 +109,7 @@
                     <button ion-button color="rdaApp" clear small icon-only item-right>
                       <ion-icon name="arrow-forward"></ion-icon>
                     </button>
-                  </ion-buttons>
+                  </ion-buttons> -->
 
                 </ion-item>
               </ion-card-content>

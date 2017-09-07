@@ -1,4 +1,4 @@
-.ios, .md {
+
   page-restaurant-page, page-DiscountPage {
 
     .scroll {
@@ -15,11 +15,58 @@
 
     // class for restaurant image
     .imageborder {
-      border: 2px solid #fff;
+      border: 1px solid color($colors, background);
       border-radius: 5% 5%;
-      box-shadow: 0 0 10px gray;
-      display: inline-block;
+      // box-shadow: 0 0 10px gray;
+      // display: inline-block;
+      // // margin-left: auto;
+      // // margin-right: auto;
     }
+
+    // // class for restaurant image
+    // .imageborder {
+    //   border: 2px solid #fff;
+    //   border-radius: 5% 5%;
+    //   box-shadow: 0 0 10px gray;
+    //   display: inline-block;
+    // }
+
+
+        .item_stretch {
+          padding-left: 0px !important;
+        }
+        // list divider for Android
+        .list-md .item-block .item-inner {
+          border-bottom: 1px solid color($colors, background);
+      }
+        // list divider for IOS
+        .list-ios .item-block .item-inner {
+            border-bottom: 1px solid color($colors, background);
+        }
+
+        .headerNot{
+          margin: 0px !important;
+          padding: 0px !important;
+
+        }
+        .cardNot
+        {
+          height: 100%;
+          width: 100%;
+          margin: 0px !important;
+          padding: 0px !important;
+          border-radius: 0px;
+        }
+        .tabMenu button {
+              height: 3.6em !important;
+        }
+
+        .nothingBurger {
+          background-color: #e8e8e8;
+          box-shadow: none;
+          border: 0.55px solid rgb(200, 199, 204);
+        }
+
 
 
     ion-card.widget {
@@ -29,9 +76,17 @@
     .widget ion-item {
       background-color: transparent;
     }
-    .widget h1, h3 {
+    .widget h1 {
       color: rgba(255,255,255, 0.65);
     }
+    .widget h3 {
+      color: rgba(255,255,255, 0.65);
+    }
+
+
+    // .widget h1, h3 {
+    //   color: rgba(255,255,255, 0.65);
+    // }
     .widget p {
       color: rgba(0,0,0, 0.5);
     }
@@ -163,5 +218,3 @@
     }
 
   }
-
-}

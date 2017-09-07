@@ -23,6 +23,20 @@ page-nearMe {
     padding-left: 10px !important;
   }
 
+  // class for ion-item
+  .item_stretch {
+  padding-left: 0px !important;
+}
+
+// list divider for Android
+ .list-md .item-block .item-inner {
+   border-bottom: 1px solid color($colors, background);
+}
+ // list divider for IOS
+ .list-ios .item-block .item-inner {
+     border-bottom: 1px solid color($colors, background);
+ }
+
   .label {
     margin: 0px;
     .label-md {
@@ -46,14 +60,22 @@ page-nearMe {
   }
 
   // class for restaurant image
-  .imageborder {
-    border: 2px solid #fff;
-    border-radius: 5% 5%;
-    box-shadow: 0 0 10px gray;
-    display: inline-block;
-    // margin-left: auto;
-    // margin-right: auto;
-  }
+  // .imageborder {
+    .imageborder {
+  border: 1px solid color($colors, background);
+  border-radius: 5% 5%;
+  // box-shadow: 0 0 10px gray;
+  // display: inline-block;
+  // // margin-left: auto;
+  // // margin-right: auto;
+}
+  //   border: 2px solid #fff;
+  //   border-radius: 5% 5%;
+  //   box-shadow: 0 0 10px gray;
+  //   display: inline-block;
+  //   // margin-left: auto;
+  //   // margin-right: auto;
+  // }
 
   // class for card header
   .header {

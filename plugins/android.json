@@ -7,9 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-open-native-settings": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -36,6 +33,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {
@@ -43,6 +43,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "es6-promise-plugin": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     }

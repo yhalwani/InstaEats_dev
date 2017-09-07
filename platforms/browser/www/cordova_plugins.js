@@ -82,14 +82,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-open-native-settings/www/settings.js",
-        "id": "cordova-open-native-settings.Settings",
-        "pluginId": "cordova-open-native-settings",
-        "clobbers": [
-            "cordova.plugins.settings"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "pluginId": "cordova-plugin-dialogs",
@@ -112,9 +104,23 @@ module.exports = [
         "clobbers": [
             "FCMPlugin"
         ]
+    },
+    {
+        "file": "plugins/es6-promise-plugin/www/promise.js",
+        "id": "es6-promise-plugin.Promise",
+        "pluginId": "es6-promise-plugin",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "pluginId": "cordova-plugin-x-socialsharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
     }
 ];
-module.exports.metadata =
+module.exports.metadata = 
 // TOP OF METADATA
 {
     "cordova-plugin-console": "1.0.5",
@@ -125,12 +131,12 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.4.1",
-    "cordova-plugin-fcm": "2.1.2"
     "cordova-plugin-geolocation": "2.4.3",
     "cordova.plugins.diagnostic": "3.6.6",
-    "cordova-plugin-request-location-accuracy": "2.2.1",
-    "cordova-open-native-settings": "1.4.1",
-    "cordova-plugin-dialogs": "1.3.3"
+    "cordova-plugin-dialogs": "1.3.3",
+    "cordova-plugin-fcm": "2.1.2",
+    "es6-promise-plugin": "4.1.0",
+    "cordova-plugin-x-socialsharing": "5.1.8"
 }
 // BOTTOM OF METADATA
 });

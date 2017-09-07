@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { Platform } from 'ionic-angular';
-import { Events, LoadingController, ToastController } from 'ionic-angular';
+import { Events, LoadingController, ToastController, Platform } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';

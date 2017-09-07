@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import firebase from 'firebase';
 
@@ -16,6 +18,7 @@ declare let google;
 export class RestaurantPage {
   restaurant : any;
   restaurantName: string;
+
   @ViewChild('map') mapElement : ElementRef;
   local_map: any;
 
@@ -49,7 +52,9 @@ export class RestaurantPage {
     public modalCtrl: ModalController,
     public navParams: NavParams,
     public storage: Storage,
-    public events: Events
+    public events: Events,
+    private socialSharing: SocialSharing,
+    public platform: Platform
   ) {
     this.restaurant = this.navParams.data;
     this.restaurantName = this.restaurant.restaurantName;
@@ -142,7 +147,39 @@ export class RestaurantPage {
     this.events.publish('restaurant:favorited');
   };
 
-  shareRest(){
+  shareRest(restName){
+    this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://instaeats.com/").then(() => {
+      // success
+    }).catch((error) => {
+      if(error === "cordova_not_available"){
+        alert("This feature is not available in browser mode. Please download the app to share");
+      } else {
+        alert("Oops :( Something went wrong. Please try again");
+      }
+    });
+      // TODO: detect recievers platform, then share platform specific link (android, iOS, browser)
+
+      // if(this.platform.is('ios')){
+      //   this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://itunes.apple.com/us/app/instaeats/id1267444244?ls=1&mt=8").then(() => {
+      //     // success
+      //   }).catch((error) => {
+      //     // error
+      //   });
+      // }
+      // if(this.platform.is('android')){
+      //   this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://play.google.com/store/apps/details?id=com.retoll.instaeats").then(() => {
+      //     // success
+      //   }).catch((error) => {
+      //     // error
+      //   });
+      // }
+      // if(this.platform.is('core')){
+      //   this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://web.instaeats.com/").then(() => {
+      //     // success
+      //   }).catch((error) => {
+      //     // error
+      //   });
+      // }
 
   };
 

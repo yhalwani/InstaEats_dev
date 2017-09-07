@@ -10,10 +10,8 @@ import  firebase  from 'firebase';
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings';
-
 import { Dialogs } from '@ionic-native/dialogs';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { Stripe } from '@ionic-native/stripe';
 
@@ -113,10 +111,9 @@ import { Map }                          from '../providers/map';
   providers: [
     Camera,
     Geolocation,
-    LocationAccuracy,
     Diagnostic,
-    OpenNativeSettings,
     Dialogs,
+    SocialSharing,
     User,
     Map,
     StatusBar,

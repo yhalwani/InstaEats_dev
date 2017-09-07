@@ -79,22 +79,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-request-location-accuracy": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-request-location-accuracy@^2.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-open-native-settings": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-open-native-settings"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-dialogs": {
         "source": {
             "type": "registry",
@@ -107,6 +91,22 @@
             "id": "cordova-plugin-fcm@^2.1.2"
         },
         "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-x-socialsharing": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-x-socialsharing"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "es6-promise-plugin": {
+        "source": {
+            "type": "registry",
+            "id": "es6-promise-plugin@4.1.0"
+        },
+        "is_top_level": false,
         "variables": {}
     }
 }
