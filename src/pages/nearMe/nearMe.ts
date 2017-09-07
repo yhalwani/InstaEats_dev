@@ -59,8 +59,7 @@ export class NearMePage {
     public map: Map,
     private dialogs: Dialogs,
     private geolocation: Geolocation,
-    private diagnostic: Diagnostic,
-
+    private diagnostic: Diagnostic
   ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -132,10 +131,6 @@ export class NearMePage {
 
   goToRestPage(list, index) {
 
-    console.log("List: " + list);
-
-    console.log("Index: "+ index);
-
     if (list == "live") {
       var restList = this.liveList;
     } else {
@@ -190,19 +185,19 @@ export class NearMePage {
   };
 
   onSearch(){
-    // create tmp list and search list. If query is in tmp list, push to search list
-    let restRef = firebase.database().ref("Restaurant Profiles/");
-    var query = this.searchInput;
-    var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
-      userQuery.once("value", function(snapshot) {
-    var data = snapshot.val();
-    console.log(data);
-
-    /* TODO: create a list and show as search resutls */
-
-    }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-    });
+    // // create tmp list and search list. If query is in tmp list, push to search list
+    // let restRef = firebase.database().ref("Restaurant Profiles/");
+    // var query = this.searchInput;
+    // var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
+    //   userQuery.once("value", function(snapshot) {
+    // var data = snapshot.val();
+    // console.log(data);
+    //
+    // /* TODO: create a list and show as search resutls */
+    //
+    // }, function (errorObject) {
+    // console.log("The read failed: " + errorObject.code);
+    // });
   };
 
 };
