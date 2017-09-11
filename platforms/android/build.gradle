@@ -87,9 +87,6 @@ ext {
     cdvPluginPostBuildExtras = []
 }
 
-// PLUGIN GRADLE EXTENSIONS START
-// PLUGIN GRADLE EXTENSIONS END
-
 def hasBuildExtras = file('build-extras.gradle').exists()
 if (hasBuildExtras) {
     apply from: 'build-extras.gradle'
@@ -250,6 +247,8 @@ dependencies {
     debugCompile(project(path: "CordovaLib", configuration: "debug"))
     releaseCompile(project(path: "CordovaLib", configuration: "release"))
     compile "com.android.support:support-v4:24.1.1+"
+    compile "com.google.firebase:firebase-core:+"
+    compile "com.google.firebase:firebase-messaging:+"
     compile "com.android.support:support-v4:25.+"
     compile "com.android.support:appcompat-v7:25.+"
     // SUB-PROJECT DEPENDENCIES END
