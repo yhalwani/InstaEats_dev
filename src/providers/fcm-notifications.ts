@@ -1,65 +1,54 @@
-import { Injectable }       from '@angular/core';
-import { Events }  from 'ionic-angular';
+import { Injectable }   from '@angular/core';
+import { Events }       from 'ionic-angular';
+import { FCM }          from '@ionic-native/fcm';
 
-declare var FCMPlugin;
 
 @Injectable()
 export class FcmNotifications {
 
   token: any;
 
-  constructor(public events: Events) {
+  constructor(public events: Events, public fcm:FCM) {
       this.token = "";
 
       events.subscribe('user:loggedOut', (loggedOut) =>{
         this.fcmLoggout();
       });
 
-  }
+  };
+
 
   fcmInit(){
-    if(typeof(FCMPlugin) !== "undefined"){
-      FCMPlugin.getToken( (t) => {
-        this.token = t;
-      }, function(e){
-        alert("Error: " + e);
+    this.fcm.getToken()
+      .then(token => {
+        this.token = token;
       });
 
-      FCMPlugin.onNotification(function(d){
-        if(d.wasTapped){
-          alert("D was tapped " + JSON.stringify(d));
-
+    this.fcm.onNotification()
+      .subscribe(data => {
+        if(data.wasTapped){
+          console.log("Recieved in background");
         } else {
-          alert("D was not tapped " + JSON.stringify(d) + d.Key);
+          console.log("Recieved in foreground");
         }
-      }, function(msg){
-          alert("Msg: " + msg)
-      }, function(err){
-        alert("Error: " + err);
       });
-    } else alert("Notifications disabled, only provided in Android/iOS environment");
   };
 
   fcmLoggout(){
-    if(typeof(FCMPlugin) !== "undefined"){
-      this.token = "";
+    this.token = "";
 
-      FCMPlugin.onNotification(function(d){
-
-      }, function(msg){
-
-      }, function(err){
+    this.fcm.onNotification()
+      .subscribe(data => {
 
       });
-    };
+
   };
 
   fcmGetToken(){
-    FCMPlugin.getToken((t)=>{
-      this.token = t;
-    }, (err)=>{
-      alert("Error: " + err);
-    });
+    this.fcm.getToken()
+      .then(token => {
+        this.token = token;
+      });
   };
 
 }

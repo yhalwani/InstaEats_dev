@@ -13,6 +13,7 @@ import { Stripe } from '@ionic-native/stripe';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
+import { FCM } from '@ionic-native/fcm';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
@@ -107,6 +108,7 @@ import { FcmNotifications }             from '../providers/fcm-notifications';
   providers: [
     Camera,
     User,
+    FCM,
     FcmNotifications,
     StatusBar,
     SplashScreen,
