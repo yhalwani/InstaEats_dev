@@ -152,35 +152,12 @@ export class RestaurantPage {
       // success
     }).catch((error) => {
       if(error === "cordova_not_available"){
-        alert("This feature is not available in browser mode. Please download the app to share");
+        alert("This feature is not available in browser. Please download the app to share");
       } else {
         alert("Oops :( Something went wrong. Please try again");
       }
     });
       // TODO: detect recievers platform, then share platform specific link (android, iOS, browser)
-
-      // if(this.platform.is('ios')){
-      //   this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://itunes.apple.com/us/app/instaeats/id1267444244?ls=1&mt=8").then(() => {
-      //     // success
-      //   }).catch((error) => {
-      //     // error
-      //   });
-      // }
-      // if(this.platform.is('android')){
-      //   this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://play.google.com/store/apps/details?id=com.retoll.instaeats").then(() => {
-      //     // success
-      //   }).catch((error) => {
-      //     // error
-      //   });
-      // }
-      // if(this.platform.is('core')){
-      //   this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://web.instaeats.com/").then(() => {
-      //     // success
-      //   }).catch((error) => {
-      //     // error
-      //   });
-      // }
-
   };
 
 

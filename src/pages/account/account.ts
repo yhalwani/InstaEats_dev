@@ -26,16 +26,25 @@ export class AccountPage {
   };
 
   accountInfoUpdate(){
-    var ref =  firebase.database().ref("/User Profiles");
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
+    let ref =  firebase.database().ref("/User Profiles");
+    let user = firebase.auth().currentUser;
+    let uid = user.uid;
 
-    ref.child(uid).update({
-      displayName: this.userName,
-      email: this.email,
-      pass: this.password
-    });
+    // change user password
+    this.userService.changePassword(this.password);
 
+    try{
+      ref.child(uid).update({
+        displayName: this.userName,
+        email: this.email,
+        pass: this.password
+      });
+    }catch(error){
+      ref.child(uid).update({
+        displayName: user.displayName,
+        email: user.email
+      });
+    }
   };
 
 

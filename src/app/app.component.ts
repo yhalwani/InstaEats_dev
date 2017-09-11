@@ -66,7 +66,6 @@ export class MyApp {
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
-        {title: 'My Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });

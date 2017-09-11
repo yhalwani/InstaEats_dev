@@ -22,13 +22,13 @@
       <ion-item>
         <ion-icon item-left name="restaurant"></ion-icon>
         <ion-label floating>User Name</ion-label>
-        <ion-input type="text" value="{{userName}}" [(ngModel)]="userName"></ion-input>
+        <ion-input type="text" value="{{this.userName}}" [(ngModel)]="userName"></ion-input>
       </ion-item>
       <!-- Email Input -->
       <ion-item>
         <ion-icon item-left name="mail"></ion-icon>
         <ion-label floating>Email</ion-label>
-        <ion-input type="email" value="{{email}}" [(ngModel)]="email"></ion-input>
+        <ion-input type="email" value="{{this.email}}" [(ngModel)]="email"></ion-input>
       </ion-item>
       <!-- Password Input -->
       <ion-item>
@@ -47,3 +47,7 @@
     </div>
 
 </ion-content>
+
+<ion-footer>
+  <button ion-button color="light" full (click)="this.userService.deleteAccount()">Delete account</button>
+</ion-footer>
