@@ -18,10 +18,11 @@ import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-port
 
 import { User }                 from '../providers/user';
 
-declare var Snap,svg,min,js: any;
+import { Map }          from '../providers/map';
+
 declare var Snap,svg,easing,min,js: any;
-declare var svgTween,js: any;
-declare var svgAnimation,js: any;
+declare var svgTween: any;
+declare var svgAnimation: any;
 
 
 @Component({
@@ -46,8 +47,9 @@ export class MyApp {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     public storage: Storage,
-    public userService: User
-  ){
+    public userService: User,
+    public map: Map
+  ) {
 
     this.initializeApp();
 
@@ -113,10 +115,10 @@ export class MyApp {
             this.storage.set('recentCount', 0);
           };
         });
+        this.map.getLocationServices();
       });
 
       this.events.publish('app:launch', this.loggedIn);
-
     });
   };
 

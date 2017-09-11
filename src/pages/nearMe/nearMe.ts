@@ -4,6 +4,12 @@ import { Storage } from '@ionic/storage';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 import firebase from 'firebase';
 
+import { Map }          from '../../providers/map';
+
+import { Geolocation } from '@ionic-native/geolocation';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { Dialogs }      from '@ionic-native/dialogs';
+
 @Component({
   selector: 'page-nearMe',
   templateUrl: 'nearMe.html'
@@ -29,13 +35,12 @@ export class NearMePage {
     restaurantName: any
   }>;
 
-
   // Dynamic variables that change according to
   nearMeViews: string = "listView";
   iconName: string = "map";
 
   locations: Array<{name: any, lat: number, lng: number, address: string}>;
-  map: any;
+  _map: any;
 
   // TODO: get input from the slider and pass as radius to create circle
   minLimit: number = 0;  // 0 km
@@ -50,7 +55,11 @@ export class NearMePage {
     public events: Events,
     public storage: Storage,
     public toastCtrl: ToastController,
-    public plt: Platform
+    public plt: Platform,
+    public map: Map,
+    private dialogs: Dialogs,
+    private geolocation: Geolocation,
+    private diagnostic: Diagnostic
   ) {
 
     let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -67,7 +76,7 @@ export class NearMePage {
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
-        }
+        };
 
         // get coordinates of live restauarants only
         let data = childSnapshot.val();
@@ -87,8 +96,7 @@ export class NearMePage {
 
   };
 
-
-  ngOnInit() {
+  ngOnInit(){
     this.loadMap();
   };
 
@@ -106,14 +114,20 @@ export class NearMePage {
   };
 
   loadMap(){
-    this.map = {
-      // location of development
-      lat: 43.6011579,
-      lng: -79.64162270000001,
-      zoom: 8,
-      iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-    };
-  };
+    // this._map = this.map.mapObject;
+    this.map.getLocationServices();
+    this._map = this.map.mapObject;
+  }
+
+  errToast(msg){
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.present();
+  }
 
   goToRestPage(list, index) {
 
@@ -171,7 +185,19 @@ export class NearMePage {
   };
 
   onSearch(){
-    console.log(this.searchInput);
+    // // create tmp list and search list. If query is in tmp list, push to search list
+    // let restRef = firebase.database().ref("Restaurant Profiles/");
+    // var query = this.searchInput;
+    // var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
+    //   userQuery.once("value", function(snapshot) {
+    // var data = snapshot.val();
+    // console.log(data);
+    //
+    // /* TODO: create a list and show as search resutls */
+    //
+    // }, function (errorObject) {
+    // console.log("The read failed: " + errorObject.code);
+    // });
   };
 
 };
@@ -217,33 +243,3 @@ export class NearMePage {
 //   this.toast(msg)})
 //   .catch((error: any) => console.log(error));
 // }
-
-// loadMap(){
-//   // Set user location
-//   if(!navigator.geolocation){
-//
-//     // if (error.code == error.PERMISSION_DENIED)
-//     this.map = {
-//       // location of development
-//       lat: 43.6011579,
-//       lng: -79.64162270000001,
-//       zoom: 8,
-//       iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-//     };
-//
-//   } else {
-//
-//     navigator.geolocation.getCurrentPosition((position) => {
-//
-//       this.map = {
-//         lat: position.coords.latitude,
-//         lng: position.coords.longitude,
-//         zoom: 11,
-//         iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc"
-//       };
-//
-//     });
-//
-//   };
-//
-// };

@@ -8,6 +8,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import  firebase  from 'firebase';
 
 import { Camera } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+
+import { Dialogs } from '@ionic-native/dialogs';
 
 import { Stripe } from '@ionic-native/stripe';
 
@@ -54,6 +60,7 @@ import { DiscountsPage }                from '../pages/discounts/discounts';
 
 import { User }                         from '../providers/user';
 import { FcmNotifications }             from '../providers/fcm-notifications';
+import { Map }                          from '../providers/map';
 
 @NgModule({
   declarations: [
@@ -107,9 +114,15 @@ import { FcmNotifications }             from '../providers/fcm-notifications';
   ],
   providers: [
     Camera,
+    Geolocation,
+    LocationAccuracy,
+    Diagnostic,
+    OpenNativeSettings,
+    Dialogs,
     User,
     FCM,
     FcmNotifications,
+    Map,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

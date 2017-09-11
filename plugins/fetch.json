@@ -63,12 +63,34 @@
         "is_top_level": false,
         "variables": {}
     },
-    "cordova-plugin-fcm": {
+    "cordova-plugin-geolocation": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-fcm@~2.1.2"
+            "id": "cordova-plugin-geolocation"
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-open-native-settings": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-open-native-settings"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        }
     }
 }

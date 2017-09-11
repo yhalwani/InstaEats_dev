@@ -28,7 +28,16 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-fcm": {
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-open-native-settings": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
