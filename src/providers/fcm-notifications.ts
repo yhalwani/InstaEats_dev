@@ -51,4 +51,12 @@ export class FcmNotifications {
       });
   };
 
+  fcmSubscribe(rest){
+    this.fcm.subscribeToTopic(rest);
+  };
+
+  fcmUnsubscribe(rest){
+    this.fcm.unsubscribeFromTopic(rest);
+  };
+
 }

@@ -34,9 +34,6 @@
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-open-native-settings": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }

@@ -7,9 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-open-native-settings": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -43,6 +40,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     }

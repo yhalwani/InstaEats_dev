@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
@@ -14,6 +14,9 @@ declare let google;
   templateUrl: 'restaurant-page.html',
 })
 export class RestaurantPage {
+
+  heartIcon: any;
+
   restaurant : any;
   restaurantName: string;
   @ViewChild('map') mapElement : ElementRef;
@@ -47,10 +50,29 @@ export class RestaurantPage {
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
+    public alertCtrl: AlertController,
     public navParams: NavParams,
     public storage: Storage,
     public events: Events
   ) {
+
+    this.storage.get('favList').then((list) => {
+
+      let found = false;
+      for (var x = 0; x < list.length; x++){
+        if(list[x].restaurantName === this.navParams.data.restaurantName){
+          this.heartIcon = "heart";
+          found = true;
+        };
+      };
+
+      if (found == false) {
+        this.heartIcon = "heart-outline";
+      };
+
+    });
+
+    this.heartIcon = "heart-outline";
     this.restaurant = this.navParams.data;
     this.restaurantName = this.restaurant.restaurantName;
     let restaurantUID = this.restaurant.id;
@@ -115,46 +137,40 @@ export class RestaurantPage {
   }
 
   favRest(){
-    this.storage.get('favCount').then((val) => {
-      if (val == 0) {
-        var list = [];
-        list.push(this.navParams.data);
-        this.storage.set('favList', list);
-        this.storage.set('favCount', ++val);
-      } else if (val >= 20) {
-        this.storage.get('favList').then((list) => {
-          if ( this.checkArrayFor(list, this.navParams.data) === false ){
-            list.push(this.navParams.data);
-            list.shift();
-            this.storage.set('favList', list);
-          };
-        });
-      } else {
-        this.storage.get('favList').then((list) => {
-          if ( this.checkArrayFor(list, this.navParams.data) === false ){
-            list.push(this.navParams.data);
-            this.storage.set('favList', list);
-            this.storage.set('favCount', ++val)
-          };
-        });
-      };
-    });
-    this.events.publish('restaurant:favorited');
+
+    if (this.heartIcon == "heart") {
+      this.heartIcon = "heart-outline";
+
+      let alert = this.alertCtrl.create({
+        title: this.navParams.data.restaurantName,
+        message: 'This restaurant has been unfavorited! You will no longer be notified if they have any discounts live!',
+        buttons: ['Ok']
+      });
+      alert.present();
+
+      this.events.publish('restaurant:unfavorited', this.navParams.data);
+
+    } else {
+
+      this.heartIcon = "heart";
+
+      let alert = this.alertCtrl.create({
+        title: this.navParams.data.restaurantName,
+        message: 'This restaurant has been favorited! You will be notified if they have any discounts live!',
+        buttons: ['Ok']
+      });
+      alert.present();
+
+      this.events.publish('restaurant:favorited', this.navParams.data);
+
+    }
+
   };
 
   shareRest(){
 
   };
 
-
-  checkArrayFor(arr, obj){
-    for (var x = 0; x < arr.length; x++){
-      if(arr[x].restaurantName === obj.restaurantName){
-        return true;
-      }
-    }
-    return false;
-  };
 
   // populate map with correct restaurant location
   getMap(){
