@@ -11,19 +11,17 @@
       <button ion-button icon-only (click)="switchView()">
         <ion-icon name={{iconName}}></ion-icon>
       </button>
-      <button ion-button icon-only (click)="openModal()">
+      <!-- <button ion-button icon-only (click)="openModal()">
         <ion-icon name="options"></ion-icon>
-      </button>
+      </button> -->
     </ion-buttons>
-
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
 
-  <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="shouldShowCancel" (ionInput)="onSearch()">
-  </ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="shouldShowCancel" (ionInput)="onSearch()"></ion-searchbar>
 
   <div [ngSwitch]="nearMeViews">
 
@@ -56,18 +54,32 @@
 
         </sebm-google-map-marker>
 
-        <!-- restaurant location markers -->
-        <sebm-google-map-marker *ngFor="let m of locations; let i = index"
-        [latitude]="m.lat"
-        [longitude]="m.lng"
+        <!-- LIVE restaurant location markers -->
+        <sebm-google-map-marker *ngFor="let m of liveList"
+        [latitude]="m.coordinates.lat"
+        [longitude]="m.coordinates.lng"
         [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc'"
         >
 
           <sebm-google-map-info-window>
-            <strong>{{m.name}}</strong>
+            <strong>{{m.restaurantName}}</strong>
             <br>
             {{m.address}}
-            <!-- {{m.lat}}, {{m.lng}} -->
+          </sebm-google-map-info-window>
+
+        </sebm-google-map-marker>
+
+        <!-- DEAD restaurant location markers -->
+        <sebm-google-map-marker *ngFor="let m of deadList"
+        [latitude]="m.coordinates.lat"
+        [longitude]="m.coordinates.lng"
+        [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats(deadList).png?alt=media&token=fd2e0ccd-2b53-45fe-b8e3-d9566269f9f1'"
+        >
+
+          <sebm-google-map-info-window>
+            <strong>{{"[OFFLINE]"}}{{m.restaurantName}} </strong>
+            <br>
+            {{m.address}}
           </sebm-google-map-info-window>
 
         </sebm-google-map-marker>

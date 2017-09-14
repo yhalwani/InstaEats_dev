@@ -19,7 +19,9 @@ export class NearMePage {
     id: string,
     imgURL: string,
     liveStatus: boolean,
-    restaurantName: any
+    restaurantName: any,
+    coordinates: Array<{name: any, lat: number, lng: number, address: string}>,
+    address: string
   }>;
 
   deadList: Array<{
@@ -28,14 +30,15 @@ export class NearMePage {
     id: string,
     imgURL: string,
     liveStatus: boolean,
-    restaurantName: any
+    restaurantName: any,
+    coordinates: Array<{name: any, lat: number, lng: number, address: string}>,
+    address: string
   }>;
 
   // Dynamic variables that change according to
   nearMeViews: string = "listView";
   iconName: string = "map";
 
-  locations: Array<{name: any, lat: number, lng: number, address: string}>;
   _map: any;
 
   // TODO: get input from the slider and pass as radius to create circle
@@ -61,8 +64,8 @@ export class NearMePage {
       let liveList = [];
       let deadList = [];
       let coords = [];
-      snapshot.forEach((childSnapshot) => {
 
+      snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true) {
           liveList.push(childSnapshot.val());
           this.liveList = liveList;
@@ -70,13 +73,6 @@ export class NearMePage {
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
         }
-
-        // get coordinates of live restauarants only
-        let data = childSnapshot.val();
-        let obj = {name: data.restaurantName, lat: data.coordinates.lat, lng: data.coordinates.lng, address: data.address};
-        coords.push(obj);
-        this.locations = coords;
-
         return false;
       });
     });
@@ -107,7 +103,6 @@ export class NearMePage {
   };
 
   loadMap(){
-    // this._map = this.map.mapObject;
     this.map.getLocationServices();
     this._map = this.map.mapObject;
   }
