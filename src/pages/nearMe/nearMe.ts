@@ -21,7 +21,8 @@ export class NearMePage {
     liveStatus: boolean,
     restaurantName: any,
     coordinates: Array<{name: any, lat: number, lng: number, address: string}>,
-    address: string
+    address: string,
+    distance: number
   }>;
 
   deadList: Array<{
@@ -32,7 +33,8 @@ export class NearMePage {
     liveStatus: boolean,
     restaurantName: any,
     coordinates: Array<{name: any, lat: number, lng: number, address: string}>,
-    address: string
+    address: string,
+    distance: number
   }>;
 
   // Dynamic variables that change according to
@@ -58,21 +60,28 @@ export class NearMePage {
     public map: Map,
   ) {
 
+    this.loadMap();
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").on("value", (snapshot) => {
-      let liveList = [];
-      let deadList = [];
-      let coords = [];
+      let liveList  = [];
+      let deadList  = [];
+      let coords    = [];
 
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true) {
           liveList.push(childSnapshot.val());
+          for(let i=0; i<liveList.length; i++){
+            liveList[i].distance = (this.distanceInKm(this._map.lat, this._map.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
+          }
           this.liveList = liveList;
+
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
         }
+
+        console.log(this.liveList);
         return false;
       });
     });
@@ -85,9 +94,9 @@ export class NearMePage {
 
   };
 
-  ngOnInit(){
-    this.loadMap();
-  };
+  // ngOnInit(){
+  //   this.loadMap();
+  // };
 
   switchView(){
     if(this.iconName == "list") {
@@ -172,6 +181,25 @@ export class NearMePage {
     return false;
   };
 
+  degreesToRadians(degrees) {
+    return degrees * Math.PI / 180;
+  }
+
+  distanceInKm(lat1, lon1, lat2, lon2) {
+    var earthRadiusKm = 6371;
+
+    var dLat = this.degreesToRadians(lat2-lat1);
+    var dLon = this.degreesToRadians(lon2-lon1);
+
+    lat1 = this.degreesToRadians(lat1);
+    lat2 = this.degreesToRadians(lat2);
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return Math.round(10 * (earthRadiusKm * c))/10;
+  }
+
   onSearch(){
     // // create tmp list and search list. If query is in tmp list, push to search list
     // let restRef = firebase.database().ref("Restaurant Profiles/");
@@ -188,35 +216,34 @@ export class NearMePage {
     // });
   };
 
+  // doRefresh(refresher){
+  //   let restRef = firebase.database().ref("Restaurant Profiles/");
+  //
+  //   restRef.orderByChild("liveStatus").on("value", (snapshot) => {
+  //     let liveList = [];
+  //     let deadList = [];
+  //     let coords = [];
+  //
+  //     snapshot.forEach((childSnapshot) => {
+  //       if(childSnapshot.val().liveStatus == true) {
+  //         liveList.push(childSnapshot.val());
+  //         this.liveList = liveList;
+  //       } else if (childSnapshot.val().liveStatus == false){
+  //         deadList.push(childSnapshot.val());
+  //         this.deadList = deadList;
+  //       }
+  //       return false;
+  //     });
+  //   });
+  //
+  //   setTimeout(() => {
+  //     refresher.complete();
+  //   }, 2000);
+  //
+  // };
+
 };
 
-// doRefresh(refresher){
-//   let restRef = firebase.database().ref("Restaurant Profiles/");
-//
-//   restRef.orderByChild("liveStatus").equalTo(true).on("value", (snapshot) => {
-//     let restaurantList = [];
-//     let coords = [];
-//
-//     snapshot.forEach((childSnapshot) => {
-//       restaurantList.push(childSnapshot.val());
-//       this.restList = restaurantList;
-//
-//       // get coordinates of live restauarants only
-//       let data = childSnapshot.val();
-//       let obj = {name: data.restaurantName, lat: data.coordinates.lat, lng: data.coordinates.lng, address: data.address};
-//       coords.push(obj);
-//       this.locations = coords;
-//
-//       return false;
-//     });
-//
-//   });
-//
-//   setTimeout(() => {
-//     refresher.complete();
-//   }, 2000);
-//
-// };
 
 // TODO:  install NativeGeocoderModules
 //        import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';

@@ -18,6 +18,7 @@ declare let google;
 export class RestaurantPage {
   restaurant : any;
   restaurantName: string;
+  restaurantStatus: boolean;
 
   @ViewChild('map') mapElement : ElementRef;
   local_map: any;
@@ -58,6 +59,7 @@ export class RestaurantPage {
   ) {
     this.restaurant = this.navParams.data;
     this.restaurantName = this.restaurant.restaurantName;
+    this.restaurantStatus = this.restaurant.liveStatus;
     let restaurantUID = this.restaurant.id;
 
     // load map everytime
@@ -85,37 +87,39 @@ export class RestaurantPage {
 
     });
 
-    var bundlesArr = [];
-    var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
-    bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
+    if(this.restaurantStatus){
+      var bundlesArr = [];
+      var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
+      bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
 
-      // retrieve bundle from firabase and populate the restaurant page for users to see
-      snapshot.forEach( (childSnapshot) => {
+        // retrieve bundle from firabase and populate the restaurant page for users to see
+        snapshot.forEach( (childSnapshot) => {
 
-        bundlesArr.push(childSnapshot.val());
-        this.Bundles = bundlesArr;
-        return false;
+          bundlesArr.push(childSnapshot.val());
+          this.Bundles = bundlesArr;
+          return false;
 
+        });
+
+        this.Bundles.forEach((bundle, bundleIndex) => {
+          var bundleTmp = {
+            bundleName:       bundle.bundleName,
+            bundleDescription:bundle.bundleDescription,
+            total:            bundle.total,
+            totalDiscount:    bundle.totalDiscount,
+            totalPercent:     bundle.totalPercent,
+            live:             bundle.live,
+            timeStarted:      bundle.timeStarted,
+            duration:         bundle.duration,
+            countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
+            bundleElem:       bundle.bundleElem
+          };
+          this.Bundles[bundleIndex] = bundleTmp;
+        });
+
+         this.Bundles.forEach(this.setTimers);
       });
-
-      this.Bundles.forEach((bundle, bundleIndex) => {
-        var bundleTmp = {
-          bundleName:       bundle.bundleName,
-          bundleDescription:bundle.bundleDescription,
-          total:            bundle.total,
-          totalDiscount:    bundle.totalDiscount,
-          totalPercent:     bundle.totalPercent,
-          live:             bundle.live,
-          timeStarted:      bundle.timeStarted,
-          duration:         bundle.duration,
-          countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
-          bundleElem:       bundle.bundleElem
-        };
-        this.Bundles[bundleIndex] = bundleTmp;
-      });
-
-      this.Bundles.forEach(this.setTimers);
-    });
+    } else {}
 
   }
 

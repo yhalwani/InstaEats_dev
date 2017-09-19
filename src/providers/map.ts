@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Events, LoadingController, ToastController, Platform } from 'ionic-angular';
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { Diagnostic } from '@ionic-native/diagnostic';
+import { Geolocation }  from '@ionic-native/geolocation';
+import { Diagnostic }   from '@ionic-native/diagnostic';
 import { Dialogs }      from '@ionic-native/dialogs';
-
 
 @Injectable()
 export class Map {
@@ -72,7 +71,6 @@ export class Map {
     }
   }
 
-
   // call native geolocation plugin to pull coordinates (Android & iOS)
   getDeviceLocation(){
     let options = {enableHighAccuracy: true};
@@ -88,32 +86,6 @@ export class Map {
       this.errToast("Unable to detect user location")
     });
   }
-
-  // check if device location is switched on (Android & iOS)
-  // checkDeviceSettings(){
-  //   this.diagnostic.isLocationEnabled().then((isAvailable) => {
-  //     if(isAvailable){
-  //       this.getDeviceLocation();
-  //     } else {
-  //       this.dialogs.confirm("This app requires devices Location Services", "Permission Required", ["Go to Settings", "Cancel"]).then((response) => {
-  //         if(response == 1){
-  //           this.diagnostic.switchToLocationSettings();
-  //         }else{
-  //           // user cancelled prompt
-  //         }
-  //       }).then(() => {
-  //         if(this.diagnostic.permissionStatus.GRANTED){
-  //           this.getDeviceLocation();
-  //         }
-  //         if(this.diagnostic.permissionStatus.DENIED){
-  //         }
-  //       }).catch((error) => {
-  //         // this.errToast("Unable to detect location");
-  //         // this.errToast("error");
-  //       });
-  //     }
-  //   });
-  // }
 
   errToast(msg){
     let toast = this.toastCtrl.create({

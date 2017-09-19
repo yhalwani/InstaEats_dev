@@ -22,7 +22,7 @@
 <ion-content>
 
   <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="shouldShowCancel" (ionInput)="onSearch()"></ion-searchbar>
-
+  <!-- <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher> -->
   <div [ngSwitch]="nearMeViews">
 
     <!-- Map View Case -->
@@ -110,7 +110,7 @@
                     <ion-icon *ngIf="rest.liveStatus" color="secondary" name="md-pricetags"></ion-icon>
                     <ion-icon *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
                     <br>
-                    <ion-note>2.4km</ion-note>
+                    <ion-note>{{rest.distance}}km </ion-note>
                   </div>
 
                   <!-- <ion-buttons item-right id="buttons">
