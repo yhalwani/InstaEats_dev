@@ -19,7 +19,13 @@ export class Map {
     iconUrl: string
   };
 
-  constructor(public platform: Platform, private geolocation: Geolocation, private diagnostic: Diagnostic, public toastCtrl: ToastController, private dialogs: Dialogs) {
+  constructor(
+    public platform: Platform,
+    private geolocation: Geolocation,
+    private diagnostic: Diagnostic,
+    public toastCtrl: ToastController,
+    private dialogs: Dialogs
+  ) {
     this.mapObject = {
       // (default)
       lat: 45.216612,

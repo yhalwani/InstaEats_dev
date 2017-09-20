@@ -1,14 +1,21 @@
-import { Injectable }   from '@angular/core';
-import { Events }       from 'ionic-angular';
-import { FCM }          from '@ionic-native/fcm';
+import { Injectable }                 from '@angular/core';
+import { NavController, Events }      from 'ionic-angular';
+import { Dialogs }                    from '@ionic-native/dialogs';
+import { RestaurantPage } from '../restaurant-page/restaurant-page';
 
+import firebase from 'firebase';
+
+declare var FCMPlugin;
 
 @Injectable()
 export class FcmNotifications {
 
   token: any;
 
-  constructor(public events: Events, public fcm:FCM) {
+  constructor(
+    public events: Events,
+    private dialogs: Dialogs
+  ) {
       this.token = "";
 
       events.subscribe('user:loggedOut', (loggedOut) =>{
@@ -17,46 +24,58 @@ export class FcmNotifications {
 
   };
 
+  init(){
+    if(typeof(FCMPlugin) !== "undefined"){
+      FCMPlugin.getToken(function(t){
 
-  fcmInit(){
-    this.fcm.getToken()
-      .then(token => {
-        this.token = token;
+      }, function(e){
+        alert(e);
       });
 
-    this.fcm.onNotification()
-      .subscribe(data => {
+      FCMPlugin.onNotification((data) => {
         if(data.wasTapped){
-          console.log("Recieved in background");
+          alert(data.body);
         } else {
-          console.log("Recieved in foreground");
+          this.dialogs.confirm(data.body, data.title, ["Go to Restaurant", "Cancel"]).then((response) => {
+            if(response == 1){
+
+              let restRef = firebase.database().ref("Restaurant Profiles/");
+              var rest = restRef.orderByChild("restaurantName").startAt(data.name);
+              rest.once("value", function(snapshot) {
+                var data = snapshot.val();
+                this.navCtrl.push(RestaurantPage, data);
+              });
+              
+            }else{
+
+            };
+          });
+
         }
+      }, (msg) => {
+
+      }, (err) => {
+        this.dialogs.alert(err);
       });
+    };
   };
 
   fcmLoggout(){
-    this.token = "";
-
-    this.fcm.onNotification()
-      .subscribe(data => {
-
-      });
 
   };
 
-  fcmGetToken(){
-    this.fcm.getToken()
-      .then(token => {
-        this.token = token;
-      });
+  getToken(){
+    FCMPlugin.getToken((t) => {
+      this.token = t;
+    });
   };
 
   fcmSubscribe(rest){
-    this.fcm.subscribeToTopic(rest);
+    FCMPlugin.subscribeToTopic(rest);
   };
 
   fcmUnsubscribe(rest){
-    this.fcm.unsubscribeFromTopic(rest);
+    FCMPlugin.unsubscribeFromTopic(rest);
   };
 
 }

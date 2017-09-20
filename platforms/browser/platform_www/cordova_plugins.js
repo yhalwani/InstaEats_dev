@@ -82,6 +82,14 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+        "id": "cordova-plugin-fcm.FCMPlugin",
+        "pluginId": "cordova-plugin-fcm",
+        "clobbers": [
+            "FCMPlugin"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "pluginId": "cordova-plugin-dialogs",
@@ -110,8 +118,9 @@ module.exports.metadata =
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.4.1",
     "cordova-plugin-geolocation": "2.4.3",
-    "cordova.plugins.diagnostic": "3.6.6",
-    "cordova-plugin-dialogs": "1.3.3"
+    "cordova-plugin-fcm": "2.1.2",
+    "cordova-plugin-dialogs": "1.3.3",
+    "cordova.plugins.diagnostic": "3.6.7"
 }
 // BOTTOM OF METADATA
 });

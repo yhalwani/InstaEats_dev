@@ -55,7 +55,6 @@ export class LoginPage {
           else if(this.userType == "User")
           {
             this.events.publish('user:loggedIn', true, auth.currentUser.displayName);
-            this.fcm.fcmInit();
             this.userService.user = {email: this.email, username: auth.currentUser.displayName, loggedIn: true, fcmToken: this.fcm.token};
             this.presentLoading(this.userToggle);
           }

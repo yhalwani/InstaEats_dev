@@ -141,12 +141,12 @@ export class RestaurantPage {
     if (this.heartIcon == "heart") {
       this.heartIcon = "heart-outline";
 
-      let alert = this.alertCtrl.create({
+      let alrt = this.alertCtrl.create({
         title: this.navParams.data.restaurantName,
         message: 'This restaurant has been unfavorited! You will no longer be notified if they have any discounts live!',
         buttons: ['Ok']
       });
-      alert.present();
+      alrt.present();
 
       this.events.publish('restaurant:unfavorited', this.navParams.data);
 
@@ -154,12 +154,12 @@ export class RestaurantPage {
 
       this.heartIcon = "heart";
 
-      let alert = this.alertCtrl.create({
+      let alrt = this.alertCtrl.create({
         title: this.navParams.data.restaurantName,
         message: 'This restaurant has been favorited! You will be notified if they have any discounts live!',
         buttons: ['Ok']
       });
-      alert.present();
+      alrt.present();
 
       this.events.publish('restaurant:favorited', this.navParams.data);
 

@@ -71,10 +71,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova.plugins.diagnostic": {
+    "cordova-plugin-fcm": {
         "source": {
             "type": "registry",
-            "id": "cordova.plugins.diagnostic"
+            "id": "cordova-plugin-fcm"
         },
         "is_top_level": true,
         "variables": {}
@@ -83,6 +83,16 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-dialogs"
-        }
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

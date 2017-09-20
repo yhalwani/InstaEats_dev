@@ -39,6 +39,7 @@ Cordova diagnostic plugin [![Latest Stable Version](https://img.shields.io/npm/v
     - [requestLocationAuthorization()](#requestlocationauthorization)
     - [isCameraPresent()](#iscamerapresent)
     - [isCameraAuthorized()](#iscameraauthorized)
+    - [isRemoteNotificationsEnabled()](#isremotenotificationsenabled)
     - [getCameraAuthorizationStatus()](#getcameraauthorizationstatus)
     - [requestCameraAuthorization()](#requestcameraauthorization)
     - [isMicrophoneAuthorized()](#ismicrophoneauthorized)
@@ -86,9 +87,9 @@ Cordova diagnostic plugin [![Latest Stable Version](https://img.shields.io/npm/v
     - [isCameraRollAuthorized()](#iscamerarollauthorized)
     - [getCameraRollAuthorizationStatus()](#getcamerarollauthorizationstatus)
     - [requestCameraRollAuthorization()](#requestcamerarollauthorization)
-    - [isRemoteNotificationsEnabled()](#isremotenotificationsenabled)
     - [isRegisteredForRemoteNotifications()](#isregisteredforremotenotifications)
     - [getRemoteNotificationTypes()](#getremotenotificationtypes)
+    - [getRemoteNotificationsAuthorizationStatus()](#getremotenotificationsauthorizationstatus)
     - [isRemindersAuthorized()](#isremindersauthorized)
     - [getRemindersAuthorizationStatus()](#getremindersauthorizationstatus)
     - [requestRemindersAuthorization()](#requestremindersauthorization)
@@ -692,7 +693,7 @@ This callback function is passed a single string parameter containing the error 
 - Calling this on iOS 7 or below will have no effect, as location permissions are are implicitly granted.
 - On iOS 8+, authorization can be requested to use location either "when in use" (only in foreground) or "always" (foreground and background).
 - This should only be called if authorization status is NOT_DETERMINED - calling it when in any other state will have no effect.
-- When calling this function, the messages contained in the  `NSLocationAlwaysUsageDescription` and `NSLocationWhenInUseUsageDescription` .plist keys are displayed to the user when requesting to use location **always** or **when in use**, respectively;
+- When calling this function, the messages contained in the `NSLocationWhenInUseUsageDescription` and `NSLocationAlwaysAndWhenInUseUsageDescription` (iOS 11+) / `NSLocationAlwaysUsageDescription` (iOS 10 and below)  .plist keys are displayed to the user when requesting to use location **always** or **when in use**, respectively;
 this plugin provides default messages, but you should override them with your specific reason for requesting access - see the [iOS usage description messages](#ios-usage-description-messages) section for how to customise them.
 
  Notes for Android:
@@ -826,8 +827,31 @@ Defaults to true.
         }, function(error){
             console.error("The following error occurred: "+error);
         }, false
-    );    
+    );
 
+### isRemoteNotificationsEnabled()
+
+Checks if remote (push) notifications are enabled.
+
+On Android, returns whether notifications for the app are not blocked.
+
+On iOS 8+, returns true if app is registered for remote notifications **AND** "Allow Notifications" switch is ON **AND** alert style is not set to "None" (i.e. "Banners" or "Alerts").
+On iOS <=7, returns true if app is registered for remote notifications **AND** alert style is not set to "None" (i.e. "Banners" or "Alerts") - same as [isRegisteredForRemoteNotifications()](#isregisteredforremotenotifications).
+
+    cordova.plugins.diagnostic.isRemoteNotificationsEnabled(successCallback, errorCallback);
+
+#### Parameters
+- {Function} successCallback - The callback which will be called when operation is successful.
+This callback function is passed a single boolean parameter which is TRUE if remote (push) notifications are enabled.
+- {Function} errorCallback - The callback which will be called when an error occurs. This callback function is passed a single string parameter containing the error message.
+
+#### Example usage
+
+    cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function(enabled){
+        console.log("Remote notifications are " + (enabled ? "enabled" : "disabled"));
+    }, function(error){
+        console.error("The following error occurred: "+error);
+    });
 ### getCameraAuthorizationStatus()
 
 Returns the camera authorization status for the application.
@@ -2153,29 +2177,6 @@ This callback function is passed a single string parameter containing the error 
     });
 
 
-### isRemoteNotificationsEnabled()
-
-Checks if remote (push) notifications are enabled.
-
-On iOS 8+, returns true if app is registered for remote notifications **AND** "Allow Notifications" switch is ON **AND** alert style is not set to "None" (i.e. "Banners" or "Alerts").
-
-On iOS <=7, returns true if app is registered for remote notifications **AND** alert style is not set to "None" (i.e. "Banners" or "Alerts") - same as [isRegisteredForRemoteNotifications()](#isregisteredforremotenotifications).
-
-    cordova.plugins.diagnostic.isRemoteNotificationsEnabled(successCallback, errorCallback);
-
-#### Parameters
-- {Function} successCallback - The callback which will be called when operation is successful.
-This callback function is passed a single boolean parameter which is TRUE if remote (push) notifications are enabled.
-- {Function} errorCallback - The callback which will be called when an error occurs. This callback function is passed a single string parameter containing the error message.
-
-#### Example usage
-
-    cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function(enabled){
-        console.log("Remote notifications are " + (enabled ? "enabled" : "disabled"));
-    }, function(error){
-        console.error("The following error occurred: "+error);
-    });
-
 ### isRegisteredForRemoteNotifications()
 
 Indicates if the app is registered for remote (push) notifications on the device.
@@ -2221,6 +2222,39 @@ This callback function is passed a single object parameter where the key is the 
     cordova.plugins.diagnostic.getRemoteNotificationTypes(function(types){
         for(var type in types){
             console.log(type + " is " + (types[type] ? "enabled" : "disabled"));
+        }
+    }, function(error){
+        console.error("The following error occurred: "+error);
+    });
+    
+### getRemoteNotificationsAuthorizationStatus()
+
+Returns the authorization status for the application to use Remote Notifications.
+
+**Note: Works on iOS 10+ only ** (iOS 9 and below will invoke the error callback).
+
+    cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(successCallback, errorCallback);
+
+#### Parameters
+
+- {Function} successCallback -  The callback which will be called when operation is successful.
+This callback function is passed a single string parameter which indicates the authorization status as a constant in `cordova.plugins.diagnostic.permissionStatus`.
+- {Function} errorCallback -  The callback which will be called when operation encounters an error.
+This callback function is passed a single string parameter containing the error message.
+
+#### Example usage
+
+    cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function(status){
+        switch(status){
+            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                console.log("Permission not yet requested");
+                break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                console.log("Permission denied");
+                break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                console.log("Permission granted");
+                break;
         }
     }, function(error){
         console.error("The following error occurred: "+error);
@@ -2513,7 +2547,16 @@ The plugin defines the [full list of dangersous permissions available in API 23]
 
 ##### Runtime permission groups
 
-Each runtime permission belongs to a permission group. Requesting a permission also requests authorisation for all other permissions in that group. If other permissions in the group are not defined in the manifest, they will default to DENIED_ALWAYS status. Otherwise, if user grants permission, all other permissions in the group will be granted; if user denies permission, all other permissions in the group will be denied.
+- Each runtime permission belongs to a permission group. 
+- In Android 6 & 7:
+    - Requesting a permission also requests authorisation for all other permissions in that group. 
+    - If other permissions in the group are not defined in the manifest, they will default to DENIED_ALWAYS status. 
+    - Otherwise, if user grants permission, all other permissions in the group will be granted
+    - if user denies permission, all other permissions in the group will be denied.
+- In Android 8+:
+   - Requesting a permission only grants that permission, not (as previously) all other permissions in that group.
+   - However, once the user grants a permission to the app, all subsequent requests for permissions in that permission group are automatically granted.
+   - See [Android 8.0 developer notes](https://developer.android.com/about/versions/oreo/android-8.0-changes.html#rmp) for more.
 
 Permissions are grouped as follows:
 

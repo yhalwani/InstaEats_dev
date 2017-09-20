@@ -16,6 +16,12 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -37,12 +43,6 @@
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     }

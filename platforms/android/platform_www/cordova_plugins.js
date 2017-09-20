@@ -125,7 +125,7 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
-    "cordova.plugins.diagnostic": "3.6.6",
+    "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1"
 };
 // BOTTOM OF METADATA

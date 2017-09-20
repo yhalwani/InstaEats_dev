@@ -79,9 +79,9 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-geolocation": {},
-            "cordova.plugins.diagnostic": {},
+            "cordova-plugin-fcm": {},
             "cordova-plugin-dialogs": {},
-            "cordova-plugin-fcm": {}
+            "cordova.plugins.diagnostic": {}
         },
         "platforms": [
             "android",

@@ -34,12 +34,14 @@ export class FavoritesPage {
           list.push(restaurant);
           this.storage.set('favList', list);
           this.storage.set('favCount', ++val);
+          this.setList(list);
         } else if (val >= 20) {
           this.storage.get('favList').then((list) => {
             if ( this.checkArrayFor(list, restaurant) === false ){
               list.push(restaurant);
               list.shift();
               this.storage.set('favList', list);
+              this.setList(list);
             };
           });
         } else {
@@ -48,20 +50,20 @@ export class FavoritesPage {
               list.push(restaurant);
               this.storage.set('favList', list);
               this.storage.set('favCount', ++val)
+              this.setList(list);
             };
           });
         };
       });
 
-      this.storage.get('favList').then((list) => {
-        this.setList(list);
-      });
 
       this.fcm.fcmSubscribe(restaurant.restaurantName);
 
     });
 
     events.subscribe('restaurant:unfavorited', (restaurant) => {
+
+      alert("Unfavorited subscribe");
 
       for (var x = 0; x < this.restList.length; x++){
         if(this.restList[x].restaurantName === restaurant.restaurantName){
@@ -70,6 +72,8 @@ export class FavoritesPage {
           break;
         };
       };
+
+      this.fcm.fcmUnsubscribe(restaurant.restaurantName);
 
     });
 
@@ -106,8 +110,10 @@ export class FavoritesPage {
     }
     this.storage.set('favList', this.restList);
     this.storage.get('favCount').then((val) => {
-          this.storage.set('favCount', --val);
+        this.storage.set('favCount', --val);
     });
+    this.setList(this.restList);
+
 
   };
 
