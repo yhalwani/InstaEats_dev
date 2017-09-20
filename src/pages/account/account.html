@@ -36,6 +36,12 @@
         <ion-label floating>Password</ion-label>
         <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
       </ion-item>
+      <!-- FCM Token -->
+      <ion-item>
+        <ion-icon item-left name="lock"></ion-icon>
+        <ion-label floating>FCM Token</ion-label>
+        <ion-input type="text" value="{{token}}" [(ngModel)]="token"></ion-input>
+      </ion-item>
     </ion-item-group>
   </ion-list>
 

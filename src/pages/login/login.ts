@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component }            from '@angular/core';
 import { NavController, Events, LoadingController, ToastController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
+import { TabsPage }             from '../tabs/tabs';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 
-import { User } from '../../providers/user';
+import { User }                 from '../../providers/user';
+import { FcmNotifications }     from '../../providers/fcm-notifications';
 
 import firebase from 'firebase';
 
@@ -24,7 +25,8 @@ export class LoginPage {
     public events: Events,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    public userService: User
+    public userService: User,
+    public fcm: FcmNotifications
   ) {
       this.userType = "User";
       this.userToggle = false;
@@ -53,9 +55,7 @@ export class LoginPage {
           else if(this.userType == "User")
           {
             this.events.publish('user:loggedIn', true, auth.currentUser.displayName);
-            this.userService.user.email = this.email;
-            this.userService.user.username = auth.currentUser.displayName;
-            this.userService.user.loggedIn = true;
+            this.userService.user = {email: this.email, username: auth.currentUser.displayName, loggedIn: true, fcmToken: this.fcm.token};
             this.presentLoading(this.userToggle);
           }
           // if usertype is restaurant and exists in Restauarant Profiles child node -> login as restaurant

@@ -79,7 +79,7 @@ export class NearMePage {
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
-        }
+        };
 
         console.log(this.liveList);
         return false;
@@ -171,6 +171,59 @@ export class NearMePage {
     this.navCtrl.push(RestaurantPage, restList[index]);
 
   };
+
+
+  goToRestPageName(name) {
+
+
+    var restList = this.liveList;
+    let restaurant;
+
+    restList.forEach((rest) => {
+      if (rest.restaurantName == name ) {
+        restaurant = rest;
+      }
+    });
+
+    this.storage.get('recentCount').then((val) => {
+
+      if (val == 0) {
+
+        var list = [];
+        list.push(restaurant);
+        this.storage.set('recentList', list);
+        this.storage.set('recentCount', ++val);
+
+      } else if (val >= 20) {
+
+        this.storage.get('recentList').then((list) => {
+          if( this.checkArrayFor( list, restaurant ) === false ){
+            list.push(restaurant);
+            list.shift();
+            this.storage.set('recentList', list);
+          };
+        });
+
+      } else {
+
+        this.storage.get('recentList').then((list) => {
+          if( this.checkArrayFor( list, restaurant ) === false ){
+            list.push(restaurant);
+            this.storage.set('recentList', list);
+            this.storage.set('recentCount', ++val);
+          };
+        });
+
+      };
+
+    });
+
+    this.events.publish('restaurant:viewed');
+    this.navCtrl.push(RestaurantPage, restaurant);
+
+  };
+
+
 
   checkArrayFor(arr, obj) {
     for (var x = 0; x < arr.length; x++){

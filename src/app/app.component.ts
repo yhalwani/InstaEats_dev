@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
 
 import firebase         from 'firebase';
@@ -16,9 +17,9 @@ import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
-import { User }         from '../providers/user';
-
-import { Map }          from '../providers/map';
+import { User }                 from '../providers/user';
+import { FcmNotifications }     from '../providers/fcm-notifications';
+import { Map }                  from '../providers/map';
 
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
@@ -47,10 +48,13 @@ export class MyApp {
     public modalCtrl: ModalController,
     public storage: Storage,
     public userService: User,
-    public map: Map
+    public map: Map,
+    public fcm: FcmNotifications,
+    private dialogs: Dialogs
   ) {
 
     this.initializeApp();
+    this.map.getLocationServices();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -113,8 +117,9 @@ export class MyApp {
             this.storage.set('recentCount', 0);
           };
         });
-        this.map.getLocationServices();
       });
+
+      this.fcm.init();
 
       this.events.publish('app:launch', this.loggedIn);
     });
@@ -130,7 +135,6 @@ export class MyApp {
         this.nav.setRoot(TabsPage)
         this.presentLoading();
         this.events.publish('user:loggedOut', false);
-
       }).catch((error) => {
         this.errToast(error.message);
       });

@@ -17,6 +17,7 @@ import { Stripe } from '@ionic-native/stripe';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
+import { FCM } from '@ionic-native/fcm';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
@@ -56,6 +57,7 @@ import { InfoPage }                     from '../pages/info/info';
 import { DiscountsPage }                from '../pages/discounts/discounts';
 
 import { User }                         from '../providers/user';
+import { FcmNotifications }             from '../providers/fcm-notifications';
 import { Map }                          from '../providers/map';
 
 @NgModule({
@@ -115,12 +117,14 @@ import { Map }                          from '../providers/map';
     Dialogs,
     SocialSharing,
     User,
+    FCM,
+    FcmNotifications,
     Map,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

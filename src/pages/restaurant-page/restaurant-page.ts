@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -16,6 +16,9 @@ declare let google;
   templateUrl: 'restaurant-page.html',
 })
 export class RestaurantPage {
+
+  heartIcon: any;
+
   restaurant : any;
   restaurantName: string;
   restaurantStatus: boolean;
@@ -51,12 +54,31 @@ export class RestaurantPage {
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
+    public alertCtrl: AlertController,
     public navParams: NavParams,
     public storage: Storage,
     public events: Events,
     private socialSharing: SocialSharing,
     public platform: Platform
   ) {
+
+    this.storage.get('favList').then((list) => {
+
+      let found = false;
+      for (var x = 0; x < list.length; x++){
+        if(list[x].restaurantName === this.navParams.data.restaurantName){
+          this.heartIcon = "heart";
+          found = true;
+        };
+      };
+
+      if (found == false) {
+        this.heartIcon = "heart-outline";
+      };
+
+    });
+
+    this.heartIcon = "heart-outline";
     this.restaurant = this.navParams.data;
     this.restaurantName = this.restaurant.restaurantName;
     this.restaurantStatus = this.restaurant.liveStatus;
@@ -123,34 +145,6 @@ export class RestaurantPage {
 
   }
 
-  favRest(){
-    this.storage.get('favCount').then((val) => {
-      if (val == 0) {
-        var list = [];
-        list.push(this.navParams.data);
-        this.storage.set('favList', list);
-        this.storage.set('favCount', ++val);
-      } else if (val >= 20) {
-        this.storage.get('favList').then((list) => {
-          if ( this.checkArrayFor(list, this.navParams.data) === false ){
-            list.push(this.navParams.data);
-            list.shift();
-            this.storage.set('favList', list);
-          };
-        });
-      } else {
-        this.storage.get('favList').then((list) => {
-          if ( this.checkArrayFor(list, this.navParams.data) === false ){
-            list.push(this.navParams.data);
-            this.storage.set('favList', list);
-            this.storage.set('favCount', ++val)
-          };
-        });
-      };
-    });
-    this.events.publish('restaurant:favorited');
-  };
-
   shareRest(restName){
     this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://instaeats.com/").then(() => {
       // success
@@ -164,15 +158,41 @@ export class RestaurantPage {
       // TODO: detect recievers platform, then share platform specific link (android, iOS, browser)
   };
 
+  favRest(){
 
-  checkArrayFor(arr, obj){
-    for (var x = 0; x < arr.length; x++){
-      if(arr[x].restaurantName === obj.restaurantName){
-        return true;
-      }
+    if (this.heartIcon == "heart") {
+      this.heartIcon = "heart-outline";
+
+      let alrt = this.alertCtrl.create({
+        title: this.navParams.data.restaurantName,
+        message: 'This restaurant has been unfavorited! You will no longer be notified if they have any discounts live!',
+        buttons: ['Ok']
+      });
+      alrt.present();
+
+      this.events.publish('restaurant:unfavorited', this.navParams.data);
+
+    } else {
+
+      this.heartIcon = "heart";
+
+      let alrt = this.alertCtrl.create({
+        title: this.navParams.data.restaurantName,
+        message: 'This restaurant has been favorited! You will be notified if they have any discounts live!',
+        buttons: ['Ok']
+      });
+      alrt.present();
+
+      this.events.publish('restaurant:favorited', this.navParams.data);
+
     }
-    return false;
+
   };
+
+  shareRest(){
+
+  };
+
 
   // populate map with correct restaurant location
   getMap(){

@@ -1,8 +1,8 @@
 {
   "_from": "cordova.plugins.diagnostic",
-  "_id": "cordova.plugins.diagnostic@3.6.6",
+  "_id": "cordova.plugins.diagnostic@3.6.7",
   "_inBundle": false,
-  "_integrity": "sha1-gONATjv3tTF7RCv9gw3JB44FZDM=",
+  "_integrity": "sha1-X2nuCQDV+bI9wwfSBcGy4N2+A+4=",
   "_location": "/cordova.plugins.diagnostic",
   "_phantomChildren": {},
   "_requested": {
@@ -19,10 +19,10 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova.plugins.diagnostic/-/cordova.plugins.diagnostic-3.6.6.tgz",
-  "_shasum": "80e3404e3bf7b5317b442bfd830dc9078e056433",
+  "_resolved": "https://registry.npmjs.org/cordova.plugins.diagnostic/-/cordova.plugins.diagnostic-3.6.7.tgz",
+  "_shasum": "5f69ee0900d5f9b23dc307d205c1b2e0ddbe03ee",
   "_spec": "cordova.plugins.diagnostic",
-  "_where": "C:\\Users\\Usman\\Documents\\InstaEats_dev\\node_modules",
+  "_where": "C:\\Users\\Youssef\\Documents\\App Dev\\InstaEats\\InstaEats_dev\\node_modules",
   "author": {
     "name": "Dave Alden"
   },
@@ -65,5 +65,5 @@
     "url": "git+https://github.com/dpa99c/cordova-diagnostic-plugin.git"
   },
   "types": "./cordova.plugins.diagnostic.d.ts",
-  "version": "3.6.6"
+  "version": "3.6.7"
 }

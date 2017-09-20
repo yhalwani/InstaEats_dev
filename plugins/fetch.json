@@ -71,6 +71,7 @@
         "is_top_level": true,
         "variables": {}
     },
+<<<<<<< HEAD
     "cordova.plugins.diagnostic": {
         "source": {
             "type": "registry",
@@ -89,10 +90,25 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-fcm@^2.1.2"
+=======
+    "cordova-plugin-fcm": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-fcm"
         },
         "is_top_level": true,
         "variables": {}
     },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+>>>>>>> master
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+<<<<<<< HEAD
     "cordova-plugin-x-socialsharing": {
         "source": {
             "type": "registry",
@@ -105,6 +121,12 @@
         "source": {
             "type": "registry",
             "id": "es6-promise-plugin@4.1.0"
+=======
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic"
+>>>>>>> master
         },
         "is_top_level": false,
         "variables": {}
