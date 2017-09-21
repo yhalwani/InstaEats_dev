@@ -58,8 +58,7 @@ export class RestaurantPage {
     public navParams: NavParams,
     public storage: Storage,
     public events: Events,
-    private socialSharing: SocialSharing,
-    public platform: Platform
+    private socialSharing: SocialSharing
   ) {
 
     this.storage.get('favList').then((list) => {
@@ -188,11 +187,6 @@ export class RestaurantPage {
     }
 
   };
-
-  shareRest(){
-
-  };
-
 
   // populate map with correct restaurant location
   getMap(){

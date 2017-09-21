@@ -80,8 +80,6 @@ export class NearMePage {
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
         };
-
-        console.log(this.liveList);
         return false;
       });
     });

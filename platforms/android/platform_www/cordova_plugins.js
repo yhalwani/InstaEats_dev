@@ -95,6 +95,20 @@ module.exports = [
         ]
     },
     {
+        "id": "es6-promise-plugin.Promise",
+        "file": "plugins/es6-promise-plugin/www/promise.js",
+        "pluginId": "es6-promise-plugin",
+        "runs": true
+    },
+    {
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "pluginId": "cordova-plugin-x-socialsharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
+    },
+    {
         "id": "cordova.plugins.diagnostic.Diagnostic",
         "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
         "pluginId": "cordova.plugins.diagnostic",
@@ -110,20 +124,6 @@ module.exports = [
             "cordova.plugins.Keyboard"
         ],
         "runs": true
-    },
-    {
-        "id": "es6-promise-plugin.Promise",
-        "file": "plugins/es6-promise-plugin/www/promise.js",
-        "pluginId": "es6-promise-plugin",
-        "runs": true
-    },
-    {
-        "id": "cordova-plugin-x-socialsharing.SocialSharing",
-        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
-        "pluginId": "cordova-plugin-x-socialsharing",
-        "clobbers": [
-            "window.plugins.socialsharing"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -139,15 +139,10 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
-<<<<<<< HEAD
-    "cordova.plugins.diagnostic": "3.6.6",
-    "ionic-plugin-keyboard": "2.2.1",
     "es6-promise-plugin": "4.1.0",
-    "cordova-plugin-x-socialsharing": "5.1.8"
-=======
+    "cordova-plugin-x-socialsharing": "5.1.8",
     "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1"
->>>>>>> master
 };
 // BOTTOM OF METADATA
 });

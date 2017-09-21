@@ -1,7 +1,7 @@
 import { Injectable }                 from '@angular/core';
 import { NavController, Events }      from 'ionic-angular';
 import { Dialogs }                    from '@ionic-native/dialogs';
-import { RestaurantPage } from '../restaurant-page/restaurant-page';
+import { RestaurantPage } from '../pages/restaurant-page/restaurant-page';
 
 import firebase from 'firebase';
 
@@ -45,7 +45,7 @@ export class FcmNotifications {
                 var data = snapshot.val();
                 this.navCtrl.push(RestaurantPage, data);
               });
-              
+
             }else{
 
             };
