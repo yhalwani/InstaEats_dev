@@ -92,9 +92,10 @@ export class NearMePage {
 
   };
 
-  // ngOnInit(){
-  //   this.loadMap();
-  // };
+  ionViewDidEnter(){
+    // this.loadMap();
+    this.sortByDistance();
+  };
 
   switchView(){
     if(this.iconName == "list") {
@@ -251,21 +252,39 @@ export class NearMePage {
     return Math.round(10 * (earthRadiusKm * c))/10;
   }
 
-  onSearch(){
-    // // create tmp list and search list. If query is in tmp list, push to search list
-    // let restRef = firebase.database().ref("Restaurant Profiles/");
-    // var query = this.searchInput;
-    // var userQuery = restRef.orderByChild("restaurantName").startAt(query).endAt(query + '\uf8ff');
-    //   userQuery.once("value", function(snapshot) {
-    // var data = snapshot.val();
-    // console.log(data);
-    //
-    // /* TODO: create a list and show as search resutls */
-    //
-    // }, function (errorObject) {
-    // console.log("The read failed: " + errorObject.code);
-    // });
+  // search bar functionality
+  onSearch(event: any){
+    let tmp;
+    let query = event.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (!query) {
+      return;
+    }
+
+    // tmp list is set to the queried list
+    tmp = this.liveList.filter((rest) => {
+      if(rest.restaurantName && query) {
+        if (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+    console.log(tmp);
   };
+
+  // sort by cuisine type
+  sortByCuisineType(event:any){
+    // TODO: decide how to show results
+  }
+
+  sortByDistance(){
+    let tmp;
+    this.liveList.sort((a, b) => {
+      return a.distance - b.distance
+    });
+  }
 
   // doRefresh(refresher){
   //   let restRef = firebase.database().ref("Restaurant Profiles/");
