@@ -28,20 +28,20 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-fcm": {
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova.plugins.diagnostic": {
+        "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-x-socialsharing": {
-          "PACKAGE_NAME": "com.retoll.instaeats"
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {

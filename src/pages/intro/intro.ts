@@ -13,16 +13,13 @@ export class IntroPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-
   navSignUp() {
     this.navCtrl.setRoot(SignupPage);
   }
 
-
   navLogin() {
     this.navCtrl.setRoot(LoginPage);
   }
-
 
   navHome() {
     this.navCtrl.setRoot(TabsPage);

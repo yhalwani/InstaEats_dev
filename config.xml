@@ -2,11 +2,11 @@
 <widget id="com.retoll.instaeats" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>InstaEats</name>
     <description>Local restaurants running at-the-moment deals.</description>
-    <author email="usman@retoll.com" href="https://www.retoll.com/">
-      Retoll Engineering Team
+    <author email="usman@retoll.com" href="https://www.retoll.com/">
+      Retoll Engineering Team
     </author>
-    <author email="youssef@retoll.com" href="https://www.retoll.com/">
-      Retoll Engineering Team
+    <author email="youssef@retoll.com" href="https://www.retoll.com/">
+      Retoll Engineering Team
     </author>
     <content src="index.html" />
     <access origin="*" />

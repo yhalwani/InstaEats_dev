@@ -41,8 +41,8 @@
     </feature>
     <name>InstaEats</name>
     <description>Local restaurants running at-the-moment deals.</description>
-    <author email="youssef@retoll.com" href="https://www.retoll.com/">
-      Retoll Engineering Team
+    <author email="youssef@retoll.com" href="https://www.retoll.com/">
+      Retoll Engineering Team
     </author>
     <content src="index.html" />
     <access origin="*" />
