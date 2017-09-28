@@ -50,7 +50,7 @@ export class Map {
             this.errToast("Location Services denied permission")
           }
         });
-    }else{
+    } else {
       // check if device location is turned on then get location
       this.diagnostic.isLocationEnabled().then((isAvailable) => {
         if(isAvailable){
@@ -86,11 +86,27 @@ export class Map {
         lng: data.coords.longitude,
         zoom: 13,
         visible:true,
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/test1-51a17.appspot.com/o/img%2Fbluedot.png?alt=media&token=9315039e-df6d-4862-9cf1-4087482e4713"
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fbluedot%20(1).png?alt=media&token=738951a8-5463-40ec-bd60-4e9e41faf9c9"
       };
     }).catch((error) => {
       this.errToast("Unable to detect user location")
     });
+  }
+
+  getBrowserLocation(){
+    navigator.geolocation.getCurrentPosition((position) => {
+        this.mapObject = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          zoom: 13,
+          visible: true,
+          iconUrl: "https://firebasestorage.googleapis.com/v0/b/test1-51a17.appspot.com/o/img%2Fbluedot.png?alt=media&token=9315039e-df6d-4862-9cf1-4087482e4713"
+        };
+      },(error) => {
+        if(error.code == error.PERMISSION_DENIED){
+          this.errToast("Location Services denied permission")
+        }
+      });
   }
 
   errToast(msg){

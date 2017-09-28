@@ -30,9 +30,9 @@
 
       <!-- Map Container -->
       <sebm-google-map id="map"
-      [latitude]="_map.lat"
-      [longitude]="_map.lng"
-      [zoom]="_map.zoom"
+      [latitude]="this.map.mapObject.lat"
+      [longitude]="this.map.mapObject.lng"
+      [zoom]="this.map.mapObject.zoom"
       [zoomControl]="false"
       [disableDefaultUI]="true"
       [scaleControl]="true"
@@ -40,16 +40,16 @@
 
         <!-- user location marker -->
         <sebm-google-map-marker
-        [latitude]="_map.lat"
-        [longitude]="_map.lng"
-        [visible]="_map.visible"
-        [iconUrl]="_map.iconUrl"
+        [latitude]="this.map.mapObject.lat"
+        [longitude]="this.map.mapObject.lng"
+        [visible]="this.map.mapObject.visible"
+        [iconUrl]="this.map.mapObject.iconUrl"
         >
 
           <sebm-google-map-info-window>
             <strong>My location</strong>
             <br>
-            {{_map.lat}}, {{_map.lng}}
+            {{this.map.mapObject.lat}}, {{this.map.mapObject.lng}}
           </sebm-google-map-info-window>
 
         </sebm-google-map-marker>

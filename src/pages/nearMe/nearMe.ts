@@ -20,8 +20,8 @@ export class NearMePage {
     imgURL: string,
     liveStatus: boolean,
     restaurantName: any,
-    coordinates: Array<{name: any, lat: number, lng: number, address: string}>,
-    address: string,
+    coordinates: Array<{name: any, lat: number, lng: number}>,
+    address: Array<{street: string, city: string, province: string, postal: string, country: string}>,
     distance: number
   }>;
 
@@ -32,16 +32,14 @@ export class NearMePage {
     imgURL: string,
     liveStatus: boolean,
     restaurantName: any,
-    coordinates: Array<{name: any, lat: number, lng: number, address: string}>,
-    address: string,
+    coordinates: Array<{name: any, lat: number, lng: number}>,
+    address: Array<{street: string, city: string, province: string, postal: string, country: string}>,
     distance: number
   }>;
 
   // Dynamic variables that change according to
   nearMeViews: string = "listView";
   iconName: string = "map";
-
-  _map: any;
 
   // TODO: get input from the slider and pass as radius to create circle
   minLimit: number = 0;  // 0 km
@@ -60,22 +58,21 @@ export class NearMePage {
     public map: Map,
   ) {
 
-    this.loadMap();
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").on("value", (snapshot) => {
       let liveList  = [];
       let deadList  = [];
-      let coords    = [];
 
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true) {
           liveList.push(childSnapshot.val());
           for(let i=0; i<liveList.length; i++){
-            liveList[i].distance = (this.distanceInKm(this._map.lat, this._map.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
+            liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
           }
-          this.liveList = liveList;
-
+          this.liveList = liveList.sort((a, b) => {
+            return a.distance - b.distance
+          });
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
@@ -92,11 +89,6 @@ export class NearMePage {
 
   };
 
-  ionViewDidEnter(){
-    // this.loadMap();
-    this.sortByDistance();
-  };
-
   switchView(){
     if(this.iconName == "list") {
       this.iconName = "map";
@@ -109,11 +101,6 @@ export class NearMePage {
 
   openModal(){
   };
-
-  loadMap(){
-    this.map.getLocationServices();
-    this._map = this.map.mapObject;
-  }
 
   errToast(msg){
     let toast = this.toastCtrl.create({
@@ -222,8 +209,6 @@ export class NearMePage {
 
   };
 
-
-
   checkArrayFor(arr, obj) {
     for (var x = 0; x < arr.length; x++){
       if(arr[x].restaurantName === obj.restaurantName){
@@ -255,6 +240,7 @@ export class NearMePage {
   // search bar functionality
   onSearch(event: any){
     let tmp;
+    let tmpLiveList = this.liveList;
     let query = event.target.value;
 
     // if the value is an empty string don't filter the items
@@ -263,6 +249,7 @@ export class NearMePage {
     }
 
     // tmp list is set to the queried list
+    // TODO: Update the list upon search -> go back to liveList if seachbar is empty
     tmp = this.liveList.filter((rest) => {
       if(rest.restaurantName && query) {
         if (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1) {
@@ -271,6 +258,7 @@ export class NearMePage {
         return false;
       }
     });
+
     console.log(tmp);
   };
 
@@ -280,7 +268,6 @@ export class NearMePage {
   }
 
   sortByDistance(){
-    let tmp;
     this.liveList.sort((a, b) => {
       return a.distance - b.distance
     });

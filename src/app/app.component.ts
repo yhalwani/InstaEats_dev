@@ -54,7 +54,7 @@ export class MyApp {
   ) {
 
     this.initializeApp();
-    this.map.getLocationServices();
+    // this.map.getLocationServices();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -95,6 +95,10 @@ export class MyApp {
     });
 
   };
+
+  ngOnInit(){
+    this.map.getLocationServices();
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {
