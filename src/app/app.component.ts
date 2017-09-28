@@ -132,7 +132,7 @@ export class MyApp {
       firebase.auth().signOut().then(() =>{
         this.loggedIn = false;
         this.userService.user.loggedIn = this.loggedIn;
-        this.nav.setRoot(TabsPage)
+        this.nav.setRoot(TabsPage);
         this.presentLoading();
         this.events.publish('user:loggedOut', false);
       }).catch((error) => {

@@ -225,9 +225,6 @@ export class OnBoardPage {
     //   .catch(error => console.log(error)
     // );
 
-    // TODO: Add topic creation to firebase
-    // Probably done with cloud functions
-
     var restRef = firebase.database().ref("/Restaurant Profiles");
 
     // create account using email and password
