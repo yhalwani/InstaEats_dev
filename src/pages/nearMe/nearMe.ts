@@ -58,6 +58,17 @@ export class NearMePage {
     public map: Map,
   ) {
 
+    this.setList();
+
+    if(this.plt.is('ios')){
+      this.plat = { platform: "header-icon-ios", assetPath: "assets/icon/icon.png"};
+    } else {
+      this.plat = { platform: "header-icon-md", assetPath: "assets/icon/icon.png"};
+    };
+
+  };
+
+  setList(){
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").on("value", (snapshot) => {
@@ -70,7 +81,8 @@ export class NearMePage {
           for(let i=0; i<liveList.length; i++){
             liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
           }
-          this.liveList = liveList.sort((a, b) => {
+          this.liveList = liveList;
+          this.liveList.sort((a, b) => {
             return a.distance - b.distance
           });
         } else if (childSnapshot.val().liveStatus == false){
@@ -80,14 +92,7 @@ export class NearMePage {
         return false;
       });
     });
-
-    if(this.plt.is('ios')){
-      this.plat = { platform: "header-icon-ios", assetPath: "assets/icon/icon.png"};
-    } else {
-      this.plat = { platform: "header-icon-md", assetPath: "assets/icon/icon.png"};
-    };
-
-  };
+  }
 
   switchView(){
     if(this.iconName == "list") {
@@ -239,38 +244,20 @@ export class NearMePage {
 
   // search bar functionality
   onSearch(event: any){
-    let tmp;
-    let tmpLiveList = this.liveList;
+    this.setList();
+
     let query = event.target.value;
 
-    // if the value is an empty string don't filter the items
-    if (!query) {
-      return;
+    if( query && query.trim() != '' ){
+      this.liveList = this.liveList.filter((rest) => {
+        return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1);
+      })
     }
-
-    // tmp list is set to the queried list
-    // TODO: Update the list upon search -> go back to liveList if seachbar is empty
-    tmp = this.liveList.filter((rest) => {
-      if(rest.restaurantName && query) {
-        if (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1) {
-          return true;
-        }
-        return false;
-      }
-    });
-
-    console.log(tmp);
   };
 
   // sort by cuisine type
   sortByCuisineType(event:any){
     // TODO: decide how to show results
-  }
-
-  sortByDistance(){
-    this.liveList.sort((a, b) => {
-      return a.distance - b.distance
-    });
   }
 
   // doRefresh(refresher){

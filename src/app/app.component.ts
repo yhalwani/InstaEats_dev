@@ -17,9 +17,9 @@ import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
-import { User }                 from '../providers/user';
+import { User }         from '../providers/user';
 import { FcmNotifications }     from '../providers/fcm-notifications';
-import { Map }                  from '../providers/map';
+import { Map }          from '../providers/map';
 
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
@@ -52,9 +52,9 @@ export class MyApp {
     public fcm: FcmNotifications,
     private dialogs: Dialogs
   ) {
-
+    this.splashScreen.hide();
+    this.statusBar.hide();
     this.initializeApp();
-    // this.map.getLocationServices();
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -68,6 +68,7 @@ export class MyApp {
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
+        {title: 'My Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -96,16 +97,10 @@ export class MyApp {
 
   };
 
-  ngOnInit(){
-    this.map.getLocationServices();
-  }
-
   initializeApp() {
     this.platform.ready().then(() => {
 
-      // this.statusBar.styleDefault();
-      // this.splashScreen.show();
-      // this.splashScreen.hide();
+      this.map.getLocationServices();
 
       let splash = this.modalCtrl.create(SplashContentPage);
       splash.present();
