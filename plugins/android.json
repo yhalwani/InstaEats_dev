@@ -25,9 +25,6 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -41,6 +38,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },

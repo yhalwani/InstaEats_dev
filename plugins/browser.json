@@ -13,9 +13,6 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -41,6 +38,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },

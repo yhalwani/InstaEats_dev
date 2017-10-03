@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { RestaurantPage }         from '../restaurant-page/restaurant-page';
 
 @Component({
   selector: 'page-about',
@@ -35,5 +36,11 @@ export class RecentPage {
       this.restList = list.reverse();
     });
   }
+
+  goToRestPage(index){
+    this.events.publish('restaurant:viewed');
+    this.navCtrl.push(RestaurantPage, this.restList[index]);
+  };
+
 
 }

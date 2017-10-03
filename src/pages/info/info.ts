@@ -14,6 +14,8 @@ export class InfoPage {
   cuisineTypes: Array<{ type: string, id: string }>;
   provinces:   Array<{ name: string, id: string }>;
 
+  newImage: any;
+
   // variables for restaurant sign up
   email:          string;
   password:       string;
@@ -156,7 +158,7 @@ export class InfoPage {
         this.cuisineType    = "cuisineType";
         this.website        = "website";
         this.phoneNumber    =  null;
-        // this.image          = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FnoImageAvailable.png?alt=media&token=d30f37e9-c408-4da9-b911-dfe411d34cbe"
+        this.image          = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FnoImageAvailable.png?alt=media&token=d30f37e9-c408-4da9-b911-dfe411d34cbe"
 
         this.street         = "street";
         this.city           = "city";
@@ -198,10 +200,6 @@ export class InfoPage {
       }
     });
 
-    if(this.image != null){
-      this.saveImageToFirebase(this.image, uid);
-    }
-
   }
 
   // change user password
@@ -214,6 +212,10 @@ export class InfoPage {
 
   // Fetch Img from Device
   addImg(){
+
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
+
     // CameraOptions
     const options: CameraOptions = {
       quality: 100,
@@ -225,7 +227,7 @@ export class InfoPage {
 
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URL
-      this.image = imageData;
+      this.saveImageToFirebase(imageData, uid);
     }, (err) => {
       // Handle error
       this.toastCtrl.create({

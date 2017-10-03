@@ -41,6 +41,7 @@ export class DiscountsPage {
 
     // Entering the restaurants bundles node in fb
     bundleNode.once('value', (snapshot) => {
+      if(snapshot.val() != null){
 
       // For each bundle the rest has loop
       snapshot.forEach((childSnapshot) => {
@@ -68,7 +69,7 @@ export class DiscountsPage {
     this.events.subscribe('bundle:created', (bundle) => {
       this.bundles = bundle;
     });
-
+    }
   });
 
 }

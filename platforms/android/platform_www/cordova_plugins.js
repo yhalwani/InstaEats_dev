@@ -79,14 +79,6 @@ module.exports = [
         "runs": true
     },
     {
-        "id": "cordova-plugin-splashscreen.SplashScreen",
-        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-        "pluginId": "cordova-plugin-splashscreen",
-        "clobbers": [
-            "navigator.splashscreen"
-        ]
-    },
-    {
         "id": "cordova-plugin-statusbar.statusbar",
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
         "pluginId": "cordova-plugin-statusbar",
@@ -124,6 +116,14 @@ module.exports = [
             "cordova.plugins.Keyboard"
         ],
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "pluginId": "cordova-plugin-splashscreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -136,13 +136,13 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.3.3",
     "cordova-plugin-fcm": "2.1.2",
     "cordova-plugin-geolocation": "2.4.3",
-    "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
     "es6-promise-plugin": "4.1.0",
     "cordova-plugin-x-socialsharing": "5.1.8",
     "cordova.plugins.diagnostic": "3.6.7",
-    "ionic-plugin-keyboard": "2.2.1"
+    "ionic-plugin-keyboard": "2.2.1",
+    "cordova-plugin-splashscreen": "4.0.3"
 };
 // BOTTOM OF METADATA
 });

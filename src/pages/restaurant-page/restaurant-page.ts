@@ -250,7 +250,7 @@ export class RestaurantPage {
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content style="background-color: #262323;" padding>
     <!-- Discount Card Template-->
 
       <ion-card class="widget">
@@ -288,7 +288,7 @@ export class RestaurantPage {
         </div>
       </ion-card>
 
-      <h2 padding text-center> Please present this page to redeem coupon </h2>
+      <h2 style="color: #3F3A38;" padding text-center> Please present this page to redeem coupon </h2>
 
     </ion-content>
   `

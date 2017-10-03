@@ -1,3 +1,7 @@
+.scroll-content {
+  background-color: #f2f2f2 !important;
+}
+
 .ion-ios-add:before {
   content: "\f102";
 }
@@ -29400,6 +29404,7 @@ page-about .imageborder {
 }
 
 page-restaurant-page .scroll, page-DiscountPage .scroll {
+  background-color: #262323 !important;
   height: 100%;
 }
 

@@ -201,7 +201,7 @@ export class MenuPage {
           $ {{totalDiscountPrice}}
         </ion-col>
         <ion-col col-2>
-          % {{totalDiscountPercent}}
+          {{totalDiscountPercent}} %
         </ion-col>
       </ion-row>
     </ion-grid>

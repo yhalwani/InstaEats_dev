@@ -92,7 +92,7 @@
     <ion-list *ngSwitchCase="'listView'">
 
       <ion-item-group>
-        <ion-item-divider> Discounts Live </ion-item-divider>
+        <!-- <ion-item-divider> Discounts Live </ion-item-divider> -->
 
           <ion-item class="item" *ngFor="let rest of liveList; let i = index">
 
@@ -108,20 +108,9 @@
 
                   <div item-right>
                     <ion-icon *ngIf="rest.liveStatus" color="secondary" name="md-pricetags"></ion-icon>
-                    <ion-icon *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
                     <br>
                     <ion-note>{{rest.distance}}km </ion-note>
                   </div>
-
-                  <!-- <ion-buttons item-right id="buttons">
-                    <button ion-button color="rdaApp" clear small icon-only item-right>
-                      <ion-icon *ngIf="rest.liveStatus" name="radio-button-on"></ion-icon>
-                      <ion-icon *ngIf="!rest.liveStatus" name="radio-button-off"></ion-icon>
-                    </button>
-                    <button ion-button color="rdaApp" clear small icon-only item-right>
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
-                  </ion-buttons> -->
 
                 </ion-item>
               </ion-card-content>
@@ -131,7 +120,7 @@
       </ion-item-group>
 
       <ion-item-group>
-        <ion-item-divider> No Discounts </ion-item-divider>
+        <!-- <ion-item-divider> No Discounts </ion-item-divider> -->
 
           <ion-item class="item" *ngFor="let rest of deadList; let i = index">
 
@@ -145,15 +134,11 @@
                   <p>{{rest.slogan}}</p>
                   <p>{{rest.description}}</p>
 
-                  <ion-buttons item-right id="buttons">
-                    <button ion-button color="rdaApp" clear small icon-only item-right>
-                      <ion-icon *ngIf="rest.liveStatus" name="radio-button-on"></ion-icon>
-                      <ion-icon *ngIf="!rest.liveStatus" name="radio-button-off"></ion-icon>
-                    </button>
-                    <button ion-button color="rdaApp" clear small icon-only item-right>
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
-                  </ion-buttons>
+                  <div item-right>
+                    <ion-icon *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
+                    <br>
+                    <!-- <ion-note>{{rest.distance}}km </ion-note> -->
+                  </div>
 
                 </ion-item>
               </ion-card-content>
