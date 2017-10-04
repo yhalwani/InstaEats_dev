@@ -6,12 +6,14 @@
     <ion-title>Favorites</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let rest of restList; let i = index">
+
       <ion-item>
         <ion-avatar class="avatar" item-left>
-          <img src="{{rest.photoUrl}}">
+          <img class="imageborder" src="{{rest.photoUrl}}">
         </ion-avatar>
         <h2>{{rest.restaurantName}}</h2>
         <p>{{rest.blurb}}</p>
@@ -19,6 +21,7 @@
           <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
         </button>
       </ion-item>
+
       <ion-item-options side="right">
         <button ion-button color="rdaApp" (click)="deleteRest(i)">
           <ion-icon name="undo"></ion-icon>

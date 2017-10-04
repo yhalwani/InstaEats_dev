@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Events, ViewController, ModalContr
 import { Storage } from '@ionic/storage';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 import firebase from 'firebase';
 
@@ -58,7 +59,8 @@ export class RestaurantPage {
     public navParams: NavParams,
     public storage: Storage,
     public events: Events,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private launchNavigator: LaunchNavigator
   ) {
 
     this.storage.get('favList').then((list) => {
@@ -203,6 +205,16 @@ export class RestaurantPage {
       }
     });
   };
+
+  navigate(){
+    let lat, lng;
+    let rest = this.restaurant.id;
+    firebase.database().ref("Restaurant Profiles/" + rest).on("value", (snapshot) => {
+      lat = snapshot.val().coordinates.lat;
+      lng = snapshot.val().coordinates.lng;
+    });
+    this.launchNavigator.navigate([lat, lng]);
+  }
 
   setTimers(bundle){
 

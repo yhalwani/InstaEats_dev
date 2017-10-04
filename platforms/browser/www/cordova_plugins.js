@@ -118,6 +118,22 @@ module.exports = [
         "id": "cordova-plugin-splashscreen.SplashScreenProxy",
         "pluginId": "cordova-plugin-splashscreen",
         "runs": true
+    },
+    {
+        "file": "plugins/uk.co.workingedge.phonegap.plugin.launchnavigator/www/common.js",
+        "id": "uk.co.workingedge.phonegap.plugin.launchnavigator.Common",
+        "pluginId": "uk.co.workingedge.phonegap.plugin.launchnavigator",
+        "clobbers": [
+            "launchnavigator"
+        ]
+    },
+    {
+        "file": "plugins/uk.co.workingedge.phonegap.plugin.launchnavigator/www/localforage.v1.5.0.min.js",
+        "id": "uk.co.workingedge.phonegap.plugin.launchnavigator.LocalForage",
+        "pluginId": "uk.co.workingedge.phonegap.plugin.launchnavigator",
+        "clobbers": [
+            "localforage"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -136,7 +152,8 @@ module.exports.metadata =
     "cordova-plugin-fcm": "2.1.2",
     "cordova-plugin-dialogs": "1.3.3",
     "cordova.plugins.diagnostic": "3.6.7",
-    "cordova-plugin-splashscreen": "4.0.3"
+    "cordova-plugin-splashscreen": "4.0.3",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
 }
 // BOTTOM OF METADATA
 });

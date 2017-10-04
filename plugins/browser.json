@@ -42,6 +42,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {

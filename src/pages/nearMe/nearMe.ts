@@ -81,8 +81,7 @@ export class NearMePage {
           for(let i=0; i<liveList.length; i++){
             liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
           }
-          this.liveList = liveList;
-          this.liveList.sort((a, b) => {
+          this.liveList = liveList.sort((a, b) => {
             return a.distance - b.distance
           });
         } else if (childSnapshot.val().liveStatus == false){
@@ -246,10 +245,12 @@ export class NearMePage {
   onSearch(event: any){
     this.setList();
 
+    let tmpList = this.liveList.concat(this.deadList);
+
     let query = event.target.value;
 
     if( query && query.trim() != '' ){
-      this.liveList = this.liveList.filter((rest) => {
+      this.liveList = tmpList.filter((rest) => {
         return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1);
       })
     }
@@ -260,45 +261,13 @@ export class NearMePage {
     // TODO: decide how to show results
   }
 
-  // doRefresh(refresher){
-  //   let restRef = firebase.database().ref("Restaurant Profiles/");
-  //
-  //   restRef.orderByChild("liveStatus").on("value", (snapshot) => {
-  //     let liveList = [];
-  //     let deadList = [];
-  //     let coords = [];
-  //
-  //     snapshot.forEach((childSnapshot) => {
-  //       if(childSnapshot.val().liveStatus == true) {
-  //         liveList.push(childSnapshot.val());
-  //         this.liveList = liveList;
-  //       } else if (childSnapshot.val().liveStatus == false){
-  //         deadList.push(childSnapshot.val());
-  //         this.deadList = deadList;
-  //       }
-  //       return false;
-  //     });
-  //   });
-  //
-  //   setTimeout(() => {
-  //     refresher.complete();
-  //   }, 2000);
-  //
-  // };
+  doRefresh(refresher){
+    this.setList();
+    
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
+
+  };
 
 };
-
-
-// TODO:  install NativeGeocoderModules
-//        import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
-//        import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';\
-//        add to constructor
-
-// reverse geocode (use coordinates and return string: street address)
-// geolocate(){
-//   this.nativeGeocoder.reverseGeocode(this.map.lat, this.map.lng)
-//   .then((result: NativeGeocoderReverseResult) =>
-//   {let msg = result.street + result.countryCode;
-//   this.toast(msg)})
-//   .catch((error: any) => console.log(error));
-// }

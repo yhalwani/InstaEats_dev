@@ -15,21 +15,72 @@
 <ion-content>
 
   <!-- Header Card -->
-  <ion-card>
-    <ion-card-header>
-      <ion-item>
-        <ion-thumbnail class="imageborder" item-left>
-          <img src="{{restaurant.photoUrl}}">
-        </ion-thumbnail>
-        <h2> {{restaurant.restaurantName}} </h2>
-        <p> {{restaurant.address}} </p>
-        <p> {{restaurant.cuisineType}} </p>
-        <p> {{restaurant.slogan}} </p>
-
-      </ion-item>
-    </ion-card-header>
+  <ion-list>
+    <!-- <ion-card-header> -->
+      <ion-item class="item_stretch">
+        <ion-card class="cardNot">
+          <ion-card-content class="headerNot">
+            <ion-item>
+              <ion-thumbnail item-left>
+                <img class="imageborder" src="{{restaurant.photoUrl}}">
+              </ion-thumbnail>
+              <ion-item-group>
+              <h2> {{restaurant.restaurantName}} </h2>
+              <p> {{restaurant.address}} </p>
+              <p> {{restaurant.cuisineType}} </p>
+              <p> {{restaurant.slogan}} </p>
+            </ion-item-group>
+          </ion-item>
+    </ion-card-content>
   </ion-card>
+      </ion-item>
 
+      <ion-card class="cardNot">
+        <ion-grid>
+          <ion-row class="tabMenu">
+            <ion-col col-4>
+              <button ion-button clear>
+                <ion-row align-items-center>
+                  <ion-col>
+                    <ion-icon name="ios-book"></ion-icon>
+                </ion-col>
+                <ion-col>
+                <p text-capitalize>Menu</p>
+                </ion-col>
+                </ion-row>
+              </button>
+            </ion-col>
+            <ion-col col-4>
+              <button ion-button clear>
+                <ion-row align-items-center>
+                  <ion-col>
+                <ion-icon name="heart"></ion-icon>
+              </ion-col>
+              <ion-col>
+                <p text-capitalize>Favourite</p>
+              </ion-col>
+              </ion-row>
+            </button>
+            </ion-col>
+            <ion-col col-4>
+              <button ion-button clear (click)="navigate()">
+                <ion-row align-items-center>
+                  <ion-col>
+                    <ion-icon name="navigate"></ion-icon>
+                  </ion-col>
+                  <ion-col>
+                    <p text-capitalize>Directions</p>
+                </ion-col>
+              </ion-row>
+            </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+
+    <!-- </ion-card-header> -->
+  </ion-list>
   <!-- No Discounts Template-->
     <!-- <ion-item-divider color="background">No discounts</ion-item-divider>
 
@@ -90,41 +141,38 @@
       <h2 style="color:red;"> Menu </h2>
     </ion-card-header>
 
-
-
       <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
         <ion-card class="cardNot">
           <ion-card-header style="background-color: #da3937; color: white;">
             {{menug.menuGroupName}}
           </ion-card-header>
-            <ion-card-content class="headerNot">
-          <ion-item *ngFor="let menu of menug.menu; let j = index">
 
+          <ion-card-content class="headerNot">
+            <ion-item *ngFor="let menu of menug.menu; let j = index">
+              <h3>{{menu.name}}</h3>
+              <p>{{menu.description}}</p>
+              <div item-right>
+                <ion-note><strong>${{menu.price}}</strong></ion-note>
+              </div>
+            </ion-item>
+          </ion-card-content>
 
-                    <h3>{{menu.name}}</h3>
-                    <p>{{menu.description}}</p>
-                    <div item-right>
-                      <ion-note><strong>${{menu.price}}</strong></ion-note>
-                    </div>
-
-          </ion-item>
-        </ion-card-content>
         </ion-card>
       </ion-list>
   </ion-card>
 
   <!-- Map Card -->
-    <sebm-google-map id="map"
-        [latitude]="local_map.lat"
-        [longitude]="local_map.lng"
-        [zoom]="local_map.zoom"
-        [zoomControl]="false"
-        [disableDefaultUI]="true"
-        [mapDraggable]="false"
-        [scrollwheel]="false"
-        [streetViewControl]="false"
-        [disableDoubleClickZoom]="true"
-      >
+  <sebm-google-map id="map"
+    [latitude]="local_map.lat"
+    [longitude]="local_map.lng"
+    [zoom]="local_map.zoom"
+    [zoomControl]="false"
+    [disableDefaultUI]="true"
+    [mapDraggable]="false"
+    [scrollwheel]="false"
+    [streetViewControl]="false"
+    [disableDoubleClickZoom]="true"
+  >
       <!-- restaurant location marker -->
       <sebm-google-map-marker
         [latitude]="local_map.lat"

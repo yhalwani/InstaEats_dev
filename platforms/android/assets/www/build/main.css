@@ -29222,18 +29222,22 @@ ion-navbar.toolbar {
   }
 }
 
-page-favorites .image {
+page-favorites .avatar {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
+page-favorites .imageborder {
   border: 2px solid #fff;
   border-radius: 5% 5%;
   box-shadow: 0 0 10px gray;
   display: inline-block;
 }
 
-page-favorites .avatar {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 50px !important;
-  max-height: 50px !important;
+page-intro .scroll-content {
+  background-color: #da3937 !important;
 }
 
 page-intro ion-content {
@@ -29385,10 +29389,6 @@ page-on-board .item-datetime ion-datetime {
   text-align: center;
 }
 
-page-about .item {
-  padding-left: 5px !important;
-}
-
 page-about .avatar {
   width: 100% !important;
   height: 100% !important;
@@ -29443,11 +29443,22 @@ page-restaurant-page .cardNot, page-DiscountPage .cardNot {
   width: 100%;
   margin: 0px !important;
   padding: 0px !important;
-  border-radius: 0px;
+  border-radius: 0px !important;
 }
 
 page-restaurant-page .tabMenu button, page-DiscountPage .tabMenu button {
-  height: 3.6em !important;
+  margin: 0px !important;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  height: 2.5em !important;
+}
+
+page-restaurant-page .tabMenu p, page-DiscountPage .tabMenu p {
+  margin: 0px !important;
+  font-size: 1.1rem;
+  font-weight: lighter;
+  min-width: 50px;
+  line-height: 0em;
 }
 
 page-restaurant-page .nothingBurger, page-DiscountPage .nothingBurger {

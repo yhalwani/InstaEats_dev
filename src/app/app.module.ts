@@ -17,6 +17,8 @@ import { Stripe } from '@ionic-native/stripe';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+
 import { FCM } from '@ionic-native/fcm';
 
 export const firebaseConfig = {
@@ -121,6 +123,7 @@ import { Map }                          from '../providers/map';
     FcmNotifications,
     Map,
     StatusBar,
+    LaunchNavigator,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
