@@ -93,7 +93,7 @@ export class MenuPage {
   <ion-header>
     <ion-toolbar>
       <ion-title>
-        Create Bundle
+        Create Coupon
       </ion-title>
       <ion-buttons start>
         <button ion-button (click)="dismiss()">
