@@ -103,7 +103,7 @@ export class MenuPage {
     </ion-toolbar>
   </ion-header>
 
-  <ion-content padding>
+  <ion-content>
     <ion-item>
       <ion-input type="text" placeholder="Bundle Name" [(ngModel)]="bundleName"></ion-input>
     </ion-item>
@@ -113,67 +113,60 @@ export class MenuPage {
 
     <br>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col col-2>
-          Check to add to discount
-        </ion-col>
-        <ion-col col-4>
-          Item Name
-        </ion-col>
-        <ion-col col-2>
-          Price
-        </ion-col>
-        <ion-col col-2>
-          Discounted Price
-        </ion-col>
-        <ion-col col-2>
-          Discount Percentage
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <br>
-
     <ion-list *ngFor="let menug of bundleMenu; let i = index">
-      <ion-list-header>
-        <ion-item-divider> {{menug.menuGroupName}} </ion-item-divider>
-      </ion-list-header>
-      <ion-grid>
-        <ion-item-group *ngFor="let menu of menug.menu; let j = index">
-          <ion-row>
-            <ion-col col-2>
-              <ion-item>
-                <!-- <ion-label> {{menu.name}} </ion-label> -->
-                <ion-checkbox [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
-              </ion-item>
+      <ion-card class="cardNot">
+        <ion-card-header style="background-color: #da3937; color: white;">
+          {{menug.menuGroupName}}
+        </ion-card-header>
+
+        <ion-grid>
+          <ion-row style="line-height: 1.5em;">
+            <ion-col col-2 col-auto >
             </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                {{menu.name}}
-              </ion-item>
+            <ion-col col-4 col-auto>
+              Item Name
             </ion-col>
-            <ion-col col-2>
-              <ion-item>
-                 $ {{menu.price}}
-              </ion-item>
+            <ion-col col-2 col-auto>
+              Price
             </ion-col>
-            <ion-col col-2>
-              <ion-item>
-                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
-              </ion-item>
+            <ion-col col-2 col-auto>
+              $'s off
             </ion-col>
-            <ion-col col-2>
-              <ion-item>
-                <ion-input type="number" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
-              </ion-item>
+            <ion-col col-2 col-auto>
+              % off
             </ion-col>
           </ion-row>
-        </ion-item-group>
-      </ion-grid>
-    </ion-list>
+        </ion-grid>
 
-    <br>
+        <ion-grid>
+          <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+            <ion-row>
+
+              <ion-col col-2 col-auto >
+                <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
+              </ion-col>
+
+              <ion-col col-4 col-auto >
+                <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
+              </ion-col>
+
+              <ion-col col-2 col-auto >
+                $ {{menu.price}}
+              </ion-col>
+
+              <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+                <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
+              </ion-col>
+
+              <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+                <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
+              </ion-col>
+
+            </ion-row>
+          </ion-item-group>
+        </ion-grid>
+            </ion-card>
+    </ion-list>
 
     <ion-grid>
       <ion-row>
@@ -184,10 +177,10 @@ export class MenuPage {
           Total Price
         </ion-col>
         <ion-col col-2>
-          Total Discounted Price
+          Total $'s off
         </ion-col>
         <ion-col col-2>
-          Total Discount Percentage
+          Total % off
         </ion-col>
       </ion-row>
       <ion-row>

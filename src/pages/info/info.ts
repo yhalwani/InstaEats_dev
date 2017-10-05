@@ -198,7 +198,15 @@ export class InfoPage {
         "Sat":    [this.sat_open, this.sat_close],
         "Sun":    [this.sun_open, this.sun_close]
       }
-    });
+    }).then(() => {
+      let toast = this.toastCtrl.create({
+        message: "Update successful",
+        duration: 3000,
+        position: 'bottom'
+      })
+      toast.present();
+
+    })
 
   }
 
@@ -259,14 +267,13 @@ export class InfoPage {
         photoUrl: downloadURL
       });
 
-      let toast = this.toastCtrl.create({
-        message: "Image upload success",
-        duration: 3000,
-        position: 'bottom'
-      })
-      toast.present();
-
     })
+    let toast = this.toastCtrl.create({
+      message: "Image upload success",
+      duration: 3000,
+      position: 'bottom'
+    })
+    toast.present();
   }
 
 }
