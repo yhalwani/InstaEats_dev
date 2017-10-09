@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Content } from 'ionic-angular';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
@@ -24,7 +25,7 @@ export class RestaurantPage {
   restaurantName: string;
   restaurantStatus: boolean;
 
-  @ViewChild('map') mapElement : ElementRef;
+  @ViewChild(Content) content: Content;
   local_map: any;
 
   menuGroup: Array<{
@@ -142,10 +143,30 @@ export class RestaurantPage {
 
          this.Bundles.forEach(this.setTimers);
       });
-    } else {}
+    } else {
+
+    }
 
   }
 
+  ngOnInit(){
+    // if restaurant is offline, toggle noDiscount card
+    if(!this.restaurantStatus){
+      document.getElementById("noDiscount").style.display = "block";
+    } else {
+      // restaurant is live, toggle coupons card
+      document.getElementById("hasDiscount").style.display = "block";
+    }
+  }
+
+  // scroll down to the menu card
+  goToMenuCard(elementId){
+    let yOffset = document.getElementById(elementId).offsetTop;
+
+    this.content.scrollTo(0, yOffset, 1000);
+  }
+
+  // share the restaurant
   shareRest(restName){
     this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://instaeats.com/").then(() => {
       // success
@@ -159,11 +180,13 @@ export class RestaurantPage {
       // TODO: detect recievers platform, then share platform specific link (android, iOS, browser)
   };
 
+  // favourite a restaurant
   favRest(){
 
     if (this.heartIcon == "heart") {
       this.heartIcon = "heart-outline";
 
+      // if user unfavourites a restaurant. save preference and notify user
       let alrt = this.alertCtrl.create({
         title: this.navParams.data.restaurantName,
         message: 'This restaurant has been unfavorited! You will no longer be notified if they have any discounts live!',
@@ -175,6 +198,7 @@ export class RestaurantPage {
 
     } else {
 
+      // if user favourites a restaurant. save preference and notify user
       this.heartIcon = "heart";
 
       let alrt = this.alertCtrl.create({

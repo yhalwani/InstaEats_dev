@@ -21,7 +21,7 @@
 
 <ion-content>
 
-  <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" (ionInput)="onSearch($event)"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" placeholder="Search by name or type" (ionInput)="onSearch($event)"></ion-searchbar>
   <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
   <div [ngSwitch]="nearMeViews">
 

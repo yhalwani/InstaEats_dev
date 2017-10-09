@@ -61,6 +61,7 @@
     <allow-intent href="geo:*" />
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.2.28:8100" />
+    <allow-navigation href="http://192.168.2.223:8100" />
     <allow-intent href="market:*" />
     <icon density="ldpi" src="resources\android\icon\drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources\android\icon\drawable-mdpi-icon.png" />

@@ -105,10 +105,10 @@ export class MenuPage {
 
   <ion-content>
     <ion-item>
-      <ion-input type="text" placeholder="Bundle Name" [(ngModel)]="bundleName"></ion-input>
+      <ion-input type="text" placeholder="Bundle Name (required)" [(ngModel)]="bundleName" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="text" placeholder="Bundle Description" [(ngModel)]="bundleDescription"></ion-input>
+      <ion-input type="text" placeholder="Bundle Description (required)" [(ngModel)]="bundleDescription" required></ion-input>
     </ion-item>
 
     <br>

@@ -5,187 +5,186 @@
       <button ion-button icon-only (click)="shareRest(restaurant.restaurantName)">
         <ion-icon name="md-share"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="favRest()">
-        <ion-icon name="{{heartIcon}}"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+      <!-- <button ion-button icon-only (click)="favRest()">
+      <ion-icon name="{{heartIcon}}"></ion-icon>
+    </button> -->
+  </ion-buttons>
+</ion-navbar>
 </ion-header>
 
 <ion-content>
 
   <!-- Header Card -->
   <ion-list>
-    <!-- <ion-card-header> -->
-      <ion-item class="item_stretch">
-        <ion-card class="cardNot">
-          <ion-card-content class="headerNot">
-            <ion-item>
-              <ion-thumbnail item-left>
-                <img class="imageborder" src="{{restaurant.photoUrl}}">
-              </ion-thumbnail>
-              <ion-item-group>
+    <ion-item class="item_stretch">
+      <ion-card class="cardNot">
+        <ion-card-content class="headerNot">
+          <ion-item>
+            <ion-thumbnail item-left>
+              <img class="imageborder" src="{{restaurant.photoUrl}}">
+            </ion-thumbnail>
+            <ion-item-group>
               <h2> {{restaurant.restaurantName}} </h2>
               <p> {{restaurant.address}} </p>
               <p> {{restaurant.cuisineType}} </p>
               <p> {{restaurant.slogan}} </p>
             </ion-item-group>
           </ion-item>
-    </ion-card-content>
-  </ion-card>
-      </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
 
-      <ion-card class="cardNot">
-        <ion-grid>
-          <ion-row class="tabMenu">
-            <ion-col col-4>
-              <button ion-button clear>
-                <ion-row align-items-center>
-                  <ion-col>
-                    <ion-icon name="ios-book"></ion-icon>
+    <ion-card class="cardNot">
+      <ion-grid>
+        <ion-row class="tabMenu">
+          <ion-col col-4>
+            <button ion-button clear (click)="goToMenuCard('menuCard')">
+              <ion-row align-items-center>
+                <ion-col>
+                  <ion-icon name="ios-book"></ion-icon>
                 </ion-col>
                 <ion-col>
-                <p text-capitalize>Menu</p>
-                </ion-col>
-                </ion-row>
-              </button>
-            </ion-col>
-            <ion-col col-4>
-              <button ion-button clear>
-                <ion-row align-items-center>
-                  <ion-col>
-                <ion-icon name="heart"></ion-icon>
-              </ion-col>
-              <ion-col>
-                <p text-capitalize>Favourite</p>
-              </ion-col>
-              </ion-row>
-            </button>
-            </ion-col>
-            <ion-col col-4>
-              <button ion-button clear (click)="navigate()">
-                <ion-row align-items-center>
-                  <ion-col>
-                    <ion-icon name="navigate"></ion-icon>
-                  </ion-col>
-                  <ion-col>
-                    <p text-capitalize>Directions</p>
+                  <p text-capitalize>Menu</p>
                 </ion-col>
               </ion-row>
             </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card>
-
-
-    <!-- </ion-card-header> -->
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button clear (click)="favRest()">
+              <ion-row align-items-center>
+                <ion-col>
+                  <ion-icon name="heart"></ion-icon>
+                </ion-col>
+                <ion-col>
+                  <p text-capitalize>Favourite</p>
+                </ion-col>
+              </ion-row>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button clear (click)="navigate()">
+              <ion-row align-items-center>
+                <ion-col>
+                  <ion-icon name="navigate"></ion-icon>
+                </ion-col>
+                <ion-col>
+                  <p text-capitalize>Directions</p>
+                </ion-col>
+              </ion-row>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
   </ion-list>
-  <!-- No Discounts Template-->
-    <!-- <ion-item-divider color="background">No discounts</ion-item-divider>
 
+  <!-- No Discounts Template-->
+  <div id="noDiscount" style="display: none;">
     <ion-card class="nothingBurger">
       <ion-grid>
-      <ion-row>
-      <ion-col>
-    <ion-card-header text-center text-wrap>
-        No discounts available
-    </ion-card-header>
-    <ion-card-content text-center>
-      No discounts available at the moment. Favourite to get notified when a discount is made available
-        <ion-row justify-content-center>
+        <ion-row>
           <ion-col>
-        <button ion-button color="light" icon-only><ion-icon name="heart"></ion-icon></button>
-      </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-col>
-  </ion-row>
-  </ion-grid>
-    </ion-card> -->
+            <ion-card-header text-center text-wrap>
+              No discounts available at the moment
+            </ion-card-header>
+            <ion-card-content text-center>
+              Favourite the restaurant to get notified when a discount is made available
+              <ion-row justify-content-center>
+                <!-- <ion-col>
+                  <button ion-button color="light" icon-only><ion-icon name="heart"></ion-icon></button>
+                </ion-col> -->
+              </ion-row>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
 
 
-<!--Mini Discount Card Template-->
-  <ion-item-divider text-center color="background"> Mini Discount Card Template </ion-item-divider>
+  <!--Mini Discount Card Template-->
+  <div id="hasDiscount" style="display: none;">
+    <ion-item-divider style="margin: 0px 0px 0px 0px;" text-center color="background">Coupons</ion-item-divider>
 
-  <ion-list *ngFor="let bundle of Bundles; let i = index;">
-  <ion-card class="widget mini" (click)="goToDiscount(i)">
-    <div class="rip top-edge"><div class="inner"></div></div>
-    <div class="top">
+    <ion-list *ngFor="let bundle of Bundles; let i = index;">
+      <ion-card class="widget mini" (click)="goToDiscount(i)">
+        <div class="rip top-edge"><div class="inner"></div></div>
+        <div class="top">
 
-      <ion-item>
-        <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
-        </ion-icon>
-        <p>Live</p>
-        <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+          <ion-item>
+            <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
+            </ion-icon>
+            <p>Live</p>
+            <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
 
-        <div item-right>
-          <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
-          <h1 class="-bold"> $ {{bundle.totalDiscount}} </h1>
+            <div item-right>
+              <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
+              <h1 class="-bold"> $ {{bundle.totalDiscount}} </h1>
+            </div>
+          </ion-item>
+          <ion-item>
+            <h1 ion-text text-right style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
+            <p ion-text text-right style="color: rgba(0, 0, 0, 0.5);">Click here for details!</p>
+          </ion-item>
+
         </div>
-      </ion-item>
-      <ion-item>
-        <h1 ion-text text-right style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
-        <p ion-text text-right style="color: rgba(0, 0, 0, 0.5);">Click here for details!</p>
-      </ion-item>
-
-    </div>
-    <div class="rip"><div class="inner"></div></div>
-  </ion-card>
-  </ion-list>
+        <div class="rip"><div class="inner"></div></div>
+      </ion-card>
+    </ion-list>
+  </div>
 
 
   <!-- Restaurant Menu Card -->
-  <ion-card>
+  <ion-card id="menuCard">
     <ion-card-header>
       <h2 style="color:red;"> Menu </h2>
     </ion-card-header>
 
-      <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
-        <ion-card class="cardNot">
-          <ion-card-header style="background-color: #da3937; color: white;">
-            {{menug.menuGroupName}}
-          </ion-card-header>
+    <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
+      <ion-card class="cardNot">
+        <ion-card-header style="background-color: #da3937; color: white;">
+          {{menug.menuGroupName}}
+        </ion-card-header>
 
-          <ion-card-content class="headerNot">
-            <ion-item *ngFor="let menu of menug.menu; let j = index">
-              <h3>{{menu.name}}</h3>
-              <p>{{menu.description}}</p>
-              <div item-right>
-                <ion-note><strong>${{menu.price}}</strong></ion-note>
-              </div>
-            </ion-item>
-          </ion-card-content>
+        <ion-card-content class="headerNot">
+          <ion-item *ngFor="let menu of menug.menu; let j = index">
+            <h3>{{menu.name}}</h3>
+            <p>{{menu.description}}</p>
+            <div item-right>
+              <ion-note><strong>${{menu.price}}</strong></ion-note>
+            </div>
+          </ion-item>
+        </ion-card-content>
 
-        </ion-card>
-      </ion-list>
+      </ion-card>
+    </ion-list>
   </ion-card>
 
   <!-- Map Card -->
   <sebm-google-map id="map"
-    [latitude]="local_map.lat"
-    [longitude]="local_map.lng"
-    [zoom]="local_map.zoom"
-    [zoomControl]="false"
-    [disableDefaultUI]="true"
-    [mapDraggable]="false"
-    [scrollwheel]="false"
-    [streetViewControl]="false"
-    [disableDoubleClickZoom]="true"
+  [latitude]="local_map.lat"
+  [longitude]="local_map.lng"
+  [zoom]="local_map.zoom"
+  [zoomControl]="false"
+  [disableDefaultUI]="true"
+  [mapDraggable]="false"
+  [scrollwheel]="false"
+  [streetViewControl]="false"
+  [disableDoubleClickZoom]="true"
   >
-      <!-- restaurant location marker -->
-      <sebm-google-map-marker
-        [latitude]="local_map.lat"
-        [longitude]="local_map.lng"
-        [iconUrl]="local_map.iconUrl"
-      >
-      <sebm-google-map-info-window [isOpen]="'true'">
-        <strong>{{local_map.name}}</strong>
-        <br>
-        {{local_map.address}}
-      </sebm-google-map-info-window>
-    </sebm-google-map-marker>
+  <!-- restaurant location marker -->
+  <sebm-google-map-marker
+  [latitude]="local_map.lat"
+  [longitude]="local_map.lng"
+  [iconUrl]="local_map.iconUrl"
+  >
+  <sebm-google-map-info-window [isOpen]="'true'">
+    <strong>{{local_map.name}}</strong>
+    <br>
+    {{local_map.address}}
+  </sebm-google-map-info-window>
+</sebm-google-map-marker>
 
-  </sebm-google-map>
+</sebm-google-map>
 
 </ion-content>

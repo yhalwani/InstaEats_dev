@@ -53,9 +53,9 @@ export class FcmNotifications {
 
         }
       }, (msg) => {
-
+        // this.dialogs.alert(err);
       }, (err) => {
-        this.dialogs.alert(err);
+        // this.dialogs.alert(err);
       });
     };
   };
