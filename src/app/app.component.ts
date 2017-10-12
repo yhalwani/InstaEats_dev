@@ -52,7 +52,7 @@ export class MyApp {
     public fcm: FcmNotifications,
     private dialogs: Dialogs
   ) {
-    this.splashScreen.hide();
+    
     this.statusBar.hide();
     this.initializeApp();
 
@@ -68,7 +68,6 @@ export class MyApp {
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
-        {title: 'My Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -99,11 +98,14 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      setTimeout(() => {
+        this.splashScreen.hide();
+      }, 4000);
 
       this.map.getLocationServices();
 
-      let splash = this.modalCtrl.create(SplashContentPage);
-      splash.present();
+      // let splash = this.modalCtrl.create(SplashContentPage);
+      // splash.present();
 
       this.storage.ready().then(() => {
         this.storage.length().then((numOfKeys) => {
@@ -121,6 +123,7 @@ export class MyApp {
       this.fcm.init();
 
       this.events.publish('app:launch', this.loggedIn);
+      this.splashScreen.hide();
     });
   };
 
@@ -163,45 +166,45 @@ export class MyApp {
 
 };
 
-
-@Component({
-  template: `
-  <ion-content>
-
-    <div id="custom-overlay">
-      <div id="canvas"></div>
-    </div>
-
-  </ion-content>
-  `
-})
-export class SplashContentPage {
-
-  constructor(
-    public viewCtrl: ViewController,
-    public splashScreen: SplashScreen
-  ) {
-
-  };
-
-  ionViewDidEnter() {
-
-    this.splashScreen.hide();
-
-    (function() {
-      var animation = new svgAnimation({
-        canvas: 		  Snap('#canvas'),
-        svg: 					'assets/svg/InstaEats-ClockWork.svg',
-        data: 				'assets/svg/json/clockWork.json',
-        duration: 		5000,
-        steps: 				1
-      });
-    })();
-
-    setTimeout(() => {
-      this.viewCtrl.dismiss();
-    }, 6000);
-
-  }
-
-};
+//
+// @Component({
+//   template: `
+//   <ion-content>
+//
+//     <div id="custom-overlay">
+//       <div id="canvas"></div>
+//     </div>
+//
+//   </ion-content>
+//   `
+// })
+// export class SplashContentPage {
+//
+//   constructor(
+//     public viewCtrl: ViewController,
+//     public splashScreen: SplashScreen
+//   ) {
+//
+//   };
+//
+//   ionViewDidEnter() {
+//
+//     this.splashScreen.hide();
+//
+//     (function() {
+//       var animation = new svgAnimation({
+//         canvas: 		  Snap('#canvas'),
+//         svg: 					'assets/svg/InstaEats-ClockWork.svg',
+//         data: 				'assets/svg/json/clockWork.json',
+//         duration: 		5000,
+//         steps: 				1
+//       });
+//     })();
+//
+//     setTimeout(() => {
+//       this.viewCtrl.dismiss();
+//     }, 6000);
+//
+//   }
+//
+// };

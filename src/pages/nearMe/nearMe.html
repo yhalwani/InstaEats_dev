@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color = "rdaApp">
-    <button ion-button menuToggle>
+    <button ion-button menuToggle style="margin: 0px; padding: 0px">
       <ion-icon name="menu"></ion-icon>
     </button>
 
@@ -92,7 +92,7 @@
     <ion-list *ngSwitchCase="'listView'">
 
       <ion-item-group>
-        <!-- <ion-item-divider> Discounts Live </ion-item-divider> -->
+        <ion-item-divider> Live Discounts </ion-item-divider>
 
           <ion-item class="item" *ngFor="let rest of liveList; let i = index">
 
@@ -120,7 +120,7 @@
       </ion-item-group>
 
       <ion-item-group>
-        <!-- <ion-item-divider> No Discounts </ion-item-divider> -->
+        <ion-item-divider> Earlier Discounts  </ion-item-divider>
 
           <ion-item class="item" *ngFor="let rest of deadList; let i = index">
 
@@ -130,7 +130,7 @@
                   <ion-thumbnail item-left>
                     <img class="imageborder" src="{{rest.photoUrl}}">
                   </ion-thumbnail>
-                  <h2>{{rest.restaurantName}}</h2>
+                  <h3>{{rest.restaurantName}}</h3>
                   <p>{{rest.slogan}}</p>
                   <p>{{rest.description}}</p>
 

@@ -8,12 +8,16 @@ import { Dialogs }      from '@ionic-native/dialogs';
 @Injectable()
 export class Map {
 
-  mapObject : {
-    lat: number,
-    lng: number,
-    zoom: number,
-    visible: boolean,
-    iconUrl: string
+  defaultLat = 45.216612;
+  defaultLng = -82.523330;
+
+  mapObject = {
+    // (default)
+    lat: this.defaultLat,
+    lng: this.defaultLng,
+    zoom: 5,
+    visible: false,
+    iconUrl: ""
   };
 
   constructor(
@@ -23,14 +27,7 @@ export class Map {
     public toastCtrl: ToastController,
     private dialogs: Dialogs
   ) {
-    this.mapObject = {
-      // (default)
-      lat: 45.216612,
-      lng: -82.523330,
-      zoom: 5,
-      visible: false,
-      iconUrl: ""
-    }
+
   }
 
   // checks what platform is being used and then calls respective functions to pull GPS coordinates
@@ -63,18 +60,18 @@ export class Map {
         }
       });
     }
+    return;
   }
 
   // call native geolocation plugin to pull coordinates (Android & iOS)
   getDeviceLocation(){
-    let options = {enableHighAccuracy: true};
-    this.geolocation.getCurrentPosition(options).then((data) => {
+    this.geolocation.getCurrentPosition().then((data) => {
       this.mapObject = {
         lat: data.coords.latitude,
         lng: data.coords.longitude,
         zoom: 13,
         visible:true,
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fbluedot%20(1).png?alt=media&token=738951a8-5463-40ec-bd60-4e9e41faf9c9"
+        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fblue_pin.png?alt=media&token=d9166627-d30b-4057-8d05-c84c109c0517"
       };
     }).catch((error) => {
       this.errToast("Unable to detect user location")
@@ -88,7 +85,7 @@ export class Map {
           lng: position.coords.longitude,
           zoom: 13,
           visible: true,
-          iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fbluedot%20(1).png?alt=media&token=738951a8-5463-40ec-bd60-4e9e41faf9c9"
+          iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fblue_pin.png?alt=media&token=d9166627-d30b-4057-8d05-c84c109c0517"
         };
       },(error) => {
         if(error.code == error.PERMISSION_DENIED){

@@ -22,7 +22,7 @@ export class NearMePage {
     restaurantName: any,
     cuisineType: any,
     coordinates: Array<{name: any, lat: number, lng: number}>,
-    address: Array<{street: string, city: string, province: string, postal: string, country: string}>,
+    address: string,
     distance: number
   }>;
 
@@ -35,7 +35,7 @@ export class NearMePage {
     restaurantName: any,
     cuisineType: any,
     coordinates: Array<{name: any, lat: number, lng: number}>,
-    address: Array<{street: string, city: string, province: string, postal: string, country: string}>,
+    address: string,
     distance: number
   }>;
 
@@ -81,12 +81,20 @@ export class NearMePage {
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true) {
           liveList.push(childSnapshot.val());
-          for(let i=0; i<liveList.length; i++){
-            liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
+          if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
+            for(let i=0; i<liveList.length; i++){
+              liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
+            }
+            this.liveList = liveList.sort((a, b) => {
+              return a.distance - b.distance
+            });
+          } else {
+            this.liveList = liveList.sort(function(a, b){
+              if(a.restaurantName < b.restaurantName) return -1;
+              if(a.restaurantName > b.restaurantName) return 1;
+            })
           }
-          this.liveList = liveList.sort((a, b) => {
-            return a.distance - b.distance
-          });
+
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
