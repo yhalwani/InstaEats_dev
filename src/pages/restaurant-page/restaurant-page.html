@@ -53,7 +53,7 @@
             <button ion-button clear (click)="favRest()">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name="heart"></ion-icon>
+                  <ion-icon name={{heartIcon}}></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Favourite</p>
@@ -176,7 +176,7 @@
   <sebm-google-map-marker
   [latitude]="local_map.lat"
   [longitude]="local_map.lng"
-  [iconUrl]="local_map.iconUrl"
+  [iconUrl]="this.mapIcon"
   >
   <sebm-google-map-info-window [isOpen]="'true'">
     <strong>{{local_map.name}}</strong>

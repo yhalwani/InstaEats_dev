@@ -52,7 +52,7 @@ export class MyApp {
     public fcm: FcmNotifications,
     private dialogs: Dialogs
   ) {
-    
+
     this.statusBar.hide();
     this.initializeApp();
 
@@ -100,7 +100,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();
-      }, 4000);
+      }, 1000);
 
       this.map.getLocationServices();
 
@@ -123,7 +123,6 @@ export class MyApp {
       this.fcm.init();
 
       this.events.publish('app:launch', this.loggedIn);
-      this.splashScreen.hide();
     });
   };
 

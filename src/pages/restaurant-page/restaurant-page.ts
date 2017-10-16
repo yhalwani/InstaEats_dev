@@ -53,6 +53,8 @@ export class RestaurantPage {
     }>
   }>
 
+  mapIcon: string;
+
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -86,9 +88,6 @@ export class RestaurantPage {
     this.restaurantStatus = this.restaurant.liveStatus;
     let restaurantUID = this.restaurant.id;
 
-    // load map everytime
-    this.getMap();
-
     var menuArr = [];
 
     firebase.database().ref('/MenuItems/' + restaurantUID).once("value", (snapshot) => {
@@ -112,6 +111,7 @@ export class RestaurantPage {
     });
 
     if(this.restaurantStatus){
+      this.mapIcon = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Flivelist.png?alt=media&token=6817a0b1-03cb-41b8-b026-8f51320c9100";
       var bundlesArr = [];
       var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
       bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
@@ -144,8 +144,11 @@ export class RestaurantPage {
          this.Bundles.forEach(this.setTimers);
       });
     } else {
-
+      this.mapIcon = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fdeadlist.png?alt=media&token=8c472e53-9f39-41c9-911d-7d6da24c7097";
     }
+
+    // load map everytime
+    this.getMap();
 
   }
 
@@ -224,8 +227,8 @@ export class RestaurantPage {
         address: data.address,
         lat: data.coordinates.lat,
         lng: data.coordinates.lng,
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc",
-        zoom: 13,
+        iconUrl: this.mapIcon,
+        zoom: 13
       }
     });
   };
