@@ -1,5 +1,6 @@
 import { Component }            from '@angular/core';
 import { NavController, Events, LoadingController, ToastController } from 'ionic-angular';
+import { SettingsProvider } from './../../providers/settings/settings';
 import { TabsPage }             from '../tabs/tabs';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 
@@ -14,6 +15,7 @@ import firebase from 'firebase';
 })
 export class LoginPage {
 
+  selectedTheme : String;
   email :     string;
   password :  string;
   userType:   string;
@@ -25,12 +27,22 @@ export class LoginPage {
     public events: Events,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
+    private settings: SettingsProvider,
     public userService: User,
     public fcm: FcmNotifications
   ) {
       this.userType = "User";
       this.userToggle = false;
+      this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
     }
+    //test case
+    // toggleAppTheme() {
+    //   if (this.selectedTheme === 'user-theme') {
+    //     this.settings.setActiveTheme('restaurant-theme');
+    //   } else {
+    //     this.settings.setActiveTheme('user-theme');
+    //   }
+    // }
 
     loginClicked() {
 
@@ -63,6 +75,13 @@ export class LoginPage {
           {
             this.events.publish('restaurant:loggedIn', true, auth.currentUser.displayName);
             this.presentLoading(this.userToggle);
+            //
+            if (this.selectedTheme === 'user-theme') {
+              this.settings.setActiveTheme('restaurant-theme');
+            } else {
+              this.settings.setActiveTheme('user-theme');
+            }
+
           }
         }, (error) => {
           this.errToast(error.message);

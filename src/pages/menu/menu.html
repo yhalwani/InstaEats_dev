@@ -4,39 +4,60 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Menu</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="updateMenu()">
+        Update!
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-  <div text-center>
-    <button ion-button large icon-right color="rdaApp" (click)="addMenuGroup()">
-      Add menu group
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </div>
+  <!-- Menu template -->
+  <!-- <ion-card>
+    <ion-card-header>
+      <h2 style="color:red;"> Menu </h2>
+    </ion-card-header>
 
-  <ion-list *ngFor="let menug of menuGroup; let i = index" no-lines>
-    <ion-card>
-      <ion-row>
-        <ion-col col-10>
-          <ion-list-header>
-            <ion-label>Group name</ion-label>
+      <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
+        <ion-card class="cardNot">
+          <ion-card-header style="background-color: #da3937; color: white;">
+            {{menug.menuGroupName}}
+          </ion-card-header>
+
+          <ion-card-content class="headerNot">
+            <ion-item *ngFor="let menu of menug.menu; let j = index">
+              <h3>{{menu.name}}</h3>
+              <p>{{menu.description}}</p>
+              <div item-right>
+                <ion-note><strong>${{menu.price}}</strong></ion-note>
+              </div>
+            </ion-item>
+          </ion-card-content>
+
+        </ion-card>
+      </ion-list>
+  </ion-card> -->
+
+
+  <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
+
+  <ion-card>
+          <ion-card-header style="background-color: #da3937;">
+            <ion-item style="background-color: transparent; color: white;">
+            <ion-label style="color:#a7211f;">Group name</ion-label>
             <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
-          </ion-list-header>
-        </ion-col>
-        <ion-col col-2>
-          <ion-buttons end>
-            <button ion-button clear item-right color="rdaApp" (click)="removeGroup(i)">
+            <button ion-button clear item-right color="light" (click)="removeGroup(i)">
               <ion-icon name="trash"></ion-icon>
             </button>
-          </ion-buttons>
-        </ion-col>
-      </ion-row>
+          </ion-item>
+          </ion-card-header>
 
-      <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
-        <ion-card>
+        <ion-card-content>
+          <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
           <ion-grid>
             <ion-row>
               <ion-col>
@@ -66,25 +87,27 @@
               </ion-item>
             </ion-row>
           </ion-grid>
-        </ion-card>
-      </ion-item-group>
-      <button ion-button color="rdaApp" clear item-center icon-right (click)="addMenuItem(i)">
-        Add menu item
+              </ion-item-group>
+        </ion-card-content>
+  <div text-center>
+      <button ion-button color="rdaApp" clear item-center icon-left (click)="addMenuItem(i)">
         <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
+          NEW ITEM
       </button>
-    </ion-card>
+    </div>
+</ion-card>
   </ion-list>
 
   <div text-center>
-    <button ion-button large icon-right color="rdaApp" (click)="createBundle()">
-      Create Bundle
+    <button ion-button large icon-left color="rdaApp" (click)="addMenuGroup()">
+      <ion-icon name="add"></ion-icon>
+        ADD MENU
     </button>
   </div>
 
   <div text-center>
-    <button ion-button large icon-right color="rdaApp" (click)="updateMenu()">
-      Update!
-      <ion-icon name="checkmark-circle"></ion-icon>
+    <button ion-button large icon-right color="rdaApp" (click)="createBundle()">
+      Create Bundle
     </button>
   </div>
 

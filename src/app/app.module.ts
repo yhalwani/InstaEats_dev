@@ -61,6 +61,7 @@ import { DiscountsPage }                from '../pages/discounts/discounts';
 import { User }                         from '../providers/user';
 import { FcmNotifications }             from '../providers/fcm-notifications';
 import { Map }                          from '../providers/map';
+import { SettingsProvider } from '../providers/settings/settings';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,7 @@ import { Map }                          from '../providers/map';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler}, SettingsProvider
   ]
 })
 export class AppModule {}

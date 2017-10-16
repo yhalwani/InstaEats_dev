@@ -1,0 +1,31 @@
+.restaurant-theme {
+  .scroll-content {
+    background-color: #F3F2EC !important;
+  }
+
+
+  .toolbar-background {
+    background-color: #FFFFFF !important;
+  }
+
+  .toolbar-title {
+    color: rgb(218, 57, 55) !important;
+  }
+
+  .bar-button {
+  color: rgb(218, 57, 55) !important;
+  }
+
+  .tabbar {
+    background-color: #FFFFFF !important;
+  }
+  .tab-button, .tab-button-icon {
+    color: rgba(218, 57, 55, 0.7) !important;
+  }
+  .tab-button[aria-selected=true] .tab-button-icon {
+    color: rgb(218, 57, 55) !important;
+  }
+  .tab-button[aria-selected="true"] .tab-button-text{
+    color: rgb(218, 57, 55) !important;
+  }
+}

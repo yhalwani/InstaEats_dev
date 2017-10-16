@@ -1,11 +1,15 @@
 <ion-header>
 
   <ion-navbar color = "rdaApp">
+
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <img class={{plat.platform}} src={{plat.assetPath}}>
+
+<ion-title>
+    <img alt="logo" class={{plat.platform}} src={{plat.assetPath}}>
+</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="switchView()">

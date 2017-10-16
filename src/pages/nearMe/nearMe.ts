@@ -263,7 +263,7 @@ export class NearMePage {
 
   doRefresh(refresher){
     this.setList();
-    
+
     setTimeout(() => {
       refresher.complete();
     }, 2000);

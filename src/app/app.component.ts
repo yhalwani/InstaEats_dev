@@ -1,3 +1,4 @@
+import { SettingsProvider } from './../providers/settings/settings';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
@@ -32,6 +33,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage  : any = TabsPage;
+  selectedTheme: String;
   loginPage : any = LoginPage;
   loggedIn  : any = false;
   menuTitle : any = "InstaEats";
@@ -42,6 +44,7 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
+    private settings: SettingsProvider,
     public events: Events,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
@@ -55,6 +58,8 @@ export class MyApp {
     this.splashScreen.hide();
     this.statusBar.hide();
     this.initializeApp();
+    this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
+
 
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
@@ -77,6 +82,7 @@ export class MyApp {
       this.loggedIn = loggedOut;
       this.menuTitle = "InstaEats";
       this.rootPage = TabsPage;
+      this.settings.setActiveTheme('user-theme');
       this.pages = [
         { title: 'Feed Me!', component: this.rootPage },
         { title: 'Login', component: LoginPage },

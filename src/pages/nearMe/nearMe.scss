@@ -25,7 +25,7 @@ page-nearMe {
 
   // class for ion-item
   .item_stretch {
-  padding-left: 0px !important;
+    padding-left: 0px !important;
 }
 
 // list divider for Android
@@ -98,6 +98,7 @@ page-nearMe {
   .toolbar-content-md {
     display: inline-flex;
     vertical-align: middle;
+    text-align: center;
   }
 
   .toolbar-content-ios {
