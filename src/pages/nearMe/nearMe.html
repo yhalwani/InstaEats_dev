@@ -5,7 +5,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <img class={{plat.platform}} src={{plat.assetPath}}>
+    <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" placeholder="Search by name or type" (ionInput)="onSearch($event)"></ion-searchbar>
+    <!-- <img class={{plat.platform}} src={{plat.assetPath}}> -->
 
     <ion-buttons end>
       <button ion-button icon-only (click)="switchView()">
@@ -21,15 +22,13 @@
 
 <ion-content>
 
-  <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" placeholder="Search by name or type" (ionInput)="onSearch($event)"></ion-searchbar>
-  <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
   <div [ngSwitch]="nearMeViews">
 
     <!-- Map View Case -->
     <ion-list *ngSwitchCase="'mapView'" id="mapViewList">
 
       <!-- Map Container -->
-      <sebm-google-map id="map"
+      <agm-map id="map"
       [latitude]="this.map.mapObject.lat"
       [longitude]="this.map.mapObject.lng"
       [zoom]="this.map.mapObject.zoom"
@@ -39,60 +38,70 @@
       >
 
         <!-- user location marker -->
-        <sebm-google-map-marker
+        <agm-marker
         [latitude]="this.map.mapObject.lat"
         [longitude]="this.map.mapObject.lng"
         [visible]="this.map.mapObject.visible"
         [iconUrl]="this.map.mapObject.iconUrl"
+        [zIndex]="999"
         >
 
-          <sebm-google-map-info-window>
+          <agm-info-window>
             <strong>My location</strong>
             <br>
             {{this.map.mapObject.lat}}, {{this.map.mapObject.lng}}
-          </sebm-google-map-info-window>
+          </agm-info-window>
 
-        </sebm-google-map-marker>
+        </agm-marker>
 
         <!-- LIVE restaurant location markers -->
-        <sebm-google-map-marker *ngFor="let m of liveList"
+        <agm-marker *ngFor="let m of liveList"
         [latitude]="m.coordinates.lat"
         [longitude]="m.coordinates.lng"
         [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Flivelist.png?alt=media&token=6817a0b1-03cb-41b8-b026-8f51320c9100'"
         >
 
-          <sebm-google-map-info-window>
+          <agm-info-window>
             <strong>{{m.restaurantName}}</strong>
             <br>
             {{m.address}}
-          </sebm-google-map-info-window>
+          </agm-info-window>
 
-        </sebm-google-map-marker>
+        </agm-marker>
 
         <!-- DEAD restaurant location markers -->
-        <sebm-google-map-marker *ngFor="let m of deadList"
+        <agm-marker *ngFor="let m of deadList"
         [latitude]="m.coordinates.lat"
         [longitude]="m.coordinates.lng"
         [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fdeadlist.png?alt=media&token=8c472e53-9f39-41c9-911d-7d6da24c7097'"
         >
 
-          <sebm-google-map-info-window>
+          <agm-info-window>
             <strong>{{"[OFFLINE]"}}{{m.restaurantName}} </strong>
             <br>
             {{m.address}}
-          </sebm-google-map-info-window>
+          </agm-info-window>
 
-        </sebm-google-map-marker>
+        </agm-marker>
 
-      </sebm-google-map>
+      </agm-map>
 
     </ion-list>
 
     <!-- List View Case -->
     <ion-list *ngSwitchCase="'listView'">
+      <ion-refresher style="z-index: 999;" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+
 
       <ion-item-group>
-        <ion-item-divider> Live Discounts </ion-item-divider>
+        <ion-item-divider> At the moment </ion-item-divider>
 
           <ion-item class="item" *ngFor="let rest of liveList; let i = index">
 
@@ -107,10 +116,11 @@
                   <p>{{rest.description}}</p>
 
                   <div item-right>
-                    <ion-icon *ngIf="rest.liveStatus" color="secondary" name="md-pricetags"></ion-icon>
+                    <ion-icon style= "position: absolute; right: 10px" *ngIf="rest.liveStatus" color="secondary" name="md-pricetags"></ion-icon>
                     <br>
                     <ion-note>{{rest.distance}}km </ion-note>
                   </div>
+
 
                 </ion-item>
               </ion-card-content>
@@ -120,7 +130,7 @@
       </ion-item-group>
 
       <ion-item-group>
-        <ion-item-divider> Earlier Discounts  </ion-item-divider>
+        <ion-item-divider> Check back later  </ion-item-divider>
 
           <ion-item class="item" *ngFor="let rest of deadList; let i = index">
 
@@ -135,7 +145,7 @@
                   <p>{{rest.description}}</p>
 
                   <div item-right>
-                    <ion-icon *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
+                    <ion-icon style= "position: absolute; right: 10px" *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
                     <br>
                     <!-- <ion-note>{{rest.distance}}km </ion-note> -->
                   </div>

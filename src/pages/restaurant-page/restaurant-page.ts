@@ -53,6 +53,7 @@ export class RestaurantPage {
     }>
   }>
 
+  // variables for map and navigation
   mapIcon: string;
 
   constructor(
@@ -76,6 +77,7 @@ export class RestaurantPage {
         };
       };
 
+      // if restaurant is not favourited change icon to outline
       if (found == false) {
         this.heartIcon = "heart-outline";
       };
@@ -187,7 +189,9 @@ export class RestaurantPage {
   favRest(){
 
     if (this.heartIcon == "heart") {
-      this.heartIcon = "heart-outline";
+      // publish event unfavourited
+      this.events.publish('restaurant:unfavorited', this.navParams.data);
+      this.heartIcon = "heart-outline"; // change the look of the icon
 
       // if user unfavourites a restaurant. save preference and notify user
       let alrt = this.alertCtrl.create({
@@ -197,10 +201,9 @@ export class RestaurantPage {
       });
       alrt.present();
 
-      this.events.publish('restaurant:unfavorited', this.navParams.data);
-
     } else {
-
+      // publish event favourited
+      this.events.publish('restaurant:favorited', this.navParams.data);
       // if user favourites a restaurant. save preference and notify user
       this.heartIcon = "heart";
 
@@ -210,8 +213,6 @@ export class RestaurantPage {
         buttons: ['Ok']
       });
       alrt.present();
-
-      this.events.publish('restaurant:favorited', this.navParams.data);
 
     }
 

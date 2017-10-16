@@ -290,7 +290,7 @@ export class NearMePage {
 
     setTimeout(() => {
       refresher.complete();
-    }, 1000);
+    }, 2000);
 
   };
 

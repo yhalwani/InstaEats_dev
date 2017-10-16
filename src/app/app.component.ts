@@ -53,7 +53,7 @@ export class MyApp {
     private dialogs: Dialogs
   ) {
 
-    this.statusBar.hide();
+    // this.statusBar.hide();
     this.initializeApp();
 
     this.pages = [

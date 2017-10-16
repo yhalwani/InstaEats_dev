@@ -15,7 +15,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { Stripe } from '@ionic-native/stripe';
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule } from '@agm/core';
 
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
