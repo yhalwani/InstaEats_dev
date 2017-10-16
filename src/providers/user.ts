@@ -53,7 +53,7 @@ export class User {
         }
       ]
     });
-  alert.present()
+    alert.present()
   }
 
 }

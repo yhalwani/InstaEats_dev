@@ -25,6 +25,9 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -40,21 +43,18 @@
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "es6-promise-plugin": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-actionsheet": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     }

@@ -34,7 +34,7 @@ firebase.initializeApp(firebaseConfig);
 
 
 import { MyApp }                        from './app.component';
-import { SplashContentPage }            from './app.component';
+// import { SplashContentPage }            from './app.component';
 
 import { IntroPage }                    from '../pages/intro/intro';
 
@@ -67,7 +67,7 @@ import { SettingsProvider } from '../providers/settings/settings';
   declarations: [
     MyApp,
     IntroPage,
-    SplashContentPage,
+    // SplashContentPage,
     TabsPage,
     LoginPage,
     SignupPage,
@@ -96,7 +96,7 @@ import { SettingsProvider } from '../providers/settings/settings';
   entryComponents: [
     MyApp,
     IntroPage,
-    SplashContentPage,
+    // SplashContentPage,
     TabsPage,
     LoginPage,
     SignupPage,

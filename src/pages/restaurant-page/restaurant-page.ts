@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Content } from 'ionic-angular';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
@@ -24,7 +25,7 @@ export class RestaurantPage {
   restaurantName: string;
   restaurantStatus: boolean;
 
-  @ViewChild('map') mapElement : ElementRef;
+  @ViewChild(Content) content: Content;
   local_map: any;
 
   menuGroup: Array<{
@@ -51,6 +52,8 @@ export class RestaurantPage {
       }>
     }>
   }>
+
+  mapIcon: string;
 
   constructor(
     public navCtrl: NavController,
@@ -85,9 +88,6 @@ export class RestaurantPage {
     this.restaurantStatus = this.restaurant.liveStatus;
     let restaurantUID = this.restaurant.id;
 
-    // load map everytime
-    this.getMap();
-
     var menuArr = [];
 
     firebase.database().ref('/MenuItems/' + restaurantUID).once("value", (snapshot) => {
@@ -111,6 +111,7 @@ export class RestaurantPage {
     });
 
     if(this.restaurantStatus){
+      this.mapIcon = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Flivelist.png?alt=media&token=6817a0b1-03cb-41b8-b026-8f51320c9100";
       var bundlesArr = [];
       var bundleNode = firebase.database().ref("/Bundles/" + restaurantUID);
       bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
@@ -142,10 +143,33 @@ export class RestaurantPage {
 
          this.Bundles.forEach(this.setTimers);
       });
-    } else {}
+    } else {
+      this.mapIcon = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fdeadlist.png?alt=media&token=8c472e53-9f39-41c9-911d-7d6da24c7097";
+    }
+
+    // load map everytime
+    this.getMap();
 
   }
 
+  ngOnInit(){
+    // if restaurant is offline, toggle noDiscount card
+    if(!this.restaurantStatus){
+      document.getElementById("noDiscount").style.display = "block";
+    } else {
+      // restaurant is live, toggle coupons card
+      document.getElementById("hasDiscount").style.display = "block";
+    }
+  }
+
+  // scroll down to the menu card
+  goToMenuCard(elementId){
+    let yOffset = document.getElementById(elementId).offsetTop;
+
+    this.content.scrollTo(0, yOffset, 1000);
+  }
+
+  // share the restaurant
   shareRest(restName){
     this.socialSharing.share("Checkout this deal at " + restName, null, null, "https://instaeats.com/").then(() => {
       // success
@@ -159,11 +183,13 @@ export class RestaurantPage {
       // TODO: detect recievers platform, then share platform specific link (android, iOS, browser)
   };
 
+  // favourite a restaurant
   favRest(){
 
     if (this.heartIcon == "heart") {
       this.heartIcon = "heart-outline";
 
+      // if user unfavourites a restaurant. save preference and notify user
       let alrt = this.alertCtrl.create({
         title: this.navParams.data.restaurantName,
         message: 'This restaurant has been unfavorited! You will no longer be notified if they have any discounts live!',
@@ -175,6 +201,7 @@ export class RestaurantPage {
 
     } else {
 
+      // if user favourites a restaurant. save preference and notify user
       this.heartIcon = "heart";
 
       let alrt = this.alertCtrl.create({
@@ -200,8 +227,8 @@ export class RestaurantPage {
         address: data.address,
         lat: data.coordinates.lat,
         lng: data.coordinates.lng,
-        iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc",
-        zoom: 13,
+        iconUrl: this.mapIcon,
+        zoom: 13
       }
     });
   };

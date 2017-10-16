@@ -25,7 +25,7 @@
 
 <ion-content>
 
-  <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" (ionInput)="onSearch($event)"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" placeholder="Search by name or type" (ionInput)="onSearch($event)"></ion-searchbar>
   <ion-refresher (ionRefresh)="doRefresh($event)"></ion-refresher>
   <div [ngSwitch]="nearMeViews">
 
@@ -62,7 +62,7 @@
         <sebm-google-map-marker *ngFor="let m of liveList"
         [latitude]="m.coordinates.lat"
         [longitude]="m.coordinates.lng"
-        [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats%20(1).png?alt=media&token=ffe75fcb-6b25-416c-9013-04112f5be2bc'"
+        [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Flivelist.png?alt=media&token=6817a0b1-03cb-41b8-b026-8f51320c9100'"
         >
 
           <sebm-google-map-info-window>
@@ -77,7 +77,7 @@
         <sebm-google-map-marker *ngFor="let m of deadList"
         [latitude]="m.coordinates.lat"
         [longitude]="m.coordinates.lng"
-        [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FinstaEats(deadList).png?alt=media&token=fd2e0ccd-2b53-45fe-b8e3-d9566269f9f1'"
+        [iconUrl]="'https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fdeadlist.png?alt=media&token=8c472e53-9f39-41c9-911d-7d6da24c7097'"
         >
 
           <sebm-google-map-info-window>
@@ -96,7 +96,7 @@
     <ion-list *ngSwitchCase="'listView'">
 
       <ion-item-group>
-        <!-- <ion-item-divider> Discounts Live </ion-item-divider> -->
+        <ion-item-divider> Live Discounts </ion-item-divider>
 
           <ion-item class="item" *ngFor="let rest of liveList; let i = index">
 
@@ -124,7 +124,7 @@
       </ion-item-group>
 
       <ion-item-group>
-        <!-- <ion-item-divider> No Discounts </ion-item-divider> -->
+        <ion-item-divider> Earlier Discounts  </ion-item-divider>
 
           <ion-item class="item" *ngFor="let rest of deadList; let i = index">
 
@@ -134,7 +134,7 @@
                   <ion-thumbnail item-left>
                     <img class="imageborder" src="{{rest.photoUrl}}">
                   </ion-thumbnail>
-                  <h2>{{rest.restaurantName}}</h2>
+                  <h3>{{rest.restaurantName}}</h3>
                   <p>{{rest.slogan}}</p>
                   <p>{{rest.description}}</p>
 

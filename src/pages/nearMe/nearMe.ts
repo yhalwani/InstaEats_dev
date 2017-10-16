@@ -20,8 +20,9 @@ export class NearMePage {
     imgURL: string,
     liveStatus: boolean,
     restaurantName: any,
+    cuisineType: any,
     coordinates: Array<{name: any, lat: number, lng: number}>,
-    address: Array<{street: string, city: string, province: string, postal: string, country: string}>,
+    address: string,
     distance: number
   }>;
 
@@ -32,8 +33,9 @@ export class NearMePage {
     imgURL: string,
     liveStatus: boolean,
     restaurantName: any,
+    cuisineType: any,
     coordinates: Array<{name: any, lat: number, lng: number}>,
-    address: Array<{street: string, city: string, province: string, postal: string, country: string}>,
+    address: string,
     distance: number
   }>;
 
@@ -69,6 +71,7 @@ export class NearMePage {
   };
 
   setList(){
+
     let restRef = firebase.database().ref("Restaurant Profiles/");
 
     restRef.orderByChild("liveStatus").on("value", (snapshot) => {
@@ -78,12 +81,20 @@ export class NearMePage {
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true) {
           liveList.push(childSnapshot.val());
-          for(let i=0; i<liveList.length; i++){
-            liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
+          if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
+            for(let i=0; i<liveList.length; i++){
+              liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
+            }
+            this.liveList = liveList.sort((a, b) => {
+              return a.distance - b.distance
+            });
+          } else {
+            this.liveList = liveList.sort(function(a, b){
+              if(a.restaurantName < b.restaurantName) return -1;
+              if(a.restaurantName > b.restaurantName) return 1;
+            })
           }
-          this.liveList = liveList.sort((a, b) => {
-            return a.distance - b.distance
-          });
+
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
           this.deadList = deadList;
@@ -165,7 +176,6 @@ export class NearMePage {
 
   goToRestPageName(name) {
 
-
     var restList = this.liveList;
     let restaurant;
 
@@ -241,32 +251,46 @@ export class NearMePage {
     return Math.round(10 * (earthRadiusKm * c))/10;
   }
 
-  // search bar functionality
+  /*
+    search bar functionality.
+    Input: user input (any)
+    Output: filtered list based on name or cuisine type
+  */
   onSearch(event: any){
     this.setList();
 
+    // set two local list for live and offline restaurants
+    let online, offline;
+
+    // join livelist and deadlist to search
     let tmpList = this.liveList.concat(this.deadList);
 
+    // user input
     let query = event.target.value;
 
     if( query && query.trim() != '' ){
-      this.liveList = tmpList.filter((rest) => {
-        return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1);
+      // for restaurants that are currently live
+      online = this.liveList.filter((rest) => {
+        return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1 || rest.cuisineType.toLowerCase().indexOf(query.toLowerCase()) > -1);
       })
+      // for restauarants that are currently offline
+      offline = this.deadList.filter((rest) => {
+        return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1 || rest.cuisineType.toLowerCase().indexOf(query.toLowerCase()) > -1);
+      })
+      // set livelist and deadlist to show search results
+      this.liveList = online;
+      this.deadList = offline;
     }
+
   };
 
-  // sort by cuisine type
-  sortByCuisineType(event:any){
-    // TODO: decide how to show results
-  }
-
+  // swipe down to force pull restaurant info from firebase
   doRefresh(refresher){
     this.setList();
 
     setTimeout(() => {
       refresher.complete();
-    }, 2000);
+    }, 1000);
 
   };
 

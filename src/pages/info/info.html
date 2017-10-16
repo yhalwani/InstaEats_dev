@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item-group>
       <!-- Restaurant Info -->
-      <ion-item-divider color="light">Account Info</ion-item-divider>
+      <ion-card-header style="background-color: #da3937; color: white;">Account Info</ion-card-header>
       <!-- Restaurant Name Input -->
       <ion-item>
         <ion-icon item-left name="restaurant"></ion-icon>
@@ -30,6 +30,7 @@
         <ion-label floating>Email</ion-label>
         <ion-input type="email" value="{{email}}" [(ngModel)]="email"></ion-input>
       </ion-item>
+      <br>
       <!-- Password Input -->
       <!-- <ion-item>
         <ion-icon item-left name="lock"></ion-icon>
@@ -38,7 +39,7 @@
       </ion-item> -->
 
       <!-- Restaurant Info -->
-      <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
+      <ion-card-header style="background-color: #da3937; color: white;">Restaurants Resources</ion-card-header>
       <!-- Img Chooser -->
       <ion-item>
         <ion-avatar item-left>
@@ -79,9 +80,10 @@
         <ion-label floating>Website</ion-label>
         <ion-input type="url" value="{{website}}" [(ngModel)]="website"></ion-input>
       </ion-item>
+      <br>
 
       <!-- Address Input -->
-      <ion-item-divider color="light">Contact Info</ion-item-divider>
+      <ion-card-header style="background-color: #da3937; color: white;">Contact Info</ion-card-header>
       <ion-item>
         <ion-icon item-left name="call"></ion-icon>
         <ion-label floating>Phone Number</ion-label>
@@ -117,8 +119,9 @@
         <ion-input type="text" value="{{postalCode}}" [(ngModel)]="postalCode"></ion-input>
       </ion-item>
 
+      <br>
       <!-- Hours of Operation Input -->
-      <ion-item-divider color="light">Hours of Operations</ion-item-divider>
+      <ion-card-header style="background-color: #da3937; color: white;">Hours of Operations</ion-card-header>
       <ion-grid fixed>
         <ion-row>
           <ion-col col-3>
