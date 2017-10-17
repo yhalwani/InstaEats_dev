@@ -159,21 +159,21 @@
 
   <!-- Map Card -->
   <agm-map id="map"
-  [latitude]="local_map.lat"
-  [longitude]="local_map.lng"
-  [zoom]="local_map.zoom"
-  [zoomControl]="false"
-  [disableDefaultUI]="true"
-  [mapDraggable]="false"
-  [scrollwheel]="false"
-  [streetViewControl]="false"
-  [disableDoubleClickZoom]="true"
+    [latitude]="local_map.lat"
+    [longitude]="local_map.lng"
+    [zoom]="local_map.zoom"
+    [zoomControl]="false"
+    [disableDefaultUI]="true"
+    [mapDraggable]="false"
+    [scrollwheel]="false"
+    [streetViewControl]="false"
+    [disableDoubleClickZoom]="true"
   >
   <!-- restaurant location marker -->
   <agm-marker
-  [latitude]="local_map.lat"
-  [longitude]="local_map.lng"
-  [iconUrl]="this.mapIcon"
+    [latitude]="local_map.lat"
+    [longitude]="local_map.lng"
+    [iconUrl]="this.mapIcon"
   >
   <agm-info-window [isOpen]="'true'">
     <strong>{{local_map.name}}</strong>

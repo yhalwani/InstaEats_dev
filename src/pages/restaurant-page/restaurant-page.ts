@@ -90,6 +90,8 @@ export class RestaurantPage {
     this.restaurantStatus = this.restaurant.liveStatus;
     let restaurantUID = this.restaurant.id;
 
+    this.endCoupon();
+
     var menuArr = [];
 
     firebase.database().ref('/MenuItems/' + restaurantUID).once("value", (snapshot) => {
@@ -270,6 +272,30 @@ export class RestaurantPage {
     let modal = this.modalCtrl.create(DiscountPage, this.Bundles[index]);
     modal.present();
   };
+
+  endCoupon(){
+
+    var bundleNode = firebase.database().ref("/Bundles/" + this.restaurant.id);
+    bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
+
+      // retrieve bundle from firabase and populate the restaurant page for users to see
+      snapshot.forEach( (childSnapshot) => {
+        let data = childSnapshot.val();
+        let timeStarted = data.timeStarted;
+
+        var nowCheck = new Date().getTime() - timeStarted;
+        if ( nowCheck > data.duration ) {
+          childSnapshot.ref.update({
+            duration: null,
+            live: false,
+            timeStarted: null
+          })
+          return false
+        }
+
+      });
+    });
+  }
 
 
 };

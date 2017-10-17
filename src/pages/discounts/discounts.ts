@@ -74,7 +74,6 @@ export class DiscountsPage {
 
 }
 
-
   presentActionSheet(index) {
     let actionSheet = this.actionSheetCtrl.create({
       title: this.bundles[index].bundleName,
@@ -192,5 +191,6 @@ export class DiscountsPage {
     bundle.countDown.minutes = 0;
     bundle.countDown.seconds = 0;
   };
+
 
 }

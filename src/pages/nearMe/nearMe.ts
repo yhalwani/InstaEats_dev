@@ -78,6 +78,7 @@ export class NearMePage {
       let liveList  = [];
       let deadList  = [];
 
+      if(snapshot){
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true) {
           liveList.push(childSnapshot.val());
@@ -101,6 +102,7 @@ export class NearMePage {
         };
         return false;
       });
+    } else {}
     });
   }
 

@@ -9,15 +9,15 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let rest of restList; let i = index">
+    <ion-item-sliding *ngFor="let rest of restList; let i = index" (click)="goToRestPage(i)">
 
-      <ion-item>
+      <ion-item class="item">
         <ion-avatar class="avatar" item-left>
           <img class="imageborder" src="{{rest.photoUrl}}">
         </ion-avatar>
-        <h2>{{rest.restaurantName}}</h2>
-        <p>{{rest.blurb}}</p>
-        <button ion-button color="rdaApp" clear icon-only item-right (click)="goToRestPage(i)">
+        <h3>{{rest.restaurantName}}</h3>
+        <p>{{rest.description}}</p>
+        <button ion-button color="rdaApp" clear icon-only item-right>
           <ion-icon colour="rdaApp" name="arrow-forward"></ion-icon>
         </button>
       </ion-item>
