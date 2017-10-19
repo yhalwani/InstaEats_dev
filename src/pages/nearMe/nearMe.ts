@@ -264,21 +264,25 @@ export class NearMePage {
     // set two local list for live and offline restaurants
     let online, offline;
 
-    // join livelist and deadlist to search
-    let tmpList = this.liveList.concat(this.deadList);
+    // // join livelist and deadlist to search
+    // let tmpList = this.liveList.concat(this.deadList);
 
     // user input
     let query = event.target.value;
 
     if( query && query.trim() != '' ){
       // for restaurants that are currently live
-      online = this.liveList.filter((rest) => {
-        return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1 || rest.cuisineType.toLowerCase().indexOf(query.toLowerCase()) > -1);
-      })
-      // for restauarants that are currently offline
-      offline = this.deadList.filter((rest) => {
-        return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1 || rest.cuisineType.toLowerCase().indexOf(query.toLowerCase()) > -1);
-      })
+      if(this.liveList){
+        online = this.liveList.filter((rest) => {
+          return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1 || rest.cuisineType.toLowerCase().indexOf(query.toLowerCase()) > -1);
+        })
+      }
+      if(this.deadList){
+        // for restauarants that are currently offline
+        offline = this.deadList.filter((rest) => {
+          return (rest.restaurantName.toLowerCase().indexOf(query.toLowerCase()) > -1 || rest.cuisineType.toLowerCase().indexOf(query.toLowerCase()) > -1);
+        })
+      }
       // set livelist and deadlist to show search results
       this.liveList = online;
       this.deadList = offline;
@@ -288,6 +292,7 @@ export class NearMePage {
 
   // swipe down to force pull restaurant info from firebase
   doRefresh(refresher){
+    if(this.nearMeViews == "listView"){
     this.setList();
 
     setTimeout(() => {
@@ -295,5 +300,6 @@ export class NearMePage {
     }, 2000);
 
   };
+}
 
 };

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ActionSheetController, AlertController } from 'ionic-angular';
+import { Platform, NavController, NavParams, Events, ActionSheetController, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
@@ -18,6 +18,7 @@ export class DiscountsPage {
     totalDiscount:         number,
     totalPercent:          number,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
+    ongoing:               string,
     bundleElem:            Array<{
       menuGroupName:       string,
       menu:                Array<{
@@ -32,8 +33,16 @@ export class DiscountsPage {
     public events: Events,
     public storage: Storage,
     public actionSheetCtrl: ActionSheetController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public platform: Platform,
+    public loadingCtrl: LoadingController
   ) {
+
+    let loader = this.loadingCtrl.create({
+      content: "Fetching bundles...",
+      duration: 2000
+    });
+        loader.present();
 
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
@@ -59,11 +68,14 @@ export class DiscountsPage {
               total:            bundle.total,
               totalDiscount:    bundle.totalDiscount,
               totalPercent:     bundle.totalPercent,
+              ongoing:          bundle.ongoing,
               live:             bundle.live,
               countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
               bundleElem:       bundle.bundleElem
             };
+
             this.bundles[bundleIndex] = bundleTmp;
+
       });
 
     this.events.subscribe('bundle:created', (bundle) => {
@@ -75,6 +87,10 @@ export class DiscountsPage {
 }
 
   presentActionSheet(index) {
+
+    var rest = firebase.auth().currentUser;
+    var restRef = firebase.database().ref("/Bundles/" + rest.uid)
+
     let actionSheet = this.actionSheetCtrl.create({
       title: this.bundles[index].bundleName,
       buttons: [
@@ -87,12 +103,11 @@ export class DiscountsPage {
         {
           text: 'Terminate!',
           handler: () => {
-            var restRef = firebase.database().ref("Bundles/");
-            var rest = firebase.auth().currentUser;
-            restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
+            restRef.child(this.bundles[index].bundleName).update({
               live: false,
               timeStarted: null,
-              duration: null
+              duration: null,
+              ongoing: null
             });
             this.bundles[index].live = !this.bundles[index].live;
             this.stopTime(this.bundles[index]);
@@ -104,9 +119,7 @@ export class DiscountsPage {
             var name = this.bundles[index].bundleName;
 
             // delete the bundle from firebase database
-            var user = firebase.auth().currentUser;
-            var ref = firebase.database().ref("/Bundles/" + user.uid);
-            ref.child(name).remove();
+            restRef.child(name).remove();
 
             // delete from local as well
             this.bundles.splice(index,1);
@@ -124,7 +137,37 @@ export class DiscountsPage {
 
   };
 
+  ionViewLoaded(){
+
+    var restRef = firebase.database().ref("Bundles/");
+    var rest = firebase.auth().currentUser;
+    var headertag;
+
+    restRef.child(rest.uid).once('value', (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        let data = childSnapshot.val();
+        headertag = data.ongoing;
+        console.log(headertag)
+        document.getElementById("headertag").innerHTML = headertag;
+        return false
+      })
+
+    })
+  }
+
   getTime(index){
+    var restRef = firebase.database().ref("Bundles/");
+    var rest = firebase.auth().currentUser;
+    // var headertag;
+    //
+    // restRef.child(rest.uid).once('value', (snapshot) => {
+    //   let data = snapshot.val();
+    //   headertag = data.ongoing;
+    // })
+    //
+    // document.getElementById("headertag").innerHTML = headertag;
+
+
     let alert = this.alertCtrl.create({
       title: 'Input discount duration',
       inputs: [
@@ -142,6 +185,11 @@ export class DiscountsPage {
           name: 'Seconds',
           placeholder: 'Seconds',
           type: 'number'
+        },
+        {
+          name: 'Other',
+          placeholder: 'Ongoing, Valid until, etc.',
+          type: 'string'
         }
       ],
       buttons: [
@@ -155,16 +203,25 @@ export class DiscountsPage {
         {
           text: 'Set Time',
           handler: data => {
-            var timeLimit = (data.Hours * 1000 * 60 * 60) + (data.Minutes * 1000 * 60 ) + (data.Seconds * 1000);
-            var now = new Date().getTime();
 
-            var restRef = firebase.database().ref("Bundles/");
-            var rest = firebase.auth().currentUser;
-            restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
-              live: true,
-              timeStarted: now,
-              duration: timeLimit
-            });
+            if(data.Hours <= 0 && data.Minutes <= 0 && data.Seconds <= 0){
+              restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
+                live: true,
+                ["ongoing"]: data.Other
+              });
+
+            } else {
+
+              var timeLimit = (data.Hours * 1000 * 60 * 60) + (data.Minutes * 1000 * 60 ) + (data.Seconds * 1000);
+              var now = new Date().getTime();
+
+              restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
+                live: true,
+                timeStarted: now,
+                duration: timeLimit
+              });
+              document.getElementById("headertag").innerHTML = data.Ongoing;
+          }
 
             this.bundles[index].live = !this.bundles[index].live;
             this.setTime(now, timeLimit, this.bundles[index]);

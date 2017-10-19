@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ModalController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, Events, ModalController, ViewController, AlertController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
@@ -22,7 +22,8 @@ export class MenuPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public events: Events,
-    public storage: Storage
+    public storage: Storage,
+    public alertCtrl: AlertController
   ) {
 
       let user = firebase.auth().currentUser;
@@ -74,11 +75,68 @@ export class MenuPage {
   };
 
   removeGroup(index){
-    this.menuGroup.splice(index,1);
+    let uid = firebase.auth().currentUser.uid;
+    let menuNode = firebase.database().ref("MenuItems/" + uid);
+    let length = this.menuGroup.length;
+
+
+    const alert = this.alertCtrl.create({
+      title: 'Confirm delete',
+      message: 'Do you want to delete this group?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            let childNode = menuNode.child(this.menuGroup[index].menuGroupName);
+            childNode.remove();
+
+
+          this.menuGroup.splice(index,1);
+          }
+        }
+      ]
+    });
+    alert.present();
+
   };
 
   removeItem(menu, item){
-    this.menuGroup[menu].menu.splice(item, 1);
+    let uid = firebase.auth().currentUser.uid;
+    let menuNode = firebase.database().ref("MenuItems/" + uid);
+    let length = this.menuGroup.length;
+
+
+    const alert = this.alertCtrl.create({
+      title: 'Confirm delete',
+      message: 'Do you want to delete this item?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            let childNode = menuNode.child(this.menuGroup[menu].menuGroupName);
+            childNode.child(item).remove();
+
+
+            this.menuGroup[menu].menu.splice(item, 1);
+          }
+        }
+      ]
+    });
+    alert.present();
   };
 
   createBundle(){
@@ -93,7 +151,7 @@ export class MenuPage {
   <ion-header>
     <ion-toolbar>
       <ion-title>
-        Create Bundle
+        Create Coupon
       </ion-title>
       <ion-buttons start>
         <button ion-button (click)="dismiss()">

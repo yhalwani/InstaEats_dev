@@ -44,6 +44,7 @@ export class RestaurantPage {
     totalPercent:          number,
     timeStarted:           any,
     duration:              any,
+    ongoing:               string,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
@@ -137,6 +138,7 @@ export class RestaurantPage {
             totalDiscount:    bundle.totalDiscount,
             totalPercent:     bundle.totalPercent,
             live:             bundle.live,
+            ongoing:          bundle.ongoing,
             timeStarted:      bundle.timeStarted,
             duration:         bundle.duration,
             countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},

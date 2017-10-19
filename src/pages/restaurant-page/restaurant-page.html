@@ -111,8 +111,20 @@
           <ion-item>
             <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
             </ion-icon>
+
+
             <p>Live</p>
-            <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+            <h3 id="headertag" class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+
+            <!-- <div id="timertag" style="display: none;">
+              <p>Live</p>
+              <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+            </div>
+
+            <div id="typetag" style="display: none">
+              <p>Live</p>
+              <h3 class="-bold">{{bundle.ongoing}}</h3>
+            </div> -->
 
             <div item-right>
               <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
