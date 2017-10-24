@@ -69,9 +69,7 @@
 
 <ion-grid>
 <ion-row>
-  <ion-list *ngFor="let bundle of bundles; let i = index;">
-
-    <ion-col col-sm-12 col-md-6 col-lg-4 col-xl-3>
+    <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let bundle of bundles; let i = index;">
     <ion-card>
       <ion-card-content style="background-color: #F4F5F8;">
 
@@ -123,7 +121,6 @@
           </ion-item>
     </ion-card>
   </ion-col>
-
     <!-- <ion-card>
 
       <ion-card-header>
@@ -183,8 +180,6 @@
 
       </ion-card-content>
     </ion-card> -->
-
-  </ion-list>
 </ion-row>
 </ion-grid>
 
