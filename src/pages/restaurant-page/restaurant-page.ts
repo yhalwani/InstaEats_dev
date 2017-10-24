@@ -147,7 +147,8 @@ export class RestaurantPage {
           this.Bundles[bundleIndex] = bundleTmp;
         });
 
-         this.Bundles.forEach(this.setTimers);
+          this.Bundles.forEach(this.setTimers);
+
       });
     } else {
       this.mapIcon = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fdeadlist.png?alt=media&token=8c472e53-9f39-41c9-911d-7d6da24c7097";
@@ -155,6 +156,31 @@ export class RestaurantPage {
 
     // load map everytime
     this.getMap();
+
+  }
+
+  ionViewWillEnter(){
+    var restRef = firebase.database().ref("Bundles/");
+    var restId = firebase.auth().currentUser.uid;
+
+    restRef.child(restId).on('value', (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        let data = childSnapshot.val();
+
+        let timer = document.getElementById("timertag");
+        let type = document.getElementById("typetag");
+
+        if(data.ongoing){
+          if(timer.style.display === 'block'){
+            timer.style.display = 'none';
+            type.style.display = 'block'
+          }
+          else { }
+        }
+        return false;
+      })
+
+    })
 
   }
 
@@ -266,9 +292,9 @@ export class RestaurantPage {
         bundle.countDown.minutes  = Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60));
         bundle.countDown.seconds  = Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
       }, 1000);
-    };
 
   };
+}
 
   goToDiscount(index){
     let modal = this.modalCtrl.create(DiscountPage, this.Bundles[index]);
@@ -327,8 +353,16 @@ export class RestaurantPage {
           <ion-item>
             <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
             </ion-icon>
+
             <p>Live</p>
-            <h3 class="-bold">{{bundleItem.countDown.hours}}:{{bundleItem.countDown.minutes}}:{{bundleItem.countDown.seconds}}</h3>
+
+            <div id="timer" style="display: block;">
+              <h3 class="-bold">{{bundleItem.countDown.hours}}:{{bundleItem.countDown.minutes}}:{{bundleItem.countDown.seconds}}</h3>
+            </div>
+
+            <div id="tag" style="display: block">
+              <h3 class="-bold">{{bundleItem.ongoing}}</h3>
+            </div>
 
             <div item-right>
               <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundleItem.total}}</p>
@@ -369,6 +403,7 @@ export class DiscountPage {
     live:                  boolean,
     timeStarted:           any,
     duration:              any,
+    ongoing:               string,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
@@ -389,6 +424,20 @@ export class DiscountPage {
     this.bundleItem = this.params.data;
 
   };
+
+  ionViewWillEnter(){
+
+    let timer = document.getElementById("timer");
+    let type = document.getElementById("tag");
+
+    if(this.bundleItem.ongoing){
+      if(timer.style.display === 'block'){
+        timer.style.display = 'none';
+        type.style.display = 'block'
+      }
+      else { }
+    }
+}
 
   // Close bundle page
   dismiss() {

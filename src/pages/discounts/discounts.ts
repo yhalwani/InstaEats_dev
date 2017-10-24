@@ -78,7 +78,7 @@ export class DiscountsPage {
 
       });
 
-    this.events.subscribe('bundle:created', (bundle) => {
+      this.events.subscribe('bundle:created', (bundle) => {
       this.bundles = bundle;
     });
     }
@@ -140,15 +140,23 @@ export class DiscountsPage {
   ionViewLoaded(){
 
     var restRef = firebase.database().ref("Bundles/");
-    var rest = firebase.auth().currentUser;
-    var headertag;
+    var rest = firebase.auth().currentUser.uid;
 
-    restRef.child(rest.uid).once('value', (snapshot) => {
+    restRef.child(rest).on('value', (snapshot) => {
       snapshot.forEach((childSnapshot) => {
         let data = childSnapshot.val();
-        headertag = data.ongoing;
-        console.log(headertag)
-        document.getElementById("headertag").innerHTML = headertag;
+
+        let timer = document.getElementById("discounttimer");
+        let type = document.getElementById("discounttype");
+
+        if(data.timeStarted){
+            if(type.style.display === 'block'){
+              type.style.display = 'none';
+              timer.style.display = 'block'
+            }
+            else { }
+        }
+
         return false
       })
 
@@ -158,15 +166,6 @@ export class DiscountsPage {
   getTime(index){
     var restRef = firebase.database().ref("Bundles/");
     var rest = firebase.auth().currentUser;
-    // var headertag;
-    //
-    // restRef.child(rest.uid).once('value', (snapshot) => {
-    //   let data = snapshot.val();
-    //   headertag = data.ongoing;
-    // })
-    //
-    // document.getElementById("headertag").innerHTML = headertag;
-
 
     let alert = this.alertCtrl.create({
       title: 'Input discount duration',
@@ -204,7 +203,7 @@ export class DiscountsPage {
           text: 'Set Time',
           handler: data => {
 
-            if(data.Hours <= 0 && data.Minutes <= 0 && data.Seconds <= 0){
+            if(data.Other){
               restRef.child(rest.uid).child(this.bundles[index].bundleName).update({
                 live: true,
                 ["ongoing"]: data.Other
@@ -220,7 +219,6 @@ export class DiscountsPage {
                 timeStarted: now,
                 duration: timeLimit
               });
-              document.getElementById("headertag").innerHTML = data.Ongoing;
           }
 
             this.bundles[index].live = !this.bundles[index].live;
@@ -240,6 +238,16 @@ export class DiscountsPage {
       bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60));
       bundle.countDown.seconds =  Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
     }, 1000);
+    let timer = document.getElementById("discounttimer");
+    let type = document.getElementById("discounttype");
+    if(bundle.timeStarted){
+        if(type.style.display === 'block'){
+          type.style.display = 'none';
+          timer.style.display = 'block'
+        }
+        else { }
+    }
+
   };
 
   stopTime(bundle){
