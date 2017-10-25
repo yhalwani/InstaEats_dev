@@ -103,8 +103,8 @@
   <div id="hasDiscount" style="display: none;">
     <ion-item-divider style="margin: 0px 0px 0px 0px;" text-center color="background">Coupons</ion-item-divider>
 
-    <ion-list *ngFor="let bundle of Bundles; let i = index;">
-      <ion-card class="widget mini" (click)="goToDiscount(i)">
+    <ion-list  *ngFor="let bundle of Bundles; let i = index;">
+      <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'" (click)="goToDiscount(i)">
         <div class="rip top-edge"><div class="inner"></div></div>
         <div class="top">
 
@@ -113,12 +113,12 @@
             </ion-icon>
             <p>Live</p>
 
-            <div id="typetag" style="display: block">
+            <div id="typetag">
               <h3 class="-bold">{{bundle.ongoing}}</h3>
             </div>
 
-            <div id="timertag" style="display: block;">
-              <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+            <div id="timertag">
+              <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
             </div>
 
             <div item-right>

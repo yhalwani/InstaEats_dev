@@ -17,6 +17,8 @@ export class DiscountsPage {
     total:                 number,
     totalDiscount:         number,
     totalPercent:          number,
+    duration:              number,
+    timeStarted:           number,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     ongoing:               string,
     bundleElem:            Array<{
@@ -42,7 +44,7 @@ export class DiscountsPage {
       content: "Fetching bundles...",
       duration: 2000
     });
-        loader.present();
+    loader.present();
 
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
@@ -68,9 +70,11 @@ export class DiscountsPage {
               total:            bundle.total,
               totalDiscount:    bundle.totalDiscount,
               totalPercent:     bundle.totalPercent,
+              duration:         bundle.duration,
+              timeStarted:      bundle.timeStarted,
               ongoing:          bundle.ongoing,
               live:             bundle.live,
-              countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
+              countDown:        {intvarlID: "", hours: "", minutes: "", seconds: ""},
               bundleElem:       bundle.bundleElem
             };
 
@@ -81,6 +85,17 @@ export class DiscountsPage {
       this.events.subscribe('bundle:created', (bundle) => {
       this.bundles = bundle;
     });
+
+    this.bundles.forEach((bundle) => {
+      if(!bundle.ongoing){
+        bundle.countDown.intvarlID = setInterval(() => {
+          var diff = new Date().getTime() - bundle.timeStarted;
+          bundle.countDown.hours   =  Math.floor( (bundle.duration - diff) / (1000 * 60 * 60)) + ":";
+          bundle.countDown.minutes =  Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
+          bundle.countDown.seconds =  Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
+        }, 1000);
+      }
+    })
     }
   });
 
@@ -124,7 +139,6 @@ export class DiscountsPage {
             // delete from local as well
             this.bundles.splice(index,1);
             this.storage.get('bundles').then((list) => {
-              console.log(list);
               // list.splice(index,1);
               // this.storage.set('bundles', list);
             });
@@ -136,32 +150,6 @@ export class DiscountsPage {
     actionSheet.present();
 
   };
-
-  ionViewLoaded(){
-
-    var restRef = firebase.database().ref("Bundles/");
-    var rest = firebase.auth().currentUser.uid;
-
-    restRef.child(rest).on('value', (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        let data = childSnapshot.val();
-
-        let timer = document.getElementById("discounttimer");
-        let type = document.getElementById("discounttype");
-
-        if(data.timeStarted){
-            if(type.style.display === 'block'){
-              type.style.display = 'none';
-              timer.style.display = 'block'
-            }
-            else { }
-        }
-
-        return false
-      })
-
-    })
-  }
 
   getTime(index){
     var restRef = firebase.database().ref("Bundles/");
@@ -232,21 +220,18 @@ export class DiscountsPage {
   }
 
   setTime(now, timeLimit, bundle){
+    if(timeLimit){
     bundle.countDown.intvarlID = setInterval(() => {
       var diff = new Date().getTime() - now;
-      bundle.countDown.hours   =  Math.floor( (timeLimit - diff) / (1000 * 60 * 60));
-      bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60));
+      bundle.countDown.hours   =  Math.floor( (timeLimit - diff) / (1000 * 60 * 60)) + ":";
+      bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
       bundle.countDown.seconds =  Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
     }, 1000);
-    let timer = document.getElementById("discounttimer");
-    let type = document.getElementById("discounttype");
-    if(bundle.timeStarted){
-        if(type.style.display === 'block'){
-          type.style.display = 'none';
-          timer.style.display = 'block'
-        }
-        else { }
-    }
+  } else {
+    bundle.countDown.hours = null;
+    bundle.countDown.minutes = null;
+    bundle.countDown.seconds = null;
+  }
 
   };
 

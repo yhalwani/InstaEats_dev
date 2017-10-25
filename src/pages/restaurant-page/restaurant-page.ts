@@ -1,10 +1,12 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, AlertController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { Content } from 'ionic-angular';
+import { Component, ViewChild, ElementRef }                                 from '@angular/core';
+import {  NavController, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavParams, Events, Content }                            from 'ionic-angular';
+import { Storage }                                                          from '@ionic/storage';
 
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { SocialSharing }                                                    from '@ionic-native/social-sharing';
+import { LaunchNavigator, LaunchNavigatorOptions }                          from '@ionic-native/launch-navigator';
+
+import { User }                                                             from '../../providers/user';
 
 import firebase from 'firebase';
 
@@ -65,8 +67,11 @@ export class RestaurantPage {
     public storage: Storage,
     public events: Events,
     private socialSharing: SocialSharing,
-    private launchNavigator: LaunchNavigator
+    private launchNavigator: LaunchNavigator,
+    public userService: User
   ) {
+
+    this.userService.updataBundleStatus();
 
     this.storage.get('favList').then((list) => {
 
@@ -90,8 +95,6 @@ export class RestaurantPage {
     this.restaurantName = this.restaurant.restaurantName;
     this.restaurantStatus = this.restaurant.liveStatus;
     let restaurantUID = this.restaurant.id;
-
-    this.endCoupon();
 
     var menuArr = [];
 
@@ -159,28 +162,27 @@ export class RestaurantPage {
 
   }
 
-  ionViewWillEnter(){
-    var restRef = firebase.database().ref("Bundles/");
-    var restId = firebase.auth().currentUser.uid;
-
-    restRef.child(restId).on('value', (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        let data = childSnapshot.val();
-
-        let timer = document.getElementById("timertag");
-        let type = document.getElementById("typetag");
-
-        if(data.ongoing){
-          if(timer.style.display === 'block'){
-            timer.style.display = 'none';
-            type.style.display = 'block'
-          }
-          else { }
-        }
-        return false;
-      })
-
-    })
+  ionViewLoaded(){
+    // var restRef = firebase.database().ref("Bundles/");
+    // var restId = this.restaurant.id;
+    //
+    // restRef.child(restId).on('value', (snapshot) => {
+    //   snapshot.forEach((childSnapshot) => {
+    //     let data = childSnapshot.val();
+    //
+    //     if(data.ongoing){
+    //       let timer = document.getElementById("timertag");
+    //       let type = document.getElementById("typetag");
+    //
+    //       if(timer.style.display === 'block'){
+    //         timer.style.display = 'none !important';
+    //         type.style.display = 'block'
+    //       }
+    //       else { }
+    //     }
+    //     return false;
+    //   })
+    // })
 
   }
 
@@ -243,9 +245,7 @@ export class RestaurantPage {
         buttons: ['Ok']
       });
       alrt.present();
-
     }
-
   };
 
   // populate map with correct restaurant location
@@ -276,55 +276,28 @@ export class RestaurantPage {
 
   setTimers(bundle){
 
-    var nowCheck = new Date().getTime() - bundle.timeStarted;
+    if(bundle.duration){
+      var nowCheck = new Date().getTime() - bundle.timeStarted;
 
-    if ( nowCheck > bundle.duration ) {
-      clearInterval(bundle.countDown.intvarlID);
-      bundle.countDown.hours = 0;
-      bundle.countDown.minutes = 0;
-      bundle.countDown.seconds = 0;
-    } else {
-      bundle.countDown.intvarlID = setInterval(() => {
-        var now = new Date().getTime();
-        var diff = now - bundle.timeStarted;
+        bundle.countDown.intvarlID = setInterval(() => {
+          var now = new Date().getTime();
+          var diff = now - bundle.timeStarted;
 
-        bundle.countDown.hours    = Math.floor( (bundle.duration - diff) / (1000 * 60 * 60));
-        bundle.countDown.minutes  = Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60));
-        bundle.countDown.seconds  = Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
-      }, 1000);
-
-  };
-}
+          bundle.countDown.hours    = Math.floor( (bundle.duration - diff) / (1000 * 60 * 60)) + ":";
+          bundle.countDown.minutes  = Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
+          bundle.countDown.seconds  = Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
+        }, 1000);
+      } else {
+        bundle.countDown.hours = null;
+        bundle.countDown.minutes = null;
+        bundle.countDown.seconds = null;
+      }
+  }
 
   goToDiscount(index){
     let modal = this.modalCtrl.create(DiscountPage, this.Bundles[index]);
     modal.present();
   };
-
-  endCoupon(){
-
-    var bundleNode = firebase.database().ref("/Bundles/" + this.restaurant.id);
-    bundleNode.orderByChild("live").equalTo(true).once('value', (snapshot) => {
-
-      // retrieve bundle from firabase and populate the restaurant page for users to see
-      snapshot.forEach( (childSnapshot) => {
-        let data = childSnapshot.val();
-        let timeStarted = data.timeStarted;
-
-        var nowCheck = new Date().getTime() - timeStarted;
-        if ( nowCheck > data.duration ) {
-          childSnapshot.ref.update({
-            duration: null,
-            live: false,
-            timeStarted: null
-          })
-          return false
-        }
-
-      });
-    });
-  }
-
 
 };
 
@@ -347,7 +320,7 @@ export class RestaurantPage {
     <ion-content style="background-color: #262323;" padding>
     <!-- Discount Card Template-->
 
-      <ion-card class="widget">
+      <ion-card [ngClass]="bundleItem.ongoing != null ? 'widget' : 'widget red'">
         <div class="top">
 
           <ion-item>
@@ -357,7 +330,7 @@ export class RestaurantPage {
             <p>Live</p>
 
             <div id="timer" style="display: block;">
-              <h3 class="-bold">{{bundleItem.countDown.hours}}:{{bundleItem.countDown.minutes}}:{{bundleItem.countDown.seconds}}</h3>
+              <h3 class="-bold">{{bundleItem.countDown.hours}}{{bundleItem.countDown.minutes}}{{bundleItem.countDown.seconds}}</h3>
             </div>
 
             <div id="tag" style="display: block">

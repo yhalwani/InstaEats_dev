@@ -20,7 +20,7 @@
   <ion-row>
     <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let bundle of bundles; let i = index;">
 
-      <ion-card>
+      <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'">
         <ion-card-content style="background-color: #F4F5F8;">
 
           <ion-card class="widget">
@@ -37,7 +37,7 @@
                 </div>
 
                 <div id="discounttimer" style="display: block;">
-                  <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+                  <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
                 </div>
 
                 <div item-right>

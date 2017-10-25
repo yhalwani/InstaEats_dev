@@ -126,9 +126,10 @@ import { SettingsProvider } from '../providers/settings/settings';
     StatusBar,
     LaunchNavigator,
     SplashScreen,
+    SettingsProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}, SettingsProvider
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

@@ -130,6 +130,8 @@ export class MyApp {
 
       this.events.publish('app:launch', this.loggedIn);
     });
+
+    this.userService.updataBundleStatus();
   };
 
   openPage(page) {
