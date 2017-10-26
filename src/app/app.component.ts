@@ -14,6 +14,8 @@ import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
 
+// import { StripePage } from '../pages/stripe/stripe';
+
 import { IntroPage }    from '../pages/intro/intro';
 
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
@@ -37,6 +39,7 @@ export class MyApp {
   loginPage : any = LoginPage;
   loggedIn  : any = false;
   menuTitle : any = "InstaEats";
+  // stripepage: any = StripePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -96,6 +99,7 @@ export class MyApp {
       this.rootPage = RestaurantPortalPage;
       this.pages = [
         {title: 'Restaurant Portal', component: this.rootPage},
+        // {title: 'Payment', component: this.stripepage},
         {title: 'Logout', component: this.loggedIn}
       ];
     });

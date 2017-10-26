@@ -10,11 +10,29 @@
 
 <ion-content padding>
 
-  <!-- <div text-center>
-    <button ion-button large icon-right color="rdaApp">
-      Create Coupon
-    </button>
-  </div> -->
+  <div id="nocoupons" style="display: none;">
+    <ion-card class="nothingBurger">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-header text-center text-wrap>
+              No coupons created
+            </ion-card-header>
+            <ion-card-content text-center>
+              You must be a paid user
+              <br>
+              to be access creating coupons feature
+              <ion-row justify-content-center>
+                <ion-col>
+                  <button ion-button color="light" icon-only (click)="getPaymentMethod()"><ion-icon name="heart"></ion-icon></button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
 
 <ion-grid>
   <ion-row>

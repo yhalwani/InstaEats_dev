@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, NavParams, Events, ActionSheetController, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { StripePage } from '../stripe/stripe';
 
 import firebase from 'firebase';
 
@@ -40,11 +41,11 @@ export class DiscountsPage {
     public loadingCtrl: LoadingController
   ) {
 
-    let loader = this.loadingCtrl.create({
-      content: "Fetching bundles...",
-      duration: 2000
-    });
-    loader.present();
+    // let loader = this.loadingCtrl.create({
+    //   content: "Fetching bundles...",
+    //   duration: 1000
+    // });
+    // loader.present();
 
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
@@ -54,52 +55,70 @@ export class DiscountsPage {
     bundleNode.once('value', (snapshot) => {
       if(snapshot.val() != null){
 
-      // For each bundle the rest has loop
-      snapshot.forEach((childSnapshot) => {
+        // For each bundle the rest has loop
+        snapshot.forEach((childSnapshot) => {
 
-        bundlesArr.push(childSnapshot.val());
-        this.bundles = bundlesArr;
-        return false;
+          bundlesArr.push(childSnapshot.val());
+          this.bundles = bundlesArr;
+          return false;
 
-      });
+        });
 
-      this.bundles.forEach((bundle, bundleIndex) => {
-            var bundleTmp = {
-              bundleName:       bundle.bundleName,
-              bundleDescription:bundle.bundleDescription,
-              total:            bundle.total,
-              totalDiscount:    bundle.totalDiscount,
-              totalPercent:     bundle.totalPercent,
-              duration:         bundle.duration,
-              timeStarted:      bundle.timeStarted,
-              ongoing:          bundle.ongoing,
-              live:             bundle.live,
-              countDown:        {intvarlID: "", hours: "", minutes: "", seconds: ""},
-              bundleElem:       bundle.bundleElem
-            };
+        this.bundles.forEach((bundle, bundleIndex) => {
+          var bundleTmp = {
+            bundleName:       bundle.bundleName,
+            bundleDescription:bundle.bundleDescription,
+            total:            bundle.total,
+            totalDiscount:    bundle.totalDiscount,
+            totalPercent:     bundle.totalPercent,
+            duration:         bundle.duration,
+            timeStarted:      bundle.timeStarted,
+            ongoing:          bundle.ongoing,
+            live:             bundle.live,
+            countDown:        {intvarlID: "", hours: "", minutes: "", seconds: ""},
+            bundleElem:       bundle.bundleElem
+          };
 
-            this.bundles[bundleIndex] = bundleTmp;
+          this.bundles[bundleIndex] = bundleTmp;
 
-      });
+        });
 
-      this.events.subscribe('bundle:created', (bundle) => {
-      this.bundles = bundle;
+        this.events.subscribe('bundle:created', (bundle) => {
+          this.bundles = bundle;
+        });
+
+        this.bundles.forEach((bundle) => {
+          if(!bundle.ongoing){
+            bundle.countDown.intvarlID = setInterval(() => {
+              var diff = new Date().getTime() - bundle.timeStarted;
+              bundle.countDown.hours   =  Math.floor( (bundle.duration - diff) / (1000 * 60 * 60)) + ":";
+              bundle.countDown.minutes =  Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
+              bundle.countDown.seconds =  Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
+            }, 1000);
+          }
+        })
+      } else {
+
+      }
     });
 
-    this.bundles.forEach((bundle) => {
-      if(!bundle.ongoing){
-        bundle.countDown.intvarlID = setInterval(() => {
-          var diff = new Date().getTime() - bundle.timeStarted;
-          bundle.countDown.hours   =  Math.floor( (bundle.duration - diff) / (1000 * 60 * 60)) + ":";
-          bundle.countDown.minutes =  Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
-          bundle.countDown.seconds =  Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
-        }, 1000);
-      }
-    })
-    }
-  });
+  }
 
-}
+  ngOnInit(){
+    let user = firebase.auth().currentUser;
+
+    firebase.database().ref('Restaurant Profiles/' + user.uid).once('value', (snapshot) => {
+      let data = snapshot.val().stripe.subscribed;
+
+      if(data){
+
+      } else {
+        document.getElementById('nocoupons').style.display = "block";
+      }
+    });
+
+
+  }
 
   presentActionSheet(index) {
 
@@ -207,7 +226,7 @@ export class DiscountsPage {
                 timeStarted: now,
                 duration: timeLimit
               });
-          }
+            }
 
             this.bundles[index].live = !this.bundles[index].live;
             this.setTime(now, timeLimit, this.bundles[index]);
@@ -221,17 +240,17 @@ export class DiscountsPage {
 
   setTime(now, timeLimit, bundle){
     if(timeLimit){
-    bundle.countDown.intvarlID = setInterval(() => {
-      var diff = new Date().getTime() - now;
-      bundle.countDown.hours   =  Math.floor( (timeLimit - diff) / (1000 * 60 * 60)) + ":";
-      bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
-      bundle.countDown.seconds =  Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
-    }, 1000);
-  } else {
-    bundle.countDown.hours = null;
-    bundle.countDown.minutes = null;
-    bundle.countDown.seconds = null;
-  }
+      bundle.countDown.intvarlID = setInterval(() => {
+        var diff = new Date().getTime() - now;
+        bundle.countDown.hours   =  Math.floor( (timeLimit - diff) / (1000 * 60 * 60)) + ":";
+        bundle.countDown.minutes =  Math.floor(((timeLimit - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
+        bundle.countDown.seconds =  Math.floor(((timeLimit - diff) % (1000 * 60)) / 1000)
+      }, 1000);
+    } else {
+      bundle.countDown.hours = null;
+      bundle.countDown.minutes = null;
+      bundle.countDown.seconds = null;
+    }
 
   };
 
@@ -241,6 +260,11 @@ export class DiscountsPage {
     bundle.countDown.minutes = 0;
     bundle.countDown.seconds = 0;
   };
+
+
+  getPaymentMethod(){
+    this.navCtrl.push(StripePage);
+  }
 
 
 }

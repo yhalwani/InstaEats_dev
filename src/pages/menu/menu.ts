@@ -17,6 +17,8 @@ export class MenuPage {
     }>
   }>;
 
+  isDisabled: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,6 +30,16 @@ export class MenuPage {
 
       let user = firebase.auth().currentUser;
       var menuArr = [];
+
+      firebase.database().ref('Restaurant Profiles/' + user.uid).once('value', (snapshot) => {
+        let data = snapshot.val().stripe.subscribed;
+
+        if(data){
+          this.isDisabled = false;
+        } else {
+          this.isDisabled = true;
+        }
+      });
 
       firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
         var data = snapshot.val();

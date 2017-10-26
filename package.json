@@ -49,6 +49,7 @@
         "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "2.2.1",
+        "cordova-plugin-stripe": "^1.5.3",
         "cordova-plugin-whitelist": "1.3.1",
         "cordova-plugin-x-socialsharing": "^5.2.0",
         "cordova.plugins.diagnostic": "^3.6.7",
@@ -89,7 +90,8 @@
             "cordova-plugin-dialogs": {},
             "cordova.plugins.diagnostic": {},
             "cordova-plugin-splashscreen": {},
-            "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
+            "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
+            "cordova-plugin-stripe": {}
         },
         "platforms": [
             "android",

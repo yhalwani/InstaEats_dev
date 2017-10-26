@@ -55,6 +55,10 @@
                         {
                             "xml": "<feature name=\"LaunchNavigator\"><param name=\"android-package\" value=\"uk.co.workingedge.phonegap.plugin.LaunchNavigator\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"CordovaStripe\"><param name=\"android-package\" value=\"com.zyramedia.cordova.stripe.CordovaStripe\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -176,6 +180,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-stripe": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
@@ -337,6 +344,14 @@
             "merges": [
                 "launchnavigator"
             ]
+        },
+        {
+            "id": "cordova-plugin-stripe.stripe",
+            "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+            "pluginId": "cordova-plugin-stripe",
+            "clobbers": [
+                "cordova.plugins.stripe"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -355,6 +370,7 @@
         "cordova-plugin-x-socialsharing": "5.1.8",
         "cordova.plugins.diagnostic": "3.6.7",
         "ionic-plugin-keyboard": "2.2.1",
-        "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
+        "cordova-plugin-stripe": "1.5.3"
     }
 }

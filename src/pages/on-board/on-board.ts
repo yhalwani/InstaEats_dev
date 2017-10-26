@@ -206,25 +206,6 @@ export class OnBoardPage {
     this.storage.set('restMenu', []);
     this.storage.set('restMenu', this.menuGroup);
 
-    // TODO: Add stripe logic in accordance with plan when finalized
-
-    // // Stripe Key
-    // this.stripe.setPublishableKey('pk_test_GtPPuYvc17ygIxk7JSktsyxN');
-    //
-    // // Trigger card addition and subscription
-    // let card = {
-    //   number: this.cardNumber.toString(),
-    //   expMonth: Number(this.expiry.toString().split("-")[1]),
-    //   expYear: Number(this.expiry.toString().split("-")[0]),
-    //   cvc: this.security.toString()
-    // };
-    //
-    // this.stripe.createCardToken(card)
-    //   .then(token => console.log(token))
-    //   //handle error
-    //   .catch(error => console.log(error)
-    // );
-
     var restRef = firebase.database().ref("/Restaurant Profiles");
 
     // create account using email and password
@@ -266,6 +247,14 @@ export class OnBoardPage {
       user.updateProfile({
         displayName: this.restaurantName
       });
+
+      user.sendEmailVerification().then(() => {
+        this.toastCtrl.create({
+          message: "Verfication email sent to your email account",
+          duration: 3000,
+          position: 'bottom'
+        }).present();
+      }).catch((error) => {console.log(error)})
 
       // Push menu to firebase
       this.pushMenu(id);

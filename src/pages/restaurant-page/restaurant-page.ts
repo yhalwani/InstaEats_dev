@@ -162,30 +162,6 @@ export class RestaurantPage {
 
   }
 
-  ionViewLoaded(){
-    // var restRef = firebase.database().ref("Bundles/");
-    // var restId = this.restaurant.id;
-    //
-    // restRef.child(restId).on('value', (snapshot) => {
-    //   snapshot.forEach((childSnapshot) => {
-    //     let data = childSnapshot.val();
-    //
-    //     if(data.ongoing){
-    //       let timer = document.getElementById("timertag");
-    //       let type = document.getElementById("typetag");
-    //
-    //       if(timer.style.display === 'block'){
-    //         timer.style.display = 'none !important';
-    //         type.style.display = 'block'
-    //       }
-    //       else { }
-    //     }
-    //     return false;
-    //   })
-    // })
-
-  }
-
   ngOnInit(){
     // if restaurant is offline, toggle noDiscount card
     if(!this.restaurantStatus){

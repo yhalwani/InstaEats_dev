@@ -49,6 +49,8 @@ import { RecentPage }                   from '../pages/recent/recent';
 import { FavoritesPage }                from '../pages/favorites/favorites';
 import { NearMePage }                   from '../pages/nearMe/nearMe';
 
+import { StripePage }                   from '../pages/stripe/stripe';
+
 import { RestaurantPage, DiscountPage } from '../pages/restaurant-page/restaurant-page';
 
 import { RestaurantPortalPage }         from '../pages/restaurant-portal/restaurant-portal';
@@ -82,7 +84,8 @@ import { SettingsProvider } from '../providers/settings/settings';
     MenuPage,
     ModalContentPage,
     InfoPage,
-    DiscountsPage
+    DiscountsPage,
+    StripePage
   ],
   imports: [
     BrowserModule,
@@ -111,7 +114,8 @@ import { SettingsProvider } from '../providers/settings/settings';
     MenuPage,
     ModalContentPage,
     InfoPage,
-    DiscountsPage
+    DiscountsPage,
+    StripePage
   ],
   providers: [
     Camera,

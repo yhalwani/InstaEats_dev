@@ -106,7 +106,7 @@
   </div>
 
   <div text-center>
-    <button ion-button large icon-right color="rdaApp" (click)="createBundle()">
+      <button ion-button large icon-right color="rdaApp" [disabled]="isDisabled" (click)="createBundle()">
       Create Bundle
     </button>
   </div>

@@ -48,6 +48,14 @@ export class SignupPage {
           displayName: this.username
         });
 
+        user.sendEmailVerification().then(() => {
+          this.toastCtrl.create({
+            message: "Verfication email sent to your email account",
+            duration: 3000,
+            position: 'bottom'
+          }).present();
+        }).catch((error) => {console.log(error)})
+
         this.events.publish('user:loggedIn', true, this.username);
         this.presentLoading();
 
