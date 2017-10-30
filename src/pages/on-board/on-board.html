@@ -4,7 +4,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>SignUp Your Restaurant!</ion-title>
+    <ion-title>Signup Your Restaurant!</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -285,7 +285,7 @@
       <h2 padding> Please add your Restaurants menu below, create groups (Appetizers, Entrees, Desserts etc) and add items to group. </h2>
 
       <button ion-button large icon-right color="rdaApp" (click)="addMenuGroup()">
-        Add menu group
+        Add Menu Category
         <ion-icon name="add"></ion-icon>
       </button>
 
@@ -295,7 +295,7 @@
         <ion-row>
           <ion-col>
             <ion-list-header>
-              <ion-label>Group name</ion-label>
+              <ion-label>Category name</ion-label>
               <ion-input type="text" value="" [(ngModel)]="menug.menuGroupName"></ion-input>
             </ion-list-header>
           </ion-col>
@@ -342,7 +342,7 @@
           Add menu item
           <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
         </button>
-        <br>``
+        <br>
       </ion-list>
 
       <br>

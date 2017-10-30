@@ -29355,6 +29355,21 @@ ion-card.widget {
   position: relative;
 }
 
+.widget.red .top {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  position: relative;
+}
+
+.widget.red .bottom {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 18px;
+  padding-top: 0;
+  min-height: 30px;
+  position: relative;
+}
+
 .widget .rip {
   padding-top: 1px;
   height: 35px;

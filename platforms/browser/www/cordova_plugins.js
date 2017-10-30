@@ -148,6 +148,14 @@ module.exports = [
         "id": "cordova-plugin-stripe.CordovaStripe",
         "pluginId": "cordova-plugin-stripe",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-headercolor/www/HeaderColor.js",
+        "id": "cordova-plugin-headercolor.HeaderColor",
+        "pluginId": "cordova-plugin-headercolor",
+        "clobbers": [
+            "cordova.plugins.headerColor"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -168,7 +176,8 @@ module.exports.metadata =
     "cordova.plugins.diagnostic": "3.6.7",
     "cordova-plugin-splashscreen": "4.0.3",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
-    "cordova-plugin-stripe": "1.5.3"
+    "cordova-plugin-stripe": "1.5.3",
+    "cordova-plugin-headercolor": "1.0"
 }
 // BOTTOM OF METADATA
 });

@@ -14,7 +14,7 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <!-- Menu template -->
   <!-- <ion-card>
@@ -60,7 +60,7 @@
           <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col style="padding: 0px">
                 <ion-item>
                   <ion-label>Name</ion-label>
                   <ion-input type="text" value="{{menu.name}}" [(ngModel)]="menu.name"></ion-input>

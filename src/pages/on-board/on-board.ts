@@ -99,23 +99,26 @@ export class OnBoardPage {
       {type : "Continental",    id : "11"},
       {type : "Creperie",       id : "12"},
       {type : "European",       id : "13"},
-      {type : "French",         id : "14"},
-      {type : "Gastro",         id : "15"},
-      {type : "Global",         id : "16"},
-      {type : "Indian",         id : "17"},
-      {type : "Italian",        id : "18"},
-      {type : "Jamaican",       id : "19"},
-      {type : "Japanese",       id : "20"},
-      {type : "Latin",          id : "21"},
-      {type : "Mediterranean",  id : "22"},
-      {type : "Mexican",        id : "23"},
-      {type : "Pizzeria",       id : "24"},
-      {type : "Seafood",        id : "25"},
-      {type : "Steakhouse",     id : "26"},
-      {type : "Sushi",          id : "27"},
-      {type : "Tapas",          id : "28"},
-      {type : "Thai",           id : "29"},
-      {type : "Bar / Pub",      id : "30"}
+      {type : "Fast food",      id : "14"},
+      {type : "French",         id : "15"},
+      {type : "Gastro",         id : "16"},
+      {type : "Global",         id : "17"},
+      {type : "Halal",          id : "18"},
+      {type : "Indian",         id : "19"},
+      {type : "Italian",        id : "20"},
+      {type : "Jamaican",       id : "21"},
+      {type : "Japanese",       id : "22"},
+      {type : "Latin",          id : "23"},
+      {type : "Mediterranean",  id : "24"},
+      {type : "Mexican",        id : "25"},
+      {type : "Pizzeria",       id : "26"},
+      {type : "Seafood",        id : "27"},
+      {type : "Steakhouse",     id : "28"},
+      {type : "Sushi",          id : "29"},
+      {type : "Tapas",          id : "30"},
+      {type : "Thai",           id : "31"},
+      {type : "Bar / Pub",      id : "32"},
+      {type : "Fast food",      id : "33"}
     ];
 
     // set province array
@@ -231,6 +234,9 @@ export class OnBoardPage {
         address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
         ownersName: this.ownerName,
         liveStatus: false,   // false by default
+        stripe:{
+          "subscribed": false
+        },
 
         hoursOfOperation: {
           "Mon": [this.mon_open, this.mon_close],

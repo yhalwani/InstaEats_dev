@@ -24,7 +24,7 @@
               to be access creating coupons feature
               <ion-row justify-content-center>
                 <ion-col>
-                  <button ion-button color="light" icon-only (click)="getPaymentMethod()"><ion-icon name="heart"></ion-icon></button>
+                  <button ion-button color="light" icon-only (click)="getPaymentMethod()"><ion-icon name="ios-open-outline"></ion-icon></button>
                 </ion-col>
               </ion-row>
             </ion-card-content>
@@ -34,72 +34,74 @@
     </ion-card>
   </div>
 
-<ion-grid>
-  <ion-row>
-    <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let bundle of bundles; let i = index;">
+  <div id="showBundles">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let bundle of bundles; let i = index;">
 
-      <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'">
-        <ion-card-content style="background-color: #F4F5F8;">
+        <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'">
+          <ion-card-content style="background-color: #F4F5F8;">
 
-          <ion-card class="widget">
-            <div class="top">
+            <ion-card class="widget">
+              <div class="top">
 
-              <ion-item>
-                <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
-                </ion-icon>
+                <ion-item>
+                  <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
+                  </ion-icon>
 
-                <p>Live</p>
+                  <p>Live</p>
 
-                <div id="discounttype" style="display: block">
-                  <h3 class="-bold">{{bundle.ongoing}}</h3>
-                </div>
+                  <div id="discounttype" style="display: block">
+                    <h3 class="-bold">{{bundle.ongoing}}</h3>
+                  </div>
 
-                <div id="discounttimer" style="display: block;">
-                  <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
-                </div>
+                  <div id="discounttimer" style="display: block;">
+                    <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
+                  </div>
 
-                <div item-right>
-                  <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundle.total}}</p>
-                  <h1 class="-bold">$ {{bundle.totalDiscount}}</h1>
-                </div>
-              </ion-item>
-              <ion-item>
-                <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
-                <p ion-text text-center text-wrap style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleDescription}}</p>
-              </ion-item>
-
-            </div>
-
-            <div class="rip"><div class="inner"></div></div>
-            <div class="bottom">
-              <ion-list *ngFor="let item of bundle.bundleElem">
-                <ion-item *ngFor="let menuItem of item.menu" class="bundle-item">
-
-                  <h3 ion-text item-left class="-bold">{{menuItem.name}}</h3>
-                  <p ion-text item-left>{{menuItem.percent}}%</p>
-                  <p *ngIf="menuItem.discount != 0" text-right class="-bold" style="text-decoration: line-through;"> $ {{menuItem.price}}</p>
-                  <h3 ion-text text-right class="-bold"> $ {{menuItem.discount}}</h3>
-
+                  <div item-right>
+                    <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundle.total}}</p>
+                    <h1 class="-bold">$ {{bundle.totalDiscount}}</h1>
+                  </div>
                 </ion-item>
-              </ion-list>
-            </div>
-          </ion-card>
+                <ion-item>
+                  <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
+                  <p ion-text text-center text-wrap style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleDescription}}</p>
+                </ion-item>
 
-        </ion-card-content>
-        <ion-item>
-          <button ion-button large clear item-left clear="true">
-            <ion-icon *ngIf="bundle.live" color="rdaApp" name="radio-button-on"></ion-icon>
-            <ion-icon *ngIf="!bundle.live" color="rdaApp" name="radio-button-off"></ion-icon>
-          </button>
-          <button ion-button large clear item-right clear="true" (click)="presentActionSheet(i)">
-            <ion-icon color="rdaApp" name="menu"></ion-icon>
-          </button>
-        </ion-item>
-      </ion-card>
+              </div>
 
-    </ion-col>
+              <div class="rip"><div class="inner"></div></div>
+              <div class="bottom">
+                <ion-list *ngFor="let item of bundle.bundleElem">
+                  <ion-item *ngFor="let menuItem of item.menu" class="bundle-item">
 
-</ion-row>
-</ion-grid>
+                    <h3 ion-text item-left class="-bold">{{menuItem.name}}</h3>
+                    <p ion-text item-left>{{menuItem.percent}}%</p>
+                    <p *ngIf="menuItem.discount != 0" text-right class="-bold" style="text-decoration: line-through;"> $ {{menuItem.price}}</p>
+                    <h3 ion-text text-right class="-bold"> $ {{menuItem.discount}}</h3>
+
+                  </ion-item>
+                </ion-list>
+              </div>
+            </ion-card>
+
+          </ion-card-content>
+          <ion-item>
+            <button ion-button large clear item-left clear="true">
+              <ion-icon *ngIf="bundle.live" color="rdaApp" name="radio-button-on"></ion-icon>
+              <ion-icon *ngIf="!bundle.live" color="rdaApp" name="radio-button-off"></ion-icon>
+            </button>
+            <button ion-button large clear item-right clear="true" (click)="presentActionSheet(i)">
+              <ion-icon color="rdaApp" name="menu"></ion-icon>
+            </button>
+          </ion-item>
+        </ion-card>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</div>
 
 </ion-content>

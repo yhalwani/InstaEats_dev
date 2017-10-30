@@ -26,14 +26,14 @@
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.2.28:8100" />
     <allow-navigation href="http://192.168.2.223:8100" />
-    <preference name="FadeSplashScreenDuration" value="1000" />
-    <preference name="FadeSplashScreen" value="true" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="16" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="FadeSplashScreenDuration" value="1000" />
+    <preference name="FadeSplashScreen" value="true" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="SplashShowOnlyFirstTime" value="false" />

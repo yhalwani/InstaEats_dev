@@ -5,6 +5,7 @@ import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
+import { HeaderColor } from '@ionic-native/header-color';
 
 import firebase         from 'firebase';
 
@@ -56,7 +57,8 @@ export class MyApp {
     public userService: User,
     public map: Map,
     public fcm: FcmNotifications,
-    private dialogs: Dialogs
+    private dialogs: Dialogs,
+    private headerColor: HeaderColor
   ) {
 
     // this.statusBar.hide();
@@ -113,6 +115,7 @@ export class MyApp {
       }, 1000);
 
       this.map.getLocationServices();
+      this.headerColor.tint('#da3937');
 
       // let splash = this.modalCtrl.create(SplashContentPage);
       // splash.present();

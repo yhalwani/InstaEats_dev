@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HeaderColor } from '@ionic-native/header-color';
 
 import  firebase  from 'firebase';
 
@@ -131,6 +132,8 @@ import { SettingsProvider } from '../providers/settings/settings';
     LaunchNavigator,
     SplashScreen,
     SettingsProvider,
+    Stripe,
+    HeaderColor,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

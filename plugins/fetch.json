@@ -130,7 +130,15 @@
     "cordova-plugin-stripe": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-stripe"
+            "id": "cordova-plugin-stripe@^1.5.3"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-headercolor": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-headercolor"
         },
         "is_top_level": true,
         "variables": {}

@@ -111,9 +111,11 @@ export class DiscountsPage {
       let data = snapshot.val().stripe.subscribed;
 
       if(data){
-
+        document.getElementById('nocoupons').style.display = "none";
+        document.getElementById('showBundles').style.display = "block";
       } else {
         document.getElementById('nocoupons').style.display = "block";
+        document.getElementById('showBundles').style.display = "none";
       }
     });
 

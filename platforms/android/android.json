@@ -59,6 +59,10 @@
                         {
                             "xml": "<feature name=\"CordovaStripe\"><param name=\"android-package\" value=\"com.zyramedia.cordova.stripe.CordovaStripe\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"HeaderColor\"><param name=\"android-package\" value=\"tomloprod.HeaderColor\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -183,6 +187,9 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-stripe": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-headercolor": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
@@ -352,6 +359,14 @@
             "clobbers": [
                 "cordova.plugins.stripe"
             ]
+        },
+        {
+            "id": "cordova-plugin-headercolor.HeaderColor",
+            "file": "plugins/cordova-plugin-headercolor/www/HeaderColor.js",
+            "pluginId": "cordova-plugin-headercolor",
+            "clobbers": [
+                "cordova.plugins.headerColor"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -371,6 +386,7 @@
         "cordova.plugins.diagnostic": "3.6.7",
         "ionic-plugin-keyboard": "2.2.1",
         "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
-        "cordova-plugin-stripe": "1.5.3"
+        "cordova-plugin-stripe": "1.5.3",
+        "cordova-plugin-headercolor": "1.0"
     }
 }
