@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ActionSheetController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+
 import firebase from 'firebase';
 
 @Component({
@@ -73,7 +74,6 @@ export class DiscountsPage {
   });
 
 }
-
 
   presentActionSheet(index) {
     let actionSheet = this.actionSheetCtrl.create({
