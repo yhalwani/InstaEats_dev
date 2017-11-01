@@ -282,69 +282,70 @@
     <!-- Menu Info Slide -->
     <ion-slide>
 
-      <h2 padding> Please add your Restaurants menu below, create groups (Appetizers, Entrees, Desserts etc) and add items to group. </h2>
-
-      <button ion-button large icon-right color="rdaApp" (click)="addMenuGroup()">
-        Add menu group
-        <ion-icon name="add"></ion-icon>
-      </button>
+      <h2 padding> Please add your Restaurants menu below</h2>
 
       <br>
 
-      <ion-list *ngFor="let menug of menuGroup; let i = index">
-        <ion-row>
-          <ion-col>
-            <ion-list-header>
-              <ion-label>Group name</ion-label>
-              <ion-input type="text" value="" [(ngModel)]="menug.menuGroupName"></ion-input>
-            </ion-list-header>
-          </ion-col>
-          <ion-col>
-            <button ion-button clear item-right color="rdaApp" (click)="removeGroup(i)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-        <ion-item-group *ngFor="let menu of menug.menu; let j = index">
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Item name</ion-label>
-                  <ion-input type="text" value="" [(ngModel)]="menu.name"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
+      <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
+
+      <ion-card>
+              <ion-card-header style="background-color: #da3937;">
+                <ion-item style="background-color: transparent; color: white;">
+                <ion-label style="color: #a7211f;">Menu Heading</ion-label>
+                <ion-input type="text" placeholder="Ex. Appetizers, Entrees, Desserts" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+                <button ion-button clear item-right color="light" (click)="removeGroup(i)">
                   <ion-icon name="trash"></ion-icon>
                 </button>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Item descripition</ion-label>
-                  <ion-input type="text" value="" [(ngModel)]="menu.description"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Item price</ion-label>
-                  <ion-input type="number" value="" [(ngModel)]="menu.price"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item-group>
-        <button ion-button color="rdaApp" clear item-right icon-right (click)="addMenuItem(i)">
-          Add menu item
-          <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
-        </button>
-        <br>
+              </ion-item>
+              </ion-card-header>
+
+            <ion-card-content>
+              <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Name</ion-label>
+                      <ion-input type="text" value="{{menu.name}}" [(ngModel)]="menu.name"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col col-auto>
+                    <ion-buttons end>
+                      <button ion-button clear item-right color="rdaApp" (click)="removeItem(i,j)">
+                        <ion-icon name="trash"></ion-icon>
+                      </button>
+                    </ion-buttons>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-item>
+                    <ion-label>Descripition</ion-label>
+                    <ion-input type="text" value="{{menu.description}}" [(ngModel)]="menu.description"></ion-input>
+                  </ion-item>
+                </ion-row>
+                <ion-row>
+                  <ion-item>
+                    <ion-label>Price</ion-label>
+                    <ion-input type="number" value="{{menu.price}}" [(ngModel)]="menu.price"></ion-input>
+                  </ion-item>
+                </ion-row>
+              </ion-grid>
+                  </ion-item-group>
+            </ion-card-content>
+      <div text-center>
+          <button ion-button color="rdaApp" clear item-center icon-left (click)="addMenuItem(i)">
+            <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
+              FOOD ITEM
+          </button>
+        </div>
+    </ion-card>
       </ion-list>
 
+      <br>
+      <button ion-button large icon-left color="rdaApp" (click)="addMenuGroup()">
+        <ion-icon name="add"></ion-icon>
+          ADD MENU HEADING
+      </button>
       <br>
 
       <ion-buttons>
