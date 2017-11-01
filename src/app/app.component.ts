@@ -19,6 +19,7 @@ import { SignupPage }   from '../pages/signup/signup';
 
 import { IntroPage }    from '../pages/intro/intro';
 
+
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
 
 import { User }         from '../providers/user';
@@ -28,6 +29,7 @@ import { Map }          from '../providers/map';
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
+
 
 @Component({
   templateUrl: 'app.html'

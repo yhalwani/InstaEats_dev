@@ -3,6 +3,7 @@ import { Platform, NavController, NavParams, Events, ActionSheetController, Load
 import { Storage } from '@ionic/storage';
 import { StripePage } from '../stripe/stripe';
 
+
 import firebase from 'firebase';
 
 @Component({

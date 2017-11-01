@@ -48,7 +48,7 @@
   <ion-card>
           <ion-card-header style="background-color: #da3937;">
             <ion-item style="background-color: transparent; color: white;">
-            <ion-label style="color:#a7211f;">Group name</ion-label>
+            <ion-label style="color:#a7211f;">Menu Heading</ion-label>
             <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
             <button ion-button clear item-right color="light" (click)="removeGroup(i)">
               <ion-icon name="trash"></ion-icon>
@@ -92,7 +92,7 @@
   <div text-center>
       <button ion-button color="rdaApp" clear item-center icon-left (click)="addMenuItem(i)">
         <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
-          NEW ITEM
+          FOOD ITEM
       </button>
     </div>
 </ion-card>
@@ -101,13 +101,13 @@
   <div text-center>
     <button ion-button large icon-left color="rdaApp" (click)="addMenuGroup()">
       <ion-icon name="add"></ion-icon>
-        ADD MENU
+        ADD MENU HEADING
     </button>
   </div>
 
   <div text-center>
-      <button ion-button large icon-right color="rdaApp" [disabled]="isDisabled" (click)="createBundle()">
-      Create Bundle
+    <button ion-button large icon-right color="rdaApp" (click)="createBundle()">
+      Create Coupon
     </button>
   </div>
 
