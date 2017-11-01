@@ -6,10 +6,11 @@
         <ion-icon name="md-share"></ion-icon>
       </button>
   </ion-buttons>
-  </ion-navbar>
+</ion-navbar>
 </ion-header>
 
 <ion-content>
+
   <!-- Header Card -->
   <ion-list>
     <ion-item class="item_stretch">
@@ -100,61 +101,6 @@
 
   <!--Mini Discount Card Template-->
   <div id="hasDiscount" style="display: none;">
-
-
-    <ion-card class="widget mini blue">
-      <div class="rip top-edge"><div class="inner"></div></div>
-      <div class="top">
-
-        <ion-item>
-          <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
-          </ion-icon>
-
-            <p>Live (HOT DEAL!)</p>
-            <h3 class="-bold">00:00:00</h3>
-
-          <div item-right>
-            <p text-right class="-bold" style="text-decoration: line-through;"> $22</p>
-            <h1 class="-bold"> $14</h1>
-          </div>
-        </ion-item>
-        <ion-item>
-          <h1 ion-text text-right>Lorem Ipsum</h1>
-          <p ion-text text-right style="color: rgba(0, 0, 0, 0.5);">Click here for details!</p>
-        </ion-item>
-
-      </div>
-      <div class="rip"><div class="inner"></div></div>
-    </ion-card>
-
-
-    <ion-card class="widget mini red">
-      <div class="rip top-edge"><div class="inner"></div></div>
-      <div class="top">
-
-        <ion-item>
-          <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
-          </ion-icon>
-
-            <p>Live (HOT DEAL!)</p>
-            <h3 class="-bold">00:00:00</h3>
-
-          <div item-right>
-            <p text-right class="-bold" style="text-decoration: line-through;"> $22</p>
-            <h1 class="-bold"> $14</h1>
-          </div>
-        </ion-item>
-        <ion-item>
-          <h1 ion-text text-right>Lorem Ipsum</h1>
-          <p ion-text text-right style="color: rgba(0, 0, 0, 0.5);">Click here for details!</p>
-        </ion-item>
-
-      </div>
-      <div class="rip"><div class="inner"></div></div>
-    </ion-card>
-
-
-
     <ion-item-divider style="margin: 0px 0px 0px 0px;" text-center color="background">Coupons</ion-item-divider>
 
     <ion-list  *ngFor="let bundle of Bundles; let i = index;">
