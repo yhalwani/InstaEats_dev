@@ -235,6 +235,7 @@ export class OnBoardPage {
         ownersName: this.ownerName,
         liveStatus: false,   // false by default
         stripe:{
+          "plan" : "none",
           "subscribed": false
         },
 

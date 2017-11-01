@@ -31,13 +31,13 @@ export class MenuPage {
       let user = firebase.auth().currentUser;
       var menuArr = [];
 
-      firebase.database().ref('Restaurant Profiles/' + user.uid).once('value', (snapshot) => {
-        let data = snapshot.val().stripe.subscribed;
+      firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
+        let data = snapshot.val();
 
-        if(data){
-          this.isDisabled = false;
-        } else {
+        if(data.plan === "none" || data.plan === "InstaEats_basicP"){
           this.isDisabled = true;
+        } else {
+          this.isDisabled = false;
         }
       });
 

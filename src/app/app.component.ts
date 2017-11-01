@@ -101,7 +101,7 @@ export class MyApp {
       this.rootPage = RestaurantPortalPage;
       this.pages = [
         {title: 'Restaurant Portal', component: this.rootPage},
-        // {title: 'Payment', component: this.stripepage},
+        // {title: 'Payment', component: StripePage},
         {title: 'Logout', component: this.loggedIn}
       ];
     });

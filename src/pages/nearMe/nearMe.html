@@ -8,18 +8,12 @@
 
     <ion-searchbar [(ngModel)]="searchInput" [autocomplete]="on" [showCancelButton]="shouldShowCancel" placeholder="Search by name or type" (ionInput)="onSearch($event)"></ion-searchbar>
 
-    <!-- <ion-title>
-        <img alt="logo" class={{plat.platform}} src={{plat.assetPath}}>
-    </ion-title> -->
-
     <ion-buttons end>
       <button ion-button icon-only (click)="switchView()">
         <ion-icon name={{iconName}}></ion-icon>
       </button>
-      <!-- <button ion-button icon-only (click)="openModal()">
-        <ion-icon name="options"></ion-icon>
-      </button> -->
     </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
@@ -150,7 +144,7 @@
                   <div item-right>
                     <ion-icon style= "position: absolute; right: 10px" *ngIf="!rest.liveStatus" color="light" name="md-pricetags"></ion-icon>
                     <br>
-                    <!-- <ion-note>{{rest.distance}}km </ion-note> -->
+                    <ion-note>{{rest.distance}}km </ion-note>
                   </div>
 
                 </ion-item>

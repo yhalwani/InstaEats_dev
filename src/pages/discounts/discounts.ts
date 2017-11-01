@@ -107,15 +107,15 @@ export class DiscountsPage {
   ngOnInit(){
     let user = firebase.auth().currentUser;
 
-    firebase.database().ref('Restaurant Profiles/' + user.uid).once('value', (snapshot) => {
-      let data = snapshot.val().stripe.subscribed;
+    firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
+      let data = snapshot.val().plan;
 
-      if(data){
-        document.getElementById('nocoupons').style.display = "none";
-        document.getElementById('showBundles').style.display = "block";
-      } else {
+      if(data === "InstaEats_basicP" || data == undefined){
         document.getElementById('nocoupons').style.display = "block";
         document.getElementById('showBundles').style.display = "none";
+      } else {
+        document.getElementById('nocoupons').style.display = "none";
+        document.getElementById('showBundles').style.display = "block";
       }
     });
 

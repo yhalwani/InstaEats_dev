@@ -69,7 +69,7 @@ export class Map {
       this.mapObject = {
         lat: data.coords.latitude,
         lng: data.coords.longitude,
-        zoom: 13,
+        zoom: 15,
         visible:true,
         iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fblue_pin.png?alt=media&token=d9166627-d30b-4057-8d05-c84c109c0517"
       };
@@ -83,7 +83,7 @@ export class Map {
         this.mapObject = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-          zoom: 13,
+          zoom: 15,
           visible: true,
           iconUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fblue_pin.png?alt=media&token=d9166627-d30b-4057-8d05-c84c109c0517"
         };

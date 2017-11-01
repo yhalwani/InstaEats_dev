@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title>Plans and subscription</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="returnToDash()">
+        Cancel
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -34,7 +39,7 @@
 
           </ion-card-content>
           <ion-card-content>
-            <button ion-button block color="secondary" (click)="openCheckout('899', 'Basic plan')">Select</button>
+            <button ion-button block color="secondary" (click)="openCheckout('899', 'Basic plan', 'InstaEats_basicP')">Select</button>
           </ion-card-content>
 
         </ion-card>
@@ -58,7 +63,7 @@
                   <p>$89/month <br> pay as you go</p>
                 </ion-card-content>
                 <ion-card-content>
-                  <button ion-button block color="yellow" (click)="openCheckout('8900', 'Month-to-Month Plus plan')">Select</button>
+                  <button ion-button block color="yellow" (click)="openCheckout('8900', 'Month-to-Month Plus plan', 'InstaEats_plusP')">Select</button>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -71,7 +76,7 @@
                   <p>$485/6 months <br> 10% off</p>
                 </ion-card-content>
                 <ion-card-content>
-                  <button ion-button block color="yellow" (click)="openCheckout('48500', '6 months Plus plan')">Select</button>
+                  <button ion-button block color="yellow" (click)="openCheckout('48500', '6 months Plus plan', 'InstaEats_plusP_6m')">Select</button>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -84,7 +89,7 @@
                   <p>$928/year <br> 15% off</p>
                 </ion-card-content>
                 <ion-card-content>
-                  <button ion-button block color="yellow" (click)="openCheckout('92800', '1 year Plus plan')">Select</button>
+                  <button ion-button block color="yellow" (click)="openCheckout('92800', '1 year Plus plan', 'InstaEats_plusP_12m')">Select</button>
                 </ion-card-content>
               </ion-card>
             </ion-col>

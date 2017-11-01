@@ -54,7 +54,7 @@ export class LoginPage {
           let tmp;
           // check if the user trying to log in exists in Restaurant Profiles node in the database
           // return true if exists, else false.
-          firebase.database().ref('Restaurant Profiles').on('value', (snapshot) => {
+          firebase.database().ref('Restaurant Profiles').once('value', (snapshot) => {
             tmp = snapshot.hasChild(firebase.auth().currentUser.uid)
           })
 
