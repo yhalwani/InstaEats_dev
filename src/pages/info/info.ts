@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Component }                                  from '@angular/core';
+import { NavController, NavParams, ToastController }  from 'ionic-angular';
+import { Storage }                                    from '@ionic/storage';
+import { Camera, CameraOptions }                      from '@ionic-native/camera';
 
 
 import firebase from 'firebase';
@@ -187,7 +187,7 @@ export class InfoPage {
       website: this.website,
       phoneNumber: this.phoneNumber,
       address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
-      liveStatus: false,   // false by default
+      // liveStatus: false,   // false by default
 
       hoursOfOperation: {
         "Mon":    [this.mon_open, this.mon_close],

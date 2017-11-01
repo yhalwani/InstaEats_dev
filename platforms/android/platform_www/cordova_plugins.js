@@ -156,6 +156,14 @@ module.exports = [
         "merges": [
             "launchnavigator"
         ]
+    },
+    {
+        "id": "cordova-plugin-stripe.stripe",
+        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+        "pluginId": "cordova-plugin-stripe",
+        "clobbers": [
+            "cordova.plugins.stripe"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -176,7 +184,8 @@ module.exports.metadata =
     "cordova-plugin-x-socialsharing": "5.1.8",
     "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
+    "cordova-plugin-stripe": "1.5.3"
 };
 // BOTTOM OF METADATA
 });

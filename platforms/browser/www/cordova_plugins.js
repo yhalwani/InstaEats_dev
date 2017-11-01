@@ -134,6 +134,20 @@ module.exports = [
         "clobbers": [
             "localforage"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+        "id": "cordova-plugin-stripe.stripe",
+        "pluginId": "cordova-plugin-stripe",
+        "clobbers": [
+            "cordova.plugins.stripe"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-stripe/src/browser/CordovaStripe.js",
+        "id": "cordova-plugin-stripe.CordovaStripe",
+        "pluginId": "cordova-plugin-stripe",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -153,7 +167,8 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.3.3",
     "cordova.plugins.diagnostic": "3.6.7",
     "cordova-plugin-splashscreen": "4.0.3",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
+    "cordova-plugin-stripe": "1.5.3"
 }
 // BOTTOM OF METADATA
 });

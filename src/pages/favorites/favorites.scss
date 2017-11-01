@@ -14,5 +14,11 @@ page-favorites {
     box-shadow: 0 0 10px gray;
     display: inline-block;
   }
-  
+
+  // class for ion-item
+  .item {
+    padding-left: 10px !important;
+    margin: 0px;
+  }
+
 }

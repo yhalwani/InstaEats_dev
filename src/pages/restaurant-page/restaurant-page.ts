@@ -1,10 +1,12 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, ModalController, AlertController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { Content } from 'ionic-angular';
+import { Component, ViewChild, ElementRef }                                 from '@angular/core';
+import {  NavController, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavParams, Events, Content }                            from 'ionic-angular';
+import { Storage }                                                          from '@ionic/storage';
 
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { SocialSharing }                                                    from '@ionic-native/social-sharing';
+import { LaunchNavigator, LaunchNavigatorOptions }                          from '@ionic-native/launch-navigator';
+
+import { User }                                                             from '../../providers/user';
 
 import firebase from 'firebase';
 
@@ -44,6 +46,7 @@ export class RestaurantPage {
     totalPercent:          number,
     timeStarted:           any,
     duration:              any,
+    ongoing:               string,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
@@ -53,6 +56,7 @@ export class RestaurantPage {
     }>
   }>
 
+  // variables for map and navigation
   mapIcon: string;
 
   constructor(
@@ -63,8 +67,11 @@ export class RestaurantPage {
     public storage: Storage,
     public events: Events,
     private socialSharing: SocialSharing,
-    private launchNavigator: LaunchNavigator
+    private launchNavigator: LaunchNavigator,
+    public userService: User
   ) {
+
+    this.userService.updataBundleStatus();
 
     this.storage.get('favList').then((list) => {
 
@@ -76,6 +83,7 @@ export class RestaurantPage {
         };
       };
 
+      // if restaurant is not favourited change icon to outline
       if (found == false) {
         this.heartIcon = "heart-outline";
       };
@@ -133,6 +141,7 @@ export class RestaurantPage {
             totalDiscount:    bundle.totalDiscount,
             totalPercent:     bundle.totalPercent,
             live:             bundle.live,
+            ongoing:          bundle.ongoing,
             timeStarted:      bundle.timeStarted,
             duration:         bundle.duration,
             countDown:        {intvarlID: 0, hours: 0, minutes: 0, seconds: 0},
@@ -141,7 +150,8 @@ export class RestaurantPage {
           this.Bundles[bundleIndex] = bundleTmp;
         });
 
-         this.Bundles.forEach(this.setTimers);
+          this.Bundles.forEach(this.setTimers);
+
       });
     } else {
       this.mapIcon = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fdeadlist.png?alt=media&token=8c472e53-9f39-41c9-911d-7d6da24c7097";
@@ -187,7 +197,9 @@ export class RestaurantPage {
   favRest(){
 
     if (this.heartIcon == "heart") {
-      this.heartIcon = "heart-outline";
+      // publish event unfavourited
+      this.events.publish('restaurant:unfavorited', this.navParams.data);
+      this.heartIcon = "heart-outline"; // change the look of the icon
 
       // if user unfavourites a restaurant. save preference and notify user
       let alrt = this.alertCtrl.create({
@@ -197,10 +209,9 @@ export class RestaurantPage {
       });
       alrt.present();
 
-      this.events.publish('restaurant:unfavorited', this.navParams.data);
-
     } else {
-
+      // publish event favourited
+      this.events.publish('restaurant:favorited', this.navParams.data);
       // if user favourites a restaurant. save preference and notify user
       this.heartIcon = "heart";
 
@@ -210,11 +221,7 @@ export class RestaurantPage {
         buttons: ['Ok']
       });
       alrt.present();
-
-      this.events.publish('restaurant:favorited', this.navParams.data);
-
     }
-
   };
 
   // populate map with correct restaurant location
@@ -245,31 +252,28 @@ export class RestaurantPage {
 
   setTimers(bundle){
 
-    var nowCheck = new Date().getTime() - bundle.timeStarted;
+    if(bundle.duration){
+      var nowCheck = new Date().getTime() - bundle.timeStarted;
 
-    if ( nowCheck > bundle.duration ) {
-      clearInterval(bundle.countDown.intvarlID);
-      bundle.countDown.hours = 0;
-      bundle.countDown.minutes = 0;
-      bundle.countDown.seconds = 0;
-    } else {
-      bundle.countDown.intvarlID = setInterval(() => {
-        var now = new Date().getTime();
-        var diff = now - bundle.timeStarted;
+        bundle.countDown.intvarlID = setInterval(() => {
+          var now = new Date().getTime();
+          var diff = now - bundle.timeStarted;
 
-        bundle.countDown.hours    = Math.floor( (bundle.duration - diff) / (1000 * 60 * 60));
-        bundle.countDown.minutes  = Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60));
-        bundle.countDown.seconds  = Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
-      }, 1000);
-    };
-
-  };
+          bundle.countDown.hours    = Math.floor( (bundle.duration - diff) / (1000 * 60 * 60)) + ":";
+          bundle.countDown.minutes  = Math.floor(((bundle.duration - diff) % (1000 * 60 * 60)) / (1000 * 60)) + ":";
+          bundle.countDown.seconds  = Math.floor(((bundle.duration - diff) % (1000 * 60)) / 1000)
+        }, 1000);
+      } else {
+        bundle.countDown.hours = null;
+        bundle.countDown.minutes = null;
+        bundle.countDown.seconds = null;
+      }
+  }
 
   goToDiscount(index){
     let modal = this.modalCtrl.create(DiscountPage, this.Bundles[index]);
     modal.present();
   };
-
 
 };
 
@@ -292,14 +296,22 @@ export class RestaurantPage {
     <ion-content style="background-color: #262323;" padding>
     <!-- Discount Card Template-->
 
-      <ion-card class="widget">
+      <ion-card [ngClass]="bundleItem.ongoing != null ? 'widget' : 'widget red'">
         <div class="top">
 
           <ion-item>
             <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
             </ion-icon>
+
             <p>Live</p>
-            <h3 class="-bold">{{bundleItem.countDown.hours}}:{{bundleItem.countDown.minutes}}:{{bundleItem.countDown.seconds}}</h3>
+
+            <div id="timer" style="display: block;">
+              <h3 class="-bold">{{bundleItem.countDown.hours}}{{bundleItem.countDown.minutes}}{{bundleItem.countDown.seconds}}</h3>
+            </div>
+
+            <div id="tag" style="display: block">
+              <h3 class="-bold">{{bundleItem.ongoing}}</h3>
+            </div>
 
             <div item-right>
               <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundleItem.total}}</p>
@@ -340,6 +352,7 @@ export class DiscountPage {
     live:                  boolean,
     timeStarted:           any,
     duration:              any,
+    ongoing:               string,
     countDown:             {intvarlID: any, hours: any, minutes: any, seconds: any},
     bundleElem:            Array<{
       menuGroupName:       string,
@@ -360,6 +373,20 @@ export class DiscountPage {
     this.bundleItem = this.params.data;
 
   };
+
+  ionViewWillEnter(){
+
+    let timer = document.getElementById("timer");
+    let type = document.getElementById("tag");
+
+    if(this.bundleItem.ongoing){
+      if(timer.style.display === 'block'){
+        timer.style.display = 'none';
+        type.style.display = 'block'
+      }
+      else { }
+    }
+}
 
   // Close bundle page
   dismiss() {

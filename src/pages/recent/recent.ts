@@ -42,5 +42,14 @@ export class RecentPage {
     this.navCtrl.push(RestaurantPage, this.restList[index]);
   };
 
+  // clearRecent(){
+  //   this.storage.clear().then(() => {
+  //     this.storage.get('recentList').then((list) => {
+  //       this.restList= null;
+  //     });
+  //
+  //   })
+  // }
+
 
 }

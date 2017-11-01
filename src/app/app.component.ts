@@ -14,6 +14,8 @@ import { OnBoardPage }  from '../pages/on-board/on-board';
 import { LoginPage }    from '../pages/login/login';
 import { SignupPage }   from '../pages/signup/signup';
 
+// import { StripePage } from '../pages/stripe/stripe';
+
 import { IntroPage }    from '../pages/intro/intro';
 
 
@@ -39,6 +41,7 @@ export class MyApp {
   loginPage : any = LoginPage;
   loggedIn  : any = false;
   menuTitle : any = "InstaEats";
+  // stripepage: any = StripePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -58,7 +61,7 @@ export class MyApp {
     private dialogs: Dialogs
   ) {
 
-    this.statusBar.hide();
+    // this.statusBar.hide();
     this.initializeApp();
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
 
@@ -98,6 +101,7 @@ export class MyApp {
       this.rootPage = RestaurantPortalPage;
       this.pages = [
         {title: 'Restaurant Portal', component: this.rootPage},
+        // {title: 'Payment', component: this.stripepage},
         {title: 'Logout', component: this.loggedIn}
       ];
     });
@@ -132,6 +136,8 @@ export class MyApp {
 
       this.events.publish('app:launch', this.loggedIn);
     });
+
+    this.userService.updataBundleStatus();
   };
 
   openPage(page) {

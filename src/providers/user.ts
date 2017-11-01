@@ -56,4 +56,32 @@ export class User {
     alert.present()
   }
 
+  // update bundle if timer goes to zero
+  updataBundleStatus(){
+    let bundleNode = firebase.database().ref("/Bundles/");
+    bundleNode.on('value', (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        childSnapshot.forEach((coupons) => {
+          let data = coupons.val();
+          if(data.live = true){
+            let timeStarted = data.timeStarted;
+            var nowCheck = new Date().getTime() - timeStarted;
+            if ( nowCheck > data.duration ) {
+              coupons.ref.update({
+                duration: null,
+                live: false,
+                timeStarted: null
+              })
+              return false
+            }
+          }
+          return false;
+        })
+        return false;
+      })
+
+    })
+  }
+
+
 }

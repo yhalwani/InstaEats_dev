@@ -15,7 +15,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { Stripe } from '@ionic-native/stripe';
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule } from '@agm/core';
 
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
@@ -48,6 +48,8 @@ import { AccountPage }                  from '../pages/account/account';
 import { RecentPage }                   from '../pages/recent/recent';
 import { FavoritesPage }                from '../pages/favorites/favorites';
 import { NearMePage }                   from '../pages/nearMe/nearMe';
+
+import { StripePage }                   from '../pages/stripe/stripe';
 
 import { RestaurantPage, DiscountPage } from '../pages/restaurant-page/restaurant-page';
 
@@ -82,7 +84,8 @@ import { SettingsProvider } from '../providers/settings/settings';
     MenuPage,
     ModalContentPage,
     InfoPage,
-    DiscountsPage
+    DiscountsPage,
+    StripePage
   ],
   imports: [
     BrowserModule,
@@ -111,7 +114,8 @@ import { SettingsProvider } from '../providers/settings/settings';
     MenuPage,
     ModalContentPage,
     InfoPage,
-    DiscountsPage
+    DiscountsPage,
+    StripePage
   ],
   providers: [
     Camera,
@@ -126,9 +130,10 @@ import { SettingsProvider } from '../providers/settings/settings';
     StatusBar,
     LaunchNavigator,
     SplashScreen,
+    SettingsProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}, SettingsProvider
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

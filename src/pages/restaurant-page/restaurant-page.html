@@ -5,9 +5,6 @@
       <button ion-button icon-only (click)="shareRest(restaurant.restaurantName)">
         <ion-icon name="md-share"></ion-icon>
       </button>
-      <!-- <button ion-button icon-only (click)="favRest()">
-      <ion-icon name="{{heartIcon}}"></ion-icon>
-    </button> -->
   </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -160,17 +157,23 @@
 
     <ion-item-divider style="margin: 0px 0px 0px 0px;" text-center color="background">Coupons</ion-item-divider>
 
-    <ion-list *ngFor="let bundle of Bundles; let i = index;">
-      <ion-card class="widget mini" (click)="goToDiscount(i)">
+    <ion-list  *ngFor="let bundle of Bundles; let i = index;">
+      <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'" (click)="goToDiscount(i)">
         <div class="rip top-edge"><div class="inner"></div></div>
         <div class="top">
 
           <ion-item>
             <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
             </ion-icon>
+            <p>Live</p>
 
-              <p>Live</p>
-              <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+            <div id="typetag">
+              <h3 class="-bold">{{bundle.ongoing}}</h3>
+            </div>
+
+            <div id="timertag">
+              <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
+            </div>
 
             <div item-right>
               <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
@@ -216,30 +219,30 @@
   </ion-card>
 
   <!-- Map Card -->
-  <sebm-google-map id="map"
-  [latitude]="local_map.lat"
-  [longitude]="local_map.lng"
-  [zoom]="local_map.zoom"
-  [zoomControl]="false"
-  [disableDefaultUI]="true"
-  [mapDraggable]="false"
-  [scrollwheel]="false"
-  [streetViewControl]="false"
-  [disableDoubleClickZoom]="true"
+  <agm-map id="map"
+    [latitude]="local_map.lat"
+    [longitude]="local_map.lng"
+    [zoom]="local_map.zoom"
+    [zoomControl]="false"
+    [disableDefaultUI]="true"
+    [mapDraggable]="false"
+    [scrollwheel]="false"
+    [streetViewControl]="false"
+    [disableDoubleClickZoom]="true"
   >
   <!-- restaurant location marker -->
-  <sebm-google-map-marker
-  [latitude]="local_map.lat"
-  [longitude]="local_map.lng"
-  [iconUrl]="this.mapIcon"
+  <agm-marker
+    [latitude]="local_map.lat"
+    [longitude]="local_map.lng"
+    [iconUrl]="this.mapIcon"
   >
-  <sebm-google-map-info-window [isOpen]="'true'">
+  <agm-info-window [isOpen]="'true'">
     <strong>{{local_map.name}}</strong>
     <br>
     {{local_map.address}}
-  </sebm-google-map-info-window>
-</sebm-google-map-marker>
+  </agm-info-window>
+</agm-marker>
 
-</sebm-google-map>
+</agm-map>
 
 </ion-content>

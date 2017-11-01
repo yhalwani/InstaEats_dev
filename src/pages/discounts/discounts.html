@@ -10,62 +10,45 @@
 
 <ion-content padding>
 
-  <div text-center>
-    <button ion-button large icon-right color="rdaApp">
-      Create Coupon
-    </button>
+  <div id="nocoupons" style="display: none;">
+    <ion-card class="nothingBurger">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-header text-center text-wrap>
+              No coupons created
+            </ion-card-header>
+            <ion-card-content text-center>
+              You must be a paid user
+              <br>
+              to be access creating coupons feature
+              <ion-row justify-content-center>
+                <ion-col>
+                  <button ion-button color="light" icon-only (click)="getPaymentMethod()"><ion-icon name="heart"></ion-icon></button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
   </div>
 
-  <!-- <ion-card class="widget">
-    <div class="top">
+<ion-grid>
+  <ion-row>
+    <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let bundle of bundles; let i = index;">
 
-      <ion-item>
-        <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
-        </ion-icon>
-        <p>Live</p>
-        <h3 class="-bold">{{bundle.countDown.hours}}:{{bundle.countDown.minutes}}:{{bundle.countDown.seconds}}</h3>
+      <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'">
+        <ion-card-content style="background-color: #F4F5F8;">
 
-        <div item-right>
-          <p text-right class="-bold" style="text-decoration: line-through;">$total</p>
-          <h1 class="-bold">$total discount</h1>
-        </div>
-      </ion-item>
-    <ion-item>
-      <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
-      <p ion-text text-center text-wrap style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleDescription}}</p>
-    </ion-item>
+          <ion-card class="widget">
+            <div class="top">
 
-    </div>
+              <ion-item>
+                <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
+                </ion-icon>
 
-    <div class="rip"><div class="inner"></div></div>
-    <div class="bottom">
-      <ion-list *ngFor="let item of bundle.bundleElem">
-        <ion-item *ngFor="let menuItem of item.menu" class="bundle-item">
-
-          <h3 ion-text item-left class="-bold">{{menuItem.name}}</h3>
-          <p ion-text item-left>{{menuItem.percent}}%</p>
-          <p *ngIf="menuItem.discount != 0" text-right class="-bold" style="text-decoration: line-through;"> $ {{menuItem.price}}</p>
-          <h3 ion-text text-right class="-bold"> $ {{menuItem.discount}}</h3>
-
-        </ion-item>
-      </ion-list>
-    </div>
-  </ion-card>
-  <ion-card>
-    <ion-buttons>
-      <button ion-button clear="true">
-        <ion-icon *ngIf="bundle.live" color="rdaApp" name="radio-button-on"></ion-icon>
-        <ion-icon *ngIf="!bundle.live" color="rdaApp" name="radio-button-off"></ion-icon>
-      </button>
-      <button ion-button clear="true" (click)="presentActionSheet(i)">
-        <ion-icon color="rdaApp" name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-
-  </ion-card>
-
-
--->
+                <p>Live</p>
 
 <ion-grid>
 <ion-row>
@@ -103,8 +86,24 @@
                 <p ion-text item-left>{{menuItem.percent}}%</p>
                 <p *ngIf="menuItem.discount != 0" text-right class="-bold" style="text-decoration: line-through;"> $ {{menuItem.price}}</p>
                 <h3 ion-text text-right class="-bold"> $ {{menuItem.discount}}</h3>
+                <div id="discounttype" style="display: block">
+                  <h3 class="-bold">{{bundle.ongoing}}</h3>
+                </div>
 
+                <div id="discounttimer" style="display: block;">
+                  <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
+                </div>
+
+                <div item-right>
+                  <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundle.total}}</p>
+                  <h1 class="-bold">$ {{bundle.totalDiscount}}</h1>
+                </div>
               </ion-item>
+              <ion-item>
+                <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
+                <p ion-text text-center text-wrap style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleDescription}}</p>
+              </ion-item>
+<<<<<<< HEAD
             </ion-list>
           </div>
         </ion-card>
@@ -122,64 +121,45 @@
     </ion-card>
   </ion-col>
     <!-- <ion-card>
+=======
 
-      <ion-card-header>
-        {{bundle.bundleName}}
-        <ion-buttons end>
-          <button ion-button color="rdaApp" clear="true" *ngIf="(bundle.countDown.hours !=0) && (bundle.countDown.minutes !=0) && (bundle.countDown.seconds != 0)">
-            {{bundle.countDown.hours}} : {{bundle.countDown.minutes}} : {{bundle.countDown.seconds}}
-          </button>
-          <button ion-button clear="true">
+            </div>
+>>>>>>> master
+
+            <div class="rip"><div class="inner"></div></div>
+            <div class="bottom">
+              <ion-list *ngFor="let item of bundle.bundleElem">
+                <ion-item *ngFor="let menuItem of item.menu" class="bundle-item">
+
+                  <h3 ion-text item-left class="-bold">{{menuItem.name}}</h3>
+                  <p ion-text item-left>{{menuItem.percent}}%</p>
+                  <p *ngIf="menuItem.discount != 0" text-right class="-bold" style="text-decoration: line-through;"> $ {{menuItem.price}}</p>
+                  <h3 ion-text text-right class="-bold"> $ {{menuItem.discount}}</h3>
+
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-card>
+
+        </ion-card-content>
+        <ion-item>
+          <button ion-button large clear item-left clear="true">
             <ion-icon *ngIf="bundle.live" color="rdaApp" name="radio-button-on"></ion-icon>
             <ion-icon *ngIf="!bundle.live" color="rdaApp" name="radio-button-off"></ion-icon>
           </button>
-          <button ion-button clear="true" (click)="presentActionSheet(i)">
+          <button ion-button large clear item-right clear="true" (click)="presentActionSheet(i)">
             <ion-icon color="rdaApp" name="menu"></ion-icon>
           </button>
-        </ion-buttons>
+        </ion-item>
+      </ion-card>
 
-      </ion-card-header>
-
-      <ion-card-content>
-
-        <ion-card-title>
-          {{bundle.bundleDescription}}
-        </ion-card-title>
-
-        <ion-list *ngFor="let item of bundle.bundleElem; let j = index">
-          <ion-item *ngFor="let menuItem of item.menu">
-            <ion-grid>
-              <h4>{{menuItem.name}}</h4>
-              <ion-row>
-                <ion-col>
-                  Discount
-                </ion-col>
-                <ion-col>
-                  {{menuItem.percent}}%
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  Price
-                </ion-col>
-                <ion-col>
-                  ${{menuItem.price}}
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  Discounted Price
-                </ion-col>
-                <ion-col>
-                  ${{menuItem.discount}}
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-list>
-
+<<<<<<< HEAD
       </ion-card-content>
     </ion-card> -->
+=======
+    </ion-col>
+
+>>>>>>> master
 </ion-row>
 </ion-grid>
 

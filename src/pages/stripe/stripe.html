@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Plans and subscription</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header style="background-color: #da3937; color: white;">
+      Please enter your Credit Card info below
+    </ion-card-header>
+
+    <ion-list class="item_stretch">
+
+      <ion-item-group>
+        <ion-item>
+          <!-- <ion-label>Card Holder</ion-label> -->
+          <ion-input type="text" value="" placeholder="Name on card" [(ngModel)]="cardHolder"></ion-input>
+        </ion-item>
+        <ion-item>
+          <!-- <ion-label>Card Number</ion-label> -->
+          <ion-input type="tel" value="" maxlength=16 placeholder="Card Number" [(ngModel)]="cardNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <!-- <ion-label>Expiry Date</ion-label> -->
+          <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" placeholder="Expiry Date" [(ngModel)]="expiry"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <!-- <ion-label>CVV</ion-label> -->
+          <ion-input type="tel" value="" minlength=3 maxlength=4 placeholder="CVV" [(ngModel)]="cvv"></ion-input>
+        </ion-item>
+      </ion-item-group>
+      <br>
+    </ion-list>
+    </ion-card>
+    <br>
+
+    <button ion-button medium clear icon-left color="rdaApp" (click)="dismiss()">
+      <ion-icon name="arrow-back"></ion-icon>
+      Back
+    </button>
+    <button ion-button medium clear icon-right color="rdaApp" (click)="finish()">
+      Finish!
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+
+</ion-content>
