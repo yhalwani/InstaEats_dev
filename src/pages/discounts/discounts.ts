@@ -111,7 +111,7 @@ export class DiscountsPage {
     firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
       let data = snapshot.val().plan;
 
-      if(data === "InstaEats_basicP" || data == undefined){
+      if(data === "InstaEats_basicP" || data === "none"){
         document.getElementById('nocoupons').style.display = "block";
         document.getElementById('showBundles').style.display = "none";
       } else {
