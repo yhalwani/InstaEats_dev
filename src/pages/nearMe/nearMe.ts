@@ -98,19 +98,20 @@ export class NearMePage {
 
         } else if (childSnapshot.val().liveStatus == false){
           deadList.push(childSnapshot.val());
-          if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
-            for(let i=0; i<deadList.length; i++){
-              deadList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, deadList[i].coordinates.lat, deadList[i].coordinates.lng));
-            }
-            this.deadList = deadList.sort((a, b) => {
-              return a.distance - b.distance
-            });
-          } else {
-            this.deadList = deadList.sort(function(a, b){
-              if(a.restaurantName < b.restaurantName) return -1;
-              if(a.restaurantName > b.restaurantName) return 1;
-            })
-          }
+          // if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
+          //   for(let i=0; i<deadList.length; i++){
+          //     deadList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, deadList[i].coordinates.lat, deadList[i].coordinates.lng));
+          //   }
+          //   this.deadList = deadList.sort((a, b) => {
+          //     return a.distance - b.distance
+          //   });
+          // } else {
+          //   this.deadList = deadList.sort(function(a, b){
+          //     if(a.restaurantName < b.restaurantName) return -1;
+          //     if(a.restaurantName > b.restaurantName) return 1;
+          //   })
+          // }
+          this.deadList = deadList;
         };
         return false;
       });

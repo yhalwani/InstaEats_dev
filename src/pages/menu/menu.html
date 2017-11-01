@@ -16,48 +16,21 @@
 
 <ion-content>
 
-  <!-- Menu template -->
-  <!-- <ion-card>
-    <ion-card-header>
-      <h2 style="color:red;"> Menu </h2>
-    </ion-card-header>
-
-      <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
-        <ion-card class="cardNot">
-          <ion-card-header style="background-color: #da3937; color: white;">
-            {{menug.menuGroupName}}
-          </ion-card-header>
-
-          <ion-card-content class="headerNot">
-            <ion-item *ngFor="let menu of menug.menu; let j = index">
-              <h3>{{menu.name}}</h3>
-              <p>{{menu.description}}</p>
-              <div item-right>
-                <ion-note><strong>${{menu.price}}</strong></ion-note>
-              </div>
-            </ion-item>
-          </ion-card-content>
-
-        </ion-card>
-      </ion-list>
-  </ion-card> -->
-
-
   <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
 
-  <ion-card>
-          <ion-card-header style="background-color: #da3937;">
-            <ion-item style="background-color: transparent; color: white;">
-            <ion-label style="color:#a7211f;">Menu Heading</ion-label>
-            <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
-            <button ion-button clear item-right color="light" (click)="removeGroup(i)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-item>
-          </ion-card-header>
+    <ion-card>
+      <ion-card-header style="background-color: #da3937;">
+        <ion-item style="background-color: transparent; color: white;">
+          <ion-label style="color:#a7211f;">Menu Heading</ion-label>
+          <ion-input type="text" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+          <button ion-button clear item-right color="light" (click)="removeGroup(i)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-card-header>
 
-        <ion-card-content>
-          <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
+      <ion-card-content>
+        <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
           <ion-grid>
             <ion-row>
               <ion-col style="padding: 0px">
@@ -87,21 +60,21 @@
               </ion-item>
             </ion-row>
           </ion-grid>
-              </ion-item-group>
-        </ion-card-content>
-  <div text-center>
-      <button ion-button color="rdaApp" clear item-center icon-left (click)="addMenuItem(i)">
-        <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
+        </ion-item-group>
+      </ion-card-content>
+      <div text-center>
+        <button ion-button color="rdaApp" clear item-center icon-left (click)="addMenuItem(i)">
+          <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
           FOOD ITEM
-      </button>
-    </div>
-</ion-card>
+        </button>
+      </div>
+    </ion-card>
   </ion-list>
 
   <div text-center>
     <button ion-button large icon-left color="rdaApp" (click)="addMenuGroup()">
       <ion-icon name="add"></ion-icon>
-        ADD MENU HEADING
+      ADD MENU HEADING
     </button>
   </div>
 
