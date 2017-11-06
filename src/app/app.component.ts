@@ -1,6 +1,6 @@
 import { SettingsProvider } from './../providers/settings/settings';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController }  from 'ionic-angular';
+import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController, AlertController }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Dialogs }      from '@ionic-native/dialogs';
@@ -46,6 +46,9 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
+  showedAlert: boolean;
+
+
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
@@ -60,7 +63,8 @@ export class MyApp {
     public map: Map,
     public fcm: FcmNotifications,
     private dialogs: Dialogs,
-    private headerColor: HeaderColor
+    private headerColor: HeaderColor,
+    public alert: AlertController
   ) {
 
     // this.statusBar.hide();
@@ -138,10 +142,47 @@ export class MyApp {
       this.fcm.init();
 
       this.events.publish('app:launch', this.loggedIn);
+
+      // Confirm exit
+      this.platform.registerBackButtonAction(() => {
+        if (this.nav.length() == 1) {
+          if (!this.showedAlert) {
+            this.confirmExitApp();
+          } else {
+            this.showedAlert = false;
+          }
+        }
+
+        this.nav.pop();
+      });
     });
 
     this.userService.updataBundleStatus();
   };
+
+  confirmExitApp() {
+    this.showedAlert = true;
+    let confirmAlert = this.alert.create({
+        title: "Exit",
+        message: "Are you sure you want to exit the application?",
+        buttons: [
+            {
+                text: 'Cancel',
+                handler: () => {
+                    this.showedAlert = false;
+                    return;
+                }
+            },
+            {
+                text: 'Exit',
+                handler: () => {
+                    this.platform.exitApp();
+                }
+            }
+        ]
+    });
+    confirmAlert.present();
+  }
 
   openPage(page) {
     // Reset the content nav to have just this page

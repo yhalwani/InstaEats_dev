@@ -80,7 +80,7 @@ export class NearMePage {
 
       if(snapshot){
       snapshot.forEach((childSnapshot) => {
-        if(childSnapshot.val().liveStatus == true) {
+        if(childSnapshot.val().liveStatus == true && childSnapshot.val().stripe.subscribed == true) {
           liveList.push(childSnapshot.val());
           if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
             for(let i=0; i<liveList.length; i++){
@@ -96,7 +96,7 @@ export class NearMePage {
             })
           }
 
-        } else if (childSnapshot.val().liveStatus == false){
+        } else if (childSnapshot.val().liveStatus == false && childSnapshot.val().stripe.subscribed == true){
           deadList.push(childSnapshot.val());
           // if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
           //   for(let i=0; i<deadList.length; i++){
@@ -111,7 +111,10 @@ export class NearMePage {
           //     if(a.restaurantName > b.restaurantName) return 1;
           //   })
           // }
-          this.deadList = deadList;
+            this.deadList = deadList.sort(function(a, b){
+              if(a.restaurantName < b.restaurantName) return -1;
+              if(a.restaurantName > b.restaurantName) return 1;
+            });
         };
         return false;
       });

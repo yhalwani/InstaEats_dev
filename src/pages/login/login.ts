@@ -35,14 +35,6 @@ export class LoginPage {
       this.userToggle = false;
       this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
     }
-    //test case
-    // toggleAppTheme() {
-    //   if (this.selectedTheme === 'user-theme') {
-    //     this.settings.setActiveTheme('restaurant-theme');
-    //   } else {
-    //     this.settings.setActiveTheme('user-theme');
-    //   }
-    // }
 
     loginClicked() {
 

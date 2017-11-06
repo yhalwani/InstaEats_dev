@@ -70,7 +70,7 @@ export class DiscountsPage {
             bundleName:       bundle.bundleName,
             bundleDescription:bundle.bundleDescription,
             total:            bundle.total,
-            totalDiscount:    bundle.totalDiscount,
+            totalDiscount:    Math.round(bundle.totalDiscount * 100) / 100,
             totalPercent:     bundle.totalPercent,
             duration:         bundle.duration,
             timeStarted:      bundle.timeStarted,

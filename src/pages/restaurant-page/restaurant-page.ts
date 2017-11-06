@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef }                                 from '@angular/core';
-import {  NavController, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, ViewController, ModalController, AlertController }  from 'ionic-angular';
 import { IonicPage, NavParams, Events, Content }                            from 'ionic-angular';
 import { Storage }                                                          from '@ionic/storage';
 
@@ -209,7 +209,7 @@ export class RestaurantPage {
       });
       alrt.present();
 
-    } else {
+    } else if (this.heartIcon == "heart-outline") {
       // publish event favourited
       this.events.publish('restaurant:favorited', this.navParams.data);
       // if user favourites a restaurant. save preference and notify user

@@ -402,7 +402,7 @@ export class ModalContentPage {
   }
 
   sumTotalPercent(i,j){
-    this.bundleMenu[i].menu[j].discount = this.bundleMenu[i].menu[j].price * ((100 - this.bundleMenu[i].menu[j].percent) / 100)
+    this.bundleMenu[i].menu[j].discount = Math.round(this.bundleMenu[i].menu[j].price * ((100 - this.bundleMenu[i].menu[j].percent) / 100) * 100) / 100;
     this.sumTotals();
   }
 
@@ -416,6 +416,7 @@ export class ModalContentPage {
       });
     });
     this.totalDiscountPrice = sumDiscount;
+
     var percent = Math.floor(100 - (100 * this.totalDiscountPrice / this.totalPrice));
     this.totalDiscountPercent = ( percent > 0) ? percent : 0;
   }
