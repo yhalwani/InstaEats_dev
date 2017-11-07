@@ -5,26 +5,23 @@ import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
-import { HeaderColor } from '@ionic-native/header-color';
+import { HeaderColor }  from '@ionic-native/header-color';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import firebase         from 'firebase';
 
-import { TabsPage }     from '../pages/tabs/tabs';
-import { AccountPage }  from '../pages/account/account';
-import { OnBoardPage }  from '../pages/on-board/on-board';
-import { LoginPage }    from '../pages/login/login';
-import { SignupPage }   from '../pages/signup/signup';
-
-// import { StripePage } from '../pages/stripe/stripe';
-
-import { IntroPage }    from '../pages/intro/intro';
-
-
+import { TabsPage }             from '../pages/tabs/tabs';
+import { AccountPage }          from '../pages/account/account';
+import { OnBoardPage }          from '../pages/on-board/on-board';
+import { LoginPage }            from '../pages/login/login';
+import { SignupPage }           from '../pages/signup/signup';
+import { IntroPage }            from '../pages/intro/intro';
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
+// import { StripePage }        from '../pages/stripe/stripe';
 
-import { User }         from '../providers/user';
+import { User }                 from '../providers/user';
 import { FcmNotifications }     from '../providers/fcm-notifications';
-import { Map }          from '../providers/map';
+import { Map }                  from '../providers/map';
 
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
@@ -38,15 +35,13 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage  : any = TabsPage;
-  selectedTheme: String;
   loginPage : any = LoginPage;
   loggedIn  : any = false;
   menuTitle : any = "InstaEats";
-  // stripepage: any = StripePage;
 
-  pages: Array<{title: string, component: any}>;
-
-  showedAlert: boolean;
+  pages:          Array<{title: string, component: any}>;
+  selectedTheme:  String;
+  showedAlert:    boolean;
 
 
   constructor(
@@ -64,19 +59,19 @@ export class MyApp {
     public fcm: FcmNotifications,
     private dialogs: Dialogs,
     private headerColor: HeaderColor,
-    public alert: AlertController
+    public alert: AlertController,
+    private iab: InAppBrowser
   ) {
 
     // this.statusBar.hide();
     this.initializeApp();
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
 
-
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
       { title: 'Login', component: LoginPage },
       { title: 'Signup', component: SignupPage },
-      { title: 'Signup Your Restaurant!', component: OnBoardPage}
+      { title: 'Restaurant Owners', component: OnBoardPage}
     ];
 
     events.subscribe('user:loggedIn', (loggedIn, username) => {
@@ -97,7 +92,7 @@ export class MyApp {
         { title: 'Feed Me!', component: this.rootPage },
         { title: 'Login', component: LoginPage },
         { title: 'Signup', component: SignupPage },
-        { title: 'Signup Your Restaurant!', component: OnBoardPage}
+        { title: 'Restaurant Owners', component: OnBoardPage}
       ];
     });
 
@@ -113,6 +108,15 @@ export class MyApp {
     });
 
   };
+
+  openInAppBrowser(){
+    if(this.platform.is('core')){
+      const browser = this.iab.create('http://instaeats.webflow.io/terms-and-policies');
+    }
+    else{
+      const browser = this.iab.create('http://instaeats.webflow.io/terms-and-policies', '_self');
+    }
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -157,14 +161,14 @@ export class MyApp {
       });
     });
 
-    this.userService.updataBundleStatus();
+    this.userService.updateBundleStatus();
   };
 
   confirmExitApp() {
     this.showedAlert = true;
     let confirmAlert = this.alert.create({
         title: "Exit",
-        message: "Are you sure you want to exit the application?",
+        message: "Are you sure you want to exit the app?",
         buttons: [
             {
                 text: 'Cancel',

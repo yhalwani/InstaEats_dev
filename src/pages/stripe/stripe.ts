@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController, ToastController } from 'ionic-angular';
-import { Stripe } from '@ionic-native/stripe';
 
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 
@@ -14,22 +13,12 @@ declare var stripe: any;
 })
 export class StripePage {
 
-  // Stripe variables
-  cardHolder: string;
-  cardNumber: number;
-  expiry:     number;
-  cvv:        number;
-  userToken:  any;
-
-  userRef:    any;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private stripe: Stripe,
     public alertCtrl: AlertController,
     public viewCtrl: ViewController,
-    public toastCtrl: ToastController,
+    public toastCtrl: ToastController
   ) {
 
   }

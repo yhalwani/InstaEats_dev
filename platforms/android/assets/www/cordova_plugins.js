@@ -172,6 +172,15 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.headerColor"
         ]
+    },
+    {
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -194,7 +203,8 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
     "cordova-plugin-stripe": "1.5.3",
-    "cordova-plugin-headercolor": "1.0"
+    "cordova-plugin-headercolor": "1.0",
+    "cordova-plugin-inappbrowser": "1.7.1"
 };
 // BOTTOM OF METADATA
 });

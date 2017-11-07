@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
-import { Stripe } from '@ionic-native/stripe';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import firebase from "firebase";
@@ -79,7 +78,6 @@ export class OnBoardPage {
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public storage: Storage,
-    public stripe: Stripe,
     public camera: Camera,
     public toastCtrl: ToastController
   ) {

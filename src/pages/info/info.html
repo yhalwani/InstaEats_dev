@@ -32,11 +32,11 @@
       </ion-item>
       <br>
       <!-- Password Input -->
-      <!-- <ion-item>
+      <ion-item>
         <ion-icon item-left name="lock"></ion-icon>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
-      </ion-item> -->
+        <button ion-button color="light" (click)="this.userService.changePassword()">Update password</button>
+        <!-- <ion-input type="password" value="" [(ngModel)]="password"></ion-input> -->
+      </ion-item>
 
       <!-- Restaurant Info -->
       <ion-card-header style="background-color: #da3937; color: white;">Restaurants Resources</ion-card-header>
@@ -266,5 +266,8 @@
     </button>
   </div>
 
-
 </ion-content>
+
+<ion-footer>
+  <button ion-button color="light" full (click)="this.userService.deleteAccount()">Delete account</button>
+</ion-footer>

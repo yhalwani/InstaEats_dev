@@ -51,6 +51,9 @@
         },
         "cordova-plugin-headercolor": {
             "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
     "dependent_plugins": {

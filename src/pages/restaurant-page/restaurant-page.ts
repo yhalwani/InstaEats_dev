@@ -71,7 +71,7 @@ export class RestaurantPage {
     public userService: User
   ) {
 
-    this.userService.updataBundleStatus();
+    this.userService.updateBundleStatus();
 
     this.storage.get('favList').then((list) => {
 

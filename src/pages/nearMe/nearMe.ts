@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Events, ToastController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
+
 import firebase from 'firebase';
 
 import { Map }          from '../../providers/map';

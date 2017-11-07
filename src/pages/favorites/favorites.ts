@@ -63,8 +63,6 @@ export class FavoritesPage {
 
     events.subscribe('restaurant:unfavorited', (restaurant) => {
 
-      alert("Unfavorited subscribe");
-
       for (var x = 0; x < this.restList.length; x++){
         if(this.restList[x].restaurantName === restaurant.restaurantName){
           let index = x;
@@ -79,7 +77,7 @@ export class FavoritesPage {
 
   };
 
-  ionViewDidLoad(){
+  ionViewLoaded(){
     this.storage.get('favList').then((list) => {
       this.setList(list);
     });

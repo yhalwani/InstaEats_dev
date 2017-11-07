@@ -40,7 +40,6 @@ export class SignupPage {
         // after creation push the user to realtime database using uid as key
         userRef.child(this.fbAuthID).update({
           email: this.email,
-          pass: this.password,
           displayName: this.username
         });
         // updates the display name else remains undefined

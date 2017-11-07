@@ -3,6 +3,7 @@ import { NavController, NavParams, ToastController }  from 'ionic-angular';
 import { Storage }                                    from '@ionic/storage';
 import { Camera, CameraOptions }                      from '@ionic-native/camera';
 
+import { User }             from '../../providers/user';
 
 import firebase from 'firebase';
 
@@ -50,7 +51,7 @@ export class InfoPage {
   sun_open:     any = null;
   sun_close:    any = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController, public userService: User) {
 
     // set cuisineTypes array
     this.cuisineTypes = [
@@ -190,8 +191,6 @@ export class InfoPage {
       website: this.website,
       phoneNumber: this.phoneNumber,
       address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
-      // liveStatus: false,   // false by default
-
       hoursOfOperation: {
         "Mon":    [this.mon_open, this.mon_close],
         "Tues":   [this.tues_open, this.tues_close],

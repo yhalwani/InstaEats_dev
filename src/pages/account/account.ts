@@ -34,14 +34,10 @@ export class AccountPage {
     let user = firebase.auth().currentUser;
     let uid = user.uid;
 
-    // change user password
-    this.userService.changePassword(this.password);
-
     try{
       ref.child(uid).update({
         displayName: this.userName,
         email: this.email,
-        pass: this.password
       });
     }catch(error){
       ref.child(uid).update({
