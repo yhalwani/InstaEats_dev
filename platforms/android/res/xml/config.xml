@@ -101,4 +101,8 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="0" />
+    <feature name="Intercom">
+        <param name="android-package" value="io.intercom.android.sdk.IntercomBridge" />
+        <param name="onload" value="true" />
+    </feature>
 </widget>

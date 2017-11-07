@@ -39,10 +39,10 @@
       <ion-row>
         <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let bundle of bundles; let i = index;">
 
-          <ion-card [ngClass]="bundle.ongoing != null ? 'widget mini' : 'widget mini red'">
+          <ion-card>
             <ion-card-content style="background-color: #F4F5F8;">
 
-              <ion-card class="widget">
+              <ion-card [ngClass]="bundle.ongoing != null ? 'widget' : 'widget red'">
                 <div class="top">
 
                   <ion-item>

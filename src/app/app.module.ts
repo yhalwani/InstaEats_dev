@@ -15,6 +15,7 @@ import { Dialogs } from '@ionic-native/dialogs';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { Stripe } from '@ionic-native/stripe';
+import { Intercom } from '@ionic-native/intercom';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -133,6 +134,7 @@ import { SettingsProvider } from '../providers/settings/settings';
     SplashScreen,
     SettingsProvider,
     Stripe,
+    Intercom,
     HeaderColor,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,

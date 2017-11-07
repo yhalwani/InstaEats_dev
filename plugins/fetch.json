@@ -138,7 +138,15 @@
     "cordova-plugin-headercolor": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-headercolor"
+            "id": "cordova-plugin-headercolor@^1.0.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-intercom": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-intercom"
         },
         "is_top_level": true,
         "variables": {}
