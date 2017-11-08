@@ -39,8 +39,7 @@
       <!-- Password Input -->
       <ion-item>
         <ion-icon item-left name="lock"></ion-icon>
-        <button ion-button color="light" (click)="this.userService.changePassword()">Update password</button>
-        <!-- <ion-input type="password" value="" [(ngModel)]="password"></ion-input> -->
+        <button ion-button clear (click)="this.userService.changePassword()">Update password</button>
       </ion-item>
     </ion-item-group>
   </ion-list>
@@ -48,5 +47,7 @@
 </ion-content>
 
 <ion-footer>
-  <button ion-button color="light" full (click)="this.userService.deleteAccount()">Delete account</button>
+  <div style="text-align: center">
+    <button ion-button clear (click)="this.userService.deleteAccount()">Delete account</button>
+  </div>
 </ion-footer>

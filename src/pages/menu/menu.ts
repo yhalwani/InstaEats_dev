@@ -28,37 +28,37 @@ export class MenuPage {
     public alertCtrl: AlertController
   ) {
 
-      let user = firebase.auth().currentUser;
-      var menuArr = [];
+    let user = firebase.auth().currentUser;
+    var menuArr = [];
 
-      firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
-        let data = snapshot.val();
+    firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
+      let data = snapshot.val();
 
-        if(data.plan === "none" || data.plan === "InstaEats_basicP"){
-          this.isDisabled = true;
-        } else {
-          this.isDisabled = false;
-        }
-      });
+      if(data.plan === "none" || data.plan === "InstaEats_basicP"){
+        this.isDisabled = true;
+      } else {
+        this.isDisabled = false;
+      }
+    });
 
-      firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
-        var data = snapshot.val();
+    firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
+      var data = snapshot.val();
 
-        for (var menuG in data){
-          var menuGE = {menuGroupName: menuG, menu: []};
+      for (var menuG in data){
+        var menuGE = {menuGroupName: menuG, menu: []};
 
-          snapshot.child(menuG).forEach((childSnapshot) => {
-            var childData = childSnapshot.val();
-            var menuI = {name: childData.name, description: childData.description, price: childData.price};
-            menuGE.menu.push(menuI);
-            return false;
-          });
-         menuArr.push(menuGE);
-        }
+        snapshot.child(menuG).forEach((childSnapshot) => {
+          var childData = childSnapshot.val();
+          var menuI = {name: childData.name, description: childData.description, price: childData.price};
+          menuGE.menu.push(menuI);
+          return false;
+        });
+        menuArr.push(menuGE);
+      }
 
-        this.storage.set('restMenu', menuArr);
-        this.menuGroup = menuArr;
-      });
+      this.storage.set('restMenu', menuArr);
+      this.menuGroup = menuArr;
+    });
   };
 
   // Push menu to firebase
@@ -106,11 +106,13 @@ export class MenuPage {
         {
           text: 'Delete',
           handler: () => {
-            let childNode = menuNode.child(this.menuGroup[index].menuGroupName);
-            childNode.remove();
-
-
-          this.menuGroup.splice(index,1);
+            try{
+              let childNode = menuNode.child(this.menuGroup[index].menuGroupName);
+              childNode.remove();
+              this.menuGroup.splice(index,1);
+            } catch(err){
+              this.menuGroup.splice(index,1);
+            }
           }
         }
       ]
@@ -123,7 +125,6 @@ export class MenuPage {
     let uid = firebase.auth().currentUser.uid;
     let menuNode = firebase.database().ref("MenuItems/" + uid);
     let length = this.menuGroup.length;
-
 
     const alert = this.alertCtrl.create({
       title: 'Confirm delete',
@@ -139,11 +140,14 @@ export class MenuPage {
         {
           text: 'Delete',
           handler: () => {
-            let childNode = menuNode.child(this.menuGroup[menu].menuGroupName);
-            childNode.child(item).remove();
 
-
-            this.menuGroup[menu].menu.splice(item, 1);
+            try{
+              let childNode = menuNode.child(this.menuGroup[menu].menuGroupName);
+              childNode.child(item).remove();
+              this.menuGroup[menu].menu.splice(item, 1);
+            } catch (err) {
+              this.menuGroup[menu].menu.splice(item, 1);
+            }
           }
         }
       ]
@@ -161,122 +165,122 @@ export class MenuPage {
 @Component({
   template: `
   <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        Create Coupon
-      </ion-title>
-      <ion-buttons start>
-        <button ion-button (click)="dismiss()">
-          Cancel
-        </button>
-      </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+  <ion-title>
+  Create Coupon
+  </ion-title>
+  <ion-buttons start>
+  <button ion-button (click)="dismiss()">
+  Cancel
+  </button>
+  </ion-buttons>
+  </ion-toolbar>
   </ion-header>
 
   <ion-content>
-    <ion-item>
-      <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
-    </ion-item>
+  <ion-item>
+  <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
+  </ion-item>
+  <ion-item>
+  <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
+  </ion-item>
 
-    <br>
+  <br>
 
-    <ion-list *ngFor="let menug of bundleMenu; let i = index">
-      <ion-card class="cardNot">
-        <ion-card-header style="background-color: #da3937; color: white;">
-          {{menug.menuGroupName}}
-        </ion-card-header>
+  <ion-list *ngFor="let menug of bundleMenu; let i = index">
+  <ion-card class="cardNot">
+  <ion-card-header style="background-color: #da3937; color: white;">
+  {{menug.menuGroupName}}
+  </ion-card-header>
 
-        <ion-grid>
-          <ion-row style="line-height: 1.5em;">
-            <ion-col col-2 col-auto >
-            </ion-col>
-            <ion-col col-4 col-auto>
-              Item Name
-            </ion-col>
-            <ion-col col-2 col-auto>
-              Price
-            </ion-col>
-            <ion-col col-2 col-auto>
-              $'s off
-            </ion-col>
-            <ion-col col-2 col-auto>
-              % off
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+  <ion-grid>
+  <ion-row style="line-height: 1.5em;">
+  <ion-col col-2 col-auto >
+  </ion-col>
+  <ion-col col-4 col-auto>
+  Item Name
+  </ion-col>
+  <ion-col col-2 col-auto>
+  Price
+  </ion-col>
+  <ion-col col-2 col-auto>
+  $'s off
+  </ion-col>
+  <ion-col col-2 col-auto>
+  % off
+  </ion-col>
+  </ion-row>
+  </ion-grid>
 
-        <ion-grid>
-          <ion-item-group *ngFor="let menu of menug.menu; let j = index">
-            <ion-row>
+  <ion-grid>
+  <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+  <ion-row>
 
-              <ion-col col-2 col-auto >
-                <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
-              </ion-col>
+  <ion-col col-2 col-auto >
+  <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
+  </ion-col>
 
-              <ion-col col-4 col-auto >
-                <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
-              </ion-col>
+  <ion-col col-4 col-auto >
+  <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
+  </ion-col>
 
-              <ion-col col-2 col-auto >
-                $ {{menu.price}}
-              </ion-col>
+  <ion-col col-2 col-auto >
+  $ {{menu.price}}
+  </ion-col>
 
-              <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-                <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
-              </ion-col>
+  <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
+  </ion-col>
 
-              <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-                <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
-              </ion-col>
+  <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
+  </ion-col>
 
-            </ion-row>
-          </ion-item-group>
-        </ion-grid>
-            </ion-card>
-    </ion-list>
+  </ion-row>
+  </ion-item-group>
+  </ion-grid>
+  </ion-card>
+  </ion-list>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col col-6>
+  <ion-grid>
+  <ion-row>
+  <ion-col col-6>
 
-        </ion-col>
-        <ion-col col-2>
-          Total Price
-        </ion-col>
-        <ion-col col-2>
-          Total $'s off
-        </ion-col>
-        <ion-col col-2>
-          Total % off
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-6>
+  </ion-col>
+  <ion-col col-2>
+  Total Price
+  </ion-col>
+  <ion-col col-2>
+  Total $'s off
+  </ion-col>
+  <ion-col col-2>
+  Total % off
+  </ion-col>
+  </ion-row>
+  <ion-row>
+  <ion-col col-6>
 
-        </ion-col>
-        <ion-col col-2>
-          {{totalPrice}}
-        </ion-col>
-        <ion-col col-2>
-          $ {{totalDiscountPrice}}
-        </ion-col>
-        <ion-col col-2>
-          {{totalDiscountPercent}} %
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  </ion-col>
+  <ion-col col-2>
+  {{totalPrice}}
+  </ion-col>
+  <ion-col col-2>
+  $ {{totalDiscountPrice}}
+  </ion-col>
+  <ion-col col-2>
+  {{totalDiscountPercent}} %
+  </ion-col>
+  </ion-row>
+  </ion-grid>
 
-    <br>
+  <br>
 
-    <div text-center>
-      <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
-        Save Bundle
-        <ion-icon name="pricetags"></ion-icon>
-      </button>
-    </div>
+  <div text-center>
+  <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
+  Save Bundle
+  <ion-icon name="pricetags"></ion-icon>
+  </button>
+  </div>
   </ion-content>
   `
 })

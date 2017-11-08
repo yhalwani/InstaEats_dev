@@ -34,7 +34,7 @@
       <!-- Password Input -->
       <ion-item>
         <ion-icon item-left name="lock"></ion-icon>
-        <button ion-button color="light" (click)="this.userService.changePassword()">Update password</button>
+        <button ion-button clear (click)="this.userService.changePassword()">Update password</button>
         <!-- <ion-input type="password" value="" [(ngModel)]="password"></ion-input> -->
       </ion-item>
 
@@ -46,8 +46,8 @@
           <img src="{{image}}">
         </ion-avatar>
         <ion-buttons>
-          <button ion-button clear icon-right color="rdaApp" (click)="addImg()">
-            Upload Image
+          <button ion-button clear icon-right (click)="addImg()">
+            Upload New Image
             <ion-icon name="add"></ion-icon>
           </button>
         </ion-buttons>
@@ -140,15 +140,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="monopen.open()">
-               <ion-datetime #monopen pickerFormat="h mm A" [hidden]="mon_open == '--:--'" [(ngModel)]="mon_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="mon_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #monopen pickerFormat="h mm A" [hidden]="mon_open == '--:--'" [(ngModel)]="mon_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="mon_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="monclose.open()">
-               <ion-datetime #monclose pickerFormat="h mm A" [hidden]="mon_close == '--:--'" [(ngModel)]="mon_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="mon_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #monclose pickerFormat="h mm A" [hidden]="mon_close == '--:--'" [(ngModel)]="mon_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="mon_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -157,15 +157,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="tuesopen.open()">
-               <ion-datetime #tuesopen pickerFormat="h mm A" [hidden]="tues_open == '--:--'" [(ngModel)]="tues_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="tues_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #tuesopen pickerFormat="h mm A" [hidden]="tues_open == '--:--'" [(ngModel)]="tues_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="tues_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="tuesclose.open()">
-               <ion-datetime #tuesclose pickerFormat="h mm A" [hidden]="tues_close == '--:--'" [(ngModel)]="tues_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="tues_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #tuesclose pickerFormat="h mm A" [hidden]="tues_close == '--:--'" [(ngModel)]="tues_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="tues_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -174,15 +174,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="wedopen.open()">
-               <ion-datetime #wedopen pickerFormat="h mm A" [hidden]="wed_open == '--:--'" [(ngModel)]="wed_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="wed_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #wedopen pickerFormat="h mm A" [hidden]="wed_open == '--:--'" [(ngModel)]="wed_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="wed_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="wedclose.open()">
-               <ion-datetime #wedclose pickerFormat="h mm A" [hidden]="wed_close == '--:--'" [(ngModel)]="wed_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="wed_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #wedclose pickerFormat="h mm A" [hidden]="wed_close == '--:--'" [(ngModel)]="wed_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="wed_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -191,15 +191,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="thursopen.open()">
-               <ion-datetime #thursopen pickerFormat="h mm A" [hidden]="thurs_open == '--:--'" [(ngModel)]="thurs_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="thurs_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #thursopen pickerFormat="h mm A" [hidden]="thurs_open == '--:--'" [(ngModel)]="thurs_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="thurs_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="thursclose.open()">
-               <ion-datetime #thursclose pickerFormat="h mm A" [hidden]="thurs_close == '--:--'" [(ngModel)]="thurs_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="thurs_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #thursclose pickerFormat="h mm A" [hidden]="thurs_close == '--:--'" [(ngModel)]="thurs_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="thurs_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -208,15 +208,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="friopen.open()">
-               <ion-datetime #friopen pickerFormat="h mm A" [hidden]="fri_open == '--:--'" [(ngModel)]="fri_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="fri_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #friopen pickerFormat="h mm A" [hidden]="fri_open == '--:--'" [(ngModel)]="fri_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="fri_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="friclose.open()">
-               <ion-datetime #friclose pickerFormat="h mm A" [hidden]="fri_close == '--:--'" [(ngModel)]="fri_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="fri_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #friclose pickerFormat="h mm A" [hidden]="fri_close == '--:--'" [(ngModel)]="fri_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="fri_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -225,15 +225,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="satopen.open()">
-               <ion-datetime #satopen pickerFormat="h mm A" [hidden]="sat_open == '--:--'" [(ngModel)]="sat_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="sat_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #satopen pickerFormat="h mm A" [hidden]="sat_open == '--:--'" [(ngModel)]="sat_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="sat_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="satclose.open()">
-               <ion-datetime #satclose pickerFormat="h mm A" [hidden]="sat_close == '--:--'" [(ngModel)]="sat_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="sat_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #satclose pickerFormat="h mm A" [hidden]="sat_close == '--:--'" [(ngModel)]="sat_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="sat_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -242,15 +242,15 @@
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="sunopen.open()">
-               <ion-datetime #sunopen pickerFormat="h mm A" [hidden]="sun_open == '--:--'" [(ngModel)]="sun_open"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="sun_open == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #sunopen pickerFormat="h mm A" [hidden]="sun_open == '--:--'" [(ngModel)]="sun_open"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="sun_open == '--:--'"></ion-icon>
+            </button>
           </ion-col>
           <ion-col no-padding>
             <button ion-button clear color="rdaApp" (click)="sunclose.open()">
-               <ion-datetime #sunclose pickerFormat="h mm A" [hidden]="sun_close == '--:--'" [(ngModel)]="sun_close"></ion-datetime>
-               <ion-icon name="add-circle" *ngIf="sun_close == '--:--'"></ion-icon>
-             </button>
+              <ion-datetime #sunclose pickerFormat="h mm A" [hidden]="sun_close == '--:--'" [(ngModel)]="sun_close"></ion-datetime>
+              <ion-icon name="add-circle" *ngIf="sun_close == '--:--'"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
 
@@ -269,5 +269,7 @@
 </ion-content>
 
 <ion-footer>
-  <button ion-button color="light" full (click)="this.userService.deleteAccount()">Delete account</button>
+  <div style="text-align: center">
+    <button ion-button clear (click)="this.userService.deleteAccount()">Delete account</button>
+  </div>
 </ion-footer>

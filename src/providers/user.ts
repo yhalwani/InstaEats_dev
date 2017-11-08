@@ -17,6 +17,41 @@ export class User {
     this.user = {email: "", username: "", loggedIn: false, fcmToken: ""};
   }
 
+  forgotPassword(){
+    let thisalert = this.alertCtrl.create({
+      title: 'Reset Password',
+      inputs: [
+        {
+          name: 'enterEmail',
+          placeholder: 'Enter email address',
+          type: 'string'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: data => {
+            let auth = firebase.auth();
+            let emailAddress = data.enterEmail;
+            auth.sendPasswordResetEmail(emailAddress).then(() => {
+              alert("Password reset email sent");
+            }).catch(function(error) {
+              alert(error.message)
+            });
+
+          }
+        }
+      ]
+    });
+    thisalert.present();
+  }
+
   // change user password
   changePassword(newPassword){
     let thisalert = this.alertCtrl.create({

@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content  } from 'ionic-angular';
+import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content, Platform  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import firebase from "firebase";
 
@@ -12,6 +13,7 @@ import firebase from "firebase";
   templateUrl: 'on-board.html',
 })
 export class OnBoardPage {
+  isDisabled: boolean = true;
 
   // Variables for restaurant sign up
   username:       any;
@@ -79,7 +81,9 @@ export class OnBoardPage {
     public loadingCtrl: LoadingController,
     public storage: Storage,
     public camera: Camera,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private iab: InAppBrowser,
+    public platform: Platform
   ) {
 
     // Set cuisineTypes array
@@ -159,6 +163,18 @@ export class OnBoardPage {
     this.content.scrollToTop(50);
   }
 
+  updateFinishButton(){
+    this.isDisabled = !this.isDisabled;
+  }
+
+  openInAppBrowser(){
+    if(this.platform.is('core')){
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies');
+    }
+    else{
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies', '_self');
+    }
+  }
 
   // Finish onboarding and store data
   finish(){
