@@ -19,6 +19,13 @@
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
+    <feature name="HeaderColor">
+        <param name="android-package" value="tomloprod.HeaderColor" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
@@ -26,6 +33,9 @@
     <feature name="StatusBar">
         <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="CordovaStripe">
+        <param name="android-package" value="com.zyramedia.cordova.stripe.CordovaStripe" />
     </feature>
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
@@ -40,16 +50,6 @@
     </feature>
     <feature name="LaunchNavigator">
         <param name="android-package" value="uk.co.workingedge.phonegap.plugin.LaunchNavigator" />
-    </feature>
-    <feature name="CordovaStripe">
-        <param name="android-package" value="com.zyramedia.cordova.stripe.CordovaStripe" />
-    </feature>
-    <feature name="HeaderColor">
-        <param name="android-package" value="tomloprod.HeaderColor" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
     <feature name="Diagnostic">
         <param name="android-package" value="cordova.plugins.Diagnostic" />
