@@ -60,7 +60,6 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
-    <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="~4.1.0" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-console" spec="1.0.5" />
@@ -78,4 +77,5 @@
     <plugin name="cordova.plugins.diagnostic" spec="^3.6.7" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.0.5" />
+    <engine name="android" spec="~6.2.3" />
 </widget>

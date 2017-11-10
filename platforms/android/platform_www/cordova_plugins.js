@@ -103,6 +103,15 @@ module.exports = [
         ]
     },
     {
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
         "id": "cordova-plugin-splashscreen.SplashScreen",
         "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
         "pluginId": "cordova-plugin-splashscreen",
@@ -180,15 +189,6 @@ module.exports = [
         "merges": [
             "launchnavigator"
         ]
-    },
-    {
-        "id": "cordova-plugin-inappbrowser.inappbrowser",
-        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-        "pluginId": "cordova-plugin-inappbrowser",
-        "clobbers": [
-            "cordova.InAppBrowser.open",
-            "window.open"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -204,6 +204,7 @@ module.exports.metadata =
     "cordova-plugin-fcm": "2.1.2",
     "cordova-plugin-geolocation": "2.4.3",
     "cordova-plugin-headercolor": "1.0",
+    "cordova-plugin-inappbrowser": "1.7.1",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-stripe": "1.5.3",
@@ -212,8 +213,7 @@ module.exports.metadata =
     "cordova-plugin-x-socialsharing": "5.1.8",
     "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
-    "cordova-plugin-inappbrowser": "1.7.1"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
 };
 // BOTTOM OF METADATA
 });

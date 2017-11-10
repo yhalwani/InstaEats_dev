@@ -41,6 +41,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -66,10 +70,6 @@
                         },
                         {
                             "xml": "<feature name=\"LaunchNavigator\"><param name=\"android-package\" value=\"uk.co.workingedge.phonegap.plugin.LaunchNavigator\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -176,6 +176,9 @@
         "cordova-plugin-headercolor": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -201,9 +204,6 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
@@ -312,6 +312,15 @@
             ]
         },
         {
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "pluginId": "cordova-plugin-inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
+            ]
+        },
+        {
             "id": "cordova-plugin-splashscreen.SplashScreen",
             "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
             "pluginId": "cordova-plugin-splashscreen",
@@ -389,15 +398,6 @@
             "merges": [
                 "launchnavigator"
             ]
-        },
-        {
-            "id": "cordova-plugin-inappbrowser.inappbrowser",
-            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-            "pluginId": "cordova-plugin-inappbrowser",
-            "clobbers": [
-                "cordova.InAppBrowser.open",
-                "window.open"
-            ]
         }
     ],
     "plugin_metadata": {
@@ -411,6 +411,7 @@
         "cordova-plugin-fcm": "2.1.2",
         "cordova-plugin-geolocation": "2.4.3",
         "cordova-plugin-headercolor": "1.0",
+        "cordova-plugin-inappbrowser": "1.7.1",
         "cordova-plugin-splashscreen": "4.0.3",
         "cordova-plugin-statusbar": "2.2.1",
         "cordova-plugin-stripe": "1.5.3",
@@ -419,7 +420,6 @@
         "cordova-plugin-x-socialsharing": "5.1.8",
         "cordova.plugins.diagnostic": "3.6.7",
         "ionic-plugin-keyboard": "2.2.1",
-        "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
-        "cordova-plugin-inappbrowser": "1.7.1"
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
     }
 }

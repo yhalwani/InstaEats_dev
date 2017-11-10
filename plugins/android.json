@@ -28,6 +28,9 @@
         "cordova-plugin-headercolor": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
@@ -50,9 +53,6 @@
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },
