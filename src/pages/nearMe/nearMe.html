@@ -33,6 +33,7 @@
       [zoomControl]="false"
       [disableDefaultUI]="true"
       [scaleControl]="true"
+      [mapTypeControl]="true"
       >
 
         <!-- user location marker -->
@@ -62,7 +63,14 @@
           <agm-info-window>
             <strong>{{m.restaurantName}}</strong>
             <br>
-            {{m.address}}
+            {{m.address[0]}}
+            <br>
+            {{m.address[1]}},
+            {{m.address[3]}}
+            <br>
+            {{m.address[2]}},
+            {{m.address[4]}}
+
           </agm-info-window>
 
         </agm-marker>
@@ -77,7 +85,13 @@
           <agm-info-window>
             <strong>{{"[OFFLINE]"}}{{m.restaurantName}} </strong>
             <br>
-            {{m.address}}
+            {{m.address[0]}}
+            <br>
+            {{m.address[1]}},
+            {{m.address[3]}}
+            <br>
+            {{m.address[2]}},
+            {{m.address[4]}}
           </agm-info-window>
 
         </agm-marker>
