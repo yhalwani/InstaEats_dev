@@ -1,14 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.retoll.instaeats" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <feature name="Device">
-        <param name="browser-package" value="Device" />
-    </feature>
-    <feature name="Camera">
-        <param name="browser-package" value="Camera" />
-    </feature>
-    <feature name="CordovaStripe">
-        <param name="browser-package" value="CordovaStripe" />
-    </feature>
     <name>InstaEats</name>
     <description>Local restaurants running at-the-moment deals.</description>
     <author email="youssef@retoll.com" href="https://www.retoll.com/">

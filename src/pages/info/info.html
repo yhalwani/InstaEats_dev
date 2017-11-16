@@ -85,6 +85,11 @@
       <!-- Address Input -->
       <ion-card-header style="background-color: #da3937; color: white;">Contact Info</ion-card-header>
       <ion-item>
+        <ion-icon item-left name="md-contact"></ion-icon>
+        <ion-label floating>Owner's Name</ion-label>
+        <ion-input type="text" value="{{ownerName}}" [(ngModel)]="ownerName"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-icon item-left name="call"></ion-icon>
         <ion-label floating>Phone Number</ion-label>
         <ion-input type="tel" value="{{phoneNumber}}" [(ngModel)]="phoneNumber"></ion-input>

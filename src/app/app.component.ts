@@ -1,4 +1,3 @@
-import { SettingsProvider } from './../providers/settings/settings';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController, AlertController }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
@@ -22,6 +21,7 @@ import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-port
 import { User }                 from '../providers/user';
 import { FcmNotifications }     from '../providers/fcm-notifications';
 import { Map }                  from '../providers/map';
+import { SettingsProvider }     from './../providers/settings/settings';
 
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events, ToastController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { LaunchNavigator, LaunchNavigatorOptions }  from '@ionic-native/launch-navigator';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 
 import firebase from 'firebase';
@@ -59,6 +60,7 @@ export class NearMePage {
     public toastCtrl: ToastController,
     public plt: Platform,
     public map: Map,
+    private launchNavigator: LaunchNavigator
   ) {
 
     this.setList();
@@ -200,6 +202,10 @@ export class NearMePage {
     this.navCtrl.push(RestaurantPage, restList[index]);
 
   };
+
+  getDirections(lat, lng){
+    this.launchNavigator.navigate([lat, lng]);
+  }
 
 
   goToRestPageName(name) {
