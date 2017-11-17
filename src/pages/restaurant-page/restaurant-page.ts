@@ -231,7 +231,7 @@ export class RestaurantPage {
       let data = snapshot.val();
       this.local_map = {
         name: data.restaurantName,
-        address: data.address,
+        address: data.address.split(","),
         lat: data.coordinates.lat,
         lng: data.coordinates.lng,
         iconUrl: this.mapIcon,
@@ -313,10 +313,6 @@ export class RestaurantPage {
               <h3 class="-bold">{{bundleItem.ongoing}}</h3>
             </div>
 
-            <div item-right>
-              <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundleItem.total}}</p>
-              <h1 class="-bold">$ {{bundleItem.totalDiscount}}</h1>
-            </div>
           </ion-item>
         <ion-item>
           <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundleItem.bundleName}}</h1>
@@ -386,7 +382,9 @@ export class DiscountPage {
       }
       else { }
     }
-}
+
+
+  }
 
   // Close bundle page
   dismiss() {
@@ -395,3 +393,12 @@ export class DiscountPage {
 
 
 };
+
+// <div id="price" style="display: block" item-right>
+//   <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundleItem.total}}</p>
+//   <h1 class="-bold">$ {{bundleItem.totalDiscount}}</h1>
+// </div>
+//
+// <div id="percentage" style="display: block" item-right>
+//   <h1 class="-bold">  {{bundleItem.totalPercent}}% off</h1>
+// </div>

@@ -3,7 +3,7 @@ import { NavController, NavParams, ToastController }  from 'ionic-angular';
 import { Storage }                                    from '@ionic/storage';
 import { Camera, CameraOptions }                      from '@ionic-native/camera';
 
-import { User }             from '../../providers/user';
+import { User }                                       from '../../providers/user';
 
 import firebase from 'firebase';
 
@@ -15,41 +15,40 @@ export class InfoPage {
   cuisineTypes: Array<{ type: string, id: string }>;
   provinces:   Array<{ name: string, id: string }>;
 
-  newImage: any;
-
   // variables for restaurant sign up
   email:          string;
   password:       string;
   restaurantName: string;
-  image:          any = null;
-  slogan:         string = null;
-  description:    string = null;
-  cuisineType:    string = null;
-  website:        string = null;
-  phoneNumber:    number = null;
+  image:          any;
+  slogan:         string;
+  description:    string;
+  cuisineType:    string;
+  website:        string;
+  phoneNumber:    number;
+  ownerName:      string;
 
   // address info
-  street:     any = null;
-  city:       any = null;
-  province:   any = null;
-  country:    any = null;
-  postalCode: any = null;
+  street:     any;
+  city:       any;
+  province:   any;
+  country:    any;
+  postalCode: any;
 
   // hours of operation
-  mon_open:     any = null;
-  mon_close:    any = null;
-  tues_open:    any = null;
-  tues_close:   any = null;
-  wed_open:     any = null;
-  wed_close:    any = null;
-  thurs_open:   any = null;
-  thurs_close:  any = null;
-  fri_open:     any = null;
-  fri_close:    any = null;
-  sat_open:     any = null;
-  sat_close:    any = null;
-  sun_open:     any = null;
-  sun_close:    any = null;
+  mon_open:     any;
+  mon_close:    any;
+  tues_open:    any;
+  tues_close:   any;
+  wed_open:     any;
+  wed_close:    any;
+  thurs_open:   any;
+  thurs_close:  any;
+  fri_open:     any;
+  fri_close:    any;
+  sat_open:     any;
+  sat_close:    any;
+  sun_open:     any;
+  sun_close:    any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController, public userService: User) {
 
@@ -128,6 +127,7 @@ export class InfoPage {
         this.website        = data.website;
         this.phoneNumber    = data.phoneNumber;
         this.image          = data.photoUrl;
+        this.ownerName      = data.ownerName;
 
         // address info
         var arr = data.address.split(",").map((item) => item.trim());

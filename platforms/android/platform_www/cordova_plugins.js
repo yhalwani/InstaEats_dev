@@ -196,7 +196,7 @@ module.exports.metadata =
 {
     "cordova-plugin-actionsheet": "2.3.3",
     "cordova-plugin-badge": "0.8.2",
-    "cordova-plugin-compat": "1.1.0",
+    "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-camera": "2.4.1",
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-device": "1.1.4",

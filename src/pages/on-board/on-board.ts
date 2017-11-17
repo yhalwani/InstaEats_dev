@@ -169,10 +169,10 @@ export class OnBoardPage {
 
   openInAppBrowser(){
     if(this.platform.is('core')){
-      const browser = this.iab.create('http://instaeats.com/terms-and-policies');
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies.html');
     }
     else{
-      const browser = this.iab.create('http://instaeats.com/terms-and-policies', '_self');
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies.html', '_self');
     }
   }
 

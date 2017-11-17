@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events, ToastController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { LaunchNavigator, LaunchNavigatorOptions }  from '@ionic-native/launch-navigator';
 import { RestaurantPage } from '../restaurant-page/restaurant-page';
 
 import firebase from 'firebase';
@@ -23,7 +24,7 @@ export class NearMePage {
     restaurantName: any,
     cuisineType: any,
     coordinates: Array<{name: any, lat: number, lng: number}>,
-    address: string,
+    address: any,
     distance: number
   }>;
 
@@ -36,7 +37,7 @@ export class NearMePage {
     restaurantName: any,
     cuisineType: any,
     coordinates: Array<{name: any, lat: number, lng: number}>,
-    address: string,
+    address: any,
     distance: number
   }>;
 
@@ -59,6 +60,7 @@ export class NearMePage {
     public toastCtrl: ToastController,
     public plt: Platform,
     public map: Map,
+    private launchNavigator: LaunchNavigator
   ) {
 
     this.setList();
@@ -80,9 +82,14 @@ export class NearMePage {
       let deadList  = [];
 
       if(snapshot){
+
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true && childSnapshot.val().stripe.subscribed == true) {
           liveList.push(childSnapshot.val());
+          let address = childSnapshot.val().address.split(",");
+          for(let i=0; i<liveList.length; i++){
+            liveList[i].address = address;
+          }
           if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
             for(let i=0; i<liveList.length; i++){
               liveList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, liveList[i].coordinates.lat, liveList[i].coordinates.lng));
@@ -99,6 +106,10 @@ export class NearMePage {
 
         } else if (childSnapshot.val().liveStatus == false && childSnapshot.val().stripe.subscribed == true){
           deadList.push(childSnapshot.val());
+          let address = childSnapshot.val().address.split(",");
+          for(let i=0; i<deadList.length; i++){
+            deadList[i].address = address;
+          }
           // if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
           //   for(let i=0; i<deadList.length; i++){
           //     deadList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, deadList[i].coordinates.lat, deadList[i].coordinates.lng));
@@ -191,6 +202,10 @@ export class NearMePage {
     this.navCtrl.push(RestaurantPage, restList[index]);
 
   };
+
+  getDirections(lat, lng){
+    this.launchNavigator.navigate([lat, lng]);
+  }
 
 
   goToRestPageName(name) {
