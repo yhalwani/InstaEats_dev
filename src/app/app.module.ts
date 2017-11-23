@@ -5,7 +5,6 @@ import { IonicStorageModule }                       from '@ionic/storage';
 import { SplashScreen }                             from '@ionic-native/splash-screen';
 import { StatusBar }                                from '@ionic-native/status-bar';
 import { HeaderColor }                              from '@ionic-native/header-color';
-import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 import  firebase  from 'firebase';
 
@@ -122,7 +121,6 @@ import { SettingsProvider }             from '../providers/settings/settings';
     Stripe,
     HeaderColor,
     InAppBrowser,
-    NativeGeocoder,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

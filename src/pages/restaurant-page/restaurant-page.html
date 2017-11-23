@@ -38,7 +38,7 @@
             <button ion-button clear (click)="goToMenuCard('menuCard')">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name="ios-book"></ion-icon>
+                  <ion-icon color="rdaApp" name="ios-book"></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Menu</p>
@@ -50,7 +50,7 @@
             <button ion-button clear (click)="favRest()">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name={{heartIcon}}></ion-icon>
+                  <ion-icon color="rdaApp" name={{heartIcon}}></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Favourite</p>
@@ -62,7 +62,7 @@
             <button ion-button clear (click)="navigate()">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name="navigate"></ion-icon>
+                  <ion-icon color="rdaApp" name="navigate"></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Directions</p>
@@ -192,7 +192,7 @@
     {{local_map.address[2]}},
     {{local_map.address[4]}}
     <br>
-    <u style="color: #da3937" (click)="navigate()">Get Directions</u>
+    <u style="color: #488aff" (click)="navigate()">Get Directions</u>
   </agm-info-window>
 </agm-marker>
 

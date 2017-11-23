@@ -4,10 +4,8 @@ import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 import firebase from "firebase";
-
 
 @Component({
   selector: 'page-on-board',
@@ -15,6 +13,7 @@ import firebase from "firebase";
 })
 export class OnBoardPage {
   isDisabled: boolean = true;
+  tmp_image: any = null;
 
   // Variables for restaurant sign up
   username:       any;
@@ -85,8 +84,7 @@ export class OnBoardPage {
     public camera: Camera,
     public toastCtrl: ToastController,
     private iab: InAppBrowser,
-    public platform: Platform,
-    private nativeGeocoder: NativeGeocoder
+    public platform: Platform
   ) {
 
     // Set cuisineTypes array
@@ -151,12 +149,13 @@ export class OnBoardPage {
   ionViewDidEnter() {
     let web = document.getElementById("web");
     let device = document.getElementById("device");
+
     if(this.platform.is('core')){
       web.style.display = "block";
-      device.style.display = 'none'
+      device.style.display = "none";
     } else {
       device.style.display = "block";
-      web.style.display = 'none'
+      web.style.display = "none";
     }
     this.slides.lockSwipes(true);
   }
@@ -243,14 +242,7 @@ export class OnBoardPage {
       let currentUser = firebase.auth().currentUser;
       let id = currentUser.uid;
 
-      if(this.platform.is('core')){
-        // run html5 gelocation to get user coordinates
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
-        this.web_saveImageToFirebase(this.image, id);
-      } else {
-        this.geocoder();
-        this.device_saveImageToFirebase(this.image, id);
-      }
+      this.saveImageToFirebase(this.image, id);
 
       // after creation push the user to realtime database using uid as key
       restRef.child(id).set({
@@ -308,14 +300,15 @@ export class OnBoardPage {
     if(event.target.files && event.target.files[0]){
       this.image = event.target.files[0];
       console.log(this.image);
-      // var reader = new FileReader();
-      // reader.readAsDataURL(file);
 
-      // if(file){
-      //   reader.onloadend = ((event) => {
-      //     this.image = (<FileReader>event.target).result;
-      //   });
-      // } else {}
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+
+      if(event.target.files[0]){
+        reader.onloadend = ((event) => {
+          this.tmp_image = (<FileReader>event.target).result;
+        });
+      } else {}
 
     }
 
@@ -341,74 +334,33 @@ export class OnBoardPage {
 
   };
 
+  saveImageToFirebase(imageFile, id){
+    // upload image under images folder/filename
+    let storageRef = firebase.storage().ref().child("img/" + this.restaurantName);
+    let dbRef = firebase.database().ref('/Restaurant Profiles/').child(id);
 
-  // Get LAT/LNG via address
-  geocoder(){
-    if(this.platform.is('core')){
-
-    } else {
-      this.nativeGeocoder.forwardGeocode(this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country)
-      .then((coordinates: NativeGeocoderForwardResult) => {
-        let userId = firebase.auth().currentUser.uid;
-
-        // push users coordinates onto firebase real-time database
-        firebase.database().ref("/Restaurant Profiles").child(userId).update({
-          coordinates: {
-            lat: Number(coordinates.latitude),
-            lng: Number(coordinates.longitude)
-          }
-        }).then(() => {
-          console.log("Current user's location has been added to profile");
+    if(imageFile){
+      if(this.platform.is('core')){
+        storageRef.put(imageFile).then((snapshot) => {
+          // this is the url for the image uploaded in firebase storage
+          let imgUrl = snapshot.downloadURL;
+          dbRef.update({
+            photoUrl: imgUrl
+          });
         });
-      })
-      .catch((error: any) => console.log(error));
-    }
-  }
-
-  setPosition(position){
-    let userId = firebase.auth().currentUser.uid;
-
-    // push users coordinates onto firebase real-time database
-    firebase.database().ref("/Restaurant Profiles").child(userId).update({
-      coordinates: {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
+      } else {
+        storageRef.putString(imageFile, 'base64').then((snapshot) => {
+          // this is the url for the image uploaded in firebase storage
+          let imgUrl = snapshot.downloadURL;
+          dbRef.update({
+            photoUrl: imgUrl
+          });
+        });
       }
-    }).then(() => {
-      console.log("Current user's location has been added to profile");
-    });
-  }
-
-  web_saveImageToFirebase(imageFile, id){
-    // upload image under images folder/filename
-    var storageRef = firebase.storage().ref();
-    if(imageFile){
-      storageRef.child("img/" + this.restaurantName).put(imageFile).then((snapshot) => {
-        // this is the url for the image uploaded in firebase storage
-        var imgUrl = snapshot.downloadURL;
-        firebase.database().ref('/Restaurant Profiles/').child(id).update({
-          photoUrl: imgUrl
-        });
-      });
     }else{
-      // TODO: have a proper error handler
-      console.log("image upload failed: invalid file")
-    }
-  }
-
-  device_saveImageToFirebase(imageFile, id){
-    // upload image under images folder/filename
-    var storageRef = firebase.storage().ref();
-    if(imageFile){
-      storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64').then((snapshot) => {
-        // this is the url for the image uploaded in firebase storage
-        var imgUrl = snapshot.downloadURL;
-        firebase.database().ref('/Restaurant Profiles/').child(id).update({
-          photoUrl: imgUrl
-        });
+      dbRef.update({
+        photoUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fnoimage.jpg?alt=media&token=7e26cbbe-d8dc-4592-b670-81b0d9d6a919"
       });
-    }else{
-      // TODO: have a proper error handler
       console.log("image upload failed: invalid file")
     }
   }

@@ -45,12 +45,17 @@
         <ion-avatar item-left>
           <img src="{{image}}">
         </ion-avatar>
-        <ion-buttons>
-          <button ion-button clear icon-right (click)="addImg()">
-            Upload New Image
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-buttons>
+        <div id="web" display='none'>
+          <input type="file" accept=".jpg, .jpeg, .png" (change)="uploadFile($event)">
+        </div>
+        <div id="device" display="none">
+          <ion-buttons center id="device" display="none">
+            <button ion-button large clear icon-right color="rdaApp" (click)="addImg()">
+              Add Image
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-buttons>
+        </div>
       </ion-item>
       <!-- Slogan Input -->
       <ion-item>

@@ -67,10 +67,6 @@
             {
               "xml": "<feature name=\"LaunchNavigator\"><param name=\"android-package\" value=\"uk.co.workingedge.phonegap.plugin.LaunchNavigator\" /></feature>",
               "count": 1
-            },
-            {
-              "xml": "<feature name=\"NativeGeocoder\"><param name=\"android-package\" value=\"cordova.plugin.nativegeocoder.NativeGeocoder\" /></feature>",
-              "count": 1
             }
           ]
         }
@@ -96,10 +92,6 @@
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
               "count": 1
             }
           ],
@@ -202,9 +194,6 @@
       "PACKAGE_NAME": "com.retoll.instaeats"
     },
     "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-      "PACKAGE_NAME": "com.retoll.instaeats"
-    },
-    "cordova-plugin-nativegeocoder": {
       "PACKAGE_NAME": "com.retoll.instaeats"
     }
   },
@@ -391,14 +380,6 @@
       "merges": [
         "launchnavigator"
       ]
-    },
-    {
-      "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
-      "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
-      "pluginId": "cordova-plugin-nativegeocoder",
-      "clobbers": [
-        "nativegeocoder"
-      ]
     }
   ],
   "plugin_metadata": {
@@ -419,7 +400,6 @@
     "cordova-plugin-x-socialsharing": "5.1.8",
     "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
-    "cordova-plugin-nativegeocoder": "2.0.4"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
   }
 }
