@@ -54,6 +54,9 @@
     },
     "uk.co.workingedge.phonegap.plugin.launchnavigator": {
       "PACKAGE_NAME": "com.retoll.instaeats"
+    },
+    "cordova-plugin-nativegeocoder": {
+      "PACKAGE_NAME": "com.retoll.instaeats"
     }
   },
   "dependent_plugins": {

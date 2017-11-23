@@ -86,9 +86,9 @@ export class NearMePage {
       snapshot.forEach((childSnapshot) => {
         if(childSnapshot.val().liveStatus == true && childSnapshot.val().stripe.subscribed == true) {
           liveList.push(childSnapshot.val());
-          let address = childSnapshot.val().address.split(",");
+          // let address = childSnapshot.val().address.split(",");
           for(let i=0; i<liveList.length; i++){
-            liveList[i].address = address;
+            liveList[i].address = String(liveList[i].address).split(",");
           }
           if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
             for(let i=0; i<liveList.length; i++){
@@ -106,27 +106,14 @@ export class NearMePage {
 
         } else if (childSnapshot.val().liveStatus == false && childSnapshot.val().stripe.subscribed == true){
           deadList.push(childSnapshot.val());
-          let address = childSnapshot.val().address.split(",");
           for(let i=0; i<deadList.length; i++){
-            deadList[i].address = address;
+
+            deadList[i].address = String(deadList[i].address).split(",");
           }
-          // if(this.map.mapObject.lat != this.map.defaultLat || this.map.mapObject.lng != this.map.defaultLng){
-          //   for(let i=0; i<deadList.length; i++){
-          //     deadList[i].distance = (this.distanceInKm(this.map.mapObject.lat,this.map.mapObject.lng, deadList[i].coordinates.lat, deadList[i].coordinates.lng));
-          //   }
-          //   this.deadList = deadList.sort((a, b) => {
-          //     return a.distance - b.distance
-          //   });
-          // } else {
-          //   this.deadList = deadList.sort(function(a, b){
-          //     if(a.restaurantName < b.restaurantName) return -1;
-          //     if(a.restaurantName > b.restaurantName) return 1;
-          //   })
-          // }
-            this.deadList = deadList.sort(function(a, b){
-              if(a.restaurantName < b.restaurantName) return -1;
-              if(a.restaurantName > b.restaurantName) return 1;
-            });
+          this.deadList = deadList.sort(function(a, b){
+            if(a.restaurantName < b.restaurantName) return -1;
+            if(a.restaurantName > b.restaurantName) return 1;
+          });
         };
         return false;
       });

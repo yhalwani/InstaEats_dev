@@ -1,7 +1,8 @@
 import { Component }                                  from '@angular/core';
-import { NavController, NavParams, ToastController }  from 'ionic-angular';
+import { NavController, NavParams, ToastController, Platform }  from 'ionic-angular';
 import { Storage }                                    from '@ionic/storage';
 import { Camera, CameraOptions }                      from '@ionic-native/camera';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 import { User }                                       from '../../providers/user';
 
@@ -26,6 +27,7 @@ export class InfoPage {
   website:        string;
   phoneNumber:    number;
   ownerName:      string;
+  restNumber:     any;
 
   // address info
   street:     any;
@@ -50,7 +52,16 @@ export class InfoPage {
   sun_open:     any;
   sun_close:    any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController, public userService: User) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public storage: Storage,
+    public camera: Camera,
+    public toastCtrl: ToastController,
+    public userService: User,
+    private nativeGeocoder: NativeGeocoder,
+    public platform: Platform
+  ) {
 
     // set cuisineTypes array
     this.cuisineTypes = [
@@ -116,6 +127,7 @@ export class InfoPage {
     */
     ref.child(userId).on('value', (snapshot) => {
       var data = snapshot.val();
+      console.log(data.photoUrl)
 
       try{
         // variables for restaurant sign up
@@ -128,6 +140,7 @@ export class InfoPage {
         this.phoneNumber    = data.phoneNumber;
         this.image          = data.photoUrl;
         this.ownerName      = data.ownerName;
+        this.restNumber     = data.restaurantNumber;
 
         // address info
         var arr = data.address.split(",").map((item) => item.trim());
@@ -190,6 +203,8 @@ export class InfoPage {
       cuisineType: this.cuisineType,
       website: this.website,
       phoneNumber: this.phoneNumber,
+      restaurantNumber: this.restNumber,
+      ownerName: this.ownerName,
       address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
       hoursOfOperation: {
         "Mon":    [this.mon_open, this.mon_close],
@@ -208,8 +223,33 @@ export class InfoPage {
       })
       toast.present();
 
+    }).then(() => {
+      this.geocoder();
     })
 
+  }
+
+  // Get LAT/LNG via address
+  geocoder(){
+    if(this.platform.is('core')){
+
+    } else {
+      this.nativeGeocoder.forwardGeocode(this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country)
+      .then((coordinates: NativeGeocoderForwardResult) => {
+        let userId = firebase.auth().currentUser.uid;
+
+        // push users coordinates onto firebase real-time database
+        firebase.database().ref("/Restaurant Profiles").child(userId).update({
+          coordinates: {
+            lat: Number(coordinates.latitude),
+            lng: Number(coordinates.longitude)
+          }
+        }).then(() => {
+          console.log("Current user's location has been added to profile");
+        });
+      })
+      .catch((error: any) => console.log(error));
+    }
   }
 
   // change user password

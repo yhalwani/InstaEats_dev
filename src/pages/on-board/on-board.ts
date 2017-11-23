@@ -4,6 +4,7 @@ import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 import firebase from "firebase";
 
@@ -25,8 +26,9 @@ export class OnBoardPage {
   description:    string = null;
   cuisineType:    string = null;
   website:        string = null;
-  phoneNumber:    number = null;
   ownerName:      string = null;
+  phoneNumber:    number = null;
+  restNumber:     number = null;
 
   // Address info
   street:     any = null;
@@ -36,20 +38,20 @@ export class OnBoardPage {
   country:    any = null;
 
   // Hours of operation
-  mon_open:     any = "--:--";
-  mon_close:    any = "--:--";
-  tues_open:    any = "--:--";
-  tues_close:   any = "--:--";
-  wed_open:     any = "--:--";
-  wed_close:    any = "--:--";
-  thurs_open:   any = "--:--";
-  thurs_close:  any = "--:--";
-  fri_open:     any = "--:--";
-  fri_close:    any = "--:--";
-  sat_open:     any = "--:--";
-  sat_close:    any = "--:--";
-  sun_open:     any = "--:--";
-  sun_close:    any = "--:--";
+  mon_open:     any = "closed";
+  mon_close:    any = "closed";
+  tues_open:    any = "closed";
+  tues_close:   any = "closed";
+  wed_open:     any = "closed";
+  wed_close:    any = "closed";
+  thurs_open:   any = "closed";
+  thurs_close:  any = "closed";
+  fri_open:     any = "closed";
+  fri_close:    any = "closed";
+  sat_open:     any = "closed";
+  sat_close:    any = "closed";
+  sun_open:     any = "closed";
+  sun_close:    any = "closed";
 
   // Slides reference
   @ViewChild(Slides) slides: Slides;
@@ -83,7 +85,8 @@ export class OnBoardPage {
     public camera: Camera,
     public toastCtrl: ToastController,
     private iab: InAppBrowser,
-    public platform: Platform
+    public platform: Platform,
+    private nativeGeocoder: NativeGeocoder
   ) {
 
     // Set cuisineTypes array
@@ -146,6 +149,15 @@ export class OnBoardPage {
 
   // Lock swipes to nav only by buttons
   ionViewDidEnter() {
+    let web = document.getElementById("web");
+    let device = document.getElementById("device");
+    if(this.platform.is('core')){
+      web.style.display = "block";
+      device.style.display = 'none'
+    } else {
+      device.style.display = "block";
+      web.style.display = 'none'
+    }
     this.slides.lockSwipes(true);
   }
 
@@ -194,6 +206,7 @@ export class OnBoardPage {
       cuisineType:      this.cuisineType,
       website:          this.website,
       phoneNumber:      this.phoneNumber,
+      restNumber:       this.restNumber,
       street:           this.street,
       city:             this.city,
       province:         this.province,
@@ -230,9 +243,14 @@ export class OnBoardPage {
       let currentUser = firebase.auth().currentUser;
       let id = currentUser.uid;
 
-      // run html5 gelocation to get user coordinates
-      if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
-      this.saveImageToFirebase(this.image, id);
+      if(this.platform.is('core')){
+        // run html5 gelocation to get user coordinates
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
+        this.web_saveImageToFirebase(this.image, id);
+      } else {
+        this.geocoder();
+        this.device_saveImageToFirebase(this.image, id);
+      }
 
       // after creation push the user to realtime database using uid as key
       restRef.child(id).set({
@@ -246,6 +264,7 @@ export class OnBoardPage {
         phoneNumber: this.phoneNumber,
         address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
         ownersName: this.ownerName,
+        restaurantNumber: this.restNumber,
         liveStatus: false,   // false by default
         stripe:{
           "plan" : "none",
@@ -285,6 +304,24 @@ export class OnBoardPage {
 
   }
 
+  uploadFile(event){
+    if(event.target.files && event.target.files[0]){
+      this.image = event.target.files[0];
+      console.log(this.image);
+      // var reader = new FileReader();
+      // reader.readAsDataURL(file);
+
+      // if(file){
+      //   reader.onloadend = ((event) => {
+      //     this.image = (<FileReader>event.target).result;
+      //   });
+      // } else {}
+
+    }
+
+    else{}
+  }
+
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
@@ -306,6 +343,28 @@ export class OnBoardPage {
 
 
   // Get LAT/LNG via address
+  geocoder(){
+    if(this.platform.is('core')){
+
+    } else {
+      this.nativeGeocoder.forwardGeocode(this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country)
+      .then((coordinates: NativeGeocoderForwardResult) => {
+        let userId = firebase.auth().currentUser.uid;
+
+        // push users coordinates onto firebase real-time database
+        firebase.database().ref("/Restaurant Profiles").child(userId).update({
+          coordinates: {
+            lat: Number(coordinates.latitude),
+            lng: Number(coordinates.longitude)
+          }
+        }).then(() => {
+          console.log("Current user's location has been added to profile");
+        });
+      })
+      .catch((error: any) => console.log(error));
+    }
+  }
+
   setPosition(position){
     let userId = firebase.auth().currentUser.uid;
 
@@ -320,11 +379,28 @@ export class OnBoardPage {
     });
   }
 
-  saveImageToFirebase(imageFile, id){
+  web_saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
     var storageRef = firebase.storage().ref();
     if(imageFile){
-      storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64', {contentType: 'image/png'}).then((snapshot) => {
+      storageRef.child("img/" + this.restaurantName).put(imageFile).then((snapshot) => {
+        // this is the url for the image uploaded in firebase storage
+        var imgUrl = snapshot.downloadURL;
+        firebase.database().ref('/Restaurant Profiles/').child(id).update({
+          photoUrl: imgUrl
+        });
+      });
+    }else{
+      // TODO: have a proper error handler
+      console.log("image upload failed: invalid file")
+    }
+  }
+
+  device_saveImageToFirebase(imageFile, id){
+    // upload image under images folder/filename
+    var storageRef = firebase.storage().ref();
+    if(imageFile){
+      storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64').then((snapshot) => {
         // this is the url for the image uploaded in firebase storage
         var imgUrl = snapshot.downloadURL;
         firebase.database().ref('/Restaurant Profiles/').child(id).update({

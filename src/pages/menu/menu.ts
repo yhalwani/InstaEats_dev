@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ModalController, ViewController, AlertController  } from 'ionic-angular';
+import { NavController, NavParams, Events, ModalController, ViewController, AlertController, ToastController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import firebase from 'firebase';
@@ -25,7 +25,8 @@ export class MenuPage {
     public modalCtrl: ModalController,
     public events: Events,
     public storage: Storage,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController
   ) {
 
     let user = firebase.auth().currentUser;
@@ -73,6 +74,12 @@ export class MenuPage {
         [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
       });
     }
+      let toast = this.toastCtrl.create({
+      message: "Menu Updated",
+      duration: 3000,
+      position: 'bottom'
+    })
+    toast.present();
   }
 
   addMenuGroup(){

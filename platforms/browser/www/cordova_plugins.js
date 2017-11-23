@@ -187,6 +187,14 @@ module.exports = [
         "clobbers": [
             "localforage"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
+        "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
+        "pluginId": "cordova-plugin-nativegeocoder",
+        "clobbers": [
+            "nativegeocoder"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -210,7 +218,8 @@ module.exports.metadata =
     "cordova-plugin-x-socialsharing": "5.1.8",
     "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
+    "cordova-plugin-nativegeocoder": "2.0.4"
 }
 // BOTTOM OF METADATA
 });
