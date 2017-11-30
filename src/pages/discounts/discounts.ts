@@ -42,12 +42,6 @@ export class DiscountsPage {
     public loadingCtrl: LoadingController
   ) {
 
-    // let loader = this.loadingCtrl.create({
-    //   content: "Fetching bundles...",
-    //   duration: 1000
-    // });
-    // loader.present();
-
     var bundlesArr = [];
     var restaurantId = firebase.auth().currentUser.uid;
     var bundleNode = firebase.database().ref("/Bundles/" + restaurantId);
@@ -128,48 +122,92 @@ export class DiscountsPage {
     var rest = firebase.auth().currentUser;
     var restRef = firebase.database().ref("/Bundles/" + rest.uid)
 
-    let actionSheet = this.actionSheetCtrl.create({
-      title: this.bundles[index].bundleName,
-      buttons: [
-        {
-          text: 'Go Live!',
-          handler: () => {
-            this.getTime(index);
-          }
-        },
-        {
-          text: 'Terminate!',
-          handler: () => {
-            restRef.child(this.bundles[index].bundleName).update({
-              live: false,
-              timeStarted: null,
-              duration: null,
-              ongoing: null
-            });
-            this.bundles[index].live = !this.bundles[index].live;
-            this.stopTime(this.bundles[index]);
-          }
-        },
-        {
-          text: 'Delete',
-          handler: () => {
-            var name = this.bundles[index].bundleName;
+    let bundleStatus;
+      restRef.child(this.bundles[index].bundleName).once('value', (snapshot) =>{
+        bundleStatus = snapshot.val().live;
+      })
 
-            // delete the bundle from firebase database
-            restRef.child(name).remove();
+      // if bundle is already live, do not show 'Go live' button
+      if(bundleStatus == true){
+        let live_actionSheet = this.actionSheetCtrl.create({
+          title: this.bundles[index].bundleName,
+          buttons: [
+            {
+              text: 'Terminate!',
+              handler: () => {
+                restRef.child(this.bundles[index].bundleName).update({
+                  live: false,
+                  timeStarted: null,
+                  duration: null,
+                  ongoing: null
+                });
+                this.bundles[index].live = !this.bundles[index].live;
+                this.stopTime(this.bundles[index]);
+              }
+            },
+            {
+              text: 'Delete',
+              handler: () => {
+                var name = this.bundles[index].bundleName;
 
-            // delete from local as well
-            this.bundles.splice(index,1);
-            this.storage.get('bundles').then((list) => {
-              // list.splice(index,1);
-              // this.storage.set('bundles', list);
-            });
-          }
-        }
-      ]
-    });
+                // delete the bundle from firebase database
+                restRef.child(name).remove();
 
-    actionSheet.present();
+                // delete from local as well
+                this.bundles.splice(index,1);
+                this.storage.get('bundles').then((list) => {
+                  // list.splice(index,1);
+                  // this.storage.set('bundles', list);
+                });
+              }
+            }
+          ]
+        });
+        live_actionSheet.present();
+      }
+      else{
+        let off_actionSheet = this.actionSheetCtrl.create({
+          title: this.bundles[index].bundleName,
+          buttons: [
+            {
+              text: 'Go Live!',
+              handler: () => {
+                this.getTime(index);
+              }
+            },
+            {
+              text: 'Terminate!',
+              handler: () => {
+                restRef.child(this.bundles[index].bundleName).update({
+                  live: false,
+                  timeStarted: null,
+                  duration: null,
+                  ongoing: null
+                });
+                this.bundles[index].live = !this.bundles[index].live;
+                this.stopTime(this.bundles[index]);
+              }
+            },
+            {
+              text: 'Delete',
+              handler: () => {
+                var name = this.bundles[index].bundleName;
+
+                // delete the bundle from firebase database
+                restRef.child(name).remove();
+
+                // delete from local as well
+                this.bundles.splice(index,1);
+                this.storage.get('bundles').then((list) => {
+                  // list.splice(index,1);
+                  // this.storage.set('bundles', list);
+                });
+              }
+            }
+          ]
+        });
+        off_actionSheet.present();
+      }
 
   };
 

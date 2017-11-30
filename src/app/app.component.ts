@@ -63,7 +63,6 @@ export class MyApp {
     private iab: InAppBrowser
   ) {
 
-    // this.statusBar.hide();
     this.initializeApp();
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
 

@@ -153,7 +153,8 @@ export class OnBoardPage {
     if(this.platform.is('core')){
       web.style.display = "block";
       device.style.display = "none";
-    } else {
+    }
+    if(this.platform.is('mobile')) {
       device.style.display = "block";
       web.style.display = "none";
     }

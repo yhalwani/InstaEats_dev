@@ -74,7 +74,7 @@ export class MenuPage {
         [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
       });
     }
-      let toast = this.toastCtrl.create({
+    let toast = this.toastCtrl.create({
       message: "Menu Updated",
       duration: 3000,
       position: 'bottom'
@@ -171,125 +171,105 @@ export class MenuPage {
 
 @Component({
   template: `
-  <ion-header>
-  <ion-toolbar>
-  <ion-title>
-  Create Coupon
-  </ion-title>
-  <ion-buttons start>
-  <button ion-button (click)="dismiss()">
-  Cancel
-  </button>
-  </ion-buttons>
-  </ion-toolbar>
-  </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          Create Coupon
+        </ion-title>
+        <ion-buttons start>
+          <button ion-button (click)="dismiss()">
+            Cancel
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
 
-  <ion-content>
-  <ion-item>
-  <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
-  </ion-item>
-  <ion-item>
-  <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
-  </ion-item>
+    <ion-content>
+      <ion-item>
+        <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
+      </ion-item>
 
-  <br>
+      <br>
 
-  <ion-list *ngFor="let menug of bundleMenu; let i = index">
-  <ion-card class="cardNot">
-  <ion-card-header style="background-color: #da3937; color: white;">
-  {{menug.menuGroupName}}
-  </ion-card-header>
+      <ion-list *ngFor="let menug of bundleMenu; let i = index">
+        <ion-card class="cardNot">
+          <ion-card-header style="background-color: #da3937; color: white;">
+            {{menug.menuGroupName}}
+          </ion-card-header>
 
-  <ion-grid>
-  <ion-row style="line-height: 1.5em;">
-  <ion-col col-2 col-auto >
-  </ion-col>
-  <ion-col col-4 col-auto>
-  Item Name
-  </ion-col>
-  <ion-col col-2 col-auto>
-  Price
-  </ion-col>
-  <ion-col col-2 col-auto>
-  $'s off
-  </ion-col>
-  <ion-col col-2 col-auto>
-  % off
-  </ion-col>
-  </ion-row>
-  </ion-grid>
+          <ion-grid>
+            <ion-row style="line-height: 1.5em;">
+              <ion-col col-2 col-auto >
+              </ion-col>
+              <ion-col col-4 col-auto> Item Name </ion-col>
+              <ion-col col-2 col-auto> Price </ion-col>
+              <ion-col col-2 col-auto> New Price </ion-col>
+              <ion-col col-2 col-auto> % off </ion-col>
+            </ion-row>
+          </ion-grid>
 
-  <ion-grid>
-  <ion-item-group *ngFor="let menu of menug.menu; let j = index">
-  <ion-row>
+          <ion-grid>
+            <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+              <ion-row>
 
-  <ion-col col-2 col-auto >
-  <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
-  </ion-col>
+                <ion-col col-2 col-auto >
+                  <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
+                </ion-col>
 
-  <ion-col col-4 col-auto >
-  <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
-  </ion-col>
+                <ion-col col-4 col-auto >
+                  <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
+                </ion-col>
 
-  <ion-col col-2 col-auto >
-  $ {{menu.price}}
-  </ion-col>
+                <ion-col col-2 col-auto >
+                  $ {{menu.price}}
+                </ion-col>
 
-  <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
-  </ion-col>
+                <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+                  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
+                </ion-col>
 
-  <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
-  </ion-col>
+                <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+                  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
+                </ion-col>
 
-  </ion-row>
-  </ion-item-group>
-  </ion-grid>
-  </ion-card>
-  </ion-list>
+              </ion-row>
+            </ion-item-group>
+          </ion-grid>
+        </ion-card>
+      </ion-list>
 
-  <ion-grid>
-  <ion-row>
-  <ion-col col-6>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+          </ion-col>
+          <ion-col col-2> Total Price </ion-col>
+          <ion-col col-2> Total $'s off </ion-col>
+          <ion-col col-2> Total % off </ion-col>
+        </ion-row>
 
-  </ion-col>
-  <ion-col col-2>
-  Total Price
-  </ion-col>
-  <ion-col col-2>
-  Total $'s off
-  </ion-col>
-  <ion-col col-2>
-  Total % off
-  </ion-col>
-  </ion-row>
-  <ion-row>
-  <ion-col col-6>
+        <ion-row>
+          <ion-col col-6>
 
-  </ion-col>
-  <ion-col col-2>
-  {{totalPrice}}
-  </ion-col>
-  <ion-col col-2>
-  $ {{totalDiscountPrice}}
-  </ion-col>
-  <ion-col col-2>
-  {{totalDiscountPercent}} %
-  </ion-col>
-  </ion-row>
-  </ion-grid>
+          </ion-col>
+          <ion-col col-2> {{totalPrice}} </ion-col>
+          <ion-col col-2> $ {{totalDiscountPrice}} </ion-col>
+          <ion-col col-2> {{totalDiscountPercent}} % </ion-col>
+        </ion-row>
+      </ion-grid>
 
-  <br>
+      <br>
 
-  <div text-center>
-  <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
-  Save Bundle
-  <ion-icon name="pricetags"></ion-icon>
-  </button>
-  </div>
-  </ion-content>
-  `
+      <div text-center>
+        <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
+          Save Bundle
+          <ion-icon name="pricetags"></ion-icon>
+        </button>
+      </div>
+    </ion-content>
+    `
 })
 export class ModalContentPage {
 
