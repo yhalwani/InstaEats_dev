@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ModalController, ViewController, AlertController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Platform } from 'ionic-angular';
+import { Intercom } from '@ionic-native/intercom';
 
 import firebase from 'firebase';
+
+declare var window;
+declare var intercom;
 
 @Component({
   selector: 'page-menu',
@@ -25,7 +30,9 @@ export class MenuPage {
     public modalCtrl: ModalController,
     public events: Events,
     public storage: Storage,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public plt: Platform,
+    private intercom: Intercom
   ) {
 
       let user = firebase.auth().currentUser;
@@ -59,7 +66,23 @@ export class MenuPage {
         this.storage.set('restMenu', menuArr);
         this.menuGroup = menuArr;
       });
+
   };
+
+  ionViewDidEnter() {
+
+    if (this.plt.is('cordova')) {
+        intercom.setLauncherVisibility('VISIBLE');
+        intercom.updateUser({
+          custom_attributes: {
+            on_page : "Restaurant Mobile Dash / Menu"
+        }
+      });
+    } else {
+
+    window.Intercom('update', {on_page: 'Restaurant Dash / Menu'});
+  }
+  }
 
   // Push menu to firebase
   updateMenu(){

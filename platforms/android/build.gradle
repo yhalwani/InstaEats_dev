@@ -30,7 +30,7 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.2.1'
     }
 }
 
@@ -39,6 +39,9 @@ allprojects {
     repositories {
         mavenCentral();
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
@@ -89,6 +92,8 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "cordova-plugin-fcm/instaeats-FCMPlugin.gradle"
+apply from: "cordova-plugin-intercom/instaeats-intercom.gradle"
+apply from: "cordova-plugin-intercom/instaeats-build-extras-intercom.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -253,10 +258,10 @@ dependencies {
     compile "com.android.support:support-v4:24.1.1+"
     compile "com.google.firebase:firebase-core:+"
     compile "com.google.firebase:firebase-messaging:+"
+    compile "com.stripe:stripe-android:4.1.2"
     compile "com.android.support:support-v4:25.+"
     compile "com.android.support:appcompat-v7:25.+"
     compile "com.squareup.okhttp3:okhttp:3+"
-    compile "com.stripe:stripe-android:4.1.2"
     // SUB-PROJECT DEPENDENCIES END
 }
 

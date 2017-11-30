@@ -58,7 +58,7 @@
     "es6-promise-plugin": {
         "source": {
             "type": "registry",
-            "id": "es6-promise-plugin@4.1.0"
+            "id": "es6-promise-plugin"
         },
         "is_top_level": false,
         "variables": {}
@@ -66,7 +66,7 @@
     "cordova-plugin-x-socialsharing": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-x-socialsharing"
+            "id": "cordova-plugin-x-socialsharing@^5.2.0"
         },
         "is_top_level": true,
         "variables": {}
@@ -82,7 +82,7 @@
     "cordova-plugin-fcm": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-fcm"
+            "id": "cordova-plugin-fcm@^2.1.2"
         },
         "is_top_level": true,
         "variables": {}
@@ -114,7 +114,7 @@
     "uk.co.workingedge.phonegap.plugin.launchnavigator": {
         "source": {
             "type": "registry",
-            "id": "uk.co.workingedge.phonegap.plugin.launchnavigator"
+            "id": "uk.co.workingedge.phonegap.plugin.launchnavigator@^4.0.5"
         },
         "is_top_level": true,
         "variables": {}
@@ -122,7 +122,7 @@
     "cordova-plugin-actionsheet": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-actionsheet@2"
+            "id": "cordova-plugin-actionsheet"
         },
         "is_top_level": false,
         "variables": {}
@@ -146,7 +146,7 @@
     "cordova-plugin-intercom": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-intercom"
+            "id": "cordova-plugin-intercom@~3.2"
         },
         "is_top_level": true,
         "variables": {}

@@ -156,6 +156,16 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.headerColor"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-intercom/www/intercom.js",
+        "id": "cordova-plugin-intercom.Intercom",
+        "pluginId": "cordova-plugin-intercom",
+        "clobbers": [
+            "intercom",
+            "cordova.plugins.intercom",
+            "plugin.intercom"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -177,7 +187,8 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "4.0.3",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
     "cordova-plugin-stripe": "1.5.3",
-    "cordova-plugin-headercolor": "1.0"
+    "cordova-plugin-headercolor": "1.0",
+    "cordova-plugin-intercom": "3.2.2"
 }
 // BOTTOM OF METADATA
 });

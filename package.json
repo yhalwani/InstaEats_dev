@@ -99,7 +99,6 @@
       "cordova-plugin-headercolor": {}
     },
     "platforms": [
-      "android",
       "browser"
     ]
   }

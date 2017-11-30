@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
 import { HeaderColor } from '@ionic-native/header-color';
+import { Intercom } from '@ionic-native/intercom';
 
 import firebase         from 'firebase';
 
@@ -30,6 +31,8 @@ declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
 
+declare var window;
+declare var intercom;
 
 @Component({
   templateUrl: 'app.html'
@@ -60,7 +63,9 @@ export class MyApp {
     public map: Map,
     public fcm: FcmNotifications,
     private dialogs: Dialogs,
-    private headerColor: HeaderColor
+    private headerColor: HeaderColor,
+    public plt: Platform,
+    private intercom: Intercom
   ) {
 
     // this.statusBar.hide();
@@ -95,6 +100,12 @@ export class MyApp {
         { title: 'Signup', component: SignupPage },
         { title: 'Signup Your Restaurant!', component: OnBoardPage}
       ];
+        if (this.plt.is('cordova')) {
+          intercom.reset();
+          intercom.setLauncherVisibility('GONE');
+        } else {
+          window.Intercom('shutdown');
+        }
     });
 
     events.subscribe('restaurant:loggedIn', (loggedIn, username) => {

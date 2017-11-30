@@ -25,10 +25,16 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
+        "cordova-plugin-headercolor": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.retoll.instaeats"
+        },
+        "cordova-plugin-stripe": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
         "cordova-plugin-whitelist": {
@@ -46,10 +52,7 @@
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         },
-        "cordova-plugin-stripe": {
-            "PACKAGE_NAME": "com.retoll.instaeats"
-        },
-        "cordova-plugin-headercolor": {
+        "cordova-plugin-intercom": {
             "PACKAGE_NAME": "com.retoll.instaeats"
         }
     },

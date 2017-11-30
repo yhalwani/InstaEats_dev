@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 import { Platform, NavController, NavParams, Events, ActionSheetController, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { StripePage } from '../stripe/stripe';
+import { Intercom } from '@ionic-native/intercom';
 
 
 import firebase from 'firebase';
+
+declare var window;
+declare var intercom;
 
 @Component({
   selector: 'page-discounts',
@@ -39,7 +43,9 @@ export class DiscountsPage {
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
     public platform: Platform,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public plt: Platform,
+    private intercom: Intercom
   ) {
 
     // let loader = this.loadingCtrl.create({
@@ -103,6 +109,21 @@ export class DiscountsPage {
       }
     });
 
+
+
+  }
+
+  ionViewDidEnter() {
+
+    if (this.plt.is('cordova')) {
+        intercom.updateUser({
+          custom_attributes: {
+            on_page : "Restaurant Mobile Dash / Discounts"
+        }
+      });
+    } else {
+    window.Intercom('update', {on_page: 'Restaurant Dash / Discounts'});
+    }
   }
 
   ngOnInit(){

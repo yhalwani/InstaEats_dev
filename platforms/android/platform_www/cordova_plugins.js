@@ -87,6 +87,14 @@ module.exports = [
         "runs": true
     },
     {
+        "id": "cordova-plugin-headercolor.HeaderColor",
+        "file": "plugins/cordova-plugin-headercolor/www/HeaderColor.js",
+        "pluginId": "cordova-plugin-headercolor",
+        "clobbers": [
+            "cordova.plugins.headerColor"
+        ]
+    },
+    {
         "id": "cordova-plugin-splashscreen.SplashScreen",
         "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
         "pluginId": "cordova-plugin-splashscreen",
@@ -100,6 +108,14 @@ module.exports = [
         "pluginId": "cordova-plugin-statusbar",
         "clobbers": [
             "window.StatusBar"
+        ]
+    },
+    {
+        "id": "cordova-plugin-stripe.stripe",
+        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+        "pluginId": "cordova-plugin-stripe",
+        "clobbers": [
+            "cordova.plugins.stripe"
         ]
     },
     {
@@ -158,22 +174,6 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova-plugin-stripe.stripe",
-        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
-        "pluginId": "cordova-plugin-stripe",
-        "clobbers": [
-            "cordova.plugins.stripe"
-        ]
-    },
-    {
-        "id": "cordova-plugin-headercolor.HeaderColor",
-        "file": "plugins/cordova-plugin-headercolor/www/HeaderColor.js",
-        "pluginId": "cordova-plugin-headercolor",
-        "clobbers": [
-            "cordova.plugins.headerColor"
-        ]
-    },
-    {
         "id": "cordova-plugin-intercom.Intercom",
         "file": "plugins/cordova-plugin-intercom/www/intercom.js",
         "pluginId": "cordova-plugin-intercom",
@@ -195,17 +195,17 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.3.3",
     "cordova-plugin-fcm": "2.1.2",
     "cordova-plugin-geolocation": "2.4.3",
+    "cordova-plugin-headercolor": "1.0",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
+    "cordova-plugin-stripe": "1.5.3",
     "cordova-plugin-whitelist": "1.3.1",
     "es6-promise-plugin": "4.1.0",
-    "cordova-plugin-x-socialsharing": "5.1.8",
+    "cordova-plugin-x-socialsharing": "5.2.1",
     "cordova.plugins.diagnostic": "3.6.7",
     "ionic-plugin-keyboard": "2.2.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.5",
-    "cordova-plugin-stripe": "1.5.3",
-    "cordova-plugin-headercolor": "1.0",
-    "cordova-plugin-intercom": "4.1.0"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.0.7",
+    "cordova-plugin-intercom": "3.2.2"
 };
 // BOTTOM OF METADATA
 });

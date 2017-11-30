@@ -2,9 +2,13 @@ import { Component }                                  from '@angular/core';
 import { NavController, NavParams, ToastController }  from 'ionic-angular';
 import { Storage }                                    from '@ionic/storage';
 import { Camera, CameraOptions }                      from '@ionic-native/camera';
+import { Platform } from 'ionic-angular';
+import { Intercom } from '@ionic-native/intercom';
 
 
 import firebase from 'firebase';
+declare var window;
+declare var intercom;
 
 @Component({
   selector: 'page-info',
@@ -50,7 +54,7 @@ export class InfoPage {
   sun_open:     any = null;
   sun_close:    any = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController, public plt: Platform, private intercom: Intercom) {
 
     // set cuisineTypes array
     this.cuisineTypes = [
@@ -170,9 +174,20 @@ export class InfoPage {
         this.postalCode     = "postalCode";
       }
     });
+
   }
 
   ionViewDidEnter() {
+
+    if (this.plt.is('cordova')) {
+        intercom.updateUser({
+          custom_attributes: {
+            on_page : "Restaurant Mobile Dash / Info"
+        }
+      });
+    } else {
+    window.Intercom('update', {on_page: 'Restaurant Dash / Info'});
+  }
   }
 
   restInfoUpdate(){

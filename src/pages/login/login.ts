@@ -6,8 +6,13 @@ import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 
 import { User }                 from '../../providers/user';
 import { FcmNotifications }     from '../../providers/fcm-notifications';
+import { Platform } from 'ionic-angular';
+import { Intercom } from '@ionic-native/intercom';
 
 import firebase from 'firebase';
+
+declare var window;
+declare var intercom;
 
 @Component({
   selector: 'page-login',
@@ -29,7 +34,9 @@ export class LoginPage {
     public toastCtrl: ToastController,
     private settings: SettingsProvider,
     public userService: User,
-    public fcm: FcmNotifications
+    public fcm: FcmNotifications,
+    public plt: Platform,
+    private intercom: Intercom
   ) {
       this.userType = "User";
       this.userToggle = false;
@@ -75,6 +82,20 @@ export class LoginPage {
           {
             this.events.publish('restaurant:loggedIn', true, auth.currentUser.displayName);
             this.presentLoading(this.userToggle);
+
+            if (this.plt.is('cordova')) {
+              intercom.setLauncherVisibility('VISIBLE');
+              intercom.registerIdentifiedUser({
+                userId: auth.currentUser.uid
+              });
+            } else {
+            window.Intercom("boot", {
+              app_id: "ns2pj54u",
+              user_id: auth.currentUser.uid,
+              hide_default_launcher: false
+            });
+          }
+
             //
             if (this.selectedTheme === 'user-theme') {
               this.settings.setActiveTheme('restaurant-theme');
