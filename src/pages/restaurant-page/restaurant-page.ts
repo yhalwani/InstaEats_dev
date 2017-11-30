@@ -12,6 +12,8 @@ import firebase from 'firebase';
 
 declare let google;
 
+// var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
 @IonicPage({
   segment: 'Restaurant/:this.restaurantName'
 })
@@ -26,6 +28,7 @@ export class RestaurantPage {
   restaurant : any;
   restaurantName: string;
   restaurantStatus: boolean;
+  openToday: any;
 
   @ViewChild(Content) content: Content;
   local_map: any;
@@ -97,6 +100,16 @@ export class RestaurantPage {
     let restaurantUID = this.restaurant.id;
 
     var menuArr = [];
+
+    // let now = new Date();
+    //
+    // this.openToday = days[now.getDay()];
+    // console.log(this.openToday);
+    //
+    // firebase.database().ref('Restaurant Profiles/' + restaurantUID).once('value', (snapshot) => {
+    //   let data = snapshot.val().hoursOfOperation;
+    //   console.log(data)
+    // })
 
     firebase.database().ref('/MenuItems/' + restaurantUID).once("value", (snapshot) => {
       var data = snapshot.val();

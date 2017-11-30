@@ -25,8 +25,8 @@ export class InfoPage {
   cuisineType:    string;
   website:        string;
   phoneNumber:    number;
-  ownerName:      string;
-  restNumber:     any;
+  ownersName:     string;
+  restNumber:     number;
 
   // address info
   street:     any;
@@ -115,8 +115,8 @@ export class InfoPage {
       {name : "Yukon",                     id : "13"}
     ];
 
-    var ref = firebase.database().ref("/Restaurant Profiles/");
-    var userId = firebase.auth().currentUser.uid;
+    let ref = firebase.database().ref("/Restaurant Profiles/");
+    let userId = firebase.auth().currentUser.uid;
 
     /*
     pull user info from firebase, if
@@ -137,11 +137,11 @@ export class InfoPage {
         this.website        = data.website;
         this.phoneNumber    = data.phoneNumber;
         this.image          = data.photoUrl;
-        this.ownerName      = data.ownerName;
+        this.ownersName     = data.ownersName;
         this.restNumber     = data.restaurantNumber;
 
         // address info
-        var arr = data.address.split(",").map((item) => item.trim());
+        let arr = data.address.split(",").map((item) => item.trim());
         this.street         = arr[0];
         this.city           = arr[1];
         this.province       = arr[2];
@@ -149,20 +149,20 @@ export class InfoPage {
         this.country        = arr[4];
 
         //hours of operation
-        this.mon_open       = data.hoursOfOperation.Mon[0];
-        this.mon_close      = data.hoursOfOperation.Mon[1];
-        this.tues_open      = data.hoursOfOperation.Tues[0];
-        this.tues_close     = data.hoursOfOperation.Tues[1];
-        this.wed_open       = data.hoursOfOperation.Wed[0];
-        this.wed_close      = data.hoursOfOperation.Wed[1];
-        this.thurs_open     = data.hoursOfOperation.Thurs[0];
-        this.thurs_close    = data.hoursOfOperation.Thurs[1];
-        this.fri_open       = data.hoursOfOperation.Fri[0];
-        this.fri_close      = data.hoursOfOperation.Fri[1];
-        this.sat_open       = data.hoursOfOperation.Sat[0];
-        this.sat_close      = data.hoursOfOperation.Sat[1];
-        this.sun_open       = data.hoursOfOperation.Sun[0];
-        this.sun_close      = data.hoursOfOperation.Sun[1];
+        this.mon_open       = data.hoursOfOperation.Monday[0];
+        this.mon_close      = data.hoursOfOperation.Monday[1];
+        this.tues_open      = data.hoursOfOperation.Tuesday[0];
+        this.tues_close     = data.hoursOfOperation.Tuesday[1];
+        this.wed_open       = data.hoursOfOperation.Wednesday[0];
+        this.wed_close      = data.hoursOfOperation.Wednesday[1];
+        this.thurs_open     = data.hoursOfOperation.Thursday[0];
+        this.thurs_close    = data.hoursOfOperation.Thursday[1];
+        this.fri_open       = data.hoursOfOperation.Friday[0];
+        this.fri_close      = data.hoursOfOperation.Friday[1];
+        this.sat_open       = data.hoursOfOperation.Saturday[0];
+        this.sat_close      = data.hoursOfOperation.Saturday[1];
+        this.sun_open       = data.hoursOfOperation.Sunday[0];
+        this.sun_close      = data.hoursOfOperation.Sunday[1];
       }
       catch(err){
         // default to
@@ -173,6 +173,9 @@ export class InfoPage {
         this.cuisineType    = "cuisineType";
         this.website        = "website";
         this.phoneNumber    =  null;
+        this.ownersName     = "owner's name";
+        this.restNumber     = null;
+
         this.image          = "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2FnoImageAvailable.png?alt=media&token=d30f37e9-c408-4da9-b911-dfe411d34cbe"
 
         this.street         = "street";
@@ -197,9 +200,9 @@ export class InfoPage {
   }
 
   restInfoUpdate(){
-    var ref =  firebase.database().ref("/Restaurant Profiles");
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
+    let ref =  firebase.database().ref("/Restaurant Profiles");
+    let user = firebase.auth().currentUser;
+    let uid = user.uid;
 
     ref.child(uid).update({
       email: this.email,
@@ -211,16 +214,16 @@ export class InfoPage {
       website: this.website,
       phoneNumber: this.phoneNumber,
       restaurantNumber: this.restNumber,
-      ownerName: this.ownerName,
-      address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
+      ownersName: this.ownersName,
+      address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode.toUpperCase() + ", " + this.country,
       hoursOfOperation: {
-        "Mon":    [this.mon_open, this.mon_close],
-        "Tues":   [this.tues_open, this.tues_close],
-        "Wed":    [this.wed_open, this.wed_close],
-        "Thurs":  [this.thurs_open, this.thurs_close],
-        "Fri":    [this.fri_open, this.fri_close],
-        "Sat":    [this.sat_open, this.sat_close],
-        "Sun":    [this.sun_open, this.sun_close]
+        "Monday":     [this.mon_open, this.mon_close],
+        "Tuesday":    [this.tues_open, this.tues_close],
+        "Wednesday":  [this.wed_open, this.wed_close],
+        "Thursday":   [this.thurs_open, this.thurs_close],
+        "Friday":     [this.fri_open, this.fri_close],
+        "Saturday":   [this.sat_open, this.sat_close],
+        "Sunday":     [this.sun_open, this.sun_close]
       }
     }).then(() => {
       let toast = this.toastCtrl.create({
@@ -235,15 +238,19 @@ export class InfoPage {
 
   // change user password
   changePassword(newPassword){
-    var user = firebase.auth().currentUser;
+    let user = firebase.auth().currentUser;
     user.updatePassword(newPassword).then(()=>{
       alert("Password Updated")
     })
   }
 
   uploadFile(event){
+    let user = firebase.auth().currentUser;
+    let uid = user.uid;
+
     if(event.target.files && event.target.files[0]){
       this.image = event.target.files[0];
+      this.saveImageToFirebase(this.image, uid);
     }
     else{}
   }
@@ -251,8 +258,8 @@ export class InfoPage {
   // Fetch Img from Device
   addImg(){
 
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
+    let user = firebase.auth().currentUser;
+    let uid = user.uid;
 
     // CameraOptions
     const options: CameraOptions = {
@@ -278,7 +285,7 @@ export class InfoPage {
 
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
-    let storageRef = firebase.storage().ref("img/" + this.restaurantName);
+    let storageRef = firebase.storage().ref(id).child("logo_" + this.restaurantName);
     let task;
 
 

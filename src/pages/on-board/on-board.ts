@@ -211,7 +211,7 @@ export class OnBoardPage {
       city:             this.city,
       province:         this.province,
       country:          this.country,
-      postalCode:       this.postalCode,
+      postalCode:       this.postalCode.toUpperCase(),
       mon_open:         this.mon_open,
       mon_close:        this.mon_close,
       tues_open:        this.tues_open,
@@ -265,13 +265,13 @@ export class OnBoardPage {
         },
 
         hoursOfOperation: {
-          "Mon": [this.mon_open, this.mon_close],
-          "Tues": [this.tues_open, this.tues_close],
-          "Wed": [this.wed_open, this.wed_close],
-          "Thurs": [this.thurs_open, this.thurs_close],
-          "Fri": [this.fri_open, this.fri_close],
-          "Sat": [this.sat_open, this.sat_close],
-          "Sun": [this.sun_open, this.sun_close]
+          "Monday": [this.mon_open, this.mon_close],
+          "Tuesday": [this.tues_open, this.tues_close],
+          "Wednesday": [this.wed_open, this.wed_close],
+          "Thursday": [this.thurs_open, this.thurs_close],
+          "Friday": [this.fri_open, this.fri_close],
+          "Saturday": [this.sat_open, this.sat_close],
+          "Sunday": [this.sun_open, this.sun_close]
         }
       });
 
@@ -300,7 +300,6 @@ export class OnBoardPage {
   uploadFile(event){
     if(event.target.files && event.target.files[0]){
       this.image = event.target.files[0];
-      console.log(this.image);
 
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -337,7 +336,7 @@ export class OnBoardPage {
 
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
-    let storageRef = firebase.storage().ref().child("img/" + this.restaurantName);
+    let storageRef = firebase.storage().ref(id).child("logo_" + this.restaurantName);
     let dbRef = firebase.database().ref('/Restaurant Profiles/').child(id);
 
     if(imageFile){
@@ -368,7 +367,6 @@ export class OnBoardPage {
 
   // Fetch Img from Device
   addImg(){
-
     // CameraOptions
     const options: CameraOptions = {
       quality: 100,
