@@ -28,23 +28,29 @@ export class TabsPage {
       this.rmAccount();
     });
 
-    this.loggedIn = userService.user.loggedIn;
+    this.tabs = [
+      {component: RecentPage, title: "Recent", icon: "clock"},
+      {component: NearMePage, title: "Near Me", icon: "pin"},
+      {component: FavoritesPage, title: "Favorites", icon: "heart"}
+    ];
 
-    if (this.loggedIn == true) {
-      this.tabs = [
-        {component: RecentPage, title: "Recent", icon: "clock"},
-        {component: NearMePage, title: "Near Me", icon: "pin"},
-        {component: FavoritesPage, title: "Favorites", icon: "heart"},
-        {component: AccountPage, title: "Account", icon: "person"}
-      ];
-    } else {
-      this.tabs = [
-        {component: RecentPage, title: "Recent", icon: "clock"},
-        {component: NearMePage, title: "Near Me", icon: "pin"},
-        {component: FavoritesPage, title: "Favorites", icon: "heart"}
-      ];
-
-    };
+    // this.loggedIn = userService.user.loggedIn;
+    //
+    // if (this.loggedIn == true) {
+    //   this.tabs = [
+    //     {component: RecentPage, title: "Recent", icon: "clock"},
+    //     {component: NearMePage, title: "Near Me", icon: "pin"},
+    //     {component: FavoritesPage, title: "Favorites", icon: "heart"},
+    //     {component: AccountPage, title: "Account", icon: "person"}
+    //   ];
+    // } else {
+    //   this.tabs = [
+    //     {component: RecentPage, title: "Recent", icon: "clock"},
+    //     {component: NearMePage, title: "Near Me", icon: "pin"},
+    //     {component: FavoritesPage, title: "Favorites", icon: "heart"}
+    //   ];
+    //
+    // };
 
   };
 

@@ -336,7 +336,7 @@ export class OnBoardPage {
 
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
-    let storageRef = firebase.storage().ref(id).child("logo_" + this.restaurantName);
+    let storageRef = firebase.storage().ref("Restaurants/" + id).child("logo_" + this.restaurantName);
     let dbRef = firebase.database().ref('/Restaurant Profiles/').child(id);
 
     if(imageFile){

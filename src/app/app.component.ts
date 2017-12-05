@@ -75,9 +75,11 @@ export class MyApp {
 
     events.subscribe('user:loggedIn', (loggedIn, username) => {
       this.loggedIn = loggedIn;
+      this.rootPage = TabsPage;
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
+        {title: 'Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -144,7 +146,33 @@ export class MyApp {
 
       this.fcm.init();
 
-      this.events.publish('app:launch', this.loggedIn);
+      // keep user logged in on refresh
+      let user = firebase.auth().currentUser;
+      if(user){
+        // check if restaurant
+        firebase.database().ref("Restaurant Profiles/").once('value', (snapshot) => {
+          if(snapshot.hasChild(user.uid)){
+            this.events.publish('restaurant:loggedIn', true, user.displayName);
+            this.settings.setActiveTheme('restaurant-theme');
+          } else {
+
+          }
+        })
+        // check if userRef
+        firebase.database().ref("User Profiles/").once('value', (snapshot) => {
+          if(snapshot.hasChild(user.uid)){
+            this.userService.user.email = user.email;
+            this.userService.user.loggedIn = true;
+            this.userService.user.username = user.displayName;
+            this.events.publish('user:loggedIn', true, user.displayName);
+          } else {
+
+          }
+        })
+      }
+      else {
+        this.events.publish('app:launch', this.loggedIn);
+      }
 
       // Confirm exit
       this.platform.registerBackButtonAction(() => {

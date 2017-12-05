@@ -285,7 +285,7 @@ export class InfoPage {
 
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
-    let storageRef = firebase.storage().ref(id).child("logo_" + this.restaurantName);
+    let storageRef = firebase.storage().ref("Restaurants/" + id).child("logo_" + this.restaurantName);
     let task;
 
 
