@@ -1,14 +1,20 @@
+<<<<<<< HEAD
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandler, NgModule } from '@angular/core';
+=======
+import { BrowserModule }                            from '@angular/platform-browser';
+import { ErrorHandler, NgModule }                   from '@angular/core';
+>>>>>>> master
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { IonicStorageModule } from '@ionic/storage';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { HeaderColor } from '@ionic-native/header-color';
+import { IonicStorageModule }                       from '@ionic/storage';
+import { SplashScreen }                             from '@ionic-native/splash-screen';
+import { StatusBar }                                from '@ionic-native/status-bar';
+import { HeaderColor }                              from '@ionic-native/header-color';
 
 import  firebase  from 'firebase';
 
+<<<<<<< HEAD
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -23,6 +29,18 @@ import { AgmCoreModule } from '@agm/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 import { FCM } from '@ionic-native/fcm';
+=======
+import { Camera }                                   from '@ionic-native/camera';
+import { Geolocation }                              from '@ionic-native/geolocation';
+import { Diagnostic }                               from '@ionic-native/diagnostic';
+import { Dialogs }                                  from '@ionic-native/dialogs';
+import { SocialSharing }                            from '@ionic-native/social-sharing';
+import { Stripe }                                   from '@ionic-native/stripe';
+import { AgmCoreModule }                            from '@agm/core';
+import { LaunchNavigator, LaunchNavigatorOptions }  from '@ionic-native/launch-navigator';
+import { FCM }                                      from '@ionic-native/fcm';
+import { InAppBrowser }                             from '@ionic-native/in-app-browser';
+>>>>>>> master
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",
@@ -35,38 +53,27 @@ export const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-
 import { MyApp }                        from './app.component';
 // import { SplashContentPage }            from './app.component';
-
 import { IntroPage }                    from '../pages/intro/intro';
-
 import { TabsPage }                     from '../pages/tabs/tabs';
-
 import { LoginPage }                    from '../pages/login/login';
 import { SignupPage }                   from '../pages/signup/signup';
 import { OnBoardPage }                  from '../pages/on-board/on-board';
-
 import { AccountPage }                  from '../pages/account/account';
 import { RecentPage }                   from '../pages/recent/recent';
 import { FavoritesPage }                from '../pages/favorites/favorites';
 import { NearMePage }                   from '../pages/nearMe/nearMe';
-
 import { StripePage }                   from '../pages/stripe/stripe';
-
 import { RestaurantPage, DiscountPage } from '../pages/restaurant-page/restaurant-page';
-
 import { RestaurantPortalPage }         from '../pages/restaurant-portal/restaurant-portal';
-
 import { MenuPage, ModalContentPage }   from '../pages/menu/menu';
-
 import { InfoPage }                     from '../pages/info/info';
 import { DiscountsPage }                from '../pages/discounts/discounts';
-
 import { User }                         from '../providers/user';
 import { FcmNotifications }             from '../providers/fcm-notifications';
 import { Map }                          from '../providers/map';
-import { SettingsProvider } from '../providers/settings/settings';
+import { SettingsProvider }             from '../providers/settings/settings';
 
 @NgModule({
   declarations: [
@@ -139,6 +146,7 @@ import { SettingsProvider } from '../providers/settings/settings';
     Stripe,
     Intercom,
     HeaderColor,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Stripe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

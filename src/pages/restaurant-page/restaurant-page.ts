@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef }                                 from '@angular/core';
-import {  NavController, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, ViewController, ModalController, AlertController }  from 'ionic-angular';
 import { IonicPage, NavParams, Events, Content }                            from 'ionic-angular';
 import { Storage }                                                          from '@ionic/storage';
 
@@ -11,6 +11,8 @@ import { User }                                                             from
 import firebase from 'firebase';
 
 declare let google;
+
+// var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 @IonicPage({
   segment: 'Restaurant/:this.restaurantName'
@@ -26,6 +28,7 @@ export class RestaurantPage {
   restaurant : any;
   restaurantName: string;
   restaurantStatus: boolean;
+  openToday: any;
 
   @ViewChild(Content) content: Content;
   local_map: any;
@@ -71,7 +74,7 @@ export class RestaurantPage {
     public userService: User
   ) {
 
-    this.userService.updataBundleStatus();
+    this.userService.updateBundleStatus();
 
     this.storage.get('favList').then((list) => {
 
@@ -97,6 +100,16 @@ export class RestaurantPage {
     let restaurantUID = this.restaurant.id;
 
     var menuArr = [];
+
+    // let now = new Date();
+    //
+    // this.openToday = days[now.getDay()];
+    // console.log(this.openToday);
+    //
+    // firebase.database().ref('Restaurant Profiles/' + restaurantUID).once('value', (snapshot) => {
+    //   let data = snapshot.val().hoursOfOperation;
+    //   console.log(data)
+    // })
 
     firebase.database().ref('/MenuItems/' + restaurantUID).once("value", (snapshot) => {
       var data = snapshot.val();
@@ -209,7 +222,7 @@ export class RestaurantPage {
       });
       alrt.present();
 
-    } else {
+    } else if (this.heartIcon == "heart-outline") {
       // publish event favourited
       this.events.publish('restaurant:favorited', this.navParams.data);
       // if user favourites a restaurant. save preference and notify user
@@ -231,7 +244,7 @@ export class RestaurantPage {
       let data = snapshot.val();
       this.local_map = {
         name: data.restaurantName,
-        address: data.address,
+        address: data.address.split(","),
         lat: data.coordinates.lat,
         lng: data.coordinates.lng,
         iconUrl: this.mapIcon,
@@ -313,10 +326,6 @@ export class RestaurantPage {
               <h3 class="-bold">{{bundleItem.ongoing}}</h3>
             </div>
 
-            <div item-right>
-              <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundleItem.total}}</p>
-              <h1 class="-bold">$ {{bundleItem.totalDiscount}}</h1>
-            </div>
           </ion-item>
         <ion-item>
           <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundleItem.bundleName}}</h1>
@@ -386,7 +395,9 @@ export class DiscountPage {
       }
       else { }
     }
-}
+
+
+  }
 
   // Close bundle page
   dismiss() {
@@ -395,3 +406,12 @@ export class DiscountPage {
 
 
 };
+
+// <div id="price" style="display: block" item-right>
+//   <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundleItem.total}}</p>
+//   <h1 class="-bold">$ {{bundleItem.totalDiscount}}</h1>
+// </div>
+//
+// <div id="percentage" style="display: block" item-right>
+//   <h1 class="-bold">  {{bundleItem.totalPercent}}% off</h1>
+// </div>

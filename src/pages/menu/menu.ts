@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, Events, ModalController, ViewController, AlertController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Platform } from 'ionic-angular';
 import { Intercom } from '@ionic-native/intercom';
+=======
+import { Component } from '@angular/core';
+import { NavController, NavParams, Events, ModalController, ViewController, AlertController, ToastController  } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { DiscountsPage } from '../discounts/discounts';
+>>>>>>> master
 
 import firebase from 'firebase';
 
@@ -32,42 +39,52 @@ export class MenuPage {
     public events: Events,
     public storage: Storage,
     public alertCtrl: AlertController,
+<<<<<<< HEAD
     public plt: Platform,
     private intercom: Intercom
+=======
+    public toastCtrl: ToastController
+>>>>>>> master
   ) {
 
-      let user = firebase.auth().currentUser;
-      var menuArr = [];
+    let user = firebase.auth().currentUser;
+    var menuArr = [];
 
-      firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
-        let data = snapshot.val();
+    firebase.database().ref('Restaurant Profiles/' + user.uid).child('stripe').once('value', (snapshot) => {
+      let data = snapshot.val();
 
-        if(data.plan === "none" || data.plan === "InstaEats_basicP"){
-          this.isDisabled = true;
-        } else {
-          this.isDisabled = false;
-        }
-      });
+      if(data.plan === "none" || data.plan === "InstaEats_basicP"){
+        this.isDisabled = true;
+      } else {
+        this.isDisabled = false;
+      }
+    });
 
-      firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
-        var data = snapshot.val();
+    firebase.database().ref('/MenuItems/' + user.uid).once("value", (snapshot) => {
+      var data = snapshot.val();
 
-        for (var menuG in data){
-          var menuGE = {menuGroupName: menuG, menu: []};
+      for (var menuG in data){
+        var menuGE = {menuGroupName: menuG, menu: []};
 
-          snapshot.child(menuG).forEach((childSnapshot) => {
-            var childData = childSnapshot.val();
-            var menuI = {name: childData.name, description: childData.description, price: childData.price};
-            menuGE.menu.push(menuI);
-            return false;
-          });
-         menuArr.push(menuGE);
-        }
+        snapshot.child(menuG).forEach((childSnapshot) => {
+          var childData = childSnapshot.val();
+          var menuI = {name: childData.name, description: childData.description, price: childData.price};
+          menuGE.menu.push(menuI);
+          return false;
+        });
+        menuArr.push(menuGE);
+      }
 
+<<<<<<< HEAD
         this.storage.set('restMenu', menuArr);
         this.menuGroup = menuArr;
       });
 
+=======
+      this.storage.set('restMenu', menuArr);
+      this.menuGroup = menuArr;
+    });
+>>>>>>> master
   };
 
   ionViewDidEnter() {
@@ -97,6 +114,12 @@ export class MenuPage {
         [this.menuGroup[i].menuGroupName]: this.menuGroup[i].menu
       });
     }
+    let toast = this.toastCtrl.create({
+      message: "Menu Updated",
+      duration: 3000,
+      position: 'bottom'
+    })
+    toast.present();
   }
 
   addMenuGroup(){
@@ -130,11 +153,13 @@ export class MenuPage {
         {
           text: 'Delete',
           handler: () => {
-            let childNode = menuNode.child(this.menuGroup[index].menuGroupName);
-            childNode.remove();
-
-
-          this.menuGroup.splice(index,1);
+            try{
+              let childNode = menuNode.child(this.menuGroup[index].menuGroupName);
+              childNode.remove();
+              this.menuGroup.splice(index,1);
+            } catch(err){
+              this.menuGroup.splice(index,1);
+            }
           }
         }
       ]
@@ -147,7 +172,6 @@ export class MenuPage {
     let uid = firebase.auth().currentUser.uid;
     let menuNode = firebase.database().ref("MenuItems/" + uid);
     let length = this.menuGroup.length;
-
 
     const alert = this.alertCtrl.create({
       title: 'Confirm delete',
@@ -163,11 +187,14 @@ export class MenuPage {
         {
           text: 'Delete',
           handler: () => {
-            let childNode = menuNode.child(this.menuGroup[menu].menuGroupName);
-            childNode.child(item).remove();
 
-
-            this.menuGroup[menu].menu.splice(item, 1);
+            try{
+              let childNode = menuNode.child(this.menuGroup[menu].menuGroupName);
+              childNode.child(item).remove();
+              this.menuGroup[menu].menu.splice(item, 1);
+            } catch (err) {
+              this.menuGroup[menu].menu.splice(item, 1);
+            }
           }
         }
       ]
@@ -184,6 +211,7 @@ export class MenuPage {
 
 @Component({
   template: `
+<<<<<<< HEAD
   <ion-header>
     <ion-toolbar>
       <ion-title>
@@ -246,27 +274,47 @@ export class MenuPage {
           <ion-item-group *ngFor="let menu of menug.menu; let j = index">
             <ion-row>
 
+=======
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          Create Coupon
+        </ion-title>
+        <ion-buttons start>
+          <button ion-button (click)="dismiss()">
+            Cancel
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-item>
+        <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
+      </ion-item>
+
+      <br>
+
+      <ion-list *ngFor="let menug of bundleMenu; let i = index">
+        <ion-card class="cardNot">
+          <ion-card-header style="background-color: #da3937; color: white;">
+            {{menug.menuGroupName}}
+          </ion-card-header>
+
+          <ion-grid>
+            <ion-row style="line-height: 1.5em;">
+>>>>>>> master
               <ion-col col-2 col-auto >
-                <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
               </ion-col>
-
-              <ion-col col-4 col-auto >
-                <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
-              </ion-col>
-
-              <ion-col col-2 col-auto >
-                $ {{menu.price}}
-              </ion-col>
-
-              <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-                <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
-              </ion-col>
-
-              <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-                <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
-              </ion-col>
-
+              <ion-col col-4 col-auto> Item Name </ion-col>
+              <ion-col col-2 col-auto> Price </ion-col>
+              <ion-col col-2 col-auto> New Price </ion-col>
+              <ion-col col-2 col-auto> % off </ion-col>
             </ion-row>
+<<<<<<< HEAD
           </ion-item-group>
         </ion-grid>
             </ion-card>
@@ -315,6 +363,69 @@ export class MenuPage {
     </div>
   </ion-content>
   `
+=======
+          </ion-grid>
+
+          <ion-grid>
+            <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+              <ion-row>
+
+                <ion-col col-2 col-auto >
+                  <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
+                </ion-col>
+
+                <ion-col col-4 col-auto >
+                  <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
+                </ion-col>
+
+                <ion-col col-2 col-auto >
+                  $ {{menu.price}}
+                </ion-col>
+
+                <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+                  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
+                </ion-col>
+
+                <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+                  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
+                </ion-col>
+
+              </ion-row>
+            </ion-item-group>
+          </ion-grid>
+        </ion-card>
+      </ion-list>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+          </ion-col>
+          <ion-col col-2> Total Price </ion-col>
+          <ion-col col-2> Total $'s off </ion-col>
+          <ion-col col-2> Total % off </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-6>
+
+          </ion-col>
+          <ion-col col-2> {{totalPrice}} </ion-col>
+          <ion-col col-2> $ {{totalDiscountPrice}} </ion-col>
+          <ion-col col-2> {{totalDiscountPercent}} % </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <br>
+
+      <div text-center>
+        <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
+          Save Bundle
+          <ion-icon name="pricetags"></ion-icon>
+        </button>
+      </div>
+    </ion-content>
+    `
+>>>>>>> master
 })
 export class ModalContentPage {
   private coupDesc : FormGroup;
@@ -361,7 +472,8 @@ export class ModalContentPage {
     public params: NavParams,
     public viewCtrl: ViewController,
     public storage: Storage,
-    public events: Events
+    public events: Events,
+    public navCtrl: NavController
   ) {
 
     this.coupDesc = this.formBuilder.group({
@@ -446,7 +558,7 @@ export class ModalContentPage {
   }
 
   sumTotalPercent(i,j){
-    this.bundleMenu[i].menu[j].discount = this.bundleMenu[i].menu[j].price * ((100 - this.bundleMenu[i].menu[j].percent) / 100)
+    this.bundleMenu[i].menu[j].discount = Math.round(this.bundleMenu[i].menu[j].price * ((100 - this.bundleMenu[i].menu[j].percent) / 100) * 100) / 100;
     this.sumTotals();
   }
 
@@ -460,6 +572,7 @@ export class ModalContentPage {
       });
     });
     this.totalDiscountPrice = sumDiscount;
+
     var percent = Math.floor(100 - (100 * this.totalDiscountPrice / this.totalPrice));
     this.totalDiscountPercent = ( percent > 0) ? percent : 0;
   }
@@ -504,13 +617,6 @@ export class ModalContentPage {
         this.bundleItem.bundleElem.push(groupE);
       };
     });
-
-
-    // this.storage.get('bundles').then((list) => {
-    //   list.push(this.bundleItem);
-    //   this.storage.set('bundles', list);
-    //   this.events.publish('bundle:created', list);
-    // });
 
     // reference to firebase database and current user
     var ref = firebase.database().ref("/Bundles");

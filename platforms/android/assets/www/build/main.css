@@ -8114,6 +8114,93 @@ ion-card-content {
 .card-md-yellow .card-header-md-danger,
 .card-md-yellow .card-title-md-danger,
 .card-md-yellow .card-content-md-danger {
+<<<<<<< HEAD
+  color: #f53d3d;
+}
+
+.card-md-yellow .text-md-light,
+.card-md-yellow .card-header-md-light,
+.card-md-yellow .card-title-md-light,
+.card-md-yellow .card-content-md-light {
+  color: #f4f4f4;
+}
+
+.card-md-yellow .text-md-dark,
+.card-md-yellow .card-header-md-dark,
+.card-md-yellow .card-title-md-dark,
+.card-md-yellow .card-content-md-dark {
+  color: #222;
+}
+
+.card-md-yellow .text-md-yellow,
+.card-md-yellow .card-header-md-yellow,
+.card-md-yellow .card-title-md-yellow,
+.card-md-yellow .card-content-md-yellow {
+  color: #fea20c;
+}
+
+.card-md-yellow .text-md-rdaApp,
+.card-md-yellow .card-header-md-rdaApp,
+.card-md-yellow .card-title-md-rdaApp,
+.card-md-yellow .card-content-md-rdaApp {
+  color: #da3937;
+}
+
+.card-md-yellow .text-md-background,
+.card-md-yellow .card-header-md-background,
+.card-md-yellow .card-title-md-background,
+.card-md-yellow .card-content-md-background {
+  color: #f2f2f2;
+}
+
+.card-header-md-yellow,
+.card-title-md-yellow,
+.card-content-md-yellow {
+  color: #fea20c;
+}
+
+.card-md .text-md-rdaApp {
+  color: #da3937;
+}
+
+.card-md-rdaApp {
+  color: #fff;
+  background-color: #da3937;
+}
+
+.card-md-rdaApp .card-header-md,
+.card-md-rdaApp .card-title-md,
+.card-md-rdaApp .card-content-md,
+.card-md-rdaApp h1,
+.card-md-rdaApp h2,
+.card-md-rdaApp h3,
+.card-md-rdaApp h4,
+.card-md-rdaApp h5,
+.card-md-rdaApp h6,
+.card-md-rdaApp p {
+  color: #fff;
+}
+
+.card-md-rdaApp .text-md-primary,
+.card-md-rdaApp .card-header-md-primary,
+.card-md-rdaApp .card-title-md-primary,
+.card-md-rdaApp .card-content-md-primary {
+  color: #488aff;
+}
+
+.card-md-rdaApp .text-md-secondary,
+.card-md-rdaApp .card-header-md-secondary,
+.card-md-rdaApp .card-title-md-secondary,
+.card-md-rdaApp .card-content-md-secondary {
+  color: #32db64;
+}
+
+.card-md-rdaApp .text-md-danger,
+.card-md-rdaApp .card-header-md-danger,
+.card-md-rdaApp .card-title-md-danger,
+.card-md-rdaApp .card-content-md-danger {
+=======
+>>>>>>> master
   color: #f53d3d;
 }
 

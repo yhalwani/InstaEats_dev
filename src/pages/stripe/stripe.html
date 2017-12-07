@@ -14,10 +14,23 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
+      <ion-col col-8 align-item-center>
+
+    <ion-row>
       <ion-col>
         <h2 ion-text text-center>
           Pick your plan
         </h2>
+
+        <ion-card style="box-shadow: none;">
+          <ion-card-content>
+
+              <ion-label color="primary" stacked>Promo Code</ion-label>
+              <ion-input type="text" value="" [(ngModel)]="promo"></ion-input>
+            <button ion-button block>Select</button>
+          </ion-card-content>
+        </ion-card>
+
         <ion-card style="background-color: #c6c6c1; border: 1px solid #aaaaa8; box-shadow: none;">
           <ion-card-header style="color: white; text-shadow: 0px 1px 0px rgba(47, 47, 41, 0.5);">
             The better choice is the <strong>Plus Plan</strong>
@@ -39,7 +52,7 @@
 
           </ion-card-content>
           <ion-card-content>
-            <button ion-button block color="secondary" (click)="openCheckout('899', 'Basic plan', 'InstaEats_basicP')">Select</button>
+            <button ion-button block color="rdaApp" (click)="openCheckout('899', 'Basic plan', 'InstaEats_basicP')">Select</button>
           </ion-card-content>
 
         </ion-card>
@@ -50,7 +63,7 @@
             Plus Plan
           </ion-card-header>
           <ion-card-content style="padding-top: 13px;">
-            Everything from Base Plan + Access to At The Moment and Ongoing deals feature.  With ATM deals feature you can create red hot deal that only for a few hours to max of 24 hours. Ongoing deals are great for daily deals, specials and etc.
+            Everything from Base Plan + Access to At The Moment and Ongoing deals feature.  With ATM deals feature you can create red hot deal that can last from few hours to a maximum of 24 hours. Ongoing deals are great for daily deals, specials and etc.
           </ion-card-content>
 
           <ion-row>
@@ -63,7 +76,7 @@
                   <p>$89/month <br> pay as you go</p>
                 </ion-card-content>
                 <ion-card-content>
-                  <button ion-button block color="yellow" (click)="openCheckout('8900', 'Month-to-Month Plus plan', 'InstaEats_plusP')">Select</button>
+                  <button ion-button block color="rdaApp" (click)="openCheckout('8900', 'Month-to-Month Plus plan', 'InstaEats_plusP')">Select</button>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -76,7 +89,7 @@
                   <p>$485/6 months <br> 10% off</p>
                 </ion-card-content>
                 <ion-card-content>
-                  <button ion-button block color="yellow" (click)="openCheckout('48500', '6 months Plus plan', 'InstaEats_plusP_6m')">Select</button>
+                  <button ion-button block color="rdaApp" (click)="openCheckout('48500', '6 months Plus plan', 'InstaEats_plusP_6m')">Select</button>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -89,7 +102,7 @@
                   <p>$928/year <br> 15% off</p>
                 </ion-card-content>
                 <ion-card-content>
-                  <button ion-button block color="yellow" (click)="openCheckout('92800', '1 year Plus plan', 'InstaEats_plusP_12m')">Select</button>
+                  <button ion-button block color="rdaApp" (click)="openCheckout('92800', '1 year Plus plan', 'InstaEats_plusP_12m')">Select</button>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -98,45 +111,8 @@
       </ion-col>
     </ion-row>
 
+    </ion-col>
+    </ion-row>
   </ion-grid>
-
-  <!-- <ion-card>
-  <ion-card-header style="background-color: #da3937; color: white;">
-  Please enter your Credit Card info below
-</ion-card-header>
-
-<ion-list class="item_stretch">
-
-<ion-item-group>
-<ion-item>
-<ion-label stacked>Card Holder</ion-label>
-<ion-input type="text" value="" placeholder="Name on card" [(ngModel)]="cardHolder"></ion-input>
-</ion-item>
-<ion-item>
-<ion-label stacked>Card Number</ion-label>
-<ion-input type="tel" value="" maxlength=16 placeholder="4242-4242-4242-4242" [(ngModel)]="cardNumber"></ion-input>
-</ion-item>
-<ion-item>
-<ion-label stacked>Expiry Date</ion-label>
-<ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" placeholder="MM/YYYY" min="2017" max="2029" [(ngModel)]="expiry"></ion-datetime>
-</ion-item>
-<ion-item>
-<ion-label stacked>CVV</ion-label>
-<ion-input type="tel" value="" minlength=3 maxlength=4 placeholder="CVV" [(ngModel)]="cvv"></ion-input>
-</ion-item>
-</ion-item-group>
-<br>
-</ion-list>
-</ion-card>
-<br>
-
-<button ion-button medium clear icon-left color="rdaApp" (click)="dismiss()">
-<ion-icon name="arrow-back"></ion-icon>
-Back
-</button>
-<button ion-button medium clear icon-right color="rdaApp" (click)="finish()">
-Finish!
-<ion-icon name="arrow-forward"></ion-icon>
-</button> -->
 
 </ion-content>

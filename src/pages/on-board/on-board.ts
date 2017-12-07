@@ -1,10 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
+<<<<<<< HEAD
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content  } from 'ionic-angular';
+=======
+import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content, Platform  } from 'ionic-angular';
+>>>>>>> master
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
-import { Stripe } from '@ionic-native/stripe';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+<<<<<<< HEAD
 import { Platform } from 'ionic-angular';
 import { Intercom } from '@ionic-native/intercom';
 
@@ -15,11 +19,19 @@ import firebase from "firebase";
 declare var window;
 declare var intercom;
 
+=======
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+import firebase from "firebase";
+
+>>>>>>> master
 @Component({
   selector: 'page-on-board',
   templateUrl: 'on-board.html',
 })
 export class OnBoardPage {
+  isDisabled: boolean = true;
+  tmp_image: any = null;
 
   // Variables for restaurant sign up
   username:       any;
@@ -31,8 +43,9 @@ export class OnBoardPage {
   description:    string = null;
   cuisineType:    string = null;
   website:        string = null;
-  phoneNumber:    number = null;
   ownerName:      string = null;
+  phoneNumber:    number = null;
+  restNumber:     number = null;
 
   // Address info
   street:     any = null;
@@ -42,20 +55,20 @@ export class OnBoardPage {
   country:    any = null;
 
   // Hours of operation
-  mon_open:     any = "--:--";
-  mon_close:    any = "--:--";
-  tues_open:    any = "--:--";
-  tues_close:   any = "--:--";
-  wed_open:     any = "--:--";
-  wed_close:    any = "--:--";
-  thurs_open:   any = "--:--";
-  thurs_close:  any = "--:--";
-  fri_open:     any = "--:--";
-  fri_close:    any = "--:--";
-  sat_open:     any = "--:--";
-  sat_close:    any = "--:--";
-  sun_open:     any = "--:--";
-  sun_close:    any = "--:--";
+  mon_open:     any = "closed";
+  mon_close:    any = "closed";
+  tues_open:    any = "closed";
+  tues_close:   any = "closed";
+  wed_open:     any = "closed";
+  wed_close:    any = "closed";
+  thurs_open:   any = "closed";
+  thurs_close:  any = "closed";
+  fri_open:     any = "closed";
+  fri_close:    any = "closed";
+  sat_open:     any = "closed";
+  sat_close:    any = "closed";
+  sun_open:     any = "closed";
+  sun_close:    any = "closed";
 
   // Slides reference
   @ViewChild(Slides) slides: Slides;
@@ -94,48 +107,51 @@ export class OnBoardPage {
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public storage: Storage,
-    public stripe: Stripe,
     public camera: Camera,
     public toastCtrl: ToastController,
+<<<<<<< HEAD
     public plt: Platform,
     private intercom: Intercom
+=======
+    private iab: InAppBrowser,
+    public platform: Platform
+>>>>>>> master
   ) {
 
     // Set cuisineTypes array
     this.cuisineTypes = [
       {type : "American",       id : "1"},
       {type : "Asian",          id : "2"},
-      {type : "Barbecue",       id : "3"},
-      {type : "British",        id : "4"},
-      {type : "Burgers",        id : "5"},
-      {type : "Canadian",       id : "6"},
-      {type : "Caribbean",      id : "7"},
-      {type : "Chinese",        id : "8"},
-      {type : "Comfort Food",   id : "9"},
-      {type : "Contemporary",   id : "10"},
-      {type : "Continental",    id : "11"},
-      {type : "Creperie",       id : "12"},
-      {type : "European",       id : "13"},
-      {type : "Fast food",      id : "14"},
-      {type : "French",         id : "15"},
-      {type : "Gastro",         id : "16"},
-      {type : "Global",         id : "17"},
-      {type : "Halal",          id : "18"},
-      {type : "Indian",         id : "19"},
-      {type : "Italian",        id : "20"},
-      {type : "Jamaican",       id : "21"},
-      {type : "Japanese",       id : "22"},
-      {type : "Latin",          id : "23"},
-      {type : "Mediterranean",  id : "24"},
-      {type : "Mexican",        id : "25"},
-      {type : "Pizzeria",       id : "26"},
-      {type : "Seafood",        id : "27"},
-      {type : "Steakhouse",     id : "28"},
-      {type : "Sushi",          id : "29"},
-      {type : "Tapas",          id : "30"},
-      {type : "Thai",           id : "31"},
-      {type : "Bar / Pub",      id : "32"},
-      {type : "Fast food",      id : "33"}
+      {type : "Bar / Pub",      id : "3"},
+      {type : "Barbecue",       id : "4"},
+      {type : "British",        id : "5"},
+      {type : "Burgers",        id : "6"},
+      {type : "Canadian",       id : "7"},
+      {type : "Caribbean",      id : "8"},
+      {type : "Chinese",        id : "9"},
+      {type : "Comfort Food",   id : "10"},
+      {type : "Contemporary",   id : "11"},
+      {type : "Continental",    id : "12"},
+      {type : "Creperie",       id : "13"},
+      {type : "European",       id : "14"},
+      {type : "Fast food",      id : "15"},
+      {type : "French",         id : "16"},
+      {type : "Gastro",         id : "17"},
+      {type : "Global",         id : "18"},
+      {type : "Halal",          id : "19"},
+      {type : "Indian",         id : "20"},
+      {type : "Italian",        id : "21"},
+      {type : "Jamaican",       id : "22"},
+      {type : "Japanese",       id : "23"},
+      {type : "Latin",          id : "24"},
+      {type : "Mediterranean",  id : "25"},
+      {type : "Mexican",        id : "26"},
+      {type : "Pizzeria",       id : "27"},
+      {type : "Seafood",        id : "28"},
+      {type : "Steakhouse",     id : "29"},
+      {type : "Sushi",          id : "30"},
+      {type : "Tapas",          id : "31"},
+      {type : "Thai",           id : "32"},
     ];
 
     // set province array
@@ -198,6 +214,7 @@ export class OnBoardPage {
 
   // Lock swipes to nav only by buttons
   ionViewDidEnter() {
+<<<<<<< HEAD
 
 
     if (this.plt.is('cordova')) {
@@ -217,6 +234,19 @@ export class OnBoardPage {
       });
     }
 
+=======
+    let web = document.getElementById("web");
+    let device = document.getElementById("device");
+
+    if(this.platform.is('core')){
+      web.style.display = "block";
+      device.style.display = "none";
+    }
+    if(this.platform.is('mobile')) {
+      device.style.display = "block";
+      web.style.display = "none";
+    }
+>>>>>>> master
     this.slides.lockSwipes(true);
   }
 
@@ -248,10 +278,108 @@ export class OnBoardPage {
     this.content.scrollToTop(50);
   }
 
+  updateFinishButton(){
+    this.isDisabled = !this.isDisabled;
+  }
+
+  openInAppBrowser(){
+    if(this.platform.is('core')){
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies.html');
+    }
+    else{
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies.html', '_self');
+    }
+  }
 
   // Finish onboarding and store data
   finish(){
 
+<<<<<<< HEAD
+=======
+    // Set empty JSON array for bundles
+    this.storage.set('bundles', []);
+
+    // Set empty JSON array to restInfo
+    this.storage.set('restInfo', {});
+
+    // Fetch and set variables
+    var info = {
+      restaurantName :  this.restaurantName,
+      email :           this.email,
+      slogan:           this.slogan,
+      description:      this.description,
+      cuisineType:      this.cuisineType,
+      website:          this.website,
+      phoneNumber:      this.phoneNumber,
+      restNumber:       this.restNumber,
+      street:           this.street,
+      city:             this.city,
+      province:         this.province,
+      country:          this.country,
+      postalCode:       this.postalCode.toUpperCase(),
+      mon_open:         this.mon_open,
+      mon_close:        this.mon_close,
+      tues_open:        this.tues_open,
+      tues_close:       this.tues_close,
+      wed_open:         this.wed_open,
+      wed_close:        this.wed_close,
+      thurs_open:       this.thurs_open,
+      thurs_close:      this.thurs_close,
+      fri_open:         this.fri_open,
+      fri_close:        this.fri_close,
+      sat_open:         this.sat_open,
+      sat_close:        this.sat_close,
+      sun_open:         this.sun_open,
+      sun_close:        this.sun_close
+    };
+
+    // Store restaurant info
+    this.storage.set('restInfo', info);
+
+    // Store menu
+    this.storage.set('restMenu', []);
+    this.storage.set('restMenu', this.menuGroup);
+
+    var restRef = firebase.database().ref("/Restaurant Profiles");
+
+    // create account using email and password
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+
+      let currentUser = firebase.auth().currentUser;
+      let id = currentUser.uid;
+
+      this.saveImageToFirebase(this.image, id);
+
+      // after creation push the user to realtime database using uid as key
+      restRef.child(id).set({
+        id: currentUser.uid,
+        email: this.email,
+        restaurantName: this.restaurantName,
+        slogan: this.slogan,
+        description: this.description,
+        cuisineType: this.cuisineType,
+        website: this.website,
+        phoneNumber: this.phoneNumber,
+        address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
+        ownersName: this.ownerName,
+        restaurantNumber: this.restNumber,
+        liveStatus: false,   // false by default
+        stripe:{
+          "plan" : "none",
+          "subscribed": false
+        },
+
+        hoursOfOperation: {
+          "Monday": [this.mon_open, this.mon_close],
+          "Tuesday": [this.tues_open, this.tues_close],
+          "Wednesday": [this.wed_open, this.wed_close],
+          "Thursday": [this.thurs_open, this.thurs_close],
+          "Friday": [this.fri_open, this.fri_close],
+          "Saturday": [this.sat_open, this.sat_close],
+          "Sunday": [this.sun_open, this.sun_close]
+        }
+      });
+>>>>>>> master
 
   this.readyToSubmit = true;
 
@@ -410,6 +538,24 @@ export class OnBoardPage {
   }
   }
 
+  uploadFile(event){
+    if(event.target.files && event.target.files[0]){
+      this.image = event.target.files[0];
+
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+
+      if(event.target.files[0]){
+        reader.onloadend = ((event) => {
+          this.tmp_image = (<FileReader>event.target).result;
+        });
+      } else {}
+
+    }
+
+    else{}
+  }
+
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
@@ -429,42 +575,39 @@ export class OnBoardPage {
 
   };
 
-
-  // Get LAT/LNG via address
-  setPosition(position){
-    let userId = firebase.auth().currentUser.uid;
-
-    // push users coordinates onto firebase real-time database
-    firebase.database().ref("/Restaurant Profiles").child(userId).update({
-      coordinates: {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }
-    }).then(() => {
-      console.log("Current user's location has been added to profile");
-    });
-  }
-
   saveImageToFirebase(imageFile, id){
     // upload image under images folder/filename
-    var storageRef = firebase.storage().ref();
+    let storageRef = firebase.storage().ref("Restaurants/" + id).child("logo_" + this.restaurantName);
+    let dbRef = firebase.database().ref('/Restaurant Profiles/').child(id);
+
     if(imageFile){
-      storageRef.child("img/" + this.restaurantName).putString(imageFile, 'base64', {contentType: 'image/png'}).then((snapshot) => {
-        // this is the url for the image uploaded in firebase storage
-        var imgUrl = snapshot.downloadURL;
-        firebase.database().ref('/Restaurant Profiles/').child(id).update({
-          photoUrl: imgUrl
+      if(this.platform.is('core')){
+        storageRef.put(imageFile).then((snapshot) => {
+          // this is the url for the image uploaded in firebase storage
+          let imgUrl = snapshot.downloadURL;
+          dbRef.update({
+            photoUrl: imgUrl
+          });
         });
-      });
+      } else {
+        storageRef.putString(imageFile, 'base64').then((snapshot) => {
+          // this is the url for the image uploaded in firebase storage
+          let imgUrl = snapshot.downloadURL;
+          dbRef.update({
+            photoUrl: imgUrl
+          });
+        });
+      }
     }else{
-      // TODO: have a proper error handler
+      dbRef.update({
+        photoUrl: "https://firebasestorage.googleapis.com/v0/b/instaeats-a06a3.appspot.com/o/img%2Fnoimage.jpg?alt=media&token=7e26cbbe-d8dc-4592-b670-81b0d9d6a919"
+      });
       console.log("image upload failed: invalid file")
     }
   }
 
   // Fetch Img from Device
   addImg(){
-
     // CameraOptions
     const options: CameraOptions = {
       quality: 100,

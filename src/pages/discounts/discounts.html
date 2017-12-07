@@ -9,6 +9,12 @@
 </ion-header>
 
 <ion-content padding>
+<!-- 
+  <div text-center>
+    <button ion-button large icon-right color="rdaApp" (click)="createCoup()">
+      Create Coupon
+    </button>
+  </div> -->
 
   <div id="nocoupons" style="display: none;">
     <ion-card class="nothingBurger">
@@ -62,10 +68,10 @@
                       <h3 class="-bold" *ngIf="bundle.duration == null && bundle.ongoing == null">00:00:00</h3>
                     </div>
 
-                    <div item-right>
+                    <!-- <div item-right>
                       <p text-right class="-bold" style="text-decoration: line-through;">$ {{bundle.total}}</p>
                       <h1 class="-bold">$ {{bundle.totalDiscount}}</h1>
-                    </div>
+                    </div> -->
                   </ion-item>
                   <ion-item>
                     <h1 ion-text text-center style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>

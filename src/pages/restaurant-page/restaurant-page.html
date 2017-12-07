@@ -25,6 +25,7 @@
               <p> {{restaurant.address}} </p>
               <p> {{restaurant.cuisineType}} </p>
               <p> {{restaurant.slogan}} </p>
+              <!-- <p> {{openToday}}  </p> -->
             </ion-item-group>
           </ion-item>
         </ion-card-content>
@@ -38,7 +39,7 @@
             <button ion-button clear (click)="goToMenuCard('menuCard')">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name="ios-book"></ion-icon>
+                  <ion-icon color="rdaApp" name="ios-book"></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Menu</p>
@@ -50,7 +51,7 @@
             <button ion-button clear (click)="favRest()">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name={{heartIcon}}></ion-icon>
+                  <ion-icon color="rdaApp" name={{heartIcon}}></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Favourite</p>
@@ -62,7 +63,7 @@
             <button ion-button clear (click)="navigate()">
               <ion-row align-items-center>
                 <ion-col>
-                  <ion-icon name="navigate"></ion-icon>
+                  <ion-icon color="rdaApp" name="navigate"></ion-icon>
                 </ion-col>
                 <ion-col>
                   <p text-capitalize>Directions</p>
@@ -87,9 +88,6 @@
             <ion-card-content text-center>
               Favourite the restaurant to get notified when a discount is made available
               <ion-row justify-content-center>
-                <!-- <ion-col>
-                  <button ion-button color="light" icon-only><ion-icon name="heart"></ion-icon></button>
-                </ion-col> -->
               </ion-row>
             </ion-card-content>
           </ion-col>
@@ -121,10 +119,11 @@
               <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
             </div>
 
-            <div item-right>
+            <!-- <div item-right>
               <p text-right class="-bold" style="text-decoration: line-through;"> $ {{bundle.total}} </p>
               <h1 class="-bold"> $ {{bundle.totalDiscount}} </h1>
-            </div>
+            </div> -->
+
           </ion-item>
           <ion-item>
             <h1 ion-text text-right style="color: rgba(0, 0, 0, 0.5);">{{bundle.bundleName}}</h1>
@@ -170,7 +169,7 @@
     [longitude]="local_map.lng"
     [zoom]="local_map.zoom"
     [zoomControl]="false"
-    [disableDefaultUI]="true"
+    [disableDefaultUI]="false"
     [mapDraggable]="false"
     [scrollwheel]="false"
     [streetViewControl]="false"
@@ -181,11 +180,20 @@
     [latitude]="local_map.lat"
     [longitude]="local_map.lng"
     [iconUrl]="this.mapIcon"
+    [title]="TITLE"
   >
-  <agm-info-window [isOpen]="'true'">
+  <agm-info-window [isOpen]="true">
     <strong>{{local_map.name}}</strong>
     <br>
-    {{local_map.address}}
+    {{local_map.address[0]}}
+    <br>
+    {{local_map.address[1]}},
+    {{local_map.address[3]}}
+    <br>
+    {{local_map.address[2]}},
+    {{local_map.address[4]}}
+    <br>
+    <p style="color: #488aff; margin: 0px" (click)="navigate()">Get Directions</p>
   </agm-info-window>
 </agm-marker>
 

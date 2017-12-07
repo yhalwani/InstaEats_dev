@@ -1,31 +1,32 @@
-import { SettingsProvider } from './../providers/settings/settings';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController }  from 'ionic-angular';
+import { Nav, Platform, Events, LoadingController, ToastController, ModalController, ViewController, AlertController }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
+<<<<<<< HEAD
 import { HeaderColor } from '@ionic-native/header-color';
 import { Intercom } from '@ionic-native/intercom';
+=======
+import { HeaderColor }  from '@ionic-native/header-color';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+>>>>>>> master
 
 import firebase         from 'firebase';
 
-import { TabsPage }     from '../pages/tabs/tabs';
-import { AccountPage }  from '../pages/account/account';
-import { OnBoardPage }  from '../pages/on-board/on-board';
-import { LoginPage }    from '../pages/login/login';
-import { SignupPage }   from '../pages/signup/signup';
-
-// import { StripePage } from '../pages/stripe/stripe';
-
-import { IntroPage }    from '../pages/intro/intro';
-
-
+import { TabsPage }             from '../pages/tabs/tabs';
+import { AccountPage }          from '../pages/account/account';
+import { OnBoardPage }          from '../pages/on-board/on-board';
+import { LoginPage }            from '../pages/login/login';
+import { SignupPage }           from '../pages/signup/signup';
+import { IntroPage }            from '../pages/intro/intro';
 import { RestaurantPortalPage } from '../pages/restaurant-portal/restaurant-portal';
+// import { StripePage }        from '../pages/stripe/stripe';
 
-import { User }         from '../providers/user';
+import { User }                 from '../providers/user';
 import { FcmNotifications }     from '../providers/fcm-notifications';
-import { Map }          from '../providers/map';
+import { Map }                  from '../providers/map';
+import { SettingsProvider }     from './../providers/settings/settings';
 
 declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
@@ -41,13 +42,14 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage  : any = TabsPage;
-  selectedTheme: String;
   loginPage : any = LoginPage;
   loggedIn  : any = false;
   menuTitle : any = "InstaEats";
-  // stripepage: any = StripePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages:          Array<{title: string, component: any}>;
+  selectedTheme:  String;
+  showedAlert:    boolean;
+
 
   constructor(
     public platform: Platform,
@@ -64,29 +66,34 @@ export class MyApp {
     public fcm: FcmNotifications,
     private dialogs: Dialogs,
     private headerColor: HeaderColor,
+<<<<<<< HEAD
     public plt: Platform,
     private intercom: Intercom
+=======
+    public alert: AlertController,
+    private iab: InAppBrowser
+>>>>>>> master
   ) {
 
-    // this.statusBar.hide();
     this.initializeApp();
 
 
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
 
-
     this.pages = [
       { title: 'Feed Me!', component: this.rootPage },
       { title: 'Login', component: LoginPage },
       { title: 'Signup', component: SignupPage },
-      { title: 'Signup Your Restaurant!', component: OnBoardPage}
+      { title: 'Restaurant Owners', component: OnBoardPage}
     ];
 
     events.subscribe('user:loggedIn', (loggedIn, username) => {
       this.loggedIn = loggedIn;
+      this.rootPage = TabsPage;
       this.menuTitle = username;
       this.pages = [
         {title: 'Feed Me!', component: this.rootPage },
+        {title: 'Account', component: AccountPage },
         {title: 'Logout', component: this.loggedIn }
       ];
     });
@@ -100,7 +107,7 @@ export class MyApp {
         { title: 'Feed Me!', component: this.rootPage },
         { title: 'Login', component: LoginPage },
         { title: 'Signup', component: SignupPage },
-        { title: 'Signup Your Restaurant!', component: OnBoardPage}
+        { title: 'Restaurant Owners', component: OnBoardPage}
       ];
         if (this.plt.is('cordova')) {
           intercom.reset();
@@ -123,10 +130,23 @@ export class MyApp {
 
   };
 
+<<<<<<< HEAD
 
     initializeApp() {
 
 
+=======
+  openInAppBrowser(){
+    if(this.platform.is('core')){
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies.html');
+    }
+    else{
+      const browser = this.iab.create('http://instaeats.com/terms-and-policies.html', '_self');
+    }
+  }
+
+  initializeApp() {
+>>>>>>> master
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();
@@ -153,11 +173,74 @@ export class MyApp {
 
       this.fcm.init();
 
-      this.events.publish('app:launch', this.loggedIn);
+      // keep user logged in on refresh
+      let user = firebase.auth().currentUser;
+      if(user){
+        // check if restaurant
+        firebase.database().ref("Restaurant Profiles/").once('value', (snapshot) => {
+          if(snapshot.hasChild(user.uid)){
+            this.events.publish('restaurant:loggedIn', true, user.displayName);
+            this.settings.setActiveTheme('restaurant-theme');
+          } else {
+
+          }
+        })
+        // check if userRef
+        firebase.database().ref("User Profiles/").once('value', (snapshot) => {
+          if(snapshot.hasChild(user.uid)){
+            this.userService.user.email = user.email;
+            this.userService.user.loggedIn = true;
+            this.userService.user.username = user.displayName;
+            this.events.publish('user:loggedIn', true, user.displayName);
+          } else {
+
+          }
+        })
+      }
+      else {
+        this.events.publish('app:launch', this.loggedIn);
+      }
+
+      // Confirm exit
+      this.platform.registerBackButtonAction(() => {
+        if (this.nav.length() == 1) {
+          if (!this.showedAlert) {
+            this.confirmExitApp();
+          } else {
+            this.showedAlert = false;
+          }
+        }
+
+        this.nav.pop();
+      });
     });
 
-    this.userService.updataBundleStatus();
+    this.userService.updateBundleStatus();
   };
+
+  confirmExitApp() {
+    this.showedAlert = true;
+    let confirmAlert = this.alert.create({
+        title: "Exit",
+        message: "Are you sure you want to exit the app?",
+        buttons: [
+            {
+                text: 'Cancel',
+                handler: () => {
+                    this.showedAlert = false;
+                    return;
+                }
+            },
+            {
+                text: 'Exit',
+                handler: () => {
+                    this.platform.exitApp();
+                }
+            }
+        ]
+    });
+    confirmAlert.present();
+  }
 
   openPage(page) {
     // Reset the content nav to have just this page

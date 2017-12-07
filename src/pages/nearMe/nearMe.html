@@ -40,8 +40,10 @@
       [longitude]="this.map.mapObject.lng"
       [zoom]="this.map.mapObject.zoom"
       [zoomControl]="false"
-      [disableDefaultUI]="true"
+      [disableDefaultUI]="false"
       [scaleControl]="true"
+      [mapTypeControl]="true"
+      [rotateControl]="true"
       >
 
         <!-- user location marker -->
@@ -52,13 +54,6 @@
         [iconUrl]="this.map.mapObject.iconUrl"
         [zIndex]="999"
         >
-
-          <agm-info-window>
-            <strong>My location</strong>
-            <br>
-            {{this.map.mapObject.lat}}, {{this.map.mapObject.lng}}
-          </agm-info-window>
-
         </agm-marker>
 
         <!-- LIVE restaurant location markers -->
@@ -71,7 +66,15 @@
           <agm-info-window>
             <strong>{{m.restaurantName}}</strong>
             <br>
-            {{m.address}}
+            {{m.address[0]}}
+            <br>
+            {{m.address[1]}},
+            {{m.address[3]}}
+            <br>
+            {{m.address[2]}},
+            {{m.address[4]}}
+            <br>
+            <p style="color: #488aff; margin: 0px" (click)="getDirections(m.coordinates.lat, m.coordinates.lng)">Get Directions</p>
           </agm-info-window>
 
         </agm-marker>
@@ -86,7 +89,15 @@
           <agm-info-window>
             <strong>{{"[OFFLINE]"}}{{m.restaurantName}} </strong>
             <br>
-            {{m.address}}
+            {{m.address[0]}}
+            <br>
+            {{m.address[1]}},
+            {{m.address[3]}}
+            <br>
+            {{m.address[2]}},
+            {{m.address[4]}}
+            <br>
+            <p style="color: #488aff; margin: 0px" (click)="getDirections(m.coordinates.lat, m.coordinates.lng)">Get Directions</p>
           </agm-info-window>
 
         </agm-marker>
@@ -97,6 +108,16 @@
 
     <!-- List View Case -->
     <ion-list *ngSwitchCase="'listView'">
+<<<<<<< HEAD
+=======
+      <ion-refresher style="z-index: 999;" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles">
+        </ion-refresher-content>
+      </ion-refresher>
+>>>>>>> master
 
       <ion-item-group>
         <ion-item-divider> At the moment </ion-item-divider>
@@ -118,7 +139,6 @@
                     <br>
                     <ion-note>{{rest.distance}}km </ion-note>
                   </div>
-
 
                 </ion-item>
               </ion-card-content>
@@ -151,6 +171,7 @@
                 </ion-item>
               </ion-card-content>
             </ion-card>
+
           </ion-item>
 
       </ion-item-group>

@@ -5,6 +5,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title> Account </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="accountInfoUpdate()">
+        Update!
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -33,27 +39,15 @@
       <!-- Password Input -->
       <ion-item>
         <ion-icon item-left name="lock"></ion-icon>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
-      </ion-item>
-      <!-- FCM Token -->
-      <ion-item>
-        <ion-icon item-left name="lock"></ion-icon>
-        <ion-label floating>FCM Token</ion-label>
-        <ion-input type="text" value="{{token}}" [(ngModel)]="token"></ion-input>
+        <button ion-button clear (click)="this.userService.changePassword()">Update password</button>
       </ion-item>
     </ion-item-group>
   </ion-list>
 
-    <div text-center>
-      <button ion-button large icon-right color="rdaApp" (click)="accountInfoUpdate()">
-        Update!
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
-    </div>
-
 </ion-content>
 
 <ion-footer>
-  <button ion-button color="light" full (click)="this.userService.deleteAccount()">Delete account</button>
+  <div style="text-align: center">
+    <button ion-button clear (click)="this.userService.deleteAccount()">Delete account</button>
+  </div>
 </ion-footer>
