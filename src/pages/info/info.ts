@@ -2,7 +2,6 @@ import { Component }                                  from '@angular/core';
 import { NavController, NavParams, ToastController, Platform }  from 'ionic-angular';
 import { Storage }                                    from '@ionic/storage';
 import { Camera, CameraOptions }                      from '@ionic-native/camera';
-import { Platform } from 'ionic-angular';
 import { Intercom } from '@ionic-native/intercom';
 
 import { User }                                       from '../../providers/user';
@@ -40,7 +39,7 @@ export class InfoPage {
   postalCode: any;
 
   // hours of operation
-<<<<<<< HEAD
+
   mon_open:     any = null;
   mon_close:    any = null;
   tues_open:    any = null;
@@ -57,32 +56,8 @@ export class InfoPage {
   sun_close:    any = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public camera: Camera, public toastCtrl: ToastController, public plt: Platform, private intercom: Intercom) {
-=======
-  mon_open:     any;
-  mon_close:    any;
-  tues_open:    any;
-  tues_close:   any;
-  wed_open:     any;
-  wed_close:    any;
-  thurs_open:   any;
-  thurs_close:  any;
-  fri_open:     any;
-  fri_close:    any;
-  sat_open:     any;
-  sat_close:    any;
-  sun_open:     any;
-  sun_close:    any;
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public storage: Storage,
-    public camera: Camera,
-    public toastCtrl: ToastController,
-    public userService: User,
-    public platform: Platform
-  ) {
->>>>>>> master
+
 
     // set cuisineTypes array
     this.cuisineTypes = [
@@ -212,8 +187,6 @@ export class InfoPage {
   }
 
   ionViewDidEnter() {
-<<<<<<< HEAD
-
     if (this.plt.is('cordova')) {
         intercom.updateUser({
           custom_attributes: {
@@ -223,17 +196,15 @@ export class InfoPage {
     } else {
     window.Intercom('update', {on_page: 'Restaurant Dash / Info'});
   }
-=======
     let web = document.getElementById("web");
     let device = document.getElementById("device");
-    if(this.platform.is('core')){
+    if(this.plt.is('core')){
       web.style.display = "block";
       device.style.display = 'none'
     } else {
       device.style.display = "block";
       web.style.display = 'none'
     }
->>>>>>> master
   }
 
   restInfoUpdate(){
@@ -326,7 +297,7 @@ export class InfoPage {
     let task;
 
 
-    if(this.platform.is('core')){
+    if(this.plt.is('core')){
       task = storageRef.put(imageFile);
     } else {
       task = storageRef.putString(imageFile, 'base64');

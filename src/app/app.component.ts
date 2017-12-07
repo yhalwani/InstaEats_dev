@@ -4,13 +4,9 @@ import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
-<<<<<<< HEAD
 import { HeaderColor } from '@ionic-native/header-color';
 import { Intercom } from '@ionic-native/intercom';
-=======
-import { HeaderColor }  from '@ionic-native/header-color';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
->>>>>>> master
 
 import firebase         from 'firebase';
 
@@ -66,13 +62,10 @@ export class MyApp {
     public fcm: FcmNotifications,
     private dialogs: Dialogs,
     private headerColor: HeaderColor,
-<<<<<<< HEAD
     public plt: Platform,
-    private intercom: Intercom
-=======
+    private intercom: Intercom,
     public alert: AlertController,
     private iab: InAppBrowser
->>>>>>> master
   ) {
 
     this.initializeApp();
@@ -130,12 +123,6 @@ export class MyApp {
 
   };
 
-<<<<<<< HEAD
-
-    initializeApp() {
-
-
-=======
   openInAppBrowser(){
     if(this.platform.is('core')){
       const browser = this.iab.create('http://instaeats.com/terms-and-policies.html');
@@ -146,7 +133,6 @@ export class MyApp {
   }
 
   initializeApp() {
->>>>>>> master
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();

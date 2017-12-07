@@ -1,11 +1,7 @@
-<<<<<<< HEAD
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandler, NgModule } from '@angular/core';
-=======
-import { BrowserModule }                            from '@angular/platform-browser';
-import { ErrorHandler, NgModule }                   from '@angular/core';
->>>>>>> master
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule }                       from '@ionic/storage';
 import { SplashScreen }                             from '@ionic-native/splash-screen';
@@ -14,7 +10,6 @@ import { HeaderColor }                              from '@ionic-native/header-c
 
 import  firebase  from 'firebase';
 
-<<<<<<< HEAD
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -29,18 +24,8 @@ import { AgmCoreModule } from '@agm/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 import { FCM } from '@ionic-native/fcm';
-=======
-import { Camera }                                   from '@ionic-native/camera';
-import { Geolocation }                              from '@ionic-native/geolocation';
-import { Diagnostic }                               from '@ionic-native/diagnostic';
-import { Dialogs }                                  from '@ionic-native/dialogs';
-import { SocialSharing }                            from '@ionic-native/social-sharing';
-import { Stripe }                                   from '@ionic-native/stripe';
-import { AgmCoreModule }                            from '@agm/core';
-import { LaunchNavigator, LaunchNavigatorOptions }  from '@ionic-native/launch-navigator';
-import { FCM }                                      from '@ionic-native/fcm';
-import { InAppBrowser }                             from '@ionic-native/in-app-browser';
->>>>>>> master
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCnsnRnjlqsMRO4jQLwFk3HzH8r-eMDiNk",

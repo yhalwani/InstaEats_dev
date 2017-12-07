@@ -43,12 +43,10 @@ export class DiscountsPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public loadingCtrl: LoadingController,
-<<<<<<< HEAD
     public plt: Platform,
-    private intercom: Intercom
-=======
+    private intercom: Intercom,
     public appCtrl: App
->>>>>>> master
+
   ) {
 
     var bundlesArr = [];
@@ -106,8 +104,6 @@ export class DiscountsPage {
       }
     });
 
-<<<<<<< HEAD
-
 
   }
 
@@ -122,10 +118,7 @@ export class DiscountsPage {
     } else {
     window.Intercom('update', {on_page: 'Restaurant Dash / Discounts'});
     }
-=======
     console.log(this.appCtrl.getRootNav());
-
->>>>>>> master
   }
 
   ngOnInit(){

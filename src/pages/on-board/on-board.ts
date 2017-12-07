@@ -1,30 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-<<<<<<< HEAD
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content  } from 'ionic-angular';
-=======
 import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content, Platform  } from 'ionic-angular';
->>>>>>> master
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-<<<<<<< HEAD
-import { Platform } from 'ionic-angular';
 import { Intercom } from '@ionic-native/intercom';
-
-
 
 import firebase from "firebase";
 
 declare var window;
 declare var intercom;
 
-=======
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-import firebase from "firebase";
-
->>>>>>> master
 @Component({
   selector: 'page-on-board',
   templateUrl: 'on-board.html',
@@ -109,13 +97,10 @@ export class OnBoardPage {
     public storage: Storage,
     public camera: Camera,
     public toastCtrl: ToastController,
-<<<<<<< HEAD
     public plt: Platform,
-    private intercom: Intercom
-=======
+    private intercom: Intercom,
     private iab: InAppBrowser,
     public platform: Platform
->>>>>>> master
   ) {
 
     // Set cuisineTypes array
@@ -187,6 +172,7 @@ export class OnBoardPage {
         description: [''],
         website: [''],
         phoneNumber: [''],
+        restNumber: [''],
         cuisineType: ['', Validators.required],
         street: ['', Validators.compose([Validators.minLength(3), Validators.required])],
         city: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
@@ -214,8 +200,6 @@ export class OnBoardPage {
 
   // Lock swipes to nav only by buttons
   ionViewDidEnter() {
-<<<<<<< HEAD
-
 
     if (this.plt.is('cordova')) {
       // This will only print on a device running Cordova
@@ -234,7 +218,6 @@ export class OnBoardPage {
       });
     }
 
-=======
     let web = document.getElementById("web");
     let device = document.getElementById("device");
 
@@ -246,7 +229,7 @@ export class OnBoardPage {
       device.style.display = "block";
       web.style.display = "none";
     }
->>>>>>> master
+
     this.slides.lockSwipes(true);
   }
 
@@ -294,93 +277,6 @@ export class OnBoardPage {
   // Finish onboarding and store data
   finish(){
 
-<<<<<<< HEAD
-=======
-    // Set empty JSON array for bundles
-    this.storage.set('bundles', []);
-
-    // Set empty JSON array to restInfo
-    this.storage.set('restInfo', {});
-
-    // Fetch and set variables
-    var info = {
-      restaurantName :  this.restaurantName,
-      email :           this.email,
-      slogan:           this.slogan,
-      description:      this.description,
-      cuisineType:      this.cuisineType,
-      website:          this.website,
-      phoneNumber:      this.phoneNumber,
-      restNumber:       this.restNumber,
-      street:           this.street,
-      city:             this.city,
-      province:         this.province,
-      country:          this.country,
-      postalCode:       this.postalCode.toUpperCase(),
-      mon_open:         this.mon_open,
-      mon_close:        this.mon_close,
-      tues_open:        this.tues_open,
-      tues_close:       this.tues_close,
-      wed_open:         this.wed_open,
-      wed_close:        this.wed_close,
-      thurs_open:       this.thurs_open,
-      thurs_close:      this.thurs_close,
-      fri_open:         this.fri_open,
-      fri_close:        this.fri_close,
-      sat_open:         this.sat_open,
-      sat_close:        this.sat_close,
-      sun_open:         this.sun_open,
-      sun_close:        this.sun_close
-    };
-
-    // Store restaurant info
-    this.storage.set('restInfo', info);
-
-    // Store menu
-    this.storage.set('restMenu', []);
-    this.storage.set('restMenu', this.menuGroup);
-
-    var restRef = firebase.database().ref("/Restaurant Profiles");
-
-    // create account using email and password
-    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
-
-      let currentUser = firebase.auth().currentUser;
-      let id = currentUser.uid;
-
-      this.saveImageToFirebase(this.image, id);
-
-      // after creation push the user to realtime database using uid as key
-      restRef.child(id).set({
-        id: currentUser.uid,
-        email: this.email,
-        restaurantName: this.restaurantName,
-        slogan: this.slogan,
-        description: this.description,
-        cuisineType: this.cuisineType,
-        website: this.website,
-        phoneNumber: this.phoneNumber,
-        address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
-        ownersName: this.ownerName,
-        restaurantNumber: this.restNumber,
-        liveStatus: false,   // false by default
-        stripe:{
-          "plan" : "none",
-          "subscribed": false
-        },
-
-        hoursOfOperation: {
-          "Monday": [this.mon_open, this.mon_close],
-          "Tuesday": [this.tues_open, this.tues_close],
-          "Wednesday": [this.wed_open, this.wed_close],
-          "Thursday": [this.thurs_open, this.thurs_close],
-          "Friday": [this.fri_open, this.fri_close],
-          "Saturday": [this.sat_open, this.sat_close],
-          "Sunday": [this.sun_open, this.sun_close]
-        }
-      });
->>>>>>> master
-
   this.readyToSubmit = true;
 
   if(!this.slideStepOne.valid){
@@ -411,6 +307,7 @@ export class OnBoardPage {
         cuisineType:      this.cuisineType,
         website:          this.website,
         phoneNumber:      this.phoneNumber,
+        restNumber:       this.restNumber,
         street:           this.street,
         city:             this.city,
         province:         this.province,
@@ -448,8 +345,8 @@ export class OnBoardPage {
         let id = currentUser.uid;
 
         // run html5 gelocation to get user coordinates
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(this.setPosition); }
-        this.saveImageToFirebase(this.image, id);
+          this.saveImageToFirebase(this.image, id);
+
 
         // after creation push the user to realtime database using uid as key
         restRef.child(id).set({
@@ -463,12 +360,12 @@ export class OnBoardPage {
           phoneNumber: this.slideStepTwo.value.phoneNumber,
           address: this.slideStepTwo.value.street + ", " + this.slideStepTwo.value.city + ", " + this.slideStepTwo.value.province + ", " + this.slideStepTwo.value.postalCode + ", " + this.slideStepTwo.value.country,
           ownersName: this.slideStepTwo.value.ownerName,
+          restaurantNumber: this.slideStepTwo.value.restNumber,
           liveStatus: false,   // false by default
           stripe:{
             "plan" : "none",
             "subscribed": false
           },
-
           hoursOfOperation: {
             "Mon": [this.mon_open, this.mon_close],
             "Tues": [this.tues_open, this.tues_close],
@@ -535,7 +432,7 @@ export class OnBoardPage {
       this.presentLoading();
 
 
-  }
+    }
   }
 
   uploadFile(event){
