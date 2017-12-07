@@ -5,6 +5,8 @@ import { IonicStorageModule }                       from '@ionic/storage';
 import { SplashScreen }                             from '@ionic-native/splash-screen';
 import { StatusBar }                                from '@ionic-native/status-bar';
 import { HeaderColor }                              from '@ionic-native/header-color';
+import { Intercom }                                 from '@ionic-native/intercom';
+import { FormsModule, ReactiveFormsModule }         from '@angular/forms';
 
 import  firebase  from 'firebase';
 
@@ -76,6 +78,8 @@ import { SettingsProvider }             from '../providers/settings/settings';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({
@@ -119,6 +123,7 @@ import { SettingsProvider }             from '../providers/settings/settings';
     SplashScreen,
     SettingsProvider,
     Stripe,
+    Intercom,
     HeaderColor,
     InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

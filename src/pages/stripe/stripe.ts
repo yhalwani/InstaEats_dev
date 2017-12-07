@@ -70,6 +70,7 @@ export class StripePage {
     //     });
     //     alert.present();
     // }
+    this.navCtrl.pop();
 
   }
 

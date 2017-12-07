@@ -2,10 +2,13 @@ import { Component }                                  from '@angular/core';
 import { NavController, NavParams, ToastController, Platform }  from 'ionic-angular';
 import { Storage }                                    from '@ionic/storage';
 import { Camera, CameraOptions }                      from '@ionic-native/camera';
+import { Intercom } from '@ionic-native/intercom';
 
 import { User }                                       from '../../providers/user';
 
 import firebase from 'firebase';
+declare var window;
+declare var intercom;
 
 @Component({
   selector: 'page-info',
@@ -36,20 +39,20 @@ export class InfoPage {
   postalCode: any;
 
   // hours of operation
-  mon_open:     any;
-  mon_close:    any;
-  tues_open:    any;
-  tues_close:   any;
-  wed_open:     any;
-  wed_close:    any;
-  thurs_open:   any;
-  thurs_close:  any;
-  fri_open:     any;
-  fri_close:    any;
-  sat_open:     any;
-  sat_close:    any;
-  sun_open:     any;
-  sun_close:    any;
+  mon_open:     any = null;
+  mon_close:    any = null;
+  tues_open:    any = null;
+  tues_close:   any = null;
+  wed_open:     any = null;
+  wed_close:    any = null;
+  thurs_open:   any = null;
+  thurs_close:  any = null;
+  fri_open:     any = null;
+  fri_close:    any = null;
+  sat_open:     any = null;
+  sat_close:    any = null;
+  sun_open:     any = null;
+  sun_close:    any = null;
 
   constructor(
     public navCtrl: NavController,
@@ -58,7 +61,8 @@ export class InfoPage {
     public camera: Camera,
     public toastCtrl: ToastController,
     public userService: User,
-    public platform: Platform
+    public platform: Platform,
+    private intercom: Intercom
   ) {
 
     // set cuisineTypes array
@@ -185,6 +189,7 @@ export class InfoPage {
         this.postalCode     = "postalCode";
       }
     });
+
   }
 
   ionViewDidEnter() {
@@ -197,6 +202,16 @@ export class InfoPage {
       device.style.display = "block";
       web.style.display = 'none'
     }
+
+    if (this.platform.is('cordova')) {
+        intercom.updateUser({
+          custom_attributes: {
+            on_page : "Restaurant Mobile Dash / Info"
+        }
+      });
+    } else {
+    window.Intercom('update', {on_page: 'Restaurant Dash / Info'});
+  }
   }
 
   restInfoUpdate(){

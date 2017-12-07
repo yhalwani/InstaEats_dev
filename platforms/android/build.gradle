@@ -32,7 +32,7 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.2.1'
     }
 }
 
@@ -93,6 +93,8 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "cordova-plugin-fcm/instaeats-FCMPlugin.gradle"
+apply from: "cordova-plugin-intercom/instaeats-intercom.gradle"
+apply from: "cordova-plugin-intercom/instaeats-build-extras-intercom.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

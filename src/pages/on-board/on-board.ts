@@ -1,11 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, Slides, Events, LoadingController, ToastController, Content, Platform  } from 'ionic-angular';
 import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Intercom } from '@ionic-native/intercom';
 
 import firebase from "firebase";
+
+declare var window;
+declare var intercom;
+
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'page-on-board',
@@ -54,7 +60,14 @@ export class OnBoardPage {
 
   // Slides reference
   @ViewChild(Slides) slides: Slides;
+  @ViewChild('restOnSlider') restOnSlider: any;
   @ViewChild(Content) content: Content;
+
+  slideStepOne: FormGroup;
+  slideStepTwo: FormGroup;
+  slideStepThree: FormGroup;
+
+  readyToSubmit: boolean = false;
 
   // Rest of variables
   cuisineTypes: Array<{ type: string, id: string }>;
@@ -77,12 +90,15 @@ export class OnBoardPage {
 
   constructor(
     public navCtrl: NavController,
+    public formBuilder: FormBuilder,
     public events: Events,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public storage: Storage,
     public camera: Camera,
     public toastCtrl: ToastController,
+    public plt: Platform,
+    private intercom: Intercom,
     private iab: InAppBrowser,
     public platform: Platform
   ) {
@@ -143,10 +159,65 @@ export class OnBoardPage {
     // Set empty menuGroup
     this.menuGroup = [];
 
+    this.slideStepOne = formBuilder.group({
+        restaurantName: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+        email: ['', Validators.required],
+        password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+    });
+
+
+
+    this.slideStepTwo = formBuilder.group({
+        slogan: [''],
+        description: [''],
+        website: [''],
+        phoneNumber: [''],
+        restNumber: [''],
+        cuisineType: ['', Validators.required],
+        street: ['', Validators.compose([Validators.minLength(3), Validators.required])],
+        city: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+        province: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+        country: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+        postalCode: ['', Validators.compose([Validators.pattern('[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]'), Validators.required])],
+        mon_open: [''],
+        mon_close: [''],
+        tues_open: [''],
+        tues_close: [''],
+        wed_open: [''],
+        wed_close: [''],
+        thurs_open: [''],
+        thurs_close: [''],
+        fri_open: [''],
+        fri_close: [''],
+        sat_open: [''],
+        sat_close: [''],
+        sun_open: [''],
+        sun_close: [''],
+        ownerName: ['', Validators.required]
+    });
+
   }
 
   // Lock swipes to nav only by buttons
   ionViewDidEnter() {
+
+    if (this.plt.is('cordova')) {
+      // This will only print on a device running Cordova
+        intercom.setLauncherVisibility('VISIBLE');
+        intercom.registerUnidentifiedUser();
+        intercom.updateUser({
+          custom_attributes: {
+            on_page : "mobile onboarding"
+        }
+      });
+    } else {
+      window.Intercom("boot", {
+        app_id: "ns2pj54u",
+        hide_default_launcher: false,
+        on_page: "onboarding"
+      });
+    }
+
     let web = document.getElementById("web");
     let device = document.getElementById("device");
 
@@ -158,19 +229,34 @@ export class OnBoardPage {
       device.style.display = "block";
       web.style.display = "none";
     }
+
     this.slides.lockSwipes(true);
+  }
+
+  ionViewWillLeave() {
+
+    if (this.plt.is('cordova')) {
+
+      intercom.setLauncherVisibility('GONE');
+
+    } else {
+      window.Intercom("update", {
+        hide_default_launcher: true
+      });
+    }
+
   }
 
   nextSlide(){
     this.slides.lockSwipes(false);
-    this.slides.slideNext();
+    this.restOnSlider.slideNext();
     this.slides.lockSwipes(true);
     this.content.scrollToTop(50);
   }
 
   prevSlide(){
     this.slides.lockSwipes(false);
-    this.slides.slidePrev();
+    this.restOnSlider.slidePrev();
     this.slides.lockSwipes(true);
     this.content.scrollToTop(50);
   }
@@ -191,110 +277,162 @@ export class OnBoardPage {
   // Finish onboarding and store data
   finish(){
 
-    // Set empty JSON array for bundles
-    this.storage.set('bundles', []);
+  this.readyToSubmit = true;
 
-    // Set empty JSON array to restInfo
-    this.storage.set('restInfo', {});
+  if(!this.slideStepOne.valid){
+    this.slides.lockSwipes(false);
+    this.restOnSlider.slideTo(0);
+    this.slides.lockSwipes(true);
+    this.content.scrollToTop(50);
+  }
+  else if(!this.slideStepTwo.valid){
+    this.slides.lockSwipes(false);
+    this.restOnSlider.slideTo(1);
+    this.slides.lockSwipes(true);
+    this.content.scrollToTop(50);
+  }
+  else {
+      // Set empty JSON array for bundles
+      this.storage.set('bundles', []);
 
-    // Fetch and set variables
-    var info = {
-      restaurantName :  this.restaurantName,
-      email :           this.email,
-      slogan:           this.slogan,
-      description:      this.description,
-      cuisineType:      this.cuisineType,
-      website:          this.website,
-      phoneNumber:      this.phoneNumber,
-      restNumber:       this.restNumber,
-      street:           this.street,
-      city:             this.city,
-      province:         this.province,
-      country:          this.country,
-      postalCode:       this.postalCode.toUpperCase(),
-      mon_open:         this.mon_open,
-      mon_close:        this.mon_close,
-      tues_open:        this.tues_open,
-      tues_close:       this.tues_close,
-      wed_open:         this.wed_open,
-      wed_close:        this.wed_close,
-      thurs_open:       this.thurs_open,
-      thurs_close:      this.thurs_close,
-      fri_open:         this.fri_open,
-      fri_close:        this.fri_close,
-      sat_open:         this.sat_open,
-      sat_close:        this.sat_close,
-      sun_open:         this.sun_open,
-      sun_close:        this.sun_close
-    };
+      // Set empty JSON array to restInfo
+      this.storage.set('restInfo', {});
 
-    // Store restaurant info
-    this.storage.set('restInfo', info);
+      // Fetch and set variables
+      var info = {
+        restaurantName :  this.restaurantName,
+        email :           this.email,
+        slogan:           this.slogan,
+        description:      this.description,
+        cuisineType:      this.cuisineType,
+        website:          this.website,
+        phoneNumber:      this.phoneNumber,
+        restNumber:       this.restNumber,
+        street:           this.street,
+        city:             this.city,
+        province:         this.province,
+        country:          this.country,
+        postalCode:       this.postalCode,
+        mon_open:         this.mon_open,
+        mon_close:        this.mon_close,
+        tues_open:        this.tues_open,
+        tues_close:       this.tues_close,
+        wed_open:         this.wed_open,
+        wed_close:        this.wed_close,
+        thurs_open:       this.thurs_open,
+        thurs_close:      this.thurs_close,
+        fri_open:         this.fri_open,
+        fri_close:        this.fri_close,
+        sat_open:         this.sat_open,
+        sat_close:        this.sat_close,
+        sun_open:         this.sun_open,
+        sun_close:        this.sun_close
+      };
 
-    // Store menu
-    this.storage.set('restMenu', []);
-    this.storage.set('restMenu', this.menuGroup);
+      // Store restaurant info
+      this.storage.set('restInfo', info);
 
-    var restRef = firebase.database().ref("/Restaurant Profiles");
+      // Store menu
+      this.storage.set('restMenu', []);
+      this.storage.set('restMenu', this.menuGroup);
 
-    // create account using email and password
-    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+      var restRef = firebase.database().ref("/Restaurant Profiles");
 
-      let currentUser = firebase.auth().currentUser;
-      let id = currentUser.uid;
+      // create account using email and password
+      firebase.auth().createUserWithEmailAndPassword(this.slideStepOne.value.email, this.slideStepOne.value.password).then((user) => {
 
-      this.saveImageToFirebase(this.image, id);
+        let currentUser = firebase.auth().currentUser;
+        let id = currentUser.uid;
 
-      // after creation push the user to realtime database using uid as key
-      restRef.child(id).set({
-        id: currentUser.uid,
-        email: this.email,
-        restaurantName: this.restaurantName,
-        slogan: this.slogan,
-        description: this.description,
-        cuisineType: this.cuisineType,
-        website: this.website,
-        phoneNumber: this.phoneNumber,
-        address: this.street + ", " + this.city + ", " + this.province + ", " + this.postalCode + ", " + this.country,
-        ownersName: this.ownerName,
-        restaurantNumber: this.restNumber,
-        liveStatus: false,   // false by default
-        stripe:{
-          "plan" : "none",
-          "subscribed": false
-        },
+        // run html5 gelocation to get user coordinates
+          this.saveImageToFirebase(this.image, id);
 
-        hoursOfOperation: {
-          "Monday": [this.mon_open, this.mon_close],
-          "Tuesday": [this.tues_open, this.tues_close],
-          "Wednesday": [this.wed_open, this.wed_close],
-          "Thursday": [this.thurs_open, this.thurs_close],
-          "Friday": [this.fri_open, this.fri_close],
-          "Saturday": [this.sat_open, this.sat_close],
-          "Sunday": [this.sun_open, this.sun_close]
-        }
+
+        // after creation push the user to realtime database using uid as key
+        restRef.child(id).set({
+          id: currentUser.uid,
+          email: this.slideStepOne.value.email,
+          restaurantName: this.slideStepOne.value.restaurantName,
+          slogan: this.slideStepTwo.value.slogan,
+          description: this.slideStepTwo.value.description,
+          cuisineType: this.slideStepTwo.value.cuisineType,
+          website: this.slideStepTwo.value.website,
+          phoneNumber: this.slideStepTwo.value.phoneNumber,
+          address: this.slideStepTwo.value.street + ", " + this.slideStepTwo.value.city + ", " + this.slideStepTwo.value.province + ", " + this.slideStepTwo.value.postalCode + ", " + this.slideStepTwo.value.country,
+          ownersName: this.slideStepTwo.value.ownerName,
+          restaurantNumber: this.slideStepTwo.value.restNumber,
+          liveStatus: false,   // false by default
+          stripe:{
+            "plan" : "none",
+            "subscribed": false
+          },
+          hoursOfOperation: {
+            "Mon": [this.mon_open, this.mon_close],
+            "Tues": [this.tues_open, this.tues_close],
+            "Wed": [this.wed_open, this.wed_close],
+            "Thurs": [this.thurs_open, this.thurs_close],
+            "Fri": [this.fri_open, this.fri_close],
+            "Sat": [this.sat_open, this.sat_close],
+            "Sun": [this.sun_open, this.sun_close]
+          }
+        });
+
+      if (this.plt.is('cordova')) {
+        intercom.registerIdentifiedUser({
+          email: this.slideStepOne.value.email,
+          userId: currentUser.uid
+        });
+        intercom.updateUser({
+          name: this.slideStepTwo.value.ownerName,
+          phone: this.slideStepTwo.value.phoneNumber,
+          companies: {
+            id: currentUser.uid,
+            name: this.slideStepOne.value.restaurantName,
+            plan: 'No Plan',
+            website: this.slideStepTwo.value.website,
+            address: this.slideStepTwo.value.street + ", " + this.slideStepTwo.value.city + ", " + this.slideStepTwo.value.province + ", " + this.slideStepTwo.value.postalCode + ", " + this.slideStepTwo.value.country
+          }
+        });
+      } else {
+        window.Intercom("boot", {
+          app_id: "ns2pj54u",
+          user_id: currentUser.uid,
+          name: this.slideStepTwo.value.ownerName,
+          email: this.slideStepOne.value.email,
+          phone: this.slideStepTwo.value.phoneNumber,
+          company: {
+            id: currentUser.uid,
+            name: this.slideStepOne.value.restaurantName,
+            plan: 'No Plan',
+            website:  this.slideStepTwo.value.website,
+            address:  this.slideStepTwo.value.street + ", " + this.slideStepTwo.value.city + ", " + this.slideStepTwo.value.province + ", " + this.slideStepTwo.value.postalCode + ", " + this.slideStepTwo.value.country
+          },
+          hide_default_launcher: false
+        });
+      }
+
+        // update the display name with the username provided
+        user.updateProfile({
+          displayName: this.slideStepOne.value.restaurantName
+        });
+
+        user.sendEmailVerification().then(() => {
+          this.toastCtrl.create({
+            message: "Verfication email sent to your email account",
+            duration: 3000,
+            position: 'bottom'
+          }).present();
+        }).catch((error) => {console.log(error)})
+
+        // Push menu to firebase
+        this.pushMenu(id);
       });
 
-      // update the display name with the username provided
-      user.updateProfile({
-        displayName: this.restaurantName
-      });
+      // Nav to Restaurant Portal
+      this.presentLoading();
 
-      user.sendEmailVerification().then(() => {
-        this.toastCtrl.create({
-          message: "Verfication email sent to your email account",
-          duration: 3000,
-          position: 'bottom'
-        }).present();
-      }).catch((error) => {console.log(error)})
 
-      // Push menu to firebase
-      this.pushMenu(id);
-    });
-
-    // Nav to Restaurant Portal
-    this.presentLoading();
-
+    }
   }
 
   uploadFile(event){

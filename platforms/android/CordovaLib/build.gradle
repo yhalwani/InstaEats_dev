@@ -16,33 +16,39 @@
    under the License.
 */
 
+
+
+buildscript {
+    repositories {
+<<<<<<< HEAD
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+=======
+        mavenCentral()
+        jcenter();
+>>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.1'
+    }
+
+}
+
+apply plugin: 'com.android.library'
+
+<<<<<<< HEAD
+group = 'org.apache.cordova'
+version = '6.3.0'
+=======
 ext {
     apply from: 'cordova.gradle'
     cdvCompileSdkVersion = privateHelpers.getProjectTarget()
     cdvBuildToolsVersion = privateHelpers.findLatestInstalledBuildTools()
 }
-
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-group = 'org.apache.cordova'
-version = '6.3.0'
+>>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
 
 android {
     compileSdkVersion cdvCompileSdkVersion
@@ -65,6 +71,7 @@ android {
             assets.srcDirs = ['assets']
         }
     }
+<<<<<<< HEAD
 
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -134,4 +141,6 @@ bintray {
             vcsTag = '6.3.0'
         }
     }
+=======
+>>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
 }

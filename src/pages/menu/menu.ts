@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ModalController, ViewController, AlertController, ToastController  } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Events, ModalController, ViewController, AlertController, ToastController, Platform  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { DiscountsPage } from '../discounts/discounts';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Intercom } from '@ionic-native/intercom';
 
 import firebase from 'firebase';
+
+declare var window;
+declare var intercom;
 
 @Component({
   selector: 'page-menu',
@@ -27,7 +32,9 @@ export class MenuPage {
     public events: Events,
     public storage: Storage,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public plt: Platform,
+    private intercom: Intercom
   ) {
 
     let user = firebase.auth().currentUser;
@@ -62,6 +69,21 @@ export class MenuPage {
       this.menuGroup = menuArr;
     });
   };
+
+  ionViewDidEnter() {
+
+    if (this.plt.is('cordova')) {
+        intercom.setLauncherVisibility('VISIBLE');
+        intercom.updateUser({
+          custom_attributes: {
+            on_page : "Restaurant Mobile Dash / Menu"
+        }
+      });
+    } else {
+
+    window.Intercom('update', {on_page: 'Restaurant Dash / Menu'});
+  }
+  }
 
   // Push menu to firebase
   updateMenu(){
@@ -172,37 +194,67 @@ export class MenuPage {
 
 @Component({
   template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Create Coupon
-        </ion-title>
-        <ion-buttons start>
-          <button ion-button (click)="dismiss()">
-            Cancel
-          </button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Create Coupon
+      </ion-title>
+      <ion-buttons start>
+        <button ion-button (click)="dismiss()">
+          Cancel
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-    <ion-content>
-      <ion-item>
-        <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
+  <ion-content>
+
+    <p *ngIf="readyToSubmit" style="color: #ea6153;"> Please fill out coupon Name and Description</p>
+
+    <form [formGroup]="coupDesc">
+    <ion-item>
+      <ion-input type="text" placeholder="Coupon Name (required)" maxlength=120 formControlName="bundleName" [class.invalid]="!coupDesc.controls.bundleName.valid && (coupDesc.controls.bundleName.dirty || readyToSubmit)"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!coupDesc.controls.bundleName.valid  && (coupDesc.controls.bundleName.dirty || readyToSubmit)">
+          <p>Required</p>
       </ion-item>
-      <ion-item>
-        <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
+    <ion-item>
+      <ion-input type="text" placeholder="Coupon Description (required)" maxlength=400 formControlName="bundleDescription" [class.invalid]="!coupDesc.controls.bundleDescription.valid && (coupDesc.controls.bundleDescription.dirty || readyToSubmit)"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!coupDesc.controls.bundleDescription.valid  && (coupDesc.controls.bundleDescription.dirty || readyToSubmit)">
+          <p>Required</p>
       </ion-item>
+    </form>
+    <br>
 
-      <br>
+    <ion-list *ngFor="let menug of bundleMenu; let i = index">
+      <ion-card class="cardNot">
+        <ion-card-header style="background-color: #da3937; color: white;">
+          {{menug.menuGroupName}}
+        </ion-card-header>
 
-      <ion-list *ngFor="let menug of bundleMenu; let i = index">
-        <ion-card class="cardNot">
-          <ion-card-header style="background-color: #da3937; color: white;">
-            {{menug.menuGroupName}}
-          </ion-card-header>
+        <ion-grid>
+          <ion-row style="line-height: 1.5em;">
+            <ion-col col-2 col-auto >
+            </ion-col>
+            <ion-col col-4 col-auto>
+              Item Name
+            </ion-col>
+            <ion-col col-2 col-auto>
+              Price
+            </ion-col>
+            <ion-col col-2 col-auto>
+              $'s off
+            </ion-col>
+            <ion-col col-2 col-auto>
+              % off
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
-          <ion-grid>
-            <ion-row style="line-height: 1.5em;">
+        <ion-grid>
+          <ion-item-group *ngFor="let menu of menug.menu; let j = index">
+            <ion-row>
               <ion-col col-2 col-auto >
               </ion-col>
               <ion-col col-4 col-auto> Item Name </ion-col>
@@ -210,69 +262,72 @@ export class MenuPage {
               <ion-col col-2 col-auto> New Price </ion-col>
               <ion-col col-2 col-auto> % off </ion-col>
             </ion-row>
-          </ion-grid>
+          </ion-item-group>
+        </ion-grid>
+            </ion-card>
+    </ion-list>
 
-          <ion-grid>
-            <ion-item-group *ngFor="let menu of menug.menu; let j = index">
-              <ion-row>
-
-                <ion-col col-2 col-auto >
-                  <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
-                </ion-col>
-
-                <ion-col col-4 col-auto >
-                  <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
-                </ion-col>
-
-                <ion-col col-2 col-auto >
-                  $ {{menu.price}}
-                </ion-col>
-
-                <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-                  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
-                </ion-col>
-
-                <ion-col col-2 col-auto style="margin:0px; padding:0px;">
-                  <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
-                </ion-col>
-
-              </ion-row>
-            </ion-item-group>
-          </ion-grid>
-        </ion-card>
-      </ion-list>
-
-      <ion-grid>
+    <ion-grid>
+      <ion-item-group *ngFor="let menu of menug.menu; let j = index">
         <ion-row>
-          <ion-col col-6>
+
+          <ion-col col-2 col-auto >
+            <ion-checkbox style="margin:0px; padding:0px;" [(ngModel)]="bundleMenu[i].menu[j].checked" (click)='sumTotal()'></ion-checkbox>
           </ion-col>
-          <ion-col col-2> Total Price </ion-col>
-          <ion-col col-2> Total $'s off </ion-col>
-          <ion-col col-2> Total % off </ion-col>
-        </ion-row>
 
-        <ion-row>
-          <ion-col col-6>
-
+          <ion-col col-4 col-auto >
+            <ion-label style="margin:0px; padding:0px;"> {{menu.name}} </ion-label>
           </ion-col>
-          <ion-col col-2> {{totalPrice}} </ion-col>
-          <ion-col col-2> $ {{totalDiscountPrice}} </ion-col>
-          <ion-col col-2> {{totalDiscountPercent}} % </ion-col>
+
+          <ion-col col-2 col-auto >
+            $ {{menu.price}}
+          </ion-col>
+
+          <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+            <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].discount" (change)='sumTotalPrice(i,j)'></ion-input>
+          </ion-col>
+
+          <ion-col col-2 col-auto style="margin:0px; padding:0px;">
+            <ion-input style="margin:0px; padding:0px;" [disabled]=!bundleMenu[i].menu[j].checked [(ngModel)]="bundleMenu[i].menu[j].percent" (change)='sumTotalPercent(i,j)'></ion-input>
+          </ion-col>
+
         </ion-row>
-      </ion-grid>
+      </ion-item-group>
+    </ion-grid>
 
-      <br>
+<ion-grid>
+  <ion-row>
+    <ion-col col-6>
+    </ion-col>
+    <ion-col col-2> Total Price </ion-col>
+    <ion-col col-2> Total $'s off </ion-col>
+    <ion-col col-2> Total % off </ion-col>
+  </ion-row>
 
-      <div text-center>
-        <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
-          Save Bundle
-          <ion-icon name="pricetags"></ion-icon>
-        </button>
-      </div>
-    </ion-content>
-    `
+  <ion-row>
+    <ion-col col-6>
+
+    </ion-col>
+    <ion-col col-2> {{totalPrice}} </ion-col>
+    <ion-col col-2> $ {{totalDiscountPrice}} </ion-col>
+    <ion-col col-2> {{totalDiscountPercent}} % </ion-col>
+  </ion-row>
+</ion-grid>
+
+<br>
+
+<div text-center>
+  <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
+    Save Bundle
+    <ion-icon name="pricetags"></ion-icon>
+  </button>
+</div>
+</ion-content>
+`
 })
 export class ModalContentPage {
+  private coupDesc : FormGroup;
+  readyToSubmit: boolean = false;
 
   menuGroup: Array<{
     menuGroupName:         string,
@@ -311,12 +366,18 @@ export class ModalContentPage {
   totalPrice:                   number;
 
   constructor(
+    private formBuilder: FormBuilder,
     public params: NavParams,
     public viewCtrl: ViewController,
     public storage: Storage,
     public events: Events,
     public navCtrl: NavController
   ) {
+
+    this.coupDesc = this.formBuilder.group({
+      bundleName: ['', Validators.required],
+      bundleDescription: ['', Validators.required],
+    });
 
     this.totalDiscountPrice    = 0;
     this.totalDiscountPercent  = 0;
@@ -417,8 +478,15 @@ export class ModalContentPage {
   // Save bundle to storage and push to firebase
   saveBundle() {
 
-    this.bundleItem.bundleName = this.bundleName;
-    this.bundleItem.bundleDescription = this.bundleDescription;
+
+  this.readyToSubmit = true;
+
+  if(!this.coupDesc.valid){
+
+  } else {
+
+    this.bundleItem.bundleName = this.coupDesc.value.bundleName;
+    this.bundleItem.bundleDescription = this.coupDesc.value.bundleDescription;
 
     this.bundleItem.total = this.totalPrice;
     this.bundleItem.totalDiscount = this.totalDiscountPrice;
@@ -465,6 +533,9 @@ export class ModalContentPage {
     });
 
     this.dismiss();
+
+  }
+
 
   };
 

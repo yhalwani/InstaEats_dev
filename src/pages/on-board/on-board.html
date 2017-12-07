@@ -10,32 +10,56 @@
 
 <ion-content padding >
 
+  <ion-grid>
+    <ion-row justify-content-center>
+        <p *ngIf="readyToSubmit" style="color: #ea6153;"> Please fill out all details accurately.</p>
+    </ion-row>
   <!-- Slides Container -->
-  <ion-slides pager paginationType="progress" color="rdaApp" style="height: auto">
+
+  <ion-slides #restOnSlider pager paginationType="progress" color="rdaApp" style="height: auto;">
 
     <!-- General Info Slide -->
     <ion-slide>
-      <h2 padding> Please enter your account information below and continue to the next step! </h2>
+      <ion-row justify-content-center>
+        <ion-col col-12 col-sm-12 col-md-6>
+      <h2 padding> Create an account for your restaurant </h2>
+
       <ion-list>
-        <!-- Restaurant Name Input -->
-        <ion-item>
-          <ion-icon item-left name="restaurant"></ion-icon>
-          <ion-label floating>Restaurant Name</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="restaurantName"></ion-input>
-        </ion-item>
-        <!-- Email Input -->
-        <ion-item>
-          <ion-icon item-left name="mail"></ion-icon>
-          <ion-label floating>Email</ion-label>
-          <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
-        </ion-item>
-        <!-- Password Input -->
-        <ion-item>
-          <ion-icon item-left name="lock"></ion-icon>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
-        </ion-item>
+
+        <form [formGroup]="slideStepOne">
+
+          <!-- Restaurant Name Input -->
+          <ion-item>
+            <ion-icon item-left name="restaurant"></ion-icon>
+            <ion-label floating>Restaurant Name</ion-label>
+            <ion-input formControlName="restaurantName" type="text" value="" [class.invalid]="!slideStepOne.controls.restaurantName.valid && (slideStepOne.controls.restaurantName.dirty || readyToSubmit)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!slideStepOne.controls.restaurantName.valid  && (slideStepOne.controls.restaurantName.dirty || readyToSubmit)">
+                <p>Required</p>
+          </ion-item>
+          <!-- Email Input -->
+          <ion-item>
+            <ion-icon item-left name="mail"></ion-icon>
+            <ion-label floating>Email</ion-label>
+            <ion-input formControlName="email" type="email" value=""  [class.invalid]="!slideStepOne.controls.email.valid && (slideStepOne.controls.email.dirty || readyToSubmit)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!slideStepOne.controls.email.valid  && (slideStepOne.controls.email.dirty || readyToSubmit)">
+            <p>Please Enter a valid email</p>
+            </ion-item>
+          <!-- Password Input -->
+          <ion-item>
+            <ion-icon item-left name="lock"></ion-icon>
+            <ion-label floating>Password</ion-label>
+            <ion-input formControlName="password" type="password" value="" [class.invalid]="!slideStepOne.controls.password.valid && (slideStepOne.controls.password.dirty || readyToSubmit)"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!slideStepOne.controls.password.valid  && (slideStepOne.controls.password.dirty || readyToSubmit)">
+                <p>Password must contain ...</p>
+            </ion-item>
+
+        </form>
+
       </ion-list>
+
       <!-- Continue to Next Slide -->
       <ion-buttons>
         <button ion-button medium clear icon-right color="rdaApp" (click)="nextSlide()">
@@ -43,14 +67,22 @@
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
+    </ion-col>
+    </ion-row>
     </ion-slide>
 
     <!-- Meta Info Slide -->
     <ion-slide>
-      <h2 padding> Please enter your Restaurants information below and continue to the next step!  </h2>
+      <ion-row justify-content-center>
+        <ion-col col-12 col-sm-12 col-md-6>
+      <h2 padding> About restaurant & contact information</h2>
+
       <ion-item-group>
+
+        <form [formGroup]="slideStepTwo">
+
         <!-- Restaurant Info -->
-        <ion-item-divider color="light">Restaurants Resources</ion-item-divider>
+        <ion-item-divider color="light">About Restaurant (Visible to Public)</ion-item-divider>
         <!-- Img Chooser -->
         <ion-item>
           <ion-avatar item-left>
@@ -72,42 +104,37 @@
         <ion-item>
           <ion-icon item-left name="quote"></ion-icon>
           <ion-label floating>Slogan</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="slogan"></ion-input>
-        </ion-item>
-        <!-- Description Input -->
-        <ion-item>
-          <ion-icon item-left name="document"></ion-icon>
-          <ion-label floating>Description</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+          <ion-input formControlName="slogan" type="text" value=""></ion-input>
         </ion-item>
         <!-- Cuisine Type Input -->
         <ion-item>
           <ion-icon item-left name="restaurant"></ion-icon>
           <ion-label floating>Cuisine Type</ion-label>
-          <ion-select [(ngModel)]="cuisineType">
+          <ion-select formControlName="cuisineType"  [class.invalid]="!slideStepTwo.controls.cuisineType.valid && (slideStepTwo.controls.cuisineType.dirty || readyToSubmit)">
             <ion-option *ngFor="let cuisine of cuisineTypes; let i = index" value="{{cuisine.type}}">
               {{cuisine.type}}
             </ion-option>
           </ion-select>
         </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.cuisineType.valid  && (slideStepTwo.controls.cuisineType.dirty || readyToSubmit)">
+              <p>Required</p>
+          </ion-item>
+        <!-- Description Input -->
+        <ion-item>
+          <ion-icon item-left name="document"></ion-icon>
+          <ion-label floating>Description</ion-label>
+          <ion-input type="text" value=""formControlName="description"></ion-input>
+        </ion-item>
         <!-- Website Input -->
         <ion-item>
           <ion-icon item-left name="globe"></ion-icon>
           <ion-label floating>Website</ion-label>
-          <ion-input type="url" value="" [(ngModel)]="website"></ion-input>
-        </ion-item>
-
-        <!-- Personal Info Input -->
-        <ion-item-divider color="light">Contact Information</ion-item-divider>
-        <ion-item>
-          <ion-icon item-left name="md-contact"></ion-icon>
-          <ion-label floating>Owner's Name</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="ownerName"></ion-input>
+          <ion-input type="url" value="" formControlName="website"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon item-left name="call"></ion-icon>
           <ion-label floating>Personal Number</ion-label>
-          <ion-input type="tel" value="" [(ngModel)]="phoneNumber"></ion-input>
+          <ion-input type="tel" value=""  formControlName="phoneNumber"></ion-input>
         </ion-item>
 
         <!-- Restaurant Info -->
@@ -115,169 +142,197 @@
         <ion-item>
           <ion-icon item-left name="call"></ion-icon>
           <ion-label floating>Restaurant's Number</ion-label>
-          <ion-input type="tel" value="" [(ngModel)]="restNumber"></ion-input>
+          <ion-input type="tel" value="" formControlName="restNumber"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon item-left name="home"></ion-icon>
           <ion-label floating>Street</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="street"></ion-input>
+          <ion-input formControlName="street" type="text" value="" [class.invalid]="!slideStepTwo.controls.street.valid && (slideStepTwo.controls.street.dirty || readyToSubmit)"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.street.valid  && (slideStepTwo.controls.street.dirty || readyToSubmit)">
+              <p>Required</p>
         </ion-item>
         <ion-item>
           <ion-label floating>City</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="city"></ion-input>
+          <ion-input formControlName="city" type="text" value="" [class.invalid]="!slideStepTwo.controls.city.valid && (slideStepTwo.controls.city.dirty || readyToSubmit)"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.city.valid  && (slideStepTwo.controls.city.dirty || readyToSubmit)">
+              <p>Required</p>
         </ion-item>
         <ion-item>
           <ion-label floating>Province</ion-label>
-          <ion-select [(ngModel)]="province">
+          <ion-select formControlName="province"  [class.invalid]="!slideStepTwo.controls.province.valid && (slideStepTwo.controls.province.dirty || readyToSubmit)">
             <ion-option *ngFor="let province of provinces; let i = index" value="{{province.name}}">
               {{province.name}}
             </ion-option>
           </ion-select>
         </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.province.valid  && (slideStepTwo.controls.province.dirty || readyToSubmit)">
+              <p>Required</p>
+        </ion-item>
         <ion-item>
           <ion-label floating>Country</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="country"></ion-input>
+          <ion-input formControlName="country" type="text" value=""  [class.invalid]="!slideStepTwo.controls.country.valid && (slideStepTwo.controls.country.dirty || readyToSubmit)"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.country.valid  && (slideStepTwo.controls.country.dirty || readyToSubmit)">
+              <p>Required</p>
         </ion-item>
         <ion-item>
           <ion-label floating>Postal Code</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="postalCode"></ion-input>
+          <ion-input formControlName="postalCode" type="text" value=""  [class.invalid]="!slideStepTwo.controls.postalCode.valid && (slideStepTwo.controls.postalCode.dirty || readyToSubmit)"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.postalCode.valid  && (slideStepTwo.controls.postalCode.dirty || readyToSubmit)">
+              <p>Required</p>
         </ion-item>
 
-        <!-- Hours of Operation Input -->
-        <ion-item-divider color="light">Hours of Operations</ion-item-divider>
-        <ion-grid fixed>
-          <ion-row>
-            <ion-col col-3>
-              Day
-            </ion-col>
-            <ion-col>
-              Open
-            </ion-col>
-            <ion-col>
-              Close
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Mon
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="monopen.open()">
-                <ion-datetime #monopen pickerFormat="h mm A" [hidden]="mon_open == 'closed'" [(ngModel)]="mon_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="mon_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="monclose.open()">
-                <ion-datetime #monclose pickerFormat="h mm A" [hidden]="mon_close == 'closed'" [(ngModel)]="mon_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="mon_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Tues
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="tuesopen.open()">
-                <ion-datetime #tuesopen pickerFormat="h mm A" [hidden]="tues_open == 'closed'" [(ngModel)]="tues_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="tues_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="tuesclose.open()">
-                <ion-datetime #tuesclose pickerFormat="h mm A" [hidden]="tues_close == 'closed'" [(ngModel)]="tues_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="tues_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Wed
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="wedopen.open()">
-                <ion-datetime #wedopen pickerFormat="h mm A" [hidden]="wed_open == 'closed'" [(ngModel)]="wed_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="wed_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="wedclose.open()">
-                <ion-datetime #wedclose pickerFormat="h mm A" [hidden]="wed_close == 'closed'" [(ngModel)]="wed_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="wed_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Thurs
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="thursopen.open()">
-                <ion-datetime #thursopen pickerFormat="h mm A" [hidden]="thurs_open == 'closed'" [(ngModel)]="thurs_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="thurs_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="thursclose.open()">
-                <ion-datetime #thursclose pickerFormat="h mm A" [hidden]="thurs_close == 'closed'" [(ngModel)]="thurs_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="thurs_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Fri
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="friopen.open()">
-                <ion-datetime #friopen pickerFormat="h mm A" [hidden]="fri_open == 'closed'" [(ngModel)]="fri_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="fri_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="friclose.open()">
-                <ion-datetime #friclose pickerFormat="h mm A" [hidden]="fri_close == 'closed'" [(ngModel)]="fri_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="fri_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Sat
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="satopen.open()">
-                <ion-datetime #satopen pickerFormat="h mm A" [hidden]="sat_open == 'closed'" [(ngModel)]="sat_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="sat_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="satclose.open()">
-                <ion-datetime #satclose pickerFormat="h mm A" [hidden]="sat_close == 'closed'" [(ngModel)]="sat_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="sat_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
-              Sun
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="sunopen.open()">
-                <ion-datetime #sunopen pickerFormat="h mm A" [hidden]="sun_open == 'closed'" [(ngModel)]="sun_open"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="sun_open == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col no-padding>
-              <button ion-button clear color="rdaApp" (click)="sunclose.open()">
-                <ion-datetime #sunclose pickerFormat="h mm A" [hidden]="sun_close == 'closed'" [(ngModel)]="sun_close"></ion-datetime>
-                <ion-icon name="add-circle" *ngIf="sun_close == 'closed'"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
+        <!-- Address Input -->
+        <ion-item-divider color="light">Owner Contact Info (Only visible to InstaEats satff)</ion-item-divider>
+        <ion-item>
+          <ion-icon item-left name="md-contact"></ion-icon>
+          <ion-label floating>Owner's Name</ion-label>
+          <ion-input formControlName="ownerName" type="text" value="" [class.invalid]="!slideStepTwo.controls.ownerName.valid && (slideStepTwo.controls.ownerName.dirty || readyToSubmit)"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!slideStepTwo.controls.ownerName.valid  && (slideStepTwo.controls.ownerName.dirty || readyToSubmit)">
+              <p>Required</p>
+        </ion-item>
 
-        </ion-grid>
+      </form>
+
+      <!-- Hours of Operation Input -->
+      <ion-item-divider color="light">Hours of Operations (Visible to Public)</ion-item-divider>
+      <ion-grid fixed style="background-color: white;">
+        <ion-row>
+          <ion-col col-3>
+            Day
+          </ion-col>
+          <ion-col>
+            Open
+          </ion-col>
+          <ion-col>
+            Close
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Mon
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="monopen.open()">
+               <ion-datetime #monopen pickerFormat="h:mm A" [hidden]="mon_open == 'closed'" [(ngModel)]="mon_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="mon_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="monclose.open()">
+               <ion-datetime #monclose pickerFormat="h:mm A" [hidden]="mon_close == 'closed'" [(ngModel)]="mon_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="mon_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Tues
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="tuesopen.open()">
+               <ion-datetime #tuesopen pickerFormat="h:mm A" [hidden]="tues_open == 'closed'" [(ngModel)]="tues_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="tues_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="tuesclose.open()">
+               <ion-datetime #tuesclose pickerFormat="h:mm A" [hidden]="tues_close == 'closed'" [(ngModel)]="tues_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="tues_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Wed
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="wedopen.open()">
+               <ion-datetime #wedopen pickerFormat="h:mm A" [hidden]="wed_open == 'closed'" [(ngModel)]="wed_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="wed_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="wedclose.open()">
+               <ion-datetime #wedclose pickerFormat="h:mm A" [hidden]="wed_close == 'closed'" [(ngModel)]="wed_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="wed_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Thurs
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="thursopen.open()">
+               <ion-datetime #thursopen pickerFormat="h:mm A" [hidden]="thurs_open == 'closed'" [(ngModel)]="thurs_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="thurs_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="thursclose.open()">
+               <ion-datetime #thursclose pickerFormat="h:mm A" [hidden]="thurs_close == 'closed'" [(ngModel)]="thurs_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="thurs_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Fri
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="friopen.open()">
+               <ion-datetime #friopen pickerFormat="h:mm A" [hidden]="fri_open == 'closed'" [(ngModel)]="fri_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="fri_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="friclose.open()">
+               <ion-datetime #friclose pickerFormat="h:mm A" [hidden]="fri_close == 'closed'" [(ngModel)]="fri_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="fri_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Sat
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="satopen.open()">
+               <ion-datetime #satopen pickerFormat="h:mm A" [hidden]="sat_open == 'closed'" [(ngModel)]="sat_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="sat_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="satclose.open()">
+               <ion-datetime #satclose pickerFormat="h:mm A" [hidden]="sat_close == 'closed'" [(ngModel)]="sat_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="sat_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3>
+            Sun
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="sunopen.open()">
+               <ion-datetime #sunopen pickerFormat="h:mm A" [hidden]="sun_open == 'closed'" [(ngModel)]="sun_open"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="sun_open == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+          <ion-col no-padding>
+            <button ion-button clear color="rdaApp" (click)="sunclose.open()">
+               <ion-datetime #sunclose pickerFormat="h:mm A" [hidden]="sun_close == 'closed'" [(ngModel)]="sun_close"></ion-datetime>
+               <ion-icon name="add-circle" *ngIf="sun_close == 'closed'"></ion-icon>
+             </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
       </ion-item-group>
 
       <ion-buttons>
@@ -291,28 +346,30 @@
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
-
+    </ion-col>
+  </ion-row>
     </ion-slide>
 
     <!-- Menu Info Slide -->
     <ion-slide>
-
-      <h2 padding> Please add your Restaurants menu below</h2>
+      <ion-row justify-content-center>
+        <ion-col col-12 col-sm-12 col-md-6>
+      <h2 padding> Create your restaurant menu</h2>
 
       <br>
 
       <ion-list *ngFor="let menug of menuGroup; let i = index" class="item_stretch">
 
-        <ion-card>
-          <ion-card-header style="background-color: #da3937;">
-            <ion-item style="background-color: transparent; color: white;">
-              <ion-label style="color: #ffffff;">Menu Heading</ion-label>
-              <ion-input type="text" placeholder="" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
-              <button ion-button clear item-right color="light" (click)="removeGroup(i)">
-                <ion-icon name="trash"></ion-icon>
-              </button>
-            </ion-item>
-          </ion-card-header>
+      <ion-card>
+              <ion-card-header style="background-color: #da3937;">
+                <ion-item style="background-color: transparent; color: white;">
+                <ion-label style="color: #ffffff;">Menu Heading</ion-label>
+                <ion-input type="text" placeholder="" value="{{menug.menuGroupName}}" [(ngModel)]="menug.menuGroupName"></ion-input>
+                <button ion-button clear item-right color="light" (click)="removeGroup(i)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-item>
+              </ion-card-header>
 
           <ion-card-content>
             <ion-item-group *ngFor="let menu of menug.menu; let j = index" no-lines>
@@ -351,9 +408,9 @@
             <button ion-button color="rdaApp" clear item-center icon-left (click)="addMenuItem(i)">
               <ion-icon colour="rdaApp" name="add-circle"></ion-icon>
               FOOD ITEM
-            </button>
-          </div>
-        </ion-card>
+          </button>
+        </div>
+    </ion-card>
       </ion-list>
 
       <br>
@@ -361,8 +418,11 @@
         <ion-icon name="add"></ion-icon>
         ADD MENU HEADING
       </button>
-      <br>
-
+      <br><br>
+      <div>
+        <ion-checkbox [(ngModel)]="checkme" (ionChange)="updateFinishButton()"></ion-checkbox>
+        I agree to the <u style="color: #da3937" (click)="openInAppBrowser()">Terms of Service and Privacy Policy</u>
+      </div>
       <ion-buttons>
         <button ion-button medium clear icon-left color="rdaApp" (click)="prevSlide()">
           <ion-icon name="arrow-back"></ion-icon>
@@ -375,13 +435,11 @@
         </button>
       </ion-buttons>
 
-      <div>
-        <ion-checkbox [(ngModel)]="checkme" (ionChange)="updateFinishButton()"></ion-checkbox>
-        I agree to the <u style="color: #da3937" (click)="openInAppBrowser()">Terms of Service and Privacy Policy</u>
-      </div>
-
+    </ion-col>
+  </ion-row>
     </ion-slide>
-
   </ion-slides>
+
+</ion-grid>
 
 </ion-content>

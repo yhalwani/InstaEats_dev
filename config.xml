@@ -36,6 +36,9 @@
     <preference name="SplashScreenDelay" value="0" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#da3739" />
+    <preference name="intercom-app-id" value="ns2pj54u" />
+    <preference name="intercom-ios-api-key" value="ios_sdk-834d06ddaabf53a53512c9481d175255163c65fe" />
+    <preference name="intercom-android-api-key" value="android_sdk-260572e79bc20509b59aa1bd8a3e0af5b5d04789" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
@@ -80,4 +83,6 @@
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
+    <plugin name="cordova-plugin-intercom" version="~3.2" />
+    <engine name="android" spec="~6.1.2" />
 </widget>

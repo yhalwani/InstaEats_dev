@@ -6,6 +6,7 @@ import { Dialogs }      from '@ionic-native/dialogs';
 import { Storage }      from '@ionic/storage';
 import { HeaderColor }  from '@ionic-native/header-color';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Intercom }     from '@ionic-native/intercom';
 
 import firebase         from 'firebase';
 
@@ -27,6 +28,8 @@ declare var Snap,svg,easing,min,js: any;
 declare var svgTween: any;
 declare var svgAnimation: any;
 
+declare var window;
+declare var intercom;
 
 @Component({
   templateUrl: 'app.html'
@@ -60,10 +63,13 @@ export class MyApp {
     private dialogs: Dialogs,
     private headerColor: HeaderColor,
     public alert: AlertController,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private intercom: Intercom
   ) {
 
     this.initializeApp();
+
+
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
 
     this.pages = [
@@ -95,6 +101,12 @@ export class MyApp {
         { title: 'Signup', component: SignupPage },
         { title: 'Restaurant Owners', component: OnBoardPage}
       ];
+        if (this.platform.is('cordova')) {
+          intercom.reset();
+          intercom.setLauncherVisibility('GONE');
+        } else {
+          window.Intercom('shutdown');
+        }
     });
 
     events.subscribe('restaurant:loggedIn', (loggedIn, username) => {

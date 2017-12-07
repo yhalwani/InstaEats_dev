@@ -23,9 +23,12 @@
         <param name="android-package" value="tomloprod.HeaderColor" />
         <param name="onload" value="true" />
     </feature>
+<<<<<<< HEAD
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+=======
+>>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
@@ -51,6 +54,13 @@
     <feature name="LaunchNavigator">
         <param name="android-package" value="uk.co.workingedge.phonegap.plugin.LaunchNavigator" />
     </feature>
+<<<<<<< HEAD
+=======
+    <feature name="Intercom">
+        <param name="android-package" value="io.intercom.android.sdk.IntercomBridge" />
+        <param name="onload" value="true" />
+    </feature>
+>>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
     <feature name="Diagnostic">
         <param name="android-package" value="cordova.plugins.Diagnostic" />
         <param name="onload" value="true" />
@@ -104,6 +114,12 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="0" />
+<<<<<<< HEAD
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#da3739" />
+=======
+    <preference name="intercom-app-id" value="ns2pj54u" />
+    <preference name="intercom-ios-api-key" value="ios_sdk-834d06ddaabf53a53512c9481d175255163c65fe" />
+    <preference name="intercom-android-api-key" value="android_sdk-260572e79bc20509b59aa1bd8a3e0af5b5d04789" />
+>>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
 </widget>
