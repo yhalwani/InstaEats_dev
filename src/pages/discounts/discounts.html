@@ -49,14 +49,17 @@
                     <ion-icon style="font-size: xx-large; color: rgba(0, 0, 0, 0.5);" ios="ios-time" md="ios-time" item-left>
                     </ion-icon>
 
-                    <p>Live</p>
+                    <p *ngIf="bundle.duration != null">Live</p>
+                    <p *ngIf="bundle.ongoing != null">Ongoing</p>
+                    <p *ngIf="bundle.duration == null && bundle.ongoing == null">Expired</p>
 
                     <div id="discounttype" style="display: block">
                       <h3 class="-bold">{{bundle.ongoing}}</h3>
                     </div>
 
                     <div id="discounttimer" style="display: block;">
-                      <h3 class="-bold">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
+                      <h3 class="-bold" *ngIf="bundle.duration != null">{{bundle.countDown.hours}}{{bundle.countDown.minutes}}{{bundle.countDown.seconds}}</h3>
+                      <h3 class="-bold" *ngIf="bundle.duration == null && bundle.ongoing == null">00:00:00</h3>
                     </div>
 
                     <div item-right>

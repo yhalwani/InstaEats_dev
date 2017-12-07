@@ -70,6 +70,8 @@ export class MyApp {
 
     // this.statusBar.hide();
     this.initializeApp();
+
+
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
 
 
@@ -121,7 +123,10 @@ export class MyApp {
 
   };
 
-  initializeApp() {
+
+    initializeApp() {
+
+
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, Events, ModalController, ViewController, AlertController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Platform } from 'ionic-angular';
@@ -197,13 +198,23 @@ export class MenuPage {
   </ion-header>
 
   <ion-content>
-    <ion-item>
-      <ion-input type="text" placeholder="Bundle Name (required)" maxlength=120 [(ngModel)]="bundleName" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="text" placeholder="Bundle Description (required)" maxlength=400 [(ngModel)]="bundleDescription" required></ion-input>
-    </ion-item>
 
+    <p *ngIf="readyToSubmit" style="color: #ea6153;"> Please fill out coupon Name and Description</p>
+
+    <form [formGroup]="coupDesc">
+    <ion-item>
+      <ion-input type="text" placeholder="Coupon Name (required)" maxlength=120 formControlName="bundleName" [class.invalid]="!coupDesc.controls.bundleName.valid && (coupDesc.controls.bundleName.dirty || readyToSubmit)"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!coupDesc.controls.bundleName.valid  && (coupDesc.controls.bundleName.dirty || readyToSubmit)">
+          <p>Required</p>
+      </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Coupon Description (required)" maxlength=400 formControlName="bundleDescription" [class.invalid]="!coupDesc.controls.bundleDescription.valid && (coupDesc.controls.bundleDescription.dirty || readyToSubmit)"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!coupDesc.controls.bundleDescription.valid  && (coupDesc.controls.bundleDescription.dirty || readyToSubmit)">
+          <p>Required</p>
+      </ion-item>
+    </form>
     <br>
 
     <ion-list *ngFor="let menug of bundleMenu; let i = index">
@@ -295,15 +306,19 @@ export class MenuPage {
     <br>
 
     <div text-center>
-      <button ion-button large icon-right color="rdaApp" (click)="saveBundle()">
-        Save Bundle
-        <ion-icon name="pricetags"></ion-icon>
+      <button ion-button large icon-left color="rdaApp" (click)="saveBundle()">
+
+      <ion-icon name="pricetags"></ion-icon>
+        Create Coupon
+
       </button>
     </div>
   </ion-content>
   `
 })
 export class ModalContentPage {
+  private coupDesc : FormGroup;
+  readyToSubmit: boolean = false;
 
   menuGroup: Array<{
     menuGroupName:         string,
@@ -342,11 +357,17 @@ export class ModalContentPage {
   totalPrice:                   number;
 
   constructor(
+    private formBuilder: FormBuilder,
     public params: NavParams,
     public viewCtrl: ViewController,
     public storage: Storage,
     public events: Events
   ) {
+
+    this.coupDesc = this.formBuilder.group({
+      bundleName: ['', Validators.required],
+      bundleDescription: ['', Validators.required],
+    });
 
     this.totalDiscountPrice    = 0;
     this.totalDiscountPercent  = 0;
@@ -446,8 +467,15 @@ export class ModalContentPage {
   // Save bundle to storage and push to firebase
   saveBundle() {
 
-    this.bundleItem.bundleName = this.bundleName;
-    this.bundleItem.bundleDescription = this.bundleDescription;
+
+  this.readyToSubmit = true;
+
+  if(!this.coupDesc.valid){
+
+  } else {
+
+    this.bundleItem.bundleName = this.coupDesc.value.bundleName;
+    this.bundleItem.bundleDescription = this.coupDesc.value.bundleDescription;
 
     this.bundleItem.total = this.totalPrice;
     this.bundleItem.totalDiscount = this.totalDiscountPrice;
@@ -501,6 +529,9 @@ export class ModalContentPage {
     });
 
     this.dismiss();
+
+  }
+
 
   };
 
