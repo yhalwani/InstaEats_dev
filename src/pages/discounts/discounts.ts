@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams, Events, ActionSheetController, LoadingController, AlertController } from 'ionic-angular';
+import { Platform, NavController, NavParams, Events, ActionSheetController, LoadingController, AlertController, App } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { StripePage } from '../stripe/stripe';
-
 
 import firebase from 'firebase';
 
@@ -39,7 +38,8 @@ export class DiscountsPage {
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
     public platform: Platform,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public appCtrl: App
   ) {
 
     var bundlesArr = [];
@@ -97,6 +97,8 @@ export class DiscountsPage {
       }
     });
 
+    console.log(this.appCtrl.getRootNav());
+
   }
 
   ngOnInit(){
@@ -113,7 +115,6 @@ export class DiscountsPage {
         document.getElementById('showBundles').style.display = "block";
       }
     });
-
 
   }
 
@@ -271,6 +272,7 @@ export class DiscountsPage {
 
             this.bundles[index].live = !this.bundles[index].live;
             this.setTime(now, timeLimit, this.bundles[index]);
+            this.navCtrl.setRoot(this.navCtrl.getActive().component); // refresh the page. but loses prev navigation
             return;
           }
         }

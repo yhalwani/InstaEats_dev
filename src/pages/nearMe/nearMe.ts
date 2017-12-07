@@ -63,15 +63,11 @@ export class NearMePage {
     private launchNavigator: LaunchNavigator
   ) {
 
-    this.setList();
-
-    if(this.plt.is('ios')){
-      this.plat = { platform: "header-icon-ios", assetPath: "assets/icon/icon.png"};
-    } else {
-      this.plat = { platform: "header-icon-md", assetPath: "assets/icon/icon.png"};
-    };
-
   };
+
+  ionViewDidLoad(){
+    this.setList();
+  }
 
   setList(){
 

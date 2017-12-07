@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events, ModalController, ViewController, AlertController, ToastController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { DiscountsPage } from '../discounts/discounts';
 
 import firebase from 'firebase';
 
@@ -313,7 +314,8 @@ export class ModalContentPage {
     public params: NavParams,
     public viewCtrl: ViewController,
     public storage: Storage,
-    public events: Events
+    public events: Events,
+    public navCtrl: NavController
   ) {
 
     this.totalDiscountPrice    = 0;

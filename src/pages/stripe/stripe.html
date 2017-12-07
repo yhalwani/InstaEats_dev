@@ -14,10 +14,23 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
+      <ion-col col-8 align-item-center>
+
+    <ion-row>
       <ion-col>
         <h2 ion-text text-center>
           Pick your plan
         </h2>
+
+        <ion-card style="box-shadow: none;">
+          <ion-card-content>
+
+              <ion-label color="primary" stacked>Promo Code</ion-label>
+              <ion-input type="text" value="" [(ngModel)]="promo"></ion-input>
+            <button ion-button block>Select</button>
+          </ion-card-content>
+        </ion-card>
+
         <ion-card style="background-color: #c6c6c1; border: 1px solid #aaaaa8; box-shadow: none;">
           <ion-card-header style="color: white; text-shadow: 0px 1px 0px rgba(47, 47, 41, 0.5);">
             The better choice is the <strong>Plus Plan</strong>
@@ -50,7 +63,7 @@
             Plus Plan
           </ion-card-header>
           <ion-card-content style="padding-top: 13px;">
-            Everything from Base Plan + Access to At The Moment and Ongoing deals feature.  With ATM deals feature you can create red hot deal that only for a few hours to max of 24 hours. Ongoing deals are great for daily deals, specials and etc.
+            Everything from Base Plan + Access to At The Moment and Ongoing deals feature.  With ATM deals feature you can create red hot deal that can last from few hours to a maximum of 24 hours. Ongoing deals are great for daily deals, specials and etc.
           </ion-card-content>
 
           <ion-row>
@@ -98,6 +111,8 @@
       </ion-col>
     </ion-row>
 
+    </ion-col>
+    </ion-row>
   </ion-grid>
 
 </ion-content>
