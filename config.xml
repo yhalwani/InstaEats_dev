@@ -65,7 +65,6 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <allow-navigation href="http://192.168.2.223:8100" />
-    <engine name="browser" spec="5.0.1" />
     <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-console" spec="1.0.5" />
@@ -83,6 +82,5 @@
     <plugin name="cordova-plugin-stripe" spec="^1.5.3" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
-    <plugin name="cordova-plugin-intercom" version="~3.2" />
-    <engine name="android" spec="~6.1.2" />
+    <plugin name="cordova-plugin-intercom" spec="^3.2.2" />
 </widget>

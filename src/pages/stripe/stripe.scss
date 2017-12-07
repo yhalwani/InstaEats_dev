@@ -3,5 +3,18 @@ page-stripe {
   .item_stretch {
     padding-left: 0px !important;
   }
+
+  .swiper-slide {
+    display: block;
+  }
+
+  ion-label, .select-text {
+    margin-left: 10px;
+  }
+
+  .invalid {
+    border-bottom: 1px solid #ea6153;
+  }
   
+
 }

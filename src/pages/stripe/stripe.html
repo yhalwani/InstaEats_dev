@@ -27,7 +27,7 @@
 
               <ion-label color="primary" stacked>Promo Code</ion-label>
               <ion-input type="text" value="" [(ngModel)]="promo"></ion-input>
-            <button ion-button block>Select</button>
+            <button ion-button block [color]='my-color' (click)="validate($event)">Validate</button>
           </ion-card-content>
         </ion-card>
 

@@ -48,13 +48,8 @@ module.exports.prepare = function (cordovaProject, options) {
     }).then(function () {
         updateIcons(cordovaProject, path.relative(cordovaProject.root, self.locations.res));
         updateSplashes(cordovaProject, path.relative(cordovaProject.root, self.locations.res));
-<<<<<<< HEAD
         updateFileResources(cordovaProject, path.relative(cordovaProject.root, self.locations.root));
     }).then(function () {
-=======
-    })
-    .then(function () {
->>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
         events.emit('verbose', 'Prepared android project successfully');
     });
 };
@@ -77,6 +72,7 @@ module.exports.clean = function (options) {
         cleanWww(projectRoot, self.locations);
         cleanIcons(projectRoot, projectConfig, path.relative(projectRoot, self.locations.res));
         cleanSplashes(projectRoot, projectConfig, path.relative(projectRoot, self.locations.res));
+        cleanFileResources(projectRoot, projectConfig, path.relative(projectRoot, self.locations.root));
     });
 };
 
@@ -416,7 +412,6 @@ function mapImageResources (rootDir, subDir, type, resourceName) {
     return pathMap;
 }
 
-<<<<<<< HEAD
 function updateFileResources (cordovaProject, platformDir) {
     var files = cordovaProject.projectConfig.getFileResources('android');
 
@@ -454,8 +449,6 @@ function cleanFileResources (projectRoot, projectConfig, platformDir) {
     }
 }
 
-=======
->>>>>>> 890cfa12bae58273d8f802511b4fbad4ed579e58
 /**
  * Gets and validates 'AndroidLaunchMode' prepference from config.xml. Returns
  *   preference value and warns if it doesn't seems to be valid
