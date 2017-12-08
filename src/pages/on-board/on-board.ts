@@ -97,7 +97,6 @@ export class OnBoardPage {
     public storage: Storage,
     public camera: Camera,
     public toastCtrl: ToastController,
-    public plt: Platform,
     private intercom: Intercom,
     private iab: InAppBrowser,
     public platform: Platform
@@ -160,40 +159,38 @@ export class OnBoardPage {
     this.menuGroup = [];
 
     this.slideStepOne = formBuilder.group({
-        restaurantName: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
-        email: ['', Validators.required],
-        password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+      restaurantName: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+      email: ['', Validators.required],
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
 
-
-
     this.slideStepTwo = formBuilder.group({
-        slogan: [''],
-        description: [''],
-        website: [''],
-        phoneNumber: [''],
-        restNumber: [''],
-        cuisineType: ['', Validators.required],
-        street: ['', Validators.compose([Validators.minLength(3), Validators.required])],
-        city: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
-        province: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
-        country: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
-        postalCode: ['', Validators.compose([Validators.pattern('[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]'), Validators.required])],
-        mon_open: [''],
-        mon_close: [''],
-        tues_open: [''],
-        tues_close: [''],
-        wed_open: [''],
-        wed_close: [''],
-        thurs_open: [''],
-        thurs_close: [''],
-        fri_open: [''],
-        fri_close: [''],
-        sat_open: [''],
-        sat_close: [''],
-        sun_open: [''],
-        sun_close: [''],
-        ownerName: ['', Validators.required]
+      slogan: [''],
+      description: [''],
+      website: [''],
+      phoneNumber: [''],
+      restNumber: [''],
+      cuisineType: ['', Validators.required],
+      street: ['', Validators.compose([Validators.minLength(3), Validators.required])],
+      city: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+      province: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+      country: ['', Validators.compose([Validators.maxLength(70), Validators.required])],
+      postalCode: ['', Validators.compose([Validators.pattern('[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]'), Validators.required])],
+      mon_open: [''],
+      mon_close: [''],
+      tues_open: [''],
+      tues_close: [''],
+      wed_open: [''],
+      wed_close: [''],
+      thurs_open: [''],
+      thurs_close: [''],
+      fri_open: [''],
+      fri_close: [''],
+      sat_open: [''],
+      sat_close: [''],
+      sun_open: [''],
+      sun_close: [''],
+      ownerName: ['', Validators.required]
     });
 
   }
@@ -201,33 +198,29 @@ export class OnBoardPage {
   // Lock swipes to nav only by buttons
   ionViewDidEnter() {
 
-    if (this.plt.is('cordova')) {
-      // This will only print on a device running Cordova
-        intercom.setLauncherVisibility('VISIBLE');
-        intercom.registerUnidentifiedUser();
-        intercom.updateUser({
-          custom_attributes: {
-            on_page : "mobile onboarding"
-        }
-      });
-    } else {
-      window.Intercom("boot", {
-        app_id: "ns2pj54u",
-        hide_default_launcher: false,
-        on_page: "onboarding"
-      });
-    }
-
     let web = document.getElementById("web");
     let device = document.getElementById("device");
 
     if(this.platform.is('core')){
       web.style.display = "block";
       device.style.display = "none";
+      window.Intercom("boot", {
+        app_id: "ns2pj54u",
+        hide_default_launcher: false,
+        on_page: "onboarding"
+      });
     }
     if(this.platform.is('mobile')) {
       device.style.display = "block";
       web.style.display = "none";
+      // This will only print on a device running Cordova
+      intercom.setLauncherVisibility('VISIBLE');
+      intercom.registerUnidentifiedUser();
+      intercom.updateUser({
+        custom_attributes: {
+          on_page : "mobile onboarding"
+        }
+      });
     }
 
     this.slides.lockSwipes(true);
@@ -235,7 +228,7 @@ export class OnBoardPage {
 
   ionViewWillLeave() {
 
-    if (this.plt.is('cordova')) {
+    if (this.platform.is('cordova')) {
 
       intercom.setLauncherVisibility('GONE');
 
@@ -377,7 +370,7 @@ export class OnBoardPage {
           }
         });
 
-      if (this.plt.is('cordova')) {
+      if (this.platform.is('cordova')) {
         intercom.registerIdentifiedUser({
           email: this.slideStepOne.value.email,
           userId: currentUser.uid

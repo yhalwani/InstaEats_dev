@@ -6,6 +6,8 @@ import { RestaurantPortalPage } from '../restaurant-portal/restaurant-portal';
 
 import firebase from 'firebase';
 
+declare var stripe: any;
+
 @Component({
   selector: 'page-stripe',
   templateUrl: 'stripe.html',
@@ -13,9 +15,7 @@ import firebase from 'firebase';
 export class StripePage {
 
   codeIsValid: boolean = false;
-  private promocode : FormGroup;
   promo: any;
-  my_color: any = '#488aff';
 
   constructor(
     public navCtrl: NavController,
@@ -25,10 +25,6 @@ export class StripePage {
     public toastCtrl: ToastController,
     private formBuilder: FormBuilder
   ) {
-
-    this.promocode = this.formBuilder.group({
-      promo: ['', this.validate],
-    });
 
   }
 
@@ -43,12 +39,6 @@ export class StripePage {
   }
 
   openCheckout(amount, description, planID) {
-    // if(this.promo == null){
-    //   this.promo = "none";
-    // }
-
-    this.codeIsValid = true;
-
     let user = firebase.auth().currentUser;
     let uid = user.uid;
     let userRef = firebase.database().ref('Restaurant Profiles/').child(uid);
@@ -60,7 +50,7 @@ export class StripePage {
         userRef.child('stripe').update({
           token,
           plan: planID,
-          promocode: this.promocode.value
+          promocode: this.promo
         });
       })
     });
@@ -71,46 +61,38 @@ export class StripePage {
       amount: Number(amount)
     });
 
-    // if(!this.codeIsValid){
-    //     let alert = this.alertCtrl.create({
-    //       title: 'Validation failed',
-    //       subTitle: 'Promocode you enter is incorrect or not valid.',
-    //       buttons: ['Dismiss']
-    //     });
-    //     alert.present();
-    // }
-
   }
 
   returnToDash(){
     this.viewCtrl.dismiss();
   }
 
-  validate(){
-    if(this.promo == "60dayseats"){
-      this.my_color = '#44b31b';
-      console.log("VALID");
+  validate(event: any){
+
+    if(this.promo){
+      if(this.promo.toLowerCase() == "60dayseats"){
+        this.codeIsValid = true;
+        let alert = this.alertCtrl.create({
+          title: 'Promo-code applied',
+          subTitle: 'Promotional discount will be reflected on your invoice',
+          buttons: ['Dismiss']
+        });
+        alert.present();
+      }
+      else if(this.promo.toLowerCase() != "60dayseats"){
+        this.codeIsValid = false;
+        let toast = this.toastCtrl.create({
+          message: "Invalid Coupon",
+          duration: 3000,
+          position: 'top'
+        })
+        toast.present();
+      }
     }
-    if(this.promo == null){
+    else if(this.promo == null || this.promo == ''){
+      this.codeIsValid = false;
       console.log("no coupon");
     }
-    if(this.promo != "60dayseats"){
-      this.my_color = '#da3937';
-      console.log("in valid");
-    }
   }
-
-  // // function to validate coupon code
-  // validate(control: FormControl): any{
-  //
-  //   if(control.value == null){
-  //     console.log("No coupon used")
-  //   }
-  //   if(control.value.toLowerCase() == "60dayseats"){
-  //     return "valid coupon"
-  //   } else {
-  //     return "invalid coupon"
-  //   }
-  // }
 
 }

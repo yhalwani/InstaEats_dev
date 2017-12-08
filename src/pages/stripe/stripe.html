@@ -13,105 +13,109 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row>
-      <ion-col col-8 align-item-center>
+    <ion-row justify-content-center>
+      <ion-col col-8>
 
-    <ion-row>
-      <ion-col>
-        <h2 ion-text text-center>
-          Pick your plan
-        </h2>
+        <ion-row>
+          <ion-col>
+            <h2 ion-text text-center>
+              Pick your plan
+            </h2>
 
-        <ion-card style="box-shadow: none;">
-          <ion-card-content>
+            <ion-card style="box-shadow: none;">
+              <ion-card-content>
+                <ion-item>
+                  <ion-icon item-right *ngIf="codeIsValid" name="checkmark-circle" color="secondary"></ion-icon>
+                  <ion-label color="primary" stacked>Promo Code</ion-label>
+                  <ion-input type="text" value="" [(ngModel)]="promo"></ion-input>
+                </ion-item>
+                <div padding>
+                  <button ion-button [color]="codeIsValid ? 'secondary' : 'primary'" (click)="validate($event)">Apply Coupon</button>
+                </div>
+              </ion-card-content>
+            </ion-card>
 
-              <ion-label color="primary" stacked>Promo Code</ion-label>
-              <ion-input type="text" value="" [(ngModel)]="promo"></ion-input>
-            <button ion-button block [color]='my-color' (click)="validate($event)">Validate</button>
-          </ion-card-content>
-        </ion-card>
+            <ion-card style="background-color: #c6c6c1; border: 1px solid #aaaaa8; box-shadow: none;">
+              <ion-card-header style="color: white; text-shadow: 0px 1px 0px rgba(47, 47, 41, 0.5);">
+                The better choice is the <strong>Plus Plan</strong>
+              </ion-card-header>
+              <ion-card-content style="color: #443c36;">
+                The Plus Plan gives you access to the prominent feature of InstaEats and with it you'll be able to create deals for your customers.
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row text-center>
+          <ion-col col-12 col-md-3>
+            <ion-card>
+              <ion-card-header style="border-bottom: 1px solid #e9e9e9;">
+                Base $8.99/month
+              </ion-card-header>
+              <ion-card-content style="padding-top: 13px;">
+                Ideal for getting your restaurant showcased on the InstaEats app. Just by being present will act as a subtle reminder to customers around you. This includes your restaurant logo, name, location and menu.
 
-        <ion-card style="background-color: #c6c6c1; border: 1px solid #aaaaa8; box-shadow: none;">
-          <ion-card-header style="color: white; text-shadow: 0px 1px 0px rgba(47, 47, 41, 0.5);">
-            The better choice is the <strong>Plus Plan</strong>
-          </ion-card-header>
-          <ion-card-content style="color: #443c36;">
-            The Plus Plan gives you access to the prominent feature of InstaEats and with it you'll be able to create deals for your customers.
-          </ion-card-content>
-        </ion-card>
+              </ion-card-content>
+              <ion-card-content>
+                <button ion-button block color="rdaApp" (click)="openCheckout('899', 'Basic plan', 'InstaEats_basicP')">Select</button>
+              </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+          <ion-col col-12 col-md-9>
+            <ion-card style="border: 1px solid #aaaaa8; box-shadow: none;">
+              <ion-card-header style="background-color: #c6c6c1; border-bottom: 1px solid #aaaaa8;">
+                Plus Plan
+              </ion-card-header>
+              <ion-card-content style="padding-top: 13px;">
+                Everything from Base Plan + Access to At The Moment and Ongoing deals feature.  With ATM deals feature you can create red hot deal that can last from few hours to a maximum of 24 hours. Ongoing deals are great for daily deals, specials and etc.
+              </ion-card-content>
+
+              <ion-row>
+                <ion-col col-12 col-sm-4>
+                  <ion-card>
+                    <ion-card-header style="background-color: #44b31b; border-bottom: 1px solid #398b18; color: white;">
+                      Monthly Subscription
+                    </ion-card-header>
+                    <ion-card-content style="padding: 13px 0px 0px 0px">
+                      <p>$89/month <br> pay as you go</p>
+                    </ion-card-content>
+                    <ion-card-content>
+                      <button ion-button block color="rdaApp" (click)="openCheckout('8900', 'Month-to-Month Plus plan', 'InstaEats_plusP')">Select</button>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col col-12 col-sm-4>
+                  <ion-card>
+                    <ion-card-header style="background-color: #44b31b; border-bottom: 1px solid #398b18; color: white;">
+                      6 months Subscription
+                    </ion-card-header>
+                    <ion-card-content style="padding: 13px 0px 0px 0px">
+                      <p>$485/6 months <br> 10% off</p>
+                    </ion-card-content>
+                    <ion-card-content>
+                      <button ion-button block color="rdaApp" (click)="openCheckout('48500', '6 months Plus plan', 'InstaEats_plusP_6m')">Select</button>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col col-12 col-sm-4>
+                  <ion-card>
+                    <ion-card-header style="background-color: #44b31b; border-bottom: 1px solid #398b18; color: white;">
+                      Yearly Subscription
+                    </ion-card-header>
+                    <ion-card-content style="padding: 13px 0px 0px 0px">
+                      <p>$928/year <br> 15% off</p>
+                    </ion-card-content>
+                    <ion-card-content>
+                      <button ion-button block color="rdaApp" (click)="openCheckout('92800', '1 year Plus plan', 'InstaEats_plusP_12m')">Select</button>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
       </ion-col>
-    </ion-row>
-    <ion-row text-center>
-      <ion-col col-12 col-md-3>
-        <ion-card>
-          <ion-card-header style="border-bottom: 1px solid #e9e9e9;">
-            Base $8.99/month
-          </ion-card-header>
-          <ion-card-content style="padding-top: 13px;">
-            Ideal for getting your restaurant showcased on the InstaEats app. Just by being present will act as a subtle reminder to customers around you. This includes your restaurant logo, name, location and menu.
-
-          </ion-card-content>
-          <ion-card-content>
-            <button ion-button block color="rdaApp" (click)="openCheckout('899', 'Basic plan', 'InstaEats_basicP')">Select</button>
-          </ion-card-content>
-
-        </ion-card>
-      </ion-col>
-      <ion-col col-12 col-md-9>
-        <ion-card style="border: 1px solid #aaaaa8; box-shadow: none;">
-          <ion-card-header style="background-color: #c6c6c1; border-bottom: 1px solid #aaaaa8;">
-            Plus Plan
-          </ion-card-header>
-          <ion-card-content style="padding-top: 13px;">
-            Everything from Base Plan + Access to At The Moment and Ongoing deals feature.  With ATM deals feature you can create red hot deal that can last from few hours to a maximum of 24 hours. Ongoing deals are great for daily deals, specials and etc.
-          </ion-card-content>
-
-          <ion-row>
-            <ion-col col-12 col-sm-4>
-              <ion-card>
-                <ion-card-header style="background-color: #44b31b; border-bottom: 1px solid #398b18; color: white;">
-                  Monthly Subscription
-                </ion-card-header>
-                <ion-card-content style="padding: 13px 0px 0px 0px">
-                  <p>$89/month <br> pay as you go</p>
-                </ion-card-content>
-                <ion-card-content>
-                  <button ion-button block color="rdaApp" (click)="openCheckout('8900', 'Month-to-Month Plus plan', 'InstaEats_plusP')">Select</button>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-            <ion-col col-12 col-sm-4>
-              <ion-card>
-                <ion-card-header style="background-color: #44b31b; border-bottom: 1px solid #398b18; color: white;">
-                  6 months Subscription
-                </ion-card-header>
-                <ion-card-content style="padding: 13px 0px 0px 0px">
-                  <p>$485/6 months <br> 10% off</p>
-                </ion-card-content>
-                <ion-card-content>
-                  <button ion-button block color="rdaApp" (click)="openCheckout('48500', '6 months Plus plan', 'InstaEats_plusP_6m')">Select</button>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-            <ion-col col-12 col-sm-4>
-              <ion-card>
-                <ion-card-header style="background-color: #44b31b; border-bottom: 1px solid #398b18; color: white;">
-                  Yearly Subscription
-                </ion-card-header>
-                <ion-card-content style="padding: 13px 0px 0px 0px">
-                  <p>$928/year <br> 15% off</p>
-                </ion-card-content>
-                <ion-card-content>
-                  <button ion-button block color="rdaApp" (click)="openCheckout('92800', '1 year Plus plan', 'InstaEats_plusP_12m')">Select</button>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-    </ion-col>
     </ion-row>
   </ion-grid>
 

@@ -32807,3 +32807,15 @@ page-restaurant-page .nothingBurger, page-DiscountPage .nothingBurger {
 page-stripe .item_stretch {
   padding-left: 0px !important;
 }
+
+page-stripe .swiper-slide {
+  display: block;
+}
+
+page-stripe ion-label, page-stripe .select-text {
+  margin-left: 10px;
+}
+
+page-stripe .invalid {
+  border-bottom: 1px solid #ea6153;
+}
